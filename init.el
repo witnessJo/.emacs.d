@@ -4,7 +4,6 @@
 ;;; You may delete these explanatory comments.
 
 
-
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
@@ -29,17 +28,17 @@
   (lambda()
     (auto-package-update-now)))
 
-    
-(when (eq system-type 'darwin
-)
 
+(when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier nil))
+
 
 (setenv "LANG" "en_US.UTF-8")
 (setenv "LC_ALL" "en_US.UTF-8")
 (setenv "LC_CTYPE" "en_US.UTF-8")
 (setenv "PTYHONIOENCODING" "utf-8")
+
 
 (defun exec-shell-command-with-buffer(cmd temp-buffer-name)
   (interactive)
@@ -47,7 +46,7 @@
     ;; (shell-command cmd temp-buffer-name "*Massage*")
     (async-shell-command cmd temp-buffer-name temp-buffer-name)
     (pop-to-buffer temp-buffer-name)
-  ))
+    ))
 
 ;; add themes
 (use-package color-theme-sanityinc-tomorrow :ensure t)
@@ -58,15 +57,23 @@
   (set-face-attribute 'default nil :family "monaco"))
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; reuse a dired list buffer.
+(require 'dired)
+(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+(define-key dired-mode-map (kbd "^")
+  (lambda () (interactive)
+    (find-alternate-file "..")))
+
 
 (defun indent-buffer ()
   "Indent the currently visited buffer."
   (interactive)
   (indent-region (point-min) (point-max)))
+
 
 (defun indent-region-or-buffer ()
   "Indent a region if selected, otherwise the whole buffer."
@@ -115,10 +122,10 @@
   :ensure)
 (with-eval-after-load 'multi-term
   (lambda ()
-     (define-key term-raw-map (kbd "C-c C-n") 'multi-term-next)
-     (define-key term-raw-map (kbd "C-c C-p") 'multi-term-prev)
-     )
+    (define-key term-raw-map (kbd "C-c C-n") 'multi-term-next)
+    (define-key term-raw-map (kbd "C-c C-p") 'multi-term-prev)
     )
+  )
 
 (use-package xterm-color
   :ensure)
@@ -214,6 +221,7 @@
   (global-set-key (kbd "C-c a g") 'helm-do-ag)
   )
 
+
 (use-package evil
   :ensure t)
 (evil-mode 1)
@@ -221,6 +229,7 @@
   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
   (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward))
+
 
 (use-package company
   :ensure t)
@@ -327,8 +336,8 @@
 
 ;; (setq python-shell-interpreter "ipython"
 ;;       python-shell-interpreter-args "-i")
-	   
- 
+
+
 ;; (use-package iedit
 ;;   :ensure t)
 ;; (define-key global-map (kbd "C-c o") 'iedit-mode)
@@ -350,21 +359,21 @@
   )
 
 (defun jyc-run-python ()
-   "Use run python program"
+  "Use run python program"
   (interactive)
   (compile (concat "python " (buffer-name))))
 ;; (
- ;; setq compilation-scroll-output t)
+;; setq compilation-scroll-output t)
 
 (defun kill-compilation-buffer ()
-   "Kill current buffer unconditionally."
-   (interactive)
-   (let ((buffer-modified-p nil))
-     (if (not (equal projectile-project-name nil))
-	 (kill-buffer (format "%s-%s" "*compilation*" projectile-project-name))
-       (kill-buffer "*compilation*")
-       ))
-   )
+  "Kill current buffer unconditionally."
+  (interactive)
+  (let ((buffer-modified-p nil))
+    (if (not (equal projectile-project-name nil))
+	(kill-buffer (format "%s-%s" "*compilation*" projectile-project-name))
+      (kill-buffer "*compilation*")
+      ))
+  )
 
 (defun close-compilation-window ()
   "Close the window having compilation buffer"
@@ -388,31 +397,31 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun jyc-copy-init-cpp-project()
   (interactive)
-   (dired-copy-file-recursive "~/.emacs.d/jongyoungcha/init_cpp_project/" default-directory nil nil nil 'always))
+  (dired-copy-file-recursive "~/.emacs.d/jongyoungcha/init_cpp_project/" default-directory nil nil nil 'always))
 
- (require 'compile)
- (add-hook 'c-mode-hook
-           (lambda ()
-	     (unless (file-exists-p "Makefile")
-	       (set (make-local-variable 'compile-command)
-                    ;; emulate make's .c.o implicit pattern rule, but with
-                    ;; different defaults for the CC, CPPFLAGS, and CFLAGS
-                    ;; variables:
-                    ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
-		    (let ((file (file-name-nondirectory buffer-file-name)))
-                      (format "%s -c -o %s.o %s %s %s"
-                              (or (getenv "CC") "gcc")
-                              (file-name-sans-extension file)
-                              (or (getenv "CPPFLAGS") "-DDEBUG=9")
-                              (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
-			      file))))))
+(require 'compile)
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (unless (file-exists-p "Makefile")
+	      (set (make-local-variable 'compile-command)
+		   ;; emulate make's .c.o implicit pattern rule, but with
+		   ;; different defaults for the CC, CPPFLAGS, and CFLAGS
+		   ;; variables:
+		   ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+		   (let ((file (file-name-nondirectory buffer-file-name)))
+		     (format "%s -c -o %s.o %s %s %s"
+			     (or (getenv "CC") "gcc")
+			     (file-name-sans-extension file)
+			     (or (getenv "CPPFLAGS") "-DDEBUG=9")
+			     (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
+			     file))))))
 
 ;; (define-key c-mode-base-map (kbd "<f5>") 'c/c++-simple-compile-and-exec)
 
 (use-package smart-compile
   :ensure t)
 (with-eval-after-load 'smart-compile
-  (add-hook 'c-mode-hook
+  (add-hook 'c-mode-common-hook
 	    (lambda ()
 	      )))
 
@@ -487,7 +496,7 @@
   (lambda()
     (cmake-ide-setup)))
 
-(add-hook 'c++-mode-hook
+(add-hook 'c-mode-common-hook
 	  (lambda()
 	    (local-set-key (kbd "C-g") 'kill-compilation-buffer)
 	    (local-set-key (kbd "C-S-g") 'close-compilation-window)
@@ -520,7 +529,40 @@
  '(python-shell-interpreter "ipython")
  '(safe-local-variable-values
    (quote
-    ((eval defun jyc-sql-compile-exec nil
+    ((projectile-project-root . "/Users/joyeongchan/projects/fuckerSQL/")
+     (eval defun jyc-sql-compile-exec nil
+	   (interactive)
+	   (exec-shell-command-with-buffer
+	    (format "python %s/build.py --bin %s --home %s --debug --cmd --exec --args %s " projectile-project-root projectile-project-name projectile-project-root jyc-program-args)
+	    (format "%s-%s" "*compilation*" projectile-project-name))
+	   (switch-to-buffer-other-window
+	    (other-buffer
+	     (current-buffer)
+	     1)))
+     (jyc-program-args . "./test_sql.txt")
+     (eval defun jyc-sql-compile-exec nil
+	   (interactive)
+	   (exec-shell-command-with-buffer
+	    (format "python %s/build.py --bin %s --home %s --debug --cmd --exec " projectile-project-root projectile-project-name projectile-project-root)
+	    (format "%s-%s" "*compilation*" projectile-project-name))
+	   (switch-to-buffer-other-window
+	    (other-buffer
+	     (current-buffer)
+	     1)))
+     (eval defun jyc-sql-compile nil
+	   (interactive)
+	   (exec-shell-command-with-buffer
+	    (format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root)
+	    (format "%s-%s" "*compilation*" projectile-project-name))
+	   (compilation-minor-mode t)
+	   (switch-to-buffer-other-window
+	    (other-buffer
+	     (current-buffer)
+	     1)))
+     (projectile-project-name . "fucker_sql")
+     (projectile-project-root . "/Users/joyeongchan/projects/jyc-sql/")
+     (projectile-project-name . "jyc_sql")
+     (eval defun jyc-sql-compile-exec nil
 	   (interactive)
 	   (exec-shell-command-with-buffer
 	    (format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root)
