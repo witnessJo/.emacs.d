@@ -3,6 +3,7 @@
 ;;; just comment it out by adding a semicolon to the start of the line.
 ;;; You may delete these explanatory comments.
 
+(gnutls-available-p)
 
 (require 'package)
 (add-to-list 'package-archives
@@ -27,7 +28,6 @@
 (with-eval-after-load 'auto-package-update
   (lambda()
     (auto-package-update-now)))
-
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)
@@ -55,6 +55,9 @@
 ;; set fonts
 (when (eq system-type 'darwin)
   (set-face-attribute 'default nil :family "monaco"))
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -281,7 +284,8 @@
 (use-package exec-path-from-shell
   :ensure t)
 (require 'exec-path-from-shell)
-(when window-system (exec-path-from-shell-initialize))
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (use-package ido
   :ensure t)
