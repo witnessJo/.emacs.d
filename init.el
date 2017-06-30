@@ -21,6 +21,12 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(defun eshell/clear ()
+  "Clear the eshell buffer."
+  (let ((inhibit-read-only t))
+    (erase-buffer)
+    (comint-send-input)))
+
 
 ;; When the loading time, the packages will be updated.
 (use-package auto-package-update
@@ -55,9 +61,6 @@
 ;; set fonts
 (when (eq system-type 'darwin)
   (set-face-attribute 'default nil :family "monaco"))
-
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -442,6 +445,8 @@
   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+
+  (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
   )
 
 (use-package company-rtags
