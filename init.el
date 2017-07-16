@@ -27,6 +27,29 @@
     (erase-buffer)
     (comint-send-input)))
 
+(defun my-get-selection-length ()
+  "Get length of selection"
+  (interactive)
+  (if (use-region-p)
+      (let (pos1 pos2)
+	(setq pos1 (region-beginning) pos2 (region-end))
+	(- pos2 pos1))
+    -1
+    )
+  )
+
+(defun my-show-selection-length ()
+  "Show length of selection"
+  (interactive)
+  (let (length)
+    (setq length (my-get-selection-length))
+    (if (equal length -1)
+	(message "regions is not activated...")
+      (message "length : %d" length)
+      )
+    )
+  )
+
 
 ;; When the loading time, the packages will be updated.
 (use-package auto-package-update
