@@ -182,9 +182,13 @@
 (global-set-key (kbd "C-x C-0") 'delete-other-windows-vertically)
 
 ;; hide tool bar
-(menu-bar-mode t)
+(menu-bar-mode -1)
 (tool-bar-mode -1)
 (blink-cursor-mode -1)
+
+;; sound off
+(setq visible-bell nil)
+(setq ring-bell-function 'ignore)
 
 (defun lispy-parens ()
   "Setup parens display for lisp modes"
