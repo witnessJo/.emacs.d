@@ -81,10 +81,25 @@
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)
 
-;; set fonts
-(when (eq system-type 'darwin)
-  (set-face-attribute 'default nil :family "monaco"))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  setting the font style  ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(set-default-coding-systems 'utf-8-unix)
 
+;; set a default font
+(when (member "DejaVu Sans Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+
+;; specify font for all unicode characters
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+
+;; specify font for chinese characters using default chinese font on linux
+(when (member "WenQuanYi Micro Hei" (font-family-list))
+  (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
+
+;; (when (eq system-type 'darwin)
+;;   (set-face-attribute 'default nil :family "monaco"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
@@ -182,9 +197,12 @@
 (global-set-key (kbd "C-x C-0") 'delete-other-windows-vertically)
 
 ;; hide tool bar
-(menu-bar-mode t)
+(menu-bar-mode -1)
 (tool-bar-mode -1)
 (blink-cursor-mode -1)
+
+(setq visible-bell nil)
+(setq ring-bell-function 'ignore)
 
 (defun lispy-parens ()
   "Setup parens display for lisp modes"
@@ -240,21 +258,19 @@
 
 (require 'helm-config)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; you need ag binary                        ;;;
-;; $ brew install the_silver_searcher        ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package helm-ag
-  :ensure t)
-(with-eval-after-load 'helm-ag
-  (global-set-key (kbd "C-c a g") 'helm-do-ag)
-  )
-
+;;;;;;;;;;;;;;;;;
+;; bision  mode ;;
+;;;;;;;;;;;;;;;;;
+;; (use-package bison-mode
+;;   :ensure t)
+;; (bison-mode t)
 
 (use-package evil
   :ensure t)
 (evil-mode 1)
 (with-eval-after-load 'evil-maps
+  (fset 'evil-visual-update-x-selection 'ignore)
+  (setq select-enable-clipboard nil)
   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
   (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward))
@@ -281,7 +297,6 @@
 
 (use-package magit
   :ensure t)
-
 
 (use-package projectile
   :ensure t)
@@ -364,13 +379,8 @@
 	  (lambda()
 	    (add-to-list 'company-backend 'company-jedi)))
 
-;; (setq python-shell-interpreter "ipython"
-;;       python-shell-interpreter-args "-i")
 
-
-;; (use-package iedit
-;;   :ensure t)
-;; (define-key global-map (kbd "C-c o") 'iedit-mode)
+(global-set-key (kbd "C-c i") 'indent-region)
 
 (use-package anaconda-mode
   :ensure t)
@@ -392,8 +402,6 @@
   "Use run python program"
   (interactive)
   (compile (concat "python " (buffer-name))))
-;; (
-;; setq compilation-scroll-output t)
 
 (defun kill-compilation-buffer ()
   "Kill current buffer unconditionally."
@@ -425,6 +433,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; c develope environments ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Set linux indent style
+(defvar c-default-style)
+(defvar c-basic-offset)
+(setq c-default-style "linux"
+      c-basic-offset 2)
+
 (defun jyc-copy-init-cpp-project()
   (interactive)
   (dired-copy-file-recursive "~/.emacs.d/jongyoungcha/init_cpp_project/" default-directory nil nil nil 'always))
@@ -557,7 +572,7 @@
  '(fci-rule-color "#003f8e")
  '(package-selected-packages
    (quote
-    (magit helm-ag rtags-helm irony ob-ipython ein sanityinc-tomorrow-blue company projectile auto-complete company-mode evil use-package helm)))
+    (bison-mode magit helm-ag rtags-helm irony ob-ipython ein sanityinc-tomorrow-blue company projectile auto-complete company-mode evil use-package helm)))
  '(python-shell-interpreter "ipython")
  '(safe-local-variable-values
    (quote
