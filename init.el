@@ -258,19 +258,21 @@
 
 (require 'helm-config)
 
-;;;;;;;;;;;;;;;;;
-;; bision  mode ;;
-;;;;;;;;;;;;;;;;;
-;; (use-package bison-mode
-;;   :ensure t)
-;; (bison-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; you need ag binary                        ;;
+;; $ brew install the_silver_searcher        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package helm-ag
+  :ensure t)
+(with-eval-after-load 'helm-ag
+  (global-set-key (kbd "C-c a g") 'helm-do-ag))
+
 
 (use-package evil
   :ensure t)
 (evil-mode 1)
 (with-eval-after-load 'evil-maps
-  (fset 'evil-visual-update-x-selection 'ignore)
-  (setq select-enable-clipboard nil)
+  ;; (fset 'evil-visual-update-x-selection 'ignore)
   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
   (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward))
