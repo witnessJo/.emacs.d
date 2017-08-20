@@ -63,6 +63,64 @@
   (my-delete-word (- arg)))
 
 
+(defun my-cut-line-or-region ()
+  "Cut current line, or text selection.
+When `universal-argument' is called first, cut whole buffer (respects `narrow-to-region').
+
+URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
+Version 2015-06-10"
+  (interactive)
+  (if current-prefix-arg
+      (progn ; not using kill-region because we don't want to include previous kill
+        (kill-new (buffer-string))
+        (delete-region (point-min) (point-max)))
+    (progn (if (use-region-p)
+               (kill-region (region-beginning) (region-end) t)
+             (kill-region (line-beginning-position) (line-beginning-position 2))))))
+
+
+(defun my-copy-line-or-region ()
+  "Copy current line, or text selection.
+When called repeatedly, append copy subsequent lines.
+When `universal-argument' is called first, copy whole buffer (respects `narrow-to-region').
+
+URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
+Version 2017-07-08"
+  (interactive)
+  (if current-prefix-arg
+      (progn
+        (kill-ring-save (point-min) (point-max))
+        (message "All visible buffer text copied"))
+    (if (use-region-p)
+        (progn
+          (kill-ring-save (region-beginning) (region-end))
+          (message "Active region copied"))
+      (if (eq last-command this-command)
+          (if (eobp)
+              (progn (message "empty line at end of buffer." ))
+            (progn
+              (kill-append "\n" nil)
+              (kill-append
+               (buffer-substring-no-properties (line-beginning-position) (line-end-position))
+               nil)
+              (message "Line copy appended")
+              (progn
+                (end-of-line)
+                (forward-char))))
+        (if (eobp)
+            (if (eq (char-before) 10 )
+                (progn (message "empty line at end of buffer." ))
+              (progn
+                (kill-ring-save (line-beginning-position) (line-end-position))
+                (end-of-line)
+                (message "line copied")))
+          (progn
+            (kill-ring-save (line-beginning-position) (line-end-position))
+            (end-of-line)
+            (forward-char)
+            (message "line copied")))))))
+
+
 ;; When the loading time, the packages will be updated.
 (use-package auto-package-update
   :ensure t)
@@ -140,7 +198,6 @@
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
   (global-set-key (kbd "C-x r l") 'helm-bookmarks)
-  
   )
 
 (require 'helm-config)
@@ -213,6 +270,8 @@
 (global-set-key (kbd "C-M-i") 'evil-jump-forward)
 (global-set-key (kbd "C-M-o") 'evil-jump-backward)
 
+(global-set-key (kbd "C-c v y") 'my-copy-line-or-region)
+(global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
 (defun my-reload-dir-locals-for-current-buffer ()
   "reload dir locals for the current buffer"
@@ -618,7 +677,9 @@
  '(python-shell-interpreter "ipython")
  '(safe-local-variable-values
    (quote
-    ((projectile-project-compilation-cmd . "cmake .;make")
+    ((projectile-project-run-cmd . "rm -rf ./wv_shm_log;./wv_shm_test")
+     (projectile-project-compilation-cmd . "cmake CMAKE_EXPORT_COMPILE_COMMANDS=1 .;make")
+     (projectile-project-compilation-cmd . "cmake .;make")
      (projectile-project-run-cmd . "./wv_shm_test")
      (projectile-project-root . "/Users/joyeongchan/projects/fuckerSQL/")
      (eval defun jyc-sql-compile-exec nil
