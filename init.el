@@ -93,6 +93,7 @@
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; set the font style  ;
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -130,12 +131,16 @@
 (use-package helm
   :ensure t)
 
+(require 'helm-bookmark)
+
 (with-eval-after-load 'helm
   (helm-mode 1)
   (setq helm-candidate-number-limit 500)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+  (global-set-key (kbd "C-x r l") 'helm-bookmarks)
+  
   )
 
 (require 'helm-config)
@@ -152,8 +157,6 @@
 (use-package hungry-delete
   :ensure t)
 (global-hungry-delete-mode)
-
-(require 'helm-bookmark)
 
 ;; reuse a dired list buffer.
 (require 'dired)
@@ -615,7 +618,9 @@
  '(python-shell-interpreter "ipython")
  '(safe-local-variable-values
    (quote
-    ((projectile-project-root . "/Users/joyeongchan/projects/fuckerSQL/")
+    ((projectile-project-compilation-cmd . "cmake .;make")
+     (projectile-project-run-cmd . "./wv_shm_test")
+     (projectile-project-root . "/Users/joyeongchan/projects/fuckerSQL/")
      (eval defun jyc-sql-compile-exec nil
 	   (interactive)
 	   (exec-shell-command-with-buffer
