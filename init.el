@@ -21,6 +21,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+
 (defun eshell/clear ()
   "Clear the eshell buffer."
   (let ((inhibit-read-only t))
@@ -49,6 +50,17 @@
       )
     )
   )
+
+
+(defun my-delete-word (arg)
+  "Delete characters forward until encountering the end of a word. With argument, do this that many times."
+  (interactive "p")
+  (delete-region (point) (progn (forward-word arg) (point))))
+
+(defun my-backward-delete-word (arg)
+  "Delete characters backword until encountering the end of a word. With argument, dothis that may times."
+  (interactive "p")
+  (my-delete-word (- arg)))
 
 
 ;; When the loading time, the packages will be updated.
@@ -81,9 +93,9 @@
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;  setting the font style  ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+; set the font style  ;
+;;;;;;;;;;;;;;;;;;;;;;;
 (set-default-coding-systems 'utf-8-unix)
 
 ;; set a default font
@@ -101,9 +113,47 @@
 ;; (when (eq system-type 'darwin)
 ;;   (set-face-attribute 'default nil :family "monaco"))
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package evil
+  :ensure t)
+;; (evil-mode 1)
+;; (with-eval-after-load 'evil-maps
+;;   ;; (fset 'evil-visual-update-x-selection 'ignore)
+;;   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+;;   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
+;;   (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward))
+
+(use-package helm
+  :ensure t)
+
+(with-eval-after-load 'helm
+  (helm-mode 1)
+  (setq helm-candidate-number-limit 500)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+  )
+
+(require 'helm-config)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; you need ag binary                        ;;
+;; $ brew install the_silver_searcher        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package helm-ag
+  :ensure t)
+(with-eval-after-load 'helm-ag
+  (global-set-key (kbd "C-c a g") 'helm-do-ag))
+
+(use-package hungry-delete
+  :ensure t)
+(global-hungry-delete-mode)
+
+(require 'helm-bookmark)
 
 ;; reuse a dired list buffer.
 (require 'dired)
@@ -112,6 +162,14 @@
   (lambda () (interactive)
     (find-alternate-file "..")))
 
+;; Remove the key esc esc esc remove other window
+(defadvice keyboard-escape-quit (around my-keyboard-escape-quit activate)
+  (let (orig-one-window-p)
+    (fset 'orig-one-window-p (symbol-function 'one-window-p))
+    (fset 'one-window-p (lambda (&optional nomini all-frames) t))
+    (unwind-protect
+        ad-do-it
+      (fset 'one-window-p (symbol-function 'orig-one-window-p)))))
 
 (defun indent-buffer ()
   "Indent the currently visited buffer."
@@ -142,9 +200,16 @@
 
 (global-set-key (kbd "C-S-M-;") 'windmove-left)
 (global-set-key (kbd "C-S-M-'") 'windmove-right)
-(global-set-key (kbd "C-S-M-[") 'windmove-up)
 
-;; (global-set-key (kbd "C-x C-<up>") 'windmove-up)
+(global-set-key (kbd "C-S-M-[") 'windmove-up)
+(global-set-key (kbd "C-<backspace>") 'hungry-delete-backward)
+(global-set-key (kbd "C-<deletechar>") 'hungry-delete-forward)
+
+(global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
+
+(global-set-key (kbd "C-M-i") 'evil-jump-forward)
+(global-set-key (kbd "C-M-o") 'evil-jump-backward)
+
 
 (defun my-reload-dir-locals-for-current-buffer ()
   "reload dir locals for the current buffer"
@@ -176,10 +241,9 @@
 (require 'ansi-color)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-
 ;; default setting.
 (defun toggle-transparency ()
-  "Transparency frame"
+  "Transparency fr0ame"
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
     (set-frame-parameter
@@ -245,37 +309,10 @@
 (global-set-key (kbd "C-c l e d") 'reload-user-init-file)
 
 
-(use-package helm
-  :ensure t)
-
-(with-eval-after-load 'helm
-  (helm-mode 1)
-  (setq helm-candidate-number-limit 500)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-  )
-
-(require 'helm-config)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; you need ag binary                        ;;
-;; $ brew install the_silver_searcher        ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package helm-ag
-  :ensure t)
-(with-eval-after-load 'helm-ag
-  (global-set-key (kbd "C-c a g") 'helm-do-ag))
 
 
-(use-package evil
-  :ensure t)
-(evil-mode 1)
-(with-eval-after-load 'evil-maps
-  ;; (fset 'evil-visual-update-x-selection 'ignore)
-  (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
-  (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
-  (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward))
+
+
 
 
 (use-package company
@@ -574,7 +611,7 @@
  '(fci-rule-color "#003f8e")
  '(package-selected-packages
    (quote
-    (bison-mode magit helm-ag rtags-helm irony ob-ipython ein sanityinc-tomorrow-blue company projectile auto-complete company-mode evil use-package helm)))
+    (hungry-delete bison-mode magit helm-ag rtags-helm irony ob-ipython ein sanityinc-tomorrow-blue company projectile auto-complete company-mode evil use-package helm)))
  '(python-shell-interpreter "ipython")
  '(safe-local-variable-values
    (quote
