@@ -255,6 +255,9 @@ Version 2017-07-08"
   (interactive)
   (other-window -1))
 
+
+(setq confirm-kill-emacs 'y-or-n-p)
+
 (global-set-key (kbd "C-; C-;") 'my-prev-window)
 (global-set-key (kbd "C-' C-'") 'other-window)
 
