@@ -177,6 +177,8 @@ Version 2017-07-08"
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(delete-selection-mode t)
+
 (use-package evil
   :ensure t)
 ;; (evil-mode 1)
@@ -188,6 +190,8 @@ Version 2017-07-08"
 
 (use-package helm
   :ensure t)
+
+(setq helm-split-window-in-side-p t)
 
 (require 'helm-bookmark)
 
@@ -269,11 +273,16 @@ Version 2017-07-08"
 (global-set-key (kbd "C-<deletechar>") 'hungry-delete-forward)
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
-
 (global-set-key (kbd "C-M-i") 'evil-jump-forward)
 (global-set-key (kbd "C-M-o") 'evil-jump-backward)
+(global-set-key (kbd "C-d") 'delete-forward-char)
+(global-set-key (kbd "M-d") 'my-delete-word)
+(global-set-key (kbd "M-f") 'evil-forward-word-begin)
+(global-set-key (kbd "M-b") 'evil-backward-word-end)
+(global-set-key (kbd "M-v") 'evil-scroll-up)
+(global-set-key (kbd "C-v") 'evil-scroll-down)
 
-(global-set-key (kbd "C-c v y") 'my-copy-line-or-region)
+(global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
 (defun my-reload-dir-locals-for-current-buffer ()
@@ -372,12 +381,6 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-c f e d") 'open-init-el)
 (global-set-key (kbd "C-c l e d") 'reload-user-init-file)
-
-
-
-
-
-
 
 
 (use-package company
@@ -543,7 +546,7 @@ Version 2017-07-08"
 (defvar c-basic-offset)
 (setq c-default-style "linux"
       c-basic-offset 2)
-
+ 
 (defun jyc-copy-init-cpp-project()
   (interactive)
   (dired-copy-file-recursive "~/.emacs.d/jongyoungcha/init_cpp_project/" default-directory nil nil nil 'always))
