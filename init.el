@@ -262,6 +262,8 @@ Version 2017-07-08"
 
 (setq confirm-kill-emacs 'y-or-n-p)
 
+(global-set-key (kbd "C-x C-x") 'nil)
+
 (global-set-key (kbd "C-; C-;") 'my-prev-window)
 (global-set-key (kbd "C-' C-'") 'other-window)
 
@@ -683,7 +685,8 @@ Version 2017-07-08"
  '(python-shell-interpreter "ipython")
  '(safe-local-variable-values
    (quote
-    ((projectile-project-run-cmd . "rm -rf ./wv_shm_log;./wv_shm_test")
+    ((projectile-project-compilation-cmd . "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Debug .;make")
+     (projectile-project-run-cmd . "rm -rf ./wv_shm_log;./wv_shm_test")
      (projectile-project-compilation-cmd . "cmake CMAKE_EXPORT_COMPILE_COMMANDS=1 .;make")
      (projectile-project-compilation-cmd . "cmake .;make")
      (projectile-project-run-cmd . "./wv_shm_test")
