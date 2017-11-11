@@ -188,6 +188,11 @@ Version 2017-07-08"
 ;;   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
 ;;   (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward))
 
+(use-package yasnippet
+  :ensure t)
+(require 'yasnippet)
+(yas-global-mode 1)
+
 (use-package helm
   :ensure t)
 
@@ -218,6 +223,7 @@ Version 2017-07-08"
 (use-package hungry-delete
   :ensure t)
 (global-hungry-delete-mode)
+
 
 ;; reuse a dired list buffer.
 (require 'dired)
@@ -690,7 +696,13 @@ Version 2017-07-08"
  '(python-shell-interpreter "ipython")
  '(safe-local-variable-values
    (quote
-    ((projectile-project-compilation-cmd . "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Debug .;make")
+    ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
+     (projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG .; make")
+     (projectile-project-compilation-cmd . "cmake . -DCMAKE_BUILD_TYPE=DEBUG; make")
+     (projectile-project-compilation-cmd . "cmake . DCMAKE_BUILD_TYPE=DEBUG; make")
+     (projectile-project-root . "./")
+     (projectile-project-name . "ants")
+     (projectile-project-compilation-cmd . "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Debug .;make")
      (projectile-project-run-cmd . "rm -rf ./wv_shm_log;./wv_shm_test")
      (projectile-project-compilation-cmd . "cmake CMAKE_EXPORT_COMPILE_COMMANDS=1 .;make")
      (projectile-project-compilation-cmd . "cmake .;make")
