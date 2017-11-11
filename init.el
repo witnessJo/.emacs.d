@@ -547,8 +547,12 @@ Version 2017-07-08"
 ;; Set linux indent style
 (defvar c-default-style)
 (defvar c-basic-offset)
+(defvar tab-width)
+(defvar indent-tabs-mode)
 (setq c-default-style "linux"
-      c-basic-offset 2)
+      c-basic-offset 4
+      tab-width 4
+	  indent-tabs-mode t)
  
 (defun jyc-copy-init-cpp-project()
   (interactive)
