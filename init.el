@@ -263,6 +263,7 @@ Version 2017-07-08"
 (setq confirm-kill-emacs 'y-or-n-p)
 
 (global-set-key (kbd "C-x C-x") 'nil)
+(global-set-key (kbd "C-x C-p") 'nil)
 
 (global-set-key (kbd "C-; C-;") 'my-prev-window)
 (global-set-key (kbd "C-' C-'") 'other-window)
