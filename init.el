@@ -268,11 +268,11 @@ Version 2017-07-08"
 
 (setq confirm-kill-emacs 'y-or-n-p)
 
-(global-set-key (kbd "C-x C-x") 'nil)
-(global-set-key (kbd "C-x C-p") 'nil)
+(global-set-key (kbd "C-x C-x") 'my-prev-window)
+(global-set-key (kbd "C-x C-p") 'other-window)
 
-(global-set-key (kbd "C-; C-;") 'my-prev-window)
-(global-set-key (kbd "C-' C-'") 'other-window)
+;; (global-set-key (kbd "C-; C-;") 'my-prev-window)
+;; (global-set-key (kbd "C-' C-'") 'other-window)
 
 (global-set-key (kbd "C-S-M-;") 'windmove-left)
 (global-set-key (kbd "C-S-M-'") 'windmove-right)
@@ -463,7 +463,6 @@ Version 2017-07-08"
 
 (require 'files)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; elisp develope environments ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -481,7 +480,7 @@ Version 2017-07-08"
 (with-eval-after-load 'elpy
   (require 'elpy)
   (elpy-enable)
-  (elpy-use-ipython)
+  ;; (elpy-use-ipython)
   (setq elpy-rpc-backend "jedi")
   (setq python-shell-interpreter "ipython")
   (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
@@ -504,15 +503,15 @@ Version 2017-07-08"
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
-(use-package ob-ipython
-  :ensure t)
-(with-eval-after-load 'ob-ipython
-  (require 'ob-ipython)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((ipython . t)
-     ))
-  )
+;; (use-package ob-ipython
+;;   :ensure t)
+;; (with-eval-after-load 'ob-ipython
+;;   (require 'ob-ipython)
+;;   (org-babel-do-load-languages
+;;    'org-babel-load-languages
+;;    '((ipython . t)
+;;      ))
+;;   )
 
 (defun jyc-run-python ()
   "Use run python program"
