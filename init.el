@@ -8,7 +8,7 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
-	     '("marmalade" . "https://marmalade-repo.org/packages/"))
+			 '("marmalade" . "https://marmalade-repo.org/packages/"))
 
 
 (when (< emacs-major-version 24)
@@ -33,8 +33,8 @@
   (interactive)
   (if (use-region-p)
       (let (pos1 pos2)
-	(setq pos1 (region-beginning) pos2 (region-end))
-	(- pos2 pos1))
+		(setq pos1 (region-beginning) pos2 (region-end))
+		(- pos2 pos1))
     -1
     )
   )
@@ -45,7 +45,7 @@
   (let (length)
     (setq length (my-get-selection-length))
     (if (equal length -1)
-	(message "regions is not activated...")
+		(message "regions is not activated...")
       (message "length : %d" length)
       )
     )
@@ -153,7 +153,7 @@ Version 2017-07-08"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;
-; set the font style  ;
+										; set the font style  ;
 ;;;;;;;;;;;;;;;;;;;;;;;
 (set-default-coding-systems 'utf-8-unix)
 
@@ -306,8 +306,8 @@ Version 2017-07-08"
   (let ((dir default-directory))
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
-	(when (equal default-directory dir))
-	(my-reload-dir-locals-for-current-buffer)))))
+		(when (equal default-directory dir))
+		(my-reload-dir-locals-for-current-buffer)))))
 
 
 (use-package multi-term
@@ -332,12 +332,12 @@ Version 2017-07-08"
     (set-frame-parameter
      nil 'alpha
      (if (eql (cond ((numberp alpha) alpha)
-		    ((numberp (cdr alpha)) (cdr alpha))
-		    ;; Also handle undocumented (<active> <inactive>) form.
+					((numberp (cdr alpha)) (cdr alpha))
+					;; Also handle undocumented (<active> <inactive>) form.
 
-		    ((numberp (cadr alpha)) (cadr alpha)))
-	      100)
-	 '(85 . 50) '(100 . 100)))))
+					((numberp (cadr alpha)) (cadr alpha)))
+			  100)
+		 '(85 . 50) '(100 . 100)))))
 
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
@@ -362,9 +362,9 @@ Version 2017-07-08"
   (set-face-background 'show-paren-match-face (face-background 'default))
   (if (boundp 'font-lock-comment-face)
       (set-face-foreground 'show-paren-match-face
-			   (face-foreground 'font-lock-comment-face))
+						   (face-foreground 'font-lock-comment-face))
     (set-face-foreground 'show-paren-match-face
-			 (face-foreground 'default)))
+						 (face-foreground 'default)))
   (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
 
 (require 'paren)
@@ -410,8 +410,10 @@ Version 2017-07-08"
   ;;   (kbd "SPC")' piotr/company-complete-and-self-inser)
   )
 
-
 (use-package magit
+  :ensure t)
+
+(use-package psvn
   :ensure t)
 
 (use-package projectile
@@ -467,8 +469,8 @@ Version 2017-07-08"
 ;;;; elisp develope environments ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'emacs-lisp-mode-hook
-	  (lambda()
-	    (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
+		  (lambda()
+			(local-set-key (kbd "C-c g g") 'xref-find-definitions)))
 
 
 
@@ -491,8 +493,8 @@ Version 2017-07-08"
 (use-package company-jedi
   :ensure t)
 (add-hook 'python-mode-hook
-	  (lambda()
-	    (add-to-list 'company-backend 'company-jedi)))
+		  (lambda()
+			(add-to-list 'company-backend 'company-jedi)))
 
 
 (global-set-key (kbd "C-c i") 'indent-region)
@@ -523,7 +525,7 @@ Version 2017-07-08"
   (interactive)
   (let ((buffer-modified-p nil))
     (if (not (equal projectile-project-name nil))
-	(kill-buffer (format "%s-%s" "*compilation*" projectile-project-name))
+		(kill-buffer (format "%s-%s" "*compilation*" projectile-project-name))
       (kill-buffer "*compilation*")
       ))
   )
@@ -536,13 +538,13 @@ Version 2017-07-08"
     (delete-windows-on "*compilation*")))
 
 (add-hook 'python-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
-	    (local-set-key (kbd "C-c c c") 'jyc-run-python)
-	    (local-set-key (kbd "C-g") 'kill-compilation-buffer)
-	    (local-set-key (kbd "C-S-g") 'close-compilation-window)
-	    (linum-mode t)
-	    ))
+		  (lambda ()
+			(local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
+			(local-set-key (kbd "C-c c c") 'jyc-run-python)
+			(local-set-key (kbd "C-g") 'kill-compilation-buffer)
+			(local-set-key (kbd "C-S-g") 'close-compilation-window)
+			(linum-mode t)
+			))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -558,27 +560,27 @@ Version 2017-07-08"
       c-basic-offset 4
       tab-width 4
 	  indent-tabs-mode t)
- 
+
 (defun jyc-copy-init-cpp-project()
   (interactive)
   (dired-copy-file-recursive "~/.emacs.d/jongyoungcha/init_cpp_project/" default-directory nil nil nil 'always))
 
 (require 'compile)
 (add-hook 'c-mode-common-hook
-	  (lambda ()
-	    (unless (file-exists-p "Makefile")
-	      (set (make-local-variable 'compile-command)
-		   ;; emulate make's .c.o implicit pattern rule, but with
-		   ;; different defaults for the CC, CPPFLAGS, and CFLAGS
-		   ;; variables:
-		   ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
-		   (let ((file (file-name-nondirectory buffer-file-name)))
-		     (format "%s -c -o %s.o %s %s %s"
-			     (or (getenv "CC") "gcc")
-			     (file-name-sans-extension file)
-			     (or (getenv "CPPFLAGS") "-DDEBUG=9")
-			     (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
-			     file))))))
+		  (lambda ()
+			(unless (file-exists-p "Makefile")
+			  (set (make-local-variable 'compile-command)
+				   ;; emulate make's .c.o implicit pattern rule, but with
+				   ;; different defaults for the CC, CPPFLAGS, and CFLAGS
+				   ;; variables:
+				   ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+				   (let ((file (file-name-nondirectory buffer-file-name)))
+					 (format "%s -c -o %s.o %s %s %s"
+							 (or (getenv "CC") "gcc")
+							 (file-name-sans-extension file)
+							 (or (getenv "CPPFLAGS") "-DDEBUG=9")
+							 (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
+							 file))))))
 
 ;; (define-key c-mode-base-map (kbd "<f5>") 'c/c++-simple-compile-and-exec)
 
@@ -586,8 +588,8 @@ Version 2017-07-08"
   :ensure t)
 (with-eval-after-load 'smart-compile
   (add-hook 'c-mode-common-hook
-	    (lambda ()
-	      )))
+			(lambda ()
+			  )))
 
 (use-package rtags
   :ensure t)
@@ -663,16 +665,22 @@ Version 2017-07-08"
     (cmake-ide-setup)))
 
 (add-hook 'c-mode-common-hook
-	  (lambda()
-	    (local-set-key (kbd "C-g") 'kill-compilation-buffer)
-	    (local-set-key (kbd "C-S-g") 'close-compilation-window)
-	    (local-set-key (kbd "C-c f f") 'ff-find-other-file)
-	    (defun enable-autoreload-for-dir-locals ()
-	      (when (and (buffer-file-name)
-			 (equal dir-locals-file
-				(file-name-nondirectory (buffer-file-name))))
-		(add-hook (make-variable-buffer-local 'after-save-hook)
-			  'my-reload-dir-locals-for-all-buffer-in-this-directory)))))
+		  (lambda()
+			(local-set-key (kbd "C-c c c") 'compile)
+			(local-set-key (kbd "C-g") 'kill-compilation-buffer)
+			(local-set-key (kbd "C-S-g") 'close-compilation-window)
+			(local-set-key (kbd "C-c f f") 'ff-find-other-file)
+			(defun enable-autoreload-for-dir-locals ()
+			  (when (and (buffer-file-name)
+						 (equal dir-locals-file
+								(file-name-nondirectory (buffer-file-name))))
+				(add-hook (make-variable-buffer-local 'after-save-hook)
+					  'my-reload-dir-locals-for-all-buffer-in-this-directory)))))
+
+
+(use-package org
+  :ensure t)
+  
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -686,305 +694,305 @@ Version 2017-07-08"
  '(custom-enabled-themes (quote (solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "789ca211efb5c1c679293897339aa3e0691c9a45e15c72e1c2b420c05b41f3c9" default)))
+	("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "789ca211efb5c1c679293897339aa3e0691c9a45e15c72e1c2b420c05b41f3c9" default)))
  '(elpy-rpc-large-buffer-size 8192)
  '(fci-rule-color "#003f8e")
  '(package-selected-packages
    (quote
-    (hungry-delete bison-mode magit helm-ag rtags-helm irony ob-ipython ein sanityinc-tomorrow-blue company projectile auto-complete company-mode evil use-package helm)))
+	(org-mode psvn hungry-delete bison-mode magit helm-ag rtags-helm irony ob-ipython ein sanityinc-tomorrow-blue company projectile auto-complete company-mode evil use-package helm)))
  '(python-shell-interpreter "ipython")
  '(safe-local-variable-values
    (quote
-    ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
-     (projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG .; make")
-     (projectile-project-compilation-cmd . "cmake . -DCMAKE_BUILD_TYPE=DEBUG; make")
-     (projectile-project-compilation-cmd . "cmake . DCMAKE_BUILD_TYPE=DEBUG; make")
-     (projectile-project-root . "./")
-     (projectile-project-name . "ants")
-     (projectile-project-compilation-cmd . "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Debug .;make")
-     (projectile-project-run-cmd . "rm -rf ./wv_shm_log;./wv_shm_test")
-     (projectile-project-compilation-cmd . "cmake CMAKE_EXPORT_COMPILE_COMMANDS=1 .;make")
-     (projectile-project-compilation-cmd . "cmake .;make")
-     (projectile-project-run-cmd . "./wv_shm_test")
-     (projectile-project-root . "/Users/joyeongchan/projects/fuckerSQL/")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --bin %s --home %s --debug --cmd --exec --args %s " projectile-project-root projectile-project-name projectile-project-root jyc-program-args)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (jyc-program-args . "./test_sql.txt")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --bin %s --home %s --debug --cmd --exec " projectile-project-root projectile-project-name projectile-project-root)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (compilation-minor-mode t)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (projectile-project-name . "fucker_sql")
-     (projectile-project-root . "/Users/joyeongchan/projects/jyc-sql/")
-     (projectile-project-name . "jyc_sql")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (message
-	    (format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root))
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (compilation-minor-mode t)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (projectile-project-root . "/Users/joyeongchan/projects/jyc-cheat/jyc-cheat-client/")
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd " projectile-project-root)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (compilation-minor-mode t)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval local-set-key
-	   (kbd "<f6>")
-	   (quote jyc-compile-exec))
-     (eval local-set-key
-	   (kbd "<f5>")
-	   (quote jyc-compile))
-     (eval defun jyc-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe" projectile-project-root)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (compilation-minor-mode t)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-compile nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug --cmd" projectile-project-root))
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (projectile-project-root . "~/projects/jyc-cheat/jyc-cheat-test/ncurses/")
-     (projectile-project-name . "jyc_cheat_test_ncurses")
-     (projectile-project-name . "jyc_cheat_client")
-     (projectile-project-name . "jyc_cheat_server")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe" projectile-project-root)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (compilation-minor-mode t)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (projectile-project-name . "jyc-cheat-client")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe" projectile-project-root)
-	    (format "%s-%s" "*compilation*" projectile-project-name))
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (projectile-project-name . "jyc-cheat-server")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe" projectile-project-root)
-	    "*compilation*")
-	   (compilation-minor-mode t)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug --cmd" projectile-project-root))
-	   (compilation-minor-mode t)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe" projectile-project-root)
-	    "*compilation*")
-	   (compilation-mode)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug --cmd" projectile-project-root))
-	   (compilation-mode)
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug_mode --cmd_export --execute" default-directory)))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug_mode --cmd_export" default-directory)))
-     (projectile-project-root . "~/projects/jyc-cheat/jyc-cheat-client/")
-     (projectile-project-root . "~/projects/jyc-cheat/jyc-cheat-server/")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe" projectile-project-root)
-	    "*compilation*")
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (projectile-project-root . "~/projects/jyc-cheat/server")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe --args \"%s/test_sql.txt\"" projectile-project-root projectile-project-root)
-	    "*compilation*")
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug --cmd" projectile-project-root))
-	   (switch-to-buffer-other-window
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe --args \"%s/test_sql.txt\"" projectile-project-root projectile-project-root)
-	    "*compilation*")
-	   (switch-to-buffer
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug --cmd" projectile-project-root))
-	   (switch-to-buffer
-	    (other-buffer
-	     (current-buffer)
-	     1)))
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe --args \"%s/test_sql.txt\"" projectile-project-root projectile-project-root)
-	    "*compilation*"))
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe --args \"./test_sql.txt\"" projectile-project-root projectile-project-root)
-	    "*compilation*"))
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd -exe --args \"./test_sql.txt\"" projectile-project-root projectile-project-root)
-	    "*compilation*"))
-     (projectile-project-root . "~/projects/jyc-sql/")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --args \"./test_sql.txt\"" projectile-project-root projectile-project-root)
-	    "*compilation*"))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug --cmd" projectile-project-root)))
-     (projectile-project-root . "~/projects/jyc-sql")
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (exec-shell-command-with-buffer
-	    (format "python %s/build.py --debug --cmd --exe --args \"./test_sql.txt\"" default-directory)
-	    "*compilation*"))
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug --cmd --exe" default-directory)))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (shell-command
-	    (format "python %s/build.py --debug --cmd" default-directory)))
-     (eval local-set-key
-	   (kbd "<f6>")
-	   (quote jyc-sql-compile-exec))
-     (eval local-set-key
-	   (kbd "<f5>")
-	   (quote jyc-sql-compile))
-     (eval defun jyc-sql-compile-exec nil
-	   (interactive)
-	   (shell-command "python build.py --debug_mode --cmd_export --execute"))
-     (eval defun jyc-sql-compile nil
-	   (interactive)
-	   (shell-command "python build.py --debug_mode --cmd_export"))
-     (cmake-ide--build-dir-var . "./"))))
+	((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
+	 (projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG .; make")
+	 (projectile-project-compilation-cmd . "cmake . -DCMAKE_BUILD_TYPE=DEBUG; make")
+	 (projectile-project-compilation-cmd . "cmake . DCMAKE_BUILD_TYPE=DEBUG; make")
+	 (projectile-project-root . "./")
+	 (projectile-project-name . "ants")
+	 (projectile-project-compilation-cmd . "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Debug .;make")
+	 (projectile-project-run-cmd . "rm -rf ./wv_shm_log;./wv_shm_test")
+	 (projectile-project-compilation-cmd . "cmake CMAKE_EXPORT_COMPILE_COMMANDS=1 .;make")
+	 (projectile-project-compilation-cmd . "cmake .;make")
+	 (projectile-project-run-cmd . "./wv_shm_test")
+	 (projectile-project-root . "/Users/joyeongchan/projects/fuckerSQL/")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --bin %s --home %s --debug --cmd --exec --args %s " projectile-project-root projectile-project-name projectile-project-root jyc-program-args)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (jyc-program-args . "./test_sql.txt")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --bin %s --home %s --debug --cmd --exec " projectile-project-root projectile-project-name projectile-project-root)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (compilation-minor-mode t)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (projectile-project-name . "fucker_sql")
+	 (projectile-project-root . "/Users/joyeongchan/projects/jyc-sql/")
+	 (projectile-project-name . "jyc_sql")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (message
+			(format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root))
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --bin %s --home %s --debug --cmd " projectile-project-root projectile-project-name projectile-project-root)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (compilation-minor-mode t)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (projectile-project-root . "/Users/joyeongchan/projects/jyc-cheat/jyc-cheat-client/")
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd " projectile-project-root)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (compilation-minor-mode t)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval local-set-key
+		   (kbd "<f6>")
+		   (quote jyc-compile-exec))
+	 (eval local-set-key
+		   (kbd "<f5>")
+		   (quote jyc-compile))
+	 (eval defun jyc-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe" projectile-project-root)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (compilation-minor-mode t)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-compile nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug --cmd" projectile-project-root))
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (projectile-project-root . "~/projects/jyc-cheat/jyc-cheat-test/ncurses/")
+	 (projectile-project-name . "jyc_cheat_test_ncurses")
+	 (projectile-project-name . "jyc_cheat_client")
+	 (projectile-project-name . "jyc_cheat_server")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe" projectile-project-root)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (compilation-minor-mode t)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (projectile-project-name . "jyc-cheat-client")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe" projectile-project-root)
+			(format "%s-%s" "*compilation*" projectile-project-name))
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (projectile-project-name . "jyc-cheat-server")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe" projectile-project-root)
+			"*compilation*")
+		   (compilation-minor-mode t)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug --cmd" projectile-project-root))
+		   (compilation-minor-mode t)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe" projectile-project-root)
+			"*compilation*")
+		   (compilation-mode)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug --cmd" projectile-project-root))
+		   (compilation-mode)
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug_mode --cmd_export --execute" default-directory)))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug_mode --cmd_export" default-directory)))
+	 (projectile-project-root . "~/projects/jyc-cheat/jyc-cheat-client/")
+	 (projectile-project-root . "~/projects/jyc-cheat/jyc-cheat-server/")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe" projectile-project-root)
+			"*compilation*")
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (projectile-project-root . "~/projects/jyc-cheat/server")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe --args \"%s/test_sql.txt\"" projectile-project-root projectile-project-root)
+			"*compilation*")
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug --cmd" projectile-project-root))
+		   (switch-to-buffer-other-window
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe --args \"%s/test_sql.txt\"" projectile-project-root projectile-project-root)
+			"*compilation*")
+		   (switch-to-buffer
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug --cmd" projectile-project-root))
+		   (switch-to-buffer
+			(other-buffer
+			 (current-buffer)
+			 1)))
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe --args \"%s/test_sql.txt\"" projectile-project-root projectile-project-root)
+			"*compilation*"))
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe --args \"./test_sql.txt\"" projectile-project-root projectile-project-root)
+			"*compilation*"))
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd -exe --args \"./test_sql.txt\"" projectile-project-root projectile-project-root)
+			"*compilation*"))
+	 (projectile-project-root . "~/projects/jyc-sql/")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --args \"./test_sql.txt\"" projectile-project-root projectile-project-root)
+			"*compilation*"))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug --cmd" projectile-project-root)))
+	 (projectile-project-root . "~/projects/jyc-sql")
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (exec-shell-command-with-buffer
+			(format "python %s/build.py --debug --cmd --exe --args \"./test_sql.txt\"" default-directory)
+			"*compilation*"))
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug --cmd --exe" default-directory)))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (shell-command
+			(format "python %s/build.py --debug --cmd" default-directory)))
+	 (eval local-set-key
+		   (kbd "<f6>")
+		   (quote jyc-sql-compile-exec))
+	 (eval local-set-key
+		   (kbd "<f5>")
+		   (quote jyc-sql-compile))
+	 (eval defun jyc-sql-compile-exec nil
+		   (interactive)
+		   (shell-command "python build.py --debug_mode --cmd_export --execute"))
+	 (eval defun jyc-sql-compile nil
+		   (interactive)
+		   (shell-command "python build.py --debug_mode --cmd_export"))
+	 (cmake-ide--build-dir-var . "./"))))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
-    ((20 . "#ff9da4")
-     (40 . "#ffc58f")
-     (60 . "#ffeead")
-     (80 . "#d1f1a9")
-     (100 . "#99ffff")
-     (120 . "#bbdaff")
-     (140 . "#ebbbff")
-     (160 . "#ff9da4")
-     (180 . "#ffc58f")
-     (200 . "#ffeead")
-     (220 . "#d1f1a9")
-     (240 . "#99ffff")
-     (260 . "#bbdaff")
-     (280 . "#ebbbff")
-     (300 . "#ff9da4")
-     (320 . "#ffc58f")
-     (340 . "#ffeead")
-     (360 . "#d1f1a9"))))
+	((20 . "#ff9da4")
+	 (40 . "#ffc58f")
+	 (60 . "#ffeead")
+	 (80 . "#d1f1a9")
+	 (100 . "#99ffff")
+	 (120 . "#bbdaff")
+	 (140 . "#ebbbff")
+	 (160 . "#ff9da4")
+	 (180 . "#ffc58f")
+	 (200 . "#ffeead")
+	 (220 . "#d1f1a9")
+	 (240 . "#99ffff")
+	 (260 . "#bbdaff")
+	 (280 . "#ebbbff")
+	 (300 . "#ff9da4")
+	 (320 . "#ffc58f")
+	 (340 . "#ffeead")
+	 (360 . "#d1f1a9"))))
  '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
