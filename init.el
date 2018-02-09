@@ -271,9 +271,6 @@ Version 2017-07-08"
 (global-set-key (kbd "C-x C-x") 'my-prev-window)
 (global-set-key (kbd "C-x C-p") 'other-window)
 
-;; (global-set-key (kbd "C-; C-;") 'my-prev-window)
-;; (global-set-key (kbd "C-' C-'") 'other-window)
-
 (global-set-key (kbd "C-S-M-;") 'windmove-left)
 (global-set-key (kbd "C-S-M-'") 'windmove-right)
 
@@ -520,22 +517,34 @@ Version 2017-07-08"
   (interactive)
   (compile (concat "python " (buffer-name))))
 
+
 (defun kill-compilation-buffer ()
   "Kill current buffer unconditionally."
   (interactive)
-  (let ((buffer-modified-p nil))
-    (if (not (equal projectile-project-name nil))
-		(kill-buffer (format "%s-%s" "*compilation*" projectile-project-name))
-      (kill-buffer "*compilation*")
-      ))
-  )
+  (let (
+	(buffer-modified-p nil)
+	(target-buffers (list "*RTags*" "*compilation*"))
+	(current-buffer))
+
+	(while target-buffers
+		(when (get-buffer (setq current-buffer (pop target-buffers)))
+			(kill-buffer current-buffer))
+		)
+	(if (not (equal projectile-project-name nil))
+		(when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
+			(kill-buffer current-buffer)))
+	))
+	
 
 (defun close-compilation-window ()
   "Close the window having compilation buffer"
   (interactive)
   (if (not (equal projectile-project-name nil))
-      (delete-windows-on (format "%s-%s" "*compilation*" projectile-project-name))
-    (delete-windows-on "*compilation*")))
+      (delete-windows-on (format "%s-%s" "*compilation*" projectile-project-name)))
+    ;; (delete-windows-on "*compilation*")
+  	(delete-windows-on "*RTags")
+	)
+	
 
 (add-hook 'python-mode-hook
 		  (lambda ()
@@ -554,12 +563,11 @@ Version 2017-07-08"
 ;; Set linux indent style
 (defvar c-default-style)
 (defvar c-basic-offset)
-(defvar tab-width)
-(defvar indent-tabs-mode)
-(setq c-default-style "linux"
-      c-basic-offset 4
-      tab-width 4
-	  indent-tabs-mode t)
+(setq-default indent-tabs-mode t)
+(setq-default tab-width 4)
+(setq indent-line-function 'insert-tab)
+(setq c-default-style "linux")
+(setq c-basic-offset 4)
 
 (defun jyc-copy-init-cpp-project()
   (interactive)
