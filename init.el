@@ -447,6 +447,8 @@ Version 2017-07-08"
   :ensure t)
 (require 'ido)
 (ido-mode t)
+(setq ido-everywhere t)
+(setq ido-enable-flex-matching t)
 
 (use-package  flycheck
   :ensure t
