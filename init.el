@@ -524,29 +524,29 @@ Version 2017-07-08"
   "Kill current buffer unconditionally."
   (interactive)
   (let (
-	(buffer-modified-p nil)
-	(target-buffers (list "*RTags*" "*compilation*"))
-	(current-buffer))
+		(buffer-modified-p nil)
+		(target-buffers (list "*RTags*" "*compilation*"))
+		(current-buffer))
 
 	(while target-buffers
-		(when (get-buffer (setq current-buffer (pop target-buffers)))
-			(kill-buffer current-buffer))
-		)
+	  (when (get-buffer (setq current-buffer (pop target-buffers)))
+		(kill-buffer current-buffer))
+	  )
 	(if (not (equal projectile-project-name nil))
 		(when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
-			(kill-buffer current-buffer)))
+		  (kill-buffer current-buffer)))
 	))
-	
+
 
 (defun close-compilation-window ()
   "Close the window having compilation buffer"
   (interactive)
   (if (not (equal projectile-project-name nil))
       (delete-windows-on (format "%s-%s" "*compilation*" projectile-project-name)))
-    ;; (delete-windows-on "*compilation*")
-  	(delete-windows-on "*RTags")
-	)
-	
+  ;; (delete-windows-on "*compilation*")
+  (delete-windows-on "*RTags")
+  )
+
 
 (add-hook 'python-mode-hook
 		  (lambda ()
@@ -565,6 +565,7 @@ Version 2017-07-08"
 ;; Set linux indent style
 (defvar c-default-style)
 (defvar c-basic-offset)
+	
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
@@ -685,12 +686,18 @@ Version 2017-07-08"
 						 (equal dir-locals-file
 								(file-name-nondirectory (buffer-file-name))))
 				(add-hook (make-variable-buffer-local 'after-save-hook)
-					  'my-reload-dir-locals-for-all-buffer-in-this-directory)))))
+						  'my-reload-dir-locals-for-all-buffer-in-this-directory)))))
 
 
 (use-package org
   :ensure t)
-  
+
+
+(add-to-list 'load-path "~/.emacs.d/jongyoungcha")
+	
+(require 'jong-scheme)
+(require 'jong-c)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
