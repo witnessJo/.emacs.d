@@ -283,8 +283,8 @@ Version 2017-07-08"
 (global-set-key (kbd "C-M-o") 'evil-jump-backward)
 (global-set-key (kbd "C-d") 'delete-forward-char)
 (global-set-key (kbd "M-d") 'my-delete-word)
-(global-set-key (kbd "M-f") 'evil-forward-word-begin)
-(global-set-key (kbd "M-b") 'evil-backward-word-end)
+;; (global-set-key (kbd "M-f") 'evil-forward-word-begin)
+;; (global-set-key (kbd "M-b") 'evil-backward-word-end)
 (global-set-key (kbd "M-v") 'evil-scroll-up)
 (global-set-key (kbd "C-v") 'evil-scroll-down)
 
@@ -520,12 +520,12 @@ Version 2017-07-08"
   (compile (concat "python " (buffer-name))))
 
 
-(defun kill-compilation-buffer ()
+(defun kill-temporary-buffers ()
   "Kill current buffer unconditionally."
   (interactive)
   (let (
 		(buffer-modified-p nil)
-		(target-buffers (list "*RTags*" "*compilation*"))
+		(target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"))
 		(current-buffer))
 
 	(while target-buffers
@@ -537,22 +537,17 @@ Version 2017-07-08"
 		  (kill-buffer current-buffer)))
 	))
 
-
-(defun close-compilation-window ()
-  "Close the window having compilation buffer"
-  (interactive)
-  (if (not (equal projectile-project-name nil))
-      (delete-windows-on (format "%s-%s" "*compilation*" projectile-project-name)))
-  ;; (delete-windows-on "*compilation*")
-  (delete-windows-on "*RTags")
-  )
-
-
+(global-set-key (kbd "C-g")
+	(lambda () (interactive)
+	(kill-temporary-buffers)
+	(keyboard-quit))
+	)
+	
 (add-hook 'python-mode-hook
 		  (lambda ()
 			(local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
 			(local-set-key (kbd "C-c c c") 'jyc-run-python)
-			(local-set-key (kbd "C-g") 'kill-compilation-buffer)
+			(local-set-key (kbd "C-g") 'kill-temporary-buffers)
 			(local-set-key (kbd "C-S-g") 'close-compilation-window)
 			(linum-mode t)
 			))

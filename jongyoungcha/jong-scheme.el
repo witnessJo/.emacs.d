@@ -13,11 +13,9 @@
 	
 (use-package xscheme :ensure t)
 
-(message-box "test message")
-
 (add-hook 'scheme-mode-hook
 		  (lambda()
-			(local-set-key (kbd "C-c c c") 'run-scheme))
+			(local-set-key (kbd "C-c c c") 'xscheme-send-buffer))
 		  )
 
 (provide 'jong-scheme);;
