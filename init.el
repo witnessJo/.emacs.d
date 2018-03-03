@@ -523,7 +523,7 @@ Version 2017-07-08"
   (interactive)
   (let (
 		(buffer-modified-p nil)
-		(target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"))
+		(target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*" "*Warnings*"))
 		(current-buffer))
 
 	(while target-buffers
@@ -641,11 +641,15 @@ Version 2017-07-08"
 
 (use-package org
   :ensure t)
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+		 ("\\.md\\'" . markdown-mode)
+		 ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 		
-	
-
-
-
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 	
 (require 'jong-scheme)
@@ -653,3 +657,17 @@ Version 2017-07-08"
 
 (load-theme 'solarized-dark t)
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+		(quote
+		 (markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
