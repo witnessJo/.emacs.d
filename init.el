@@ -536,11 +536,11 @@ Version 2017-07-08"
 	))
 
 (global-set-key (kbd "C-g")
-	(lambda () (interactive)
-	(kill-temporary-buffers)
-	(keyboard-quit))
-	)
-	
+				(lambda () (interactive)
+				  (kill-temporary-buffers)
+				  (keyboard-quit))
+				)
+
 (add-hook 'python-mode-hook
 		  (lambda ()
 			(local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
@@ -558,10 +558,9 @@ Version 2017-07-08"
 ;; Set linux indent style
 (defvar c-default-style)
 (defvar c-basic-offset)
-	
+
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
-(setq indent-line-function 'insert-tab)
 (setq c-default-style "linux")
 (setq c-basic-offset 4)
 
@@ -649,9 +648,9 @@ Version 2017-07-08"
 		 ("\\.md\\'" . markdown-mode)
 		 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
-		
+
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
-	
+
 (require 'jong-scheme)
 (require 'jong-c)
 
@@ -663,8 +662,13 @@ Version 2017-07-08"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-		(quote
-		 (markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode))))
+   (quote
+	(markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+ '(safe-local-variable-values
+   (quote
+	((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
+	 (projectile-project-name . "ants")
+	 (cmake-ide--build-dir-var . "./")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
