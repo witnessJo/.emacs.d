@@ -611,6 +611,7 @@ Version 2017-07-08"
   (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
   )
 
+
 (use-package company-rtags
   :ensure t)
 (with-eval-after-load 'company-rtags
