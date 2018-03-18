@@ -265,6 +265,31 @@ Version 2017-07-08"
   (interactive)
   (other-window -1))
 
+(setq skippable-buffers '("^\\*Messages\\*" "^\\*scratch\\*" "^\\*Help\\*" "^\\*helm buffers\\*"))
+
+(defun jong-next-buffer ()
+  "next-buffer that skips certain buffers"
+  (interactive)
+  (next-buffer)
+  (dolist (skippable-buffer skippable-buffers)
+	(when (string-match (buffer-name) skippable-buffer)
+	  (message "skip buffer: %s" skippable-buffer)
+	  (next-buffer)
+	  )
+	))
+
+(defun jong-prev-buffer ()
+  "next-buffer that skips certain buffers"
+  (interactive)
+  (previous-buffer)
+  (dolist (skippable-buffer skippable-buffers)
+	(when (string-match (buffer-name) skippable-buffer)
+	  (message "skip buffer: %s" skippable-buffer)
+	  (previous-buffer)
+	  )
+	))
+
+(global-set-key [remap next-buffer] 'my-next-buffer)
 
 (setq confirm-kill-emacs 'y-or-n-p)
 
@@ -288,6 +313,9 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
+
+(global-set-key [remap next-buffer] 'jong-next-buffer)
+(global-set-key [remap previous-buffer] 'jong-prev-buffer)
 
 (defun my-reload-dir-locals-for-current-buffer ()
   "reload dir locals for the current buffer"
