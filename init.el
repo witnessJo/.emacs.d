@@ -628,7 +628,7 @@ Version 2017-07-08"
 (add-hook 'c-mode-common-hook
 		  (lambda()
 			(local-set-key (kbd "C-c c c") 'compile)
-			(local-set-key (kbd "C-g") 'kill-compilation-buffer)
+			(local-set-key (kbd "C-g") 'kill-temporary-buffers)
 			(local-set-key (kbd "C-S-g") 'close-compilation-window)
 			(local-set-key (kbd "C-c f f") 'ff-find-other-file)
 			(defun enable-autoreload-for-dir-locals ()
