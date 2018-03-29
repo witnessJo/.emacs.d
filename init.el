@@ -37,7 +37,7 @@
 	  (eshell-return-to-prompt)
 	  (insert cmd)
 	  (eshell-send-input)
-	  (display-buffer "*eshell*"))
+	  (pop-to-buffer-same-window "*eshell*"))
 	))
 
 
