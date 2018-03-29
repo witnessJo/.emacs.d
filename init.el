@@ -28,6 +28,19 @@
     (erase-buffer)
     (comint-send-input)))
 
+(defun my-show-eshell ()
+  (interactive)
+  (let (cmd)
+	(setq cmd (format "%s %s" "cd" default-directory))
+	(message cmd)
+	(with-current-buffer "*eshell*"
+	  (eshell-return-to-prompt)
+	  (insert cmd)
+	  (eshell-send-input)
+	  (display-buffer "*eshell*"))
+	))
+
+
 (defun my-get-selection-length ()
   "Get length of selection"
   (interactive)
