@@ -558,6 +558,21 @@ Version 2017-07-08"
   (interactive)
   (compile (concat "python " (buffer-name))))
 
+(defun delete-above-below-window ()
+  (interactive)
+  (cond
+   ((window-in-direction 'above)
+    (windmove-up)
+	(delete-window))
+   ((window-in-direction 'below)
+    (windmove-down)
+	(delete-window))
+   ((window-in-direction 'left)
+    nil)
+   ((window-in-direction 'right)
+    nil))
+  )
+
 
 (defun kill-temporary-buffers ()
   "Kill current buffer unconditionally."
@@ -574,6 +589,7 @@ Version 2017-07-08"
 	(if (not (equal projectile-project-name nil))
 		(when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
 		  (kill-buffer current-buffer)))
+	(delete-above-below-window)
 	))
 
 (global-set-key (kbd "C-g")
@@ -717,3 +733,4 @@ Version 2017-07-08"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+ 
