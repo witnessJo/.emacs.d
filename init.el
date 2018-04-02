@@ -28,6 +28,7 @@
     (erase-buffer)
     (comint-send-input)))
 
+
 (defun my-show-eshell ()
   (interactive)
   (let (cmd)
@@ -329,6 +330,11 @@ Version 2017-07-08"
 
 (global-set-key [remap next-buffer] 'jong-next-buffer)
 (global-set-key [remap previous-buffer] 'jong-prev-buffer)
+
+(global-set-key (kbd "C-c b") 'display-buffer)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-x C-b") 'switch-to-buffer-other-window)
+
 
 (defun my-reload-dir-locals-for-current-buffer ()
   "reload dir locals for the current buffer"
