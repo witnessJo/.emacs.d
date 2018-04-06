@@ -702,6 +702,24 @@ Version 2017-07-08"
 						  'my-reload-dir-locals-for-all-buffer-in-this-directory)))))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; rust develope environments ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package rust-mode
+  :ensure t)
+
+(use-package racer
+  :ensure t)
+
+(use-package cargo
+  :ensure t)
+
+(require 'racer)
+(require 'cargo)
+
+(setq rust-format-on-save t)
+
+
 (use-package org
   :ensure t)
 
@@ -718,6 +736,7 @@ Version 2017-07-08"
 (require 'jong-scheme)
 (require 'jong-c)
 
+
 (load-theme 'solarized-dark t)
 
 (custom-set-variables
@@ -727,7 +746,7 @@ Version 2017-07-08"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+	(cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
 	((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
