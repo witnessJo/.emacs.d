@@ -167,7 +167,7 @@ Version 2017-07-08"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;
-										; set the font style  ;
+; set the font style  ;
 ;;;;;;;;;;;;;;;;;;;;;;;
 (set-default-coding-systems 'utf-8-unix)
 
@@ -191,7 +191,6 @@ Version 2017-07-08"
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(delete-selection-mode t)
 
 (use-package evil
   :ensure t)
@@ -238,6 +237,13 @@ Version 2017-07-08"
   :ensure t)
 (global-hungry-delete-mode)
 
+;; Add self paranthesis completion function.
+(defun electric-pair ()
+  "If at end of line, insert character pair without surrounding spaces.
+Otherwise, just insert the typed character."
+  (interactive)
+  (if (eolp) (let (parens-require-spaces) (insert-pair)) (self-insert-command 1)))
+
 
 ;; reuse a dired list buffer.
 (require 'dired)
@@ -274,6 +280,7 @@ Version 2017-07-08"
         (message "Indented buffer.")))))
 
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
 
 (defun my-prev-window ()
   (interactive)
@@ -333,7 +340,8 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-c b") 'display-buffer)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
-(global-set-key (kbd "C-x C-b") 'switch-to-buffer-other-window)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
@@ -606,6 +614,11 @@ Version 2017-07-08"
 
 (add-hook 'python-mode-hook
 		  (lambda ()
+			(define-key python-mode-map "\"" 'electric-pair)
+			(define-key python-mode-map "\'" 'electric-pair)
+			(define-key python-mode-map "(" 'electric-pair)
+			(define-key python-mode-map "[" 'electric-pair)
+			(define-key python-mode-map "{" 'electric-pair)
 			(local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
 			(local-set-key (kbd "C-c c c") 'jyc-run-python)
 			(local-set-key (kbd "C-g") 'kill-temporary-buffers)
@@ -648,8 +661,6 @@ Version 2017-07-08"
 							 (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
 							 file))))))
 
-;; (define-key c-mode-base-map (kbd "<f5>") 'c/c++-simple-compile-and-exec)
-
 (use-package smart-compile
   :ensure t)
 (with-eval-after-load 'smart-compile
@@ -690,6 +701,11 @@ Version 2017-07-08"
 
 (add-hook 'c-mode-common-hook
 		  (lambda()
+			(define-key c-mode-map "\"" 'electric-pair)
+			(define-key c-mode-map "\'" 'electric-pair)
+			(define-key c-mode-map "(" 'electric-pair)
+			(define-key c-mode-map "[" 'electric-pair)
+			(define-key c-mode-map "{" 'electric-pair)
 			(local-set-key (kbd "C-c c c") 'compile)
 			(local-set-key (kbd "C-g") 'kill-temporary-buffers)
 			(local-set-key (kbd "C-S-g") 'close-compilation-window)
