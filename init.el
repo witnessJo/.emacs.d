@@ -21,7 +21,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-
 (defun eshell/clear ()
   "Clear the eshell buffer."
   (let ((inhibit-read-only t))
@@ -238,12 +237,16 @@ Version 2017-07-08"
 (global-hungry-delete-mode)
 
 ;; Add self paranthesis completion function.
-(defun electric-pair ()
-  "If at end of line, insert character pair without surrounding spaces.
-Otherwise, just insert the typed character."
-  (interactive)
-  (if (eolp) (let (parens-require-spaces) (insert-pair)) (self-insert-command 1)))
+;; (defun electric-pair ()
+;;   "If at end of line, insert character pair without surrounding spaces.
+;; Otherwise, just insert the typed character."
+;;   (interactive)
+;;   (if (eolp) (let (parens-require-spaces) (insert-pair)) (self-insert-command 1)))
 
+(use-package autopair
+  :ensure t)
+(autopair-global-mode 1)
+(setq autopair-autowrap t)
 
 ;; reuse a dired list buffer.
 (require 'dired)
@@ -614,11 +617,6 @@ Otherwise, just insert the typed character."
 
 (add-hook 'python-mode-hook
 		  (lambda ()
-			(define-key python-mode-map "\"" 'electric-pair)
-			(define-key python-mode-map "\'" 'electric-pair)
-			(define-key python-mode-map "(" 'electric-pair)
-			(define-key python-mode-map "[" 'electric-pair)
-			(define-key python-mode-map "{" 'electric-pair)
 			(local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
 			(local-set-key (kbd "C-c c c") 'jyc-run-python)
 			(local-set-key (kbd "C-g") 'kill-temporary-buffers)
@@ -685,6 +683,10 @@ Otherwise, just insert the typed character."
   (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
   )
 
+(use-package function-args
+  :ensure t
+  :config
+  (function-args-mode t))
 
 (use-package company-rtags
   :ensure t)
@@ -701,11 +703,6 @@ Otherwise, just insert the typed character."
 
 (add-hook 'c-mode-common-hook
 		  (lambda()
-			(define-key c-mode-map "\"" 'electric-pair)
-			(define-key c-mode-map "\'" 'electric-pair)
-			(define-key c-mode-map "(" 'electric-pair)
-			(define-key c-mode-map "[" 'electric-pair)
-			(define-key c-mode-map "{" 'electric-pair)
 			(local-set-key (kbd "C-c c c") 'compile)
 			(local-set-key (kbd "C-g") 'kill-temporary-buffers)
 			(local-set-key (kbd "C-S-g") 'close-compilation-window)
@@ -762,7 +759,7 @@ Otherwise, just insert the typed character."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+	(function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
 	((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
