@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: if ( cond1 )
+#{
+#	${exp1};
+#}
+#else
+#{
+#	${exp2};
+#}
+#
+# key: ifel
+# --
+
+if ( ${cond1} )
+{
+	${exp1};
+}
+else
+{
+	${exp2};
+}

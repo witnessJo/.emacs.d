@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: if ( ... )
+#{
+#	...
+#}
+# else if ( ... )
+#{
+#	...
+#}
+#else
+#{
+#	...
+#}
+# key: elif
+# --
+
+
+if ( ${cond1} )
+{
+	${exp1}
+}
+else if ( ${cond2} )
+{
+	${exp2}
+}
+else
+{
+	${exp3}
+}
