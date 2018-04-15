@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: if ( ... )
+#{
+#	...
+#}
+# key: if
+# --
+
+if ( ${cond1} )
+{
+	${exp1};
+}

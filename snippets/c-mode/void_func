@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: void ... ( ... )
+#{
+#	return;
+#}
+# key: voidfun
+# --
+
+void ${name} ( ${args} )
+{
+	return;
+}

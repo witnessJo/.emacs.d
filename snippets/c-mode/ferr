@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: fprintf(stderr, \"...\", ...);
+# key: ferr
+# --
+
+fprintf(stderr, "${format}", ${args1});
+
+

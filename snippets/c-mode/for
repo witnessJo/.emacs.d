@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name : for (...; ... ; ...)
+# {
+# ...
+# }
+# key: for
+# --
+for (${exp1}; ${cond1}; ${exp2})
+{
+	${exp3};
+}

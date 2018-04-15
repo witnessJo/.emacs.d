@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: fprintf(stdout, \"...\", ...);
+# key: fout
+# --
+
+fprintf(stdout, "${format}", ${args});
