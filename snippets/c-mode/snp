@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: snprintf(..., ..., ..., ...);
+# key: snp
+# --
+
+snprintf(${dst}, ${dst_size}, "${format}", ${args});

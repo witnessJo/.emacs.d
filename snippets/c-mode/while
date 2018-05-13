@@ -1,13 +1,12 @@
 # -*- mode: snippet -*-
-# name: if ( ... )
+# name: while ( ... )
 #{
 #	...
 #}
-# key: if
+# key: while
 # --
 
-
-if ( ${cond1} )
+while ( ${cond1} )
 {
 	${statement};
 }

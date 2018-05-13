@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: struct ...
+#{
+#	...;	
+#};
+# key: st
+# --
+
+struct ${name}
+{
+	${attribute};
+};
