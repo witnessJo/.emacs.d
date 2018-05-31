@@ -469,8 +469,8 @@ Version 2017-07-08"
   :config
   (setq git-commit-summary-max-length 1000))
 
-(use-package psvn
-  :ensure t)
+;; (use-package psvn
+;;   :ensure t)
 
 (use-package projectile
   :ensure t)
