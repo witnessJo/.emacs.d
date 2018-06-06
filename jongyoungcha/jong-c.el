@@ -6,9 +6,11 @@
 (defvar c-default-style)
 (defvar c-basic-offset)
 
-(setq-default indent-tabs-mode t)
-(setq-default tab-width 4)
+;; (setq-default indent-tabs-mode t)
+
 (setq c-default-style "linux")
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 (setq c-basic-offset 4)
 
 (defun jyc-copy-init-cpp-project()
@@ -98,7 +100,12 @@
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
 
 ;; Add flycheck c++ mode
-(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
+(add-hook 'c++-mode-hook (lambda ()
+                           (setq flycheck-gcc-language-standard "c++11")
+                           (setq c-default-style "linux")
+                           (setq-default indent-tabs-mode nil)
+                           (setq-default tab-width 4)
+                           (setq c-basic-offset 4)))
 
 ;; Set key bindings
 (eval-after-load "helm-gtags"
@@ -110,6 +117,7 @@
 	 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 	 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 	 (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)))
+
 
 
 (provide 'jong-c)
