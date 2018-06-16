@@ -84,9 +84,28 @@
 				(add-hook (make-variable-buffer-local 'after-save-hook)
 						  'my-reload-dir-locals-for-all-buffer-in-this-directory)))))
 
+;; Add flycheck c++ mode
+(add-hook 'c++-mode-hook (lambda ()
+                           (setq flycheck-gcc-language-standard "c++11")
+                           (setq c-default-style "linux")
+                           (setq-default indent-tabs-mode nil)
+                           (setq-default tab-width 4)
+                           (setq c-basic-offset 4)))
+
 
 (use-package ggtags
   :ensure t)
+
+(eval-after-load "ggtags"
+  '(progn
+     (define-key ggtags-mode-map (kbd "C-c g .") (lambda ()
+                                                       (interactive)
+                                                       (evil--jumps-push)
+                                                       (call-interactively 'ggtags-find-definition)))
+     (define-key ggtags-mode-map (kbd "C-c g ,") (lambda ()
+                                                       (interactive)
+                                                       (evil--jumps-push)
+                                                       (call-interactively 'ggtags-find-reference)))))
 
 (use-package helm-gtags
   :ensure t)
@@ -95,17 +114,11 @@
 			(when (derived-mode-p 'c-mode 'c++-mode)
 			  (ggtags-mode 1))))
 
+
 (add-hook 'c-mode-hook 'helm-gtags-mode)
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
 
-;; Add flycheck c++ mode
-(add-hook 'c++-mode-hook (lambda ()
-                           (setq flycheck-gcc-language-standard "c++11")
-                           (setq c-default-style "linux")
-                           (setq-default indent-tabs-mode nil)
-                           (setq-default tab-width 4)
-                           (setq c-basic-offset 4)))
 
 ;; Set key bindings
 (eval-after-load "helm-gtags"
@@ -119,7 +132,4 @@
 	 (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)))
 
 
-
 (provide 'jong-c)
-
-

@@ -710,12 +710,12 @@ Version 2017-07-08"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
-	((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
-	 (projectile-project-name . "ants")
-	 (cmake-ide--build-dir-var . "./")))))
+    ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
+     (projectile-project-name . "ants")
+     (cmake-ide--build-dir-var . "./")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -723,3 +723,4 @@ Version 2017-07-08"
  ;; If there is more than one, they won't work right.
  )
 
+(put 'dired-find-alternate-file 'disabled nil)
