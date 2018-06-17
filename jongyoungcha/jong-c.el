@@ -17,6 +17,24 @@
   (interactive)
   (dired-copy-file-recursive "~/.emacs.d/jongyoungcha/init_cpp_project/" default-directory nil nil nil 'always))
 
+
+(defun jong-c-insert-predfine ()
+  (interactive)
+  (let ((filename buffer-file-name) predefined extension)
+    (setq filename (file-name-nondirectory filename))
+    (when (not (string-empty-p filename))
+      (setq extension (file-name-extension filename))
+      (if (or (string= extension "h") (string= extension "hpp"))
+          (progn
+            (setq predefined (upcase (format "_%s_" (replace-regexp-in-string "\\." "_" filename))))
+            (setq predefined (upcase (format "%s" (replace-regexp-in-string "\\-" "_" predefined))))
+            (insert (format "#ifndef %s\n" predefined))
+            (insert (format "#define %s\n" predefined))
+            (insert (format "#endif\n")))
+        (message "%s" "The file was not a C header file...")))
+    ))
+
+
 (require 'compile)
 (add-hook 'c-mode-common-hook
 		  (lambda ()
@@ -73,6 +91,7 @@
 
 (add-hook 'c-mode-common-hook
 		  (lambda()
+            (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
 			(local-set-key (kbd "C-c c c") 'compile)
 			(local-set-key (kbd "C-g") 'kill-temporary-buffers)
 			(local-set-key (kbd "C-S-g") 'close-compilation-window)
@@ -130,6 +149,8 @@
 	 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 	 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 	 (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)))
+
+
 
 
 (provide 'jong-c)

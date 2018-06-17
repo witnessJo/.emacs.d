@@ -243,10 +243,10 @@ Version 2017-07-08"
 ;;   (interactive)
 ;;   (if (eolp) (let (parens-require-spaces) (insert-pair)) (self-insert-command 1)))
 
-;; (use-package autopair
-;;   :ensure t)
-;; (autopair-global-mode 1)
-;; (setq autopair-autowrap t);
+(use-package autopair
+  :ensure t)
+(autopair-global-mode 1)
+(setq autopair-autowrap t)
 
 ;; reuse a dired list buffer.
 (require 'dired)

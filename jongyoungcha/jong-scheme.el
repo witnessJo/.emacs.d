@@ -18,4 +18,4 @@
 			(local-set-key (kbd "C-c c c") 'xscheme-send-buffer))
 		  )
 
-(provide 'jong-scheme);;
+(provide 'jong-scheme)
