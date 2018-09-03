@@ -10,7 +10,6 @@
              '("melpa" . "https://melpa.org/packages/")
 			 '("marmalade" . "https://marmalade-repo.org/packages/"))
 
-
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -27,7 +26,6 @@
     (erase-buffer)
     (comint-send-input)))
 
-
 (defun my-show-eshell ()
   (interactive)
   (let (cmd)
@@ -39,7 +37,6 @@
 	  (eshell-send-input)
 	  (pop-to-buffer-same-window "*eshell*"))
 	))
-
 
 (defun my-get-selection-length ()
   "Get length of selection"
@@ -63,7 +60,6 @@
       )
     )
   )
-
 
 (defun my-delete-word (arg)
   "Delete characters forward until encountering the end of a word. With argument, do this that many times."
@@ -166,13 +162,13 @@ Version 2017-07-08"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;
-										; set the font style  ;
+; set the font style  ;
 ;;;;;;;;;;;;;;;;;;;;;;;
 (set-default-coding-systems 'utf-8-unix)
 
 ;; set a default font
-(when (member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+(when (member "courier" (font-family-list))
+  (set-face-attribute 'default nil :font "courier-14"))
 
 ;; specify font for all unicode characters
 (when (member "Symbola" (font-family-list))
@@ -341,7 +337,8 @@ Version 2017-07-08"
 (global-set-key [remap next-buffer] 'jong-next-buffer)
 (global-set-key [remap previous-buffer] 'jong-prev-buffer)
 
-(global-set-key (kbd "C-c b") 'display-buffer)
+;; (global-set-key (kbd "C-c b") 'display-buffer)
+(global-set-key (kbd "C-c b r") 'rename-buffer)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
@@ -363,23 +360,26 @@ Version 2017-07-08"
 		(my-reload-dir-locals-for-current-buffer)))))
 
 
+
+(add-hook 'term-load-hook
+	  (lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
+
 (use-package multi-term
-  :ensure)
-(with-eval-after-load 'multi-term
-  (lambda ()
-    (define-key term-raw-map (kbd "C-c C-n") 'multi-term-next)
-    (define-key term-raw-map (kbd "C-c C-p") 'multi-term-prev)
-    )
+  :ensure
+  :bind (("C-c C-n" . multi-term-next)
+         ("C-c C-p" . multi-term-prev))
   )
 
 (use-package xterm-color
   :ensure)
 (require 'ansi-color)
+
+
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; default setting.
 (defun toggle-transparency ()
-  "Transparency fr0ame"
+  "Transparency frame"
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
     (set-frame-parameter
