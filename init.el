@@ -20,12 +20,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(defun eshell/clear ()
-  "Clear the eshell buffer."
-  (let ((inhibit-read-only t))
-    (erase-buffer)
-    (comint-send-input)))
-
 (defun my-show-eshell ()
   (interactive)
   (let (cmd)
@@ -361,21 +355,6 @@ Version 2017-07-08"
 
 
 
-(add-hook 'term-load-hook
-	  (lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
-
-(use-package multi-term
-  :ensure
-  :bind (("C-c C-n" . multi-term-next)
-         ("C-c C-p" . multi-term-prev))
-  )
-
-(use-package xterm-color
-  :ensure)
-(require 'ansi-color)
-
-
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; default setting.
 (defun toggle-transparency ()
@@ -700,6 +679,7 @@ Version 2017-07-08"
 (require 'jong-c)
 (require 'jong-scala)
 (require 'jong-haskell)
+(require 'jong-term)
 
 (load-theme 'solarized-dark t)
 
