@@ -661,13 +661,11 @@ Version 2017-07-08"
 
 (setq rust-format-on-save t)
 
-
 (use-package org
   :ensure t)
 
 (use-package markdown-mode
-  :ensure t
-  :commands (markdown-mode gfm-mode)
+  :ensure t  :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
 		 ("\\.md\\'" . markdown-mode)
 		 ("\\.markdown\\'" . markdown-mode))
@@ -680,8 +678,9 @@ Version 2017-07-08"
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-term)
+(require 'jong-nodejs)
 
-(load-theme 'solarized-dark t)
+(load-theme 'solarized-dark t)2
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
