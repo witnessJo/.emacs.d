@@ -55,16 +55,6 @@
     )
   )
 
-(defun my-delete-word (arg)
-  "Delete characters forward until encountering the end of a word. With argument, do this that many times."
-  (interactive "p")
-  (delete-region (point) (progn (forward-word arg) (point))))
-
-(defun my-backward-delete-word (arg)
-  "Delete characters backword until encountering the end of a word. With argument, dothis that may times."
-  (interactive "p")
-  (my-delete-word (- arg)))
-
 
 (defun my-cut-line-or-region ()
   "Cut current line, or text selection.
@@ -303,6 +293,21 @@ Version 2017-07-08"
 	  )
 	))
 
+(defun delete-word (arg)
+  "Delete characters forward until encountering the end of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (delete-region (point) (progn (forward-word arg) (point))))
+  
+(defun backward-delete-word (arg)
+  "Delete characters backward until encountering the beginning of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (delete-word (- arg)))
+
+(global-set-key (kbd "M-<backspace>") 'backward-delete-word)
+(global-set-key (kbd "M-d") 'delete-word)
+
 (global-set-key [remap next-buffer] 'my-next-buffer)
 
 (setq confirm-kill-emacs 'y-or-n-p)
@@ -321,7 +326,6 @@ Version 2017-07-08"
 (global-set-key (kbd "C-M-i") 'evil-jump-forward)
 (global-set-key (kbd "C-M-o") 'evil-jump-backward)
 (global-set-key (kbd "C-d") 'delete-forward-char)
-(global-set-key (kbd "M-d") 'my-delete-word)
 (global-set-key (kbd "M-v") 'evil-scroll-up)
 (global-set-key (kbd "C-v") 'evil-scroll-down)
 
