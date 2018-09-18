@@ -433,6 +433,8 @@ With argument ARG, do this that many times."
 (require 'company)
 (with-eval-after-load 'company
   (setq company-async-timeout 4)
+  (setq company-dabbrev-downcase nil)
+  (setq company-idle-delay 0.1)
   (add-hook 'after-init-hook 'global-company-mode)
   ;; (defun piotr/company-complete-and-self-inser ()
   ;;   "Complete the current selection and self-insert."
@@ -584,7 +586,6 @@ With argument ARG, do this that many times."
 		(buffer-modified-p nil)
 		(target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*" "*Warnings*"))
 		(current-buffer))
-
 	(while target-buffers
 	  (when (get-buffer (setq current-buffer (pop target-buffers)))
 		(kill-buffer current-buffer))
@@ -592,8 +593,8 @@ With argument ARG, do this that many times."
 	(if (not (equal projectile-project-name nil))
 		(when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
 		  (kill-buffer current-buffer)))
-	(delete-above-below-window)
-	))
+	(delete-above-below-window)))
+
 
 (global-set-key (kbd "C-g")
 				(lambda () (interactive)
@@ -684,7 +685,7 @@ With argument ARG, do this that many times."
 (require 'jong-term)
 (require 'jong-nodejs)
 
-(load-theme 'solarized-dark t)2
+(load-theme 'solarized-dark t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -693,7 +694,7 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
