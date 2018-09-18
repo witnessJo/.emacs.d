@@ -435,18 +435,8 @@ With argument ARG, do this that many times."
   (setq company-async-timeout 4)
   (setq company-dabbrev-downcase nil)
   (setq company-idle-delay 0.1)
-  (add-hook 'after-init-hook 'global-company-mode)
-  ;; (defun piotr/company-complete-and-self-inser ()
-  ;;   "Complete the current selection and self-insert."
-  ;;   (interactive)
-  ;;   (company-complete-selection)
-  ;;   (call-interactively 'self-insert-command))
-
-  ;; (define-key company-active-map
-  ;;   (kbd ".") 'piotr/company-complete-and-self-inser)
-  ;; (define-key company-active-map
-  ;;   (kbd "SPC")' piotr/company-complete-and-self-inser)
-  )
+  (setq company-minimum-prefix-length 1)
+  (add-hook 'after-init-hook 'global-company-mode))
 
 
 (use-package magit
@@ -694,7 +684,7 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
