@@ -1,4 +1,4 @@
-;;; Added by Package.el.  This must come before configurations of
+;;; Avdded by Package.el.  This must come before configurations of
 ;;; installed packages.  Don't delete this line.  If you don't want it,
 ;;; just comment it out by adding a semicolon to the start of the line.
 ;;; You may delete these explanatory comments.
@@ -144,11 +144,15 @@ Version 2017-07-08"
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;
-; set the font style  ;
-;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; char encoding environment ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-default-coding-systems 'utf-8-unix)
+(set-language-environment 'UTF-8)
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; set the font style ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; set a default font
 (when (member "courier" (font-family-list))
@@ -298,7 +302,7 @@ Version 2017-07-08"
 With argument ARG, do this that many times."
   (interactive "p")
   (delete-region (point) (progn (forward-word arg) (point))))
-  
+
 (defun backward-delete-word (arg)
   "Delete characters backward until encountering the beginning of a word.
 With argument ARG, do this that many times."
@@ -435,7 +439,8 @@ With argument ARG, do this that many times."
   (setq company-async-timeout 4)
   (setq company-dabbrev-downcase nil)
   (setq company-idle-delay 0.1)
-  (setq company-minimum-prefix-length 1)
+  (setq company-minimum-prefix-length 3)
+  (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode))
 
 
@@ -574,16 +579,17 @@ With argument ARG, do this that many times."
   (interactive)
   (let (
 		(buffer-modified-p nil)
-		(target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*" "*Warnings*"))
+		(target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
+                              "*Warnings*" "*xref*" "*Node Shell*"))
 		(current-buffer))
 	(while target-buffers
 	  (when (get-buffer (setq current-buffer (pop target-buffers)))
-		(kill-buffer current-buffer))
-	  )
+		(kill-buffer current-buffer)))
 	(if (not (equal projectile-project-name nil))
 		(when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
 		  (kill-buffer current-buffer)))
-	(delete-above-below-window)))
+    (delete-above-below-window))
+  )
 
 
 (global-set-key (kbd "C-g")
@@ -637,8 +643,6 @@ With argument ARG, do this that many times."
 
 
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; rust develope environments ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -668,11 +672,11 @@ With argument ARG, do this that many times."
 
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 
+(require 'jong-term)
 (require 'jong-scheme)
 (require 'jong-c)
 (require 'jong-scala)
 (require 'jong-haskell)
-(require 'jong-term)
 (require 'jong-nodejs)
 
 (load-theme 'solarized-dark t)
@@ -684,7 +688,7 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
@@ -698,3 +702,4 @@ With argument ARG, do this that many times."
  )
 
 (put 'dired-find-alternate-file 'disabled nil)
+

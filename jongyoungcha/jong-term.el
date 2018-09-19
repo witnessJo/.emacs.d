@@ -6,10 +6,10 @@
 (add-hook 'term-load-hook
 	  (lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
 
-(use-package multi-term
-  :ensure
-  :bind (("C-c C-n" . multi-term-next)
-         ("C-c C-p" . multi-term-prev)))
+;; (use-package multi-term
+;;   :ensure
+;;   :bind (("C-c C-n" . multi-term-next)
+;;          ("C-c C-p" . multi-term-prev)))
 
 (use-package xterm-color
   :ensure)

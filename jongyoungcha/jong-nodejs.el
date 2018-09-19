@@ -7,8 +7,11 @@
 (use-package xref-js2
   :ensure t)
 
-;; (use-package nodejs-repl
-;;   :ensure t)
+(use-package nodejs-repl
+  :ensure t)
+
+(use-package js-comint
+  :ensure t)
 
 (use-package indium
   :ensure t)
@@ -24,10 +27,14 @@
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
-
 (use-package company-tern
   :ensure t)
 (add-to-list 'company-backends 'company-tern)
+
+(defun jong-run-js ()
+  "jongyoungcha's run nodejs"
+  (interactive)
+  (pop-to-buffer (make-comint "Node Shell" "node" nil (buffer-file-name))))
 
 (add-hook 'js2-mode-hook #'tern)
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
@@ -41,16 +48,38 @@
                            (tern-mode)
                            (company-mode)))
 
-(add-hook 'js2-mode-hook (lambda ()
 
-                           (local-set-key (kbd "C-c r .") 'xref-find-definitions)
-                           (local-set-key (kbd "C-c r ,") 'xref-find-references)
-                           (define-key js2-mode-map (kbd "C-c r .") 'xref-find-definitions)
-                           (define-key js2-mode-map (kbd "C-c r ,") 'xref-find-references)
-                           (define-key js2-mode-map (kbd "C-c r l") 'indium-eval-last-node)
-                           (define-key js2-mode-map (kbd "C-c r r") 'indium-eval-region)
-                           (define-key js2-mode-map (kbd "C-c r b") 'indium-eval-buffer)
-                           (define-key js2-mode-map (kbd "C-c :") 'indium-inspect-expression)))
-
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c r .") 'xref-find-definitions)
+            (local-set-key (kbd "C-c r ,") 'xref-find-references)
+            (define-key js2-mode-map (kbd "C-c r .") 'xref-find-definitions)
+            (define-key js2-mode-map (kbd "C-c r ,") 'xref-find-references)
+            (define-key js2-mode-map (kbd "C-c d l") 'indium-eval-last-node)
+            (define-key js2-mode-map (kbd "C-c d r") 'indium-eval-region)
+            (define-key js2-mode-map (kbd "C-c d b") 'indium-eval-buffer)
+            (define-key js2-mode-map (kbd "C-c d :") 'indium-inspect-expression)
+            (define-key js2-mode-map (kbd "C-c c c") 'jong-run-js)
+            (define-key js2-mode-map (kbd "C-c r r")
+              (lambda () (interactive)
+                (call-interactively 'nodejs-repl-send-last-expression)
+                (nodejs-repl-switch-to-repl)
+                (other-window -1)))
+            (define-key js2-mode-map (kbd "C-c r g")
+              (lambda () (interactive)
+                (call-interactively 'nodejs-repl-send-region)
+                (nodejs-repl-switch-to-repl)
+                (other-window -1)))
+            (define-key js2-mode-map (kbd "C-c r b")
+              (lambda () (interactive)
+                (call-interactively 'nodejs-repl-send-buffer)
+                (nodejs-repl-switch-to-repl)
+                (other-window -1)))
+            (define-key js2-mode-map (kbd "C-c r l")
+              (lambda () (interactive)
+                (call-interactively 'nodejs-repl-send-line)
+                (nodejs-repl-switch-to-repl)
+                (other-window -1))))
+          )
 
 (provide 'jong-nodejs)
