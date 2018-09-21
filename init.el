@@ -479,7 +479,7 @@ With argument ARG, do this that many times."
   (setq company-dabbrev-downcase nil)
   (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 3)
-p  (global-set-key (kbd "C-<tab>") 'company-complete)
+  (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode))
 
 
