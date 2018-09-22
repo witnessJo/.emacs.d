@@ -8,7 +8,7 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
-			 '("marmalade" . "https://marmalade-repo.org/packages/"))
+	          '("marmalade" . "https://marmalade-repo.org/packages/"))
 
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
@@ -23,22 +23,22 @@
 (defun my-show-eshell ()
   (interactive)
   (let (cmd)
-	(setq cmd (format "%s %s" "cd" default-directory))
-	(message cmd)
-	(with-current-buffer "*eshell*"
-	  (eshell-return-to-prompt)
-	  (insert cmd)
-	  (eshell-send-input)
-	  (pop-to-buffer-same-window "*eshell*"))
-	))
+    (setq cmd (format "%s %s" "cd" default-directory))
+    (message cmd)
+    (with-current-buffer "*eshell*"
+      (eshell-return-to-prompt)
+      (insert cmd)
+      (eshell-send-input)
+      (pop-to-buffer-same-window "*eshell*"))
+    ))
 
 (defun my-get-selection-length ()
   "Get length of selection"
   (interactive)
   (if (use-region-p)
       (let (pos1 pos2)
-		(setq pos1 (region-beginning) pos2 (region-end))
-		(- pos2 pos1))
+	     (setq pos1 (region-beginning) pos2 (region-end))
+	     (- pos2 pos1))
     -1
     )
   )
@@ -50,7 +50,7 @@
   (let (length)
     (setq length (my-get-selection-length))
     (if (equal length -1)
-		(message "regions is not activated...")
+	     (message "regions is not activated...")
       (message "length : %d" length)
       )
     )
@@ -281,22 +281,54 @@ Version 2017-07-08"
   (interactive)
   (next-buffer)
   (dolist (skippable-buffer skippable-buffers)
-	(when (string-match (buffer-name) skippable-buffer)
-	  (message "skip buffer: %s" skippable-buffer)
-	  (next-buffer)
-	  )
-	))
+    (when (string-match (buffer-name) skippable-buffer)
+      (message "skip buffer: %s" skippable-buffer)
+      (next-buffer)
+      )
+    ))
 
 (defun jong-prev-buffer ()
   "next-buffer that skips certain buffers"
   (interactive)
   (previous-buffer)
   (dolist (skippable-buffer skippable-buffers)
-	(when (string-match (buffer-name) skippable-buffer)
-	  (message "skip buffer: %s" skippable-buffer)
-	  (previous-buffer)
-	  )
-	))
+    (when (string-match (buffer-name) skippable-buffer)
+      (message "skip buffer: %s" skippable-buffer)
+      (previous-buffer)
+      )
+    ))
+
+
+(defun jo-show-buffer-other-window ()
+  (interactive)
+  (let ((source-buf (current-buffer))
+        (target-buf (helm-buffers-list)))
+    (set-window-buffer (selected-window) source-buf)
+    (switch-to-buffer-other-window target-buf)
+    (other-window -1))
+  )
+
+(defun jo-show-buffer-other-window-move ()
+  (interactive)
+  (let ((source-buf (current-buffer))
+        (target-buf (helm-buffers-list)))
+    (set-window-buffer (selected-window) source-buf)
+    (switch-to-buffer-other-window target-buf))
+  )
+
+(defun jo-other-window-scroll-up ()
+  (interactive)
+  (other-window -1)
+  (scroll-up 10)
+  (other-window -1)
+  )
+
+(defun jo-other-window-scroll-down ()
+  (interactive)
+  (other-window -1)
+  (scroll-down 10)
+  (other-window -1)
+  )
 
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of a word.
@@ -309,6 +341,7 @@ With argument ARG, do this that many times."
 With argument ARG, do this that many times."
   (interactive "p")
   (delete-word (- arg)))
+;; (global-set-key (kbd ))
 
 (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
 (global-set-key (kbd "M-d") 'delete-word)
@@ -316,6 +349,7 @@ With argument ARG, do this that many times."
 (global-set-key [remap next-buffer] 'my-next-buffer)
 
 (setq confirm-kill-emacs 'y-or-n-p)
+
 
 (global-set-key (kbd "C-x C-x") 'my-prev-window)
 (global-set-key (kbd "C-x C-p") 'other-window)
@@ -340,10 +374,16 @@ With argument ARG, do this that many times."
 (global-set-key [remap next-buffer] 'jong-next-buffer)
 (global-set-key [remap previous-buffer] 'jong-prev-buffer)
 
-;; (global-set-key (kbd "C-c b") 'display-buffer)
 (global-set-key (kbd "C-c b r") 'rename-buffer)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(global-set-key (kbd "C-x v") 'jong-show-buffer-other-window)
+(global-set-key (kbd "C-x C-v") 'jong-show-buffer-other-window)
+(global-set-key (kbd "C-x n") 'jong-show-buffer-other-window-move)
+(global-set-key (kbd "C-x C-n") 'jong-show-buffer-other-window-move)
+(global-set-key (kbd "M-n") 'jo-other-window-scroll-up)
+(global-set-key (kbd "M-p") 'jo-other-window-scroll-down)
+
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
 
 
@@ -359,8 +399,8 @@ With argument ARG, do this that many times."
   (let ((dir default-directory))
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
-		(when (equal default-directory dir))
-		(my-reload-dir-locals-for-current-buffer)))))
+	     (when (equal default-directory dir))
+	     (my-reload-dir-locals-for-current-buffer)))))
 
 
 
@@ -373,12 +413,12 @@ With argument ARG, do this that many times."
     (set-frame-parameter
      nil 'alpha
      (if (eql (cond ((numberp alpha) alpha)
-					((numberp (cdr alpha)) (cdr alpha))
-					;; Also handle undocumented (<active> <inactive>) form.
+		              ((numberp (cdr alpha)) (cdr alpha))
+		              ;; Also handle undocumented (<active> <inactive>) form.
 
-					((numberp (cadr alpha)) (cadr alpha)))
-			  100)
-		 '(85 . 50) '(100 . 100)))))
+		              ((numberp (cadr alpha)) (cadr alpha)))
+	           100)
+	      '(85 . 50) '(100 . 100)))))
 
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
@@ -403,9 +443,9 @@ With argument ARG, do this that many times."
   (set-face-background 'show-paren-match-face (face-background 'default))
   (if (boundp 'font-lock-comment-face)
       (set-face-foreground 'show-paren-match-face
-						   (face-foreground 'font-lock-comment-face))
+			                  (face-foreground 'font-lock-comment-face))
     (set-face-foreground 'show-paren-match-face
-						 (face-foreground 'default)))
+			                (face-foreground 'default)))
   (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
 
 (require 'paren)
@@ -508,8 +548,8 @@ With argument ARG, do this that many times."
 ;;;; elisp develope environments ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'emacs-lisp-mode-hook
-		  (lambda()
-			(local-set-key (kbd "C-c g g") 'xref-find-definitions)))
+	       (lambda()
+	         (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
 
 
 
@@ -532,8 +572,8 @@ With argument ARG, do this that many times."
 (use-package company-jedi
   :ensure t)
 (add-hook 'python-mode-hook
-		  (lambda()
-			(add-to-list 'company-backend 'company-jedi)))
+	       (lambda()
+	         (add-to-list 'company-backend 'company-jedi)))
 
 
 (global-set-key (kbd "C-c i") 'indent-region)
@@ -544,15 +584,6 @@ With argument ARG, do this that many times."
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
-;; (use-package ob-ipython
-;;   :ensure t)
-;; (with-eval-after-load 'ob-ipython
-;;   (require 'ob-ipython)
-;;   (org-babel-do-load-languages
-;;    'org-babel-load-languages
-;;    '((ipython . t)
-;;      ))
-;;   )
 
 (defun jyc-run-python ()
   "Use run python program"
@@ -564,10 +595,10 @@ With argument ARG, do this that many times."
   (cond
    ((window-in-direction 'above)
     (windmove-up)
-	(delete-window))
+    (delete-window))
    ((window-in-direction 'below)
     (windmove-down)
-	(delete-window))
+    (delete-window))
    ((window-in-direction 'left)
     nil)
    ((window-in-direction 'right)
@@ -579,34 +610,34 @@ With argument ARG, do this that many times."
   "Kill current buffer unconditionally."
   (interactive)
   (let (
-		(buffer-modified-p nil)
-		(target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
-                              "*Warnings*" "*xref*" "*Node Shell*"))
-		(current-buffer))
-	(while target-buffers
-	  (when (get-buffer (setq current-buffer (pop target-buffers)))
-		(kill-buffer current-buffer)))
-	(if (not (equal projectile-project-name nil))
-		(when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
-		  (kill-buffer current-buffer)))
+	     (buffer-modified-p nil)
+	     (target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
+			                     "*Warnings*" "*xref*" "*Node Shell*"))
+	     (current-buffer))
+    (while target-buffers
+      (when (get-buffer (setq current-buffer (pop target-buffers)))
+	     (kill-buffer current-buffer)))
+    (if (not (equal projectile-project-name nil))
+	     (when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
+	       (kill-buffer current-buffer)))
     (delete-above-below-window))
   )
 
 
 (global-set-key (kbd "C-g")
-				(lambda () (interactive)
-				  (kill-temporary-buffers)
-				  (keyboard-quit))
-				)
+		          (lambda () (interactive)
+		            (kill-temporary-buffers)
+		            (keyboard-quit))
+		          )
 
 (add-hook 'python-mode-hook
-		  (lambda ()
-			(local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
-			(local-set-key (kbd "C-c c c") 'jyc-run-python)
-			(local-set-key (kbd "C-g") 'kill-temporary-buffers)
-			(local-set-key (kbd "C-S-g") 'close-compilation-window)
-			(linum-mode t)
-			))
+	       (lambda ()
+	         (local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
+	         (local-set-key (kbd "C-c c c") 'jyc-run-python)
+	         (local-set-key (kbd "C-g") 'kill-temporary-buffers)
+	         (local-set-key (kbd "C-S-g") 'close-compilation-window)
+	         (linum-mode t)
+	         ))
 
 
 
@@ -627,13 +658,13 @@ With argument ARG, do this that many times."
    If buffer is modified, ask about save before running etags."
   (let ((extension (file-name-extension (buffer-file-name))))
     (condition-case err
-		ad-do-it
+	     ad-do-it
       (error (and (buffer-modified-p)
-				  (not (ding))
-				  (y-or-n-p "Buffer is modified, save it? ")
-				  (save-buffer))
-			 (er-refresh-etags extension)
-			 ad-do-it))))
+		            (not (ding))
+		            (y-or-n-p "Buffer is modified, save it? ")
+		            (save-buffer))
+	          (er-refresh-etags extension)
+	          ad-do-it))))
 
 (defun er-refresh-etags (&optional extension)
   "Run etags on all peer files in current dir and reload them silently."
@@ -667,18 +698,20 @@ With argument ARG, do this that many times."
 (use-package markdown-mode
   :ensure t  :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
-		 ("\\.md\\'" . markdown-mode)
-		 ("\\.markdown\\'" . markdown-mode))
+	      ("\\.md\\'" . markdown-mode)
+	      ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 
+(require 'jong-elisp)
 (require 'jong-term)
 (require 'jong-scheme)
 (require 'jong-c)
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-nodejs)
+(require 'jong-minor-eos)
 
 (load-theme 'solarized-dark t)
 
@@ -689,7 +722,7 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")

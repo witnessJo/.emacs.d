@@ -147,6 +147,4 @@
      (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)))
 
 
-
-
 (provide 'jong-c)
