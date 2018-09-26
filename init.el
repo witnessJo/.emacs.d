@@ -301,33 +301,29 @@ Version 2017-07-08"
 
 (defun jo-show-buffer-other-window ()
   (interactive)
-  (let ((source-buf (current-buffer))
-        (target-buf (helm-buffers-list)))
-    (set-window-buffer (selected-window) source-buf)
-    (switch-to-buffer-other-window target-buf)
-    (other-window -1))
+  (other-window -1)
+  (helm-buffers-list)
+  (other-window 1)
   )
 
 (defun jo-show-buffer-other-window-move ()
   (interactive)
-  (let ((source-buf (current-buffer))
-        (target-buf (helm-buffers-list)))
-    (set-window-buffer (selected-window) source-buf)
-    (switch-to-buffer-other-window target-buf))
+  (other-window -1)
+  (helm-buffers-list)
   )
 
-(defun jo-other-window-scroll-up ()
+(defun jo-isearch-forward-other-window ()
   (interactive)
   (other-window -1)
-  (scroll-up 10)
-  (other-window -1)
+  (isearch-forward)
+  (other-window 1)
   )
 
-(defun jo-other-window-scroll-down ()
+(defun jo-isearch-backward-other-window ()
   (interactive)
   (other-window -1)
-  (scroll-down 10)
-  (other-window -1)
+  (isearch-backward)
+  (other-window 1)
   )
 
 (defun delete-word (arg)
@@ -365,8 +361,8 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-M-i") 'evil-jump-forward)
 (global-set-key (kbd "C-M-o") 'evil-jump-backward)
 (global-set-key (kbd "C-d") 'delete-forward-char)
-(global-set-key (kbd "M-v") 'evil-scroll-up)
-(global-set-key (kbd "C-v") 'evil-scroll-down)
+(global-set-key (kbd "M-v") 'evil-scroll-page-up)
+(global-set-key (kbd "C-v") 'evil-scroll-page-down)
 
 (global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
@@ -377,12 +373,14 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-c b r") 'rename-buffer)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "C-x v") 'jong-show-buffer-other-window)
-(global-set-key (kbd "C-x C-v") 'jong-show-buffer-other-window)
-(global-set-key (kbd "C-x n") 'jong-show-buffer-other-window-move)
-(global-set-key (kbd "C-x C-n") 'jong-show-buffer-other-window-move)
-(global-set-key (kbd "M-n") 'jo-other-window-scroll-up)
-(global-set-key (kbd "M-p") 'jo-other-window-scroll-down)
+(global-set-key (kbd "C-x v") 'jo-show-buffer-other-window)
+(global-set-key (kbd "C-x C-v") 'jo-show-buffer-other-window)
+(global-set-key (kbd "C-x n") 'jo-show-buffer-other-window-move)
+(global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-window-move)
+(global-set-key (kbd "C-=") 'jo-isearch-forward-other-window)
+(global-set-key (kbd "C-+") 'jo-isearch-backward-other-window)
+(global-set-key (kbd "M-n") (lambda() (interactive) (scroll-other-window 15)))
+(global-set-key (kbd "M-p") (lambda() (interactive) (scroll-other-window -15)))
 
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
 
@@ -481,7 +479,7 @@ With argument ARG, do this that many times."
   (setq company-dabbrev-downcase nil)
   (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 3)
-  (global-set-key (kbd "C-<tab>") 'company-complete)
+p  (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode))
 
 
@@ -638,8 +636,6 @@ With argument ARG, do this that many times."
 	         (local-set-key (kbd "C-S-g") 'close-compilation-window)
 	         (linum-mode t)
 	         ))
-
-
 
 
 
