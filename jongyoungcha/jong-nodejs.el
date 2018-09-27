@@ -68,14 +68,17 @@
                            ;; (tern-mode)
                            (company-mode)))
 
-
 (add-hook 'js2-mode-hook
           (lambda ()
-            ;; (local-set-key (kbd "C-c r .") 'xref-find-definitions)
-            ;; (local-set-key (kbd "C-c r ,") 'xref-find-references)
-            (defind-key js2-mode-map (kbd "C-c r s") 'tide-start-server)
-            (define-key js2-mode-map (kbd "C-c r .") 'tide-jump-to-definition)
-            (define-key js2-mode-map (kbd "C-c r ,") 'tide-references)
+            (define-key js2-mode-map (kbd "C-c r s") 'tide-start-server)
+            (define-key js2-mode-map (kbd "C-c r .")
+	      (lambda () (interactive)
+		(evil--jumps-push)
+		(call-interactively 'tide-jump-to-definition)))
+            (define-key js2-mode-map (kbd "C-c r ,")
+	      (lambda () (interactive)
+		(evil--jumps-push)
+		(call-interactively 'tide-references)))
             (define-key js2-mode-map (kbd "C-c r r") 'tide-rename-symbol)
             (define-key js2-mode-map (kbd "C-c r d") 'tide-documentation-at-point)
             (define-key js2-mode-map (kbd "C-c d l") 'indium-eval-last-node)
