@@ -346,6 +346,9 @@ With argument ARG, do this that many times."
 
 (setq confirm-kill-emacs 'y-or-n-p)
 
+(setq mark-ring-max 8)
+(setq global-mark-ring-max 8)
+(setq set-mark-command-repeat-pop t)
 
 (global-set-key (kbd "C-x C-x") 'my-prev-window)
 (global-set-key (kbd "C-x C-p") 'other-window)
@@ -358,8 +361,10 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-<deletechar>") 'hungry-delete-forward)
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
-(global-set-key (kbd "C-M-i") 'evil-jump-forward)
-(global-set-key (kbd "C-M-o") 'evil-jump-backward)
+;; (global-set-key (kbd "C-M-i") 'jo-pop-local-mark-ring)
+(global-set-key (kbd "C-M-o") 'pop-global-mark)
+(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+
 (global-set-key (kbd "C-d") 'delete-forward-char)
 (global-set-key (kbd "M-v") 'evil-scroll-page-up)
 (global-set-key (kbd "C-v") 'evil-scroll-page-down)
@@ -703,6 +708,7 @@ With argument ARG, do this that many times."
 (require 'jong-elisp)
 (require 'jong-term)
 (require 'jong-scheme)
+(require 'jong-cmake)
 (require 'jong-c)
 (require 'jong-scala)
 (require 'jong-haskell)
@@ -718,7 +724,7 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
