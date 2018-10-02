@@ -175,15 +175,8 @@ Version 2017-07-08"
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (use-package evil
   :ensure t)
-;; (evil-mode 1)
-;; (with-eval-after-load 'evil-maps
-;;   ;; (fset 'evil-visual-update-x-selection 'ignore)
-;;   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
-;;   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
-;;   (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward))
 
 (use-package yasnippet
   :ensure t)
@@ -216,6 +209,14 @@ Version 2017-07-08"
   :ensure t)
 (with-eval-after-load 'helm-ag
   (global-set-key (kbd "C-c a g") 'helm-do-ag))
+
+(use-package eyebrowse
+  :ensure t)
+(with-eval-after-load 'eyebrowse
+  (setq eyebrowse-mode t))
+
+(use-package prodigy
+  :ensure t)
 
 (use-package hungry-delete
   :ensure t)
@@ -326,6 +327,8 @@ Version 2017-07-08"
   (other-window 1)
   )
 
+
+
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of a word.
 With argument ARG, do this that many times."
@@ -361,9 +364,8 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-<deletechar>") 'hungry-delete-forward)
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
-;; (global-set-key (kbd "C-M-i") 'jo-pop-local-mark-ring)
-(global-set-key (kbd "C-M-o") 'pop-global-mark)
 (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+(global-set-key (kbd "C-h C-SPC") 'helm-all-mark-rings)
 
 (global-set-key (kbd "C-d") 'delete-forward-char)
 (global-set-key (kbd "M-v") 'evil-scroll-page-up)
@@ -381,13 +383,15 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-x v") 'jo-show-buffer-other-window)
 (global-set-key (kbd "C-x C-v") 'jo-show-buffer-other-window)
 (global-set-key (kbd "C-x n") 'jo-show-buffer-other-window-move)
-(global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-window-move)
+(global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-windomw-move)
 (global-set-key (kbd "C-=") 'jo-isearch-forward-other-window)
 (global-set-key (kbd "C-+") 'jo-isearch-backward-other-window)
-(global-set-key (kbd "M-n") (lambda() (interactive) (scroll-other-window 15)))
-(global-set-key (kbd "M-p") (lambda() (interactive) (scroll-other-window -15)))
-
+(global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
+(global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window -15)))
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
+(global-set-key (kbd "C-c <") 'eyebrowse-prev-window-config)
+(global-set-key (kbd "C-c >") 'eyebrowse-next-window-config)
+
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
@@ -714,6 +718,7 @@ With argument ARG, do this that many times."
 (require 'jong-haskell)
 (require 'jong-nodejs)
 (require 'jong-minor-eos)
+(require 'jong-go)
 
 (load-theme 'solarized-dark t)
 
@@ -722,9 +727,10 @@ With argument ARG, do this that many times."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(eyebrowse-mode t)
  '(package-selected-packages
    (quote
-    (cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
