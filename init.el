@@ -327,8 +327,6 @@ Version 2017-07-08"
   (other-window 1)
   )
 
-
-
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of a word.
 With argument ARG, do this that many times."
@@ -340,7 +338,6 @@ With argument ARG, do this that many times."
 With argument ARG, do this that many times."
   (interactive "p")
   (delete-word (- arg)))
-;; (global-set-key (kbd ))
 
 (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
 (global-set-key (kbd "M-d") 'delete-word)
@@ -391,7 +388,9 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
 (global-set-key (kbd "C-c <") 'eyebrowse-prev-window-config)
 (global-set-key (kbd "C-c >") 'eyebrowse-next-window-config)
-
+(global-set-key (kbd "C-c w w") (lambda() (interactive)
+				  (call-interactively 'eyebrowse-switch-to-window-config-1)
+				  (call-interactively 'eyebrowse-switch-to-window-config-2)))
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
@@ -408,8 +407,6 @@ With argument ARG, do this that many times."
       (with-current-buffer buffer
 	     (when (equal default-directory dir))
 	     (my-reload-dir-locals-for-current-buffer)))))
-
-
 
 
 ;; default setting.

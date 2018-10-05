@@ -42,6 +42,19 @@
                              (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
                              file))))))
 
+(defun jo-compile-cmake ()
+  (interactive)
+  (if (file-exists-p "CMakeLists.txt")
+      (progn
+        (if (get-buffer "*compilation*")
+            (progn
+              (delete-window-on (get-buffer "*compilation*"))
+              (kill-buffer "*compilation*")))
+        (compile "cmake . && ls ./Makefile && make -k"))
+    (message "%s" "Couldnt find CMakeList.txt"))
+  )
+
+
 (use-package smart-compile
   :ensure t)
 (with-eval-after-load 'smart-compile
@@ -60,7 +73,7 @@
   (add-hook 'rtags-jump-hook (lambda ()
                                (push-mark (point))))
 
-                       
+  
   (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
@@ -86,6 +99,7 @@
           (lambda()
             (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
             (local-set-key (kbd "C-c c c") 'compile)
+            (local-set-key (kbd "C-c c m") 'jo-compile-cmake)
             (local-set-key (kbd "C-g") 'kill-temporary-buffers)
             (local-set-key (kbd "C-S-g") 'close-compilation-window)
             (local-set-key (kbd "C-c f f") 'ff-find-other-file)
