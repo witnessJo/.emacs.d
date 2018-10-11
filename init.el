@@ -271,9 +271,9 @@ Version 2017-07-08"
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
 
-(defun my-prev-window ()
-  (interactive)
-  (other-window -1))
+;; (defun my-prev-window ()
+;;   (interactive)
+;;   (other-window -1))
 
 (setq skippable-buffers '("^\\*Messages\\*" "^\\*scratch\\*" "^\\*Help\\*" "^\\*helm buffers\\*"))
 
@@ -350,7 +350,8 @@ With argument ARG, do this that many times."
 (setq global-mark-ring-max 8)
 (setq set-mark-command-repeat-pop t)
 
-(global-set-key (kbd "C-x C-x") 'my-prev-window)
+;; (global-set-key (kbd "C-x C-x") 'my-prev-window)
+(global-set-key (kbd "C-x C-x") 'other-window)
 (global-set-key (kbd "C-x C-p") 'other-window)
 
 (global-set-key (kbd "C-S-M-;") 'windmove-left)
@@ -727,7 +728,7 @@ With argument ARG, do this that many times."
  '(eyebrowse-mode t)
  '(package-selected-packages
    (quote
-    (prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
