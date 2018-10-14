@@ -156,8 +156,8 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; set a default font
-(when (member "courier" (font-family-list))
-  (set-face-attribute 'default nil :font "courier-14"))
+(when (member "DejaVu Sans Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "Dejavu Sans Mono-11.5"))
 
 ;; specify font for all unicode characters
 (when (member "Symbola" (font-family-list))
@@ -174,7 +174,6 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (use-package evil
   :ensure t)
 
@@ -526,7 +525,8 @@ With argument ARG, do this that many times."
   :ensure t)
 (require 'exec-path-from-shell)
 (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs '("PATH" "GOPATH")))
 
 (use-package ido
   :ensure t)
@@ -728,7 +728,7 @@ With argument ARG, do this that many times."
  '(eyebrowse-mode t)
  '(package-selected-packages
    (quote
-    (go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (popwin flymake-go go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
