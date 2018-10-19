@@ -32,8 +32,24 @@
       (pop-to-buffer-same-window "*eshell*"))
     ))
 
+(defun jo-open-line-above ()
+  "Insert a newline above the current line and put point at beginning."
+  (interactive)
+  (unless (bolp)
+    (beginning-of-line))
+  (newline)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(defun jo-open-line-below ()
+  "Insert a newline below the current line and put point at beginning."
+  (interactive)
+  (unless (eolp)
+    (end-of-line))
+  (newline-and-indent))
+
 (defun my-get-selection-length ()
-  "Get length of selection"
+  "Get length of selection."
   (interactive)
   (if (use-region-p)
       (let (pos1 pos2)
@@ -45,7 +61,7 @@
 
 
 (defun my-show-selection-length ()
-  "Show length of selection"
+  "Show length of selection."
   (interactive)
   (let (length)
     (setq length (my-get-selection-length))
@@ -58,7 +74,7 @@
 
 
 (defun my-cut-line-or-region ()
-  "Cut current line, or text selection.
+  "Cut current line, or text selection
 When `universal-argument' is called first, cut whole buffer (respects `narrow-to-region').
 
 URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
@@ -156,8 +172,12 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; set a default font
-(when (member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "Dejavu Sans Mono-11.5"))
+(when (member "courier" (font-family-list))
+  (set-face-attribute 'default nil :font "courier-12"))
+  
+;; set a default font
+;; (when (member "DejaVu Sans Mono" (font-family-list))
+;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
 
 ;; specify font for all unicode characters
 (when (member "Symbola" (font-family-list))
@@ -348,8 +368,11 @@ With argument ARG, do this that many times."
 (setq mark-ring-max 8)
 (setq global-mark-ring-max 8)
 (setq set-mark-command-repeat-pop t)
+(global-set-key (kbd "C-k") 'comint-kill-whole-line)
 
-;; (global-set-key (kbd "C-x C-x") 'my-prev-window)
+(global-set-key (kbd "C-S-o") 'jo-open-line-above)
+(global-set-key (kbd "C-o") 'jo-open-line-below)
+
 (global-set-key (kbd "C-x C-x") 'other-window)
 (global-set-key (kbd "C-x C-p") 'other-window)
 
@@ -556,8 +579,6 @@ With argument ARG, do this that many times."
 	       (lambda()
 	         (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  python develope environments  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -610,17 +631,17 @@ With argument ARG, do this that many times."
     nil))
   )
 
-
+(defvar jo-kill-target-buffers)
+(setq jo-kill-target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
+			                     "*Warnings*" "*xref*" "*Node Shell*"))
 (defun kill-temporary-buffers ()
   "Kill current buffer unconditionally."
   (interactive)
-  (let (
-	     (buffer-modified-p nil)
-	     (target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
-			                     "*Warnings*" "*xref*" "*Node Shell*"))
+  (let ((buffer-modified-p nil)
+	     (jo-kill-target-buffers)
 	     (current-buffer))
-    (while target-buffers
-      (when (get-buffer (setq current-buffer (pop target-buffers)))
+    (while jo-kill-target-buffers
+      (when (get-buffer (setq current-buffer (pop jo-kill-target-buffers)))
 	     (kill-buffer current-buffer)))
     (if (not (equal projectile-project-name nil))
 	     (when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
@@ -728,7 +749,7 @@ With argument ARG, do this that many times."
  '(eyebrowse-mode t)
  '(package-selected-packages
    (quote
-    (popwin flymake-go go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (go-guru go-dlv flycheck-compile popwin flymake-go go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
