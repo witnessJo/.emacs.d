@@ -205,6 +205,8 @@ Version 2017-07-08"
 (use-package helm
   :ensure t)
 
+(require 'pos-tip)
+
 (setq helm-split-window-in-side-p t)
 
 (require 'helm-bookmark)
@@ -368,7 +370,11 @@ With argument ARG, do this that many times."
 (setq mark-ring-max 8)
 (setq global-mark-ring-max 8)
 (setq set-mark-command-repeat-pop t)
-(global-set-key (kbd "C-k") 'comint-kill-whole-line)
+(global-set-key (kbd "C-k") (lambda () (interactive)
+                              (call-interactively 'comint-kill-whole-line)
+			      (call-interactively 'indent-for-tab-command)))
+
+(global-set-key (kbd "C-;") 'comment-line)
 
 (global-set-key (kbd "C-S-o") 'jo-open-line-above)
 (global-set-key (kbd "C-o") 'jo-open-line-below)
@@ -502,7 +508,6 @@ With argument ARG, do this that many times."
 
 (use-package company
   :ensure t)
-(require 'company)
 (with-eval-after-load 'company
   (setq company-async-timeout 4)
   (setq company-dabbrev-downcase nil)
@@ -510,6 +515,13 @@ With argument ARG, do this that many times."
   (setq company-minimum-prefix-length 3)
   (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package company-quickhelp
+  :ensure t)
+(with-eval-after-load 'company-quickhelp
+  (company-quickhelp-mode)
+  (setq company-quickhelp-delay 0.1))
+
 
 
 (use-package magit
@@ -601,8 +613,9 @@ With argument ARG, do this that many times."
 	       (lambda()
 	         (add-to-list 'company-backend 'company-jedi)))
 
-
 (global-set-key (kbd "C-c i") 'indent-region)
+
+
 
 (use-package anaconda-mode
   :ensure t)
@@ -749,7 +762,7 @@ With argument ARG, do this that many times."
  '(eyebrowse-mode t)
  '(package-selected-packages
    (quote
-    (go-guru go-dlv flycheck-compile popwin flymake-go go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (company-quickhelp go-guru go-dlv flycheck-compile popwin flymake-go go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")

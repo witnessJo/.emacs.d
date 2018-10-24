@@ -98,6 +98,14 @@ And the environment variable was existing, Download go binaries from the interne
                               (set (make-local-variable 'compile-command)
                                    "go build -v && go test -v && go vet"))))
 
+
+(defun jo-projectile-run-project (&optional prompt)
+  (interactive "P")
+  (let ((compilation-read-command
+	 (or (not (projectile-run-command (projectile-compilation-dir)))
+	     prompt)))
+    (projectile-run-project prompt)))
+
 (add-hook 'go-mode-hook (lambda ()
                           (setq indent-tabs-mode nil)
                           (setq tab-width 4)
@@ -131,7 +139,15 @@ And the environment variable was existing, Download go binaries from the interne
                                          (lambda () (interactive)
                                            (compile "go build -v && go test -v && go vet")))
                           (local-set-key (kbd "C-c r s") 'jo-set-projectile-run-command)
-                          (local-set-key (kbd "C-c r r") 'projectile-run-project)))
+			  (local-set-key (kbd "C-c r r") 'jo-projectile-run-project)
+                          ;; (local-set-key (kbd "C-c r r") 'projectile-run-project)
+                          ;; (local-set-key (kbd "C-c r r")
+                          ;;                (lambda() (interactive)
+                          ;;                  ;; (call-interactively 'projectile-run-project)
+                          ;;                  ;; (call-interactively 'autopair-newline)
+			  ;; 		   (projectile-run-project "the prompt")
+                          ;;                  ))
+                          ))
 
 
 (provide 'jong-go)
