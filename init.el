@@ -174,7 +174,7 @@ Version 2017-07-08"
 ;; set a default font
 (when (member "courier" (font-family-list))
   (set-face-attribute 'default nil :font "courier-12"))
-  
+
 ;; set a default font
 ;; (when (member "DejaVu Sans Mono" (font-family-list))
 ;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
@@ -372,7 +372,7 @@ With argument ARG, do this that many times."
 (setq set-mark-command-repeat-pop t)
 (global-set-key (kbd "C-k") (lambda () (interactive)
                               (call-interactively 'comint-kill-whole-line)
-			      (call-interactively 'indent-for-tab-command)))
+                              (call-interactively 'indent-for-tab-command)))
 
 (global-set-key (kbd "C-;") 'comment-line)
 
@@ -418,8 +418,9 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-c <") 'eyebrowse-prev-window-config)
 (global-set-key (kbd "C-c >") 'eyebrowse-next-window-config)
 (global-set-key (kbd "C-c w w") (lambda() (interactive)
-				  (call-interactively 'eyebrowse-switch-to-window-config-1)
-				  (call-interactively 'eyebrowse-switch-to-window-config-2)))
+                                  (call-interactively 'eyebrowse-switch-to-window-config-1)
+                                  (call-interactively 'eyebrowse-switch-to-window-config-2)
+                                  (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
@@ -646,19 +647,18 @@ With argument ARG, do this that many times."
 
 (defvar jo-kill-target-buffers)
 (setq jo-kill-target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
-			                     "*Warnings*" "*xref*" "*Node Shell*"))
+                                   "*Warnings*" "*xref*" "*Node Shell*" "*Google Translate*"))
 (defun kill-temporary-buffers ()
   "Kill current buffer unconditionally."
   (interactive)
-  (let ((buffer-modified-p nil)
-	     (jo-kill-target-buffers)
-	     (current-buffer))
-    (while jo-kill-target-buffers
-      (when (get-buffer (setq current-buffer (pop jo-kill-target-buffers)))
-	     (kill-buffer current-buffer)))
+  (let ((buffer-modifinnnned-p nil)
+        (buffer-to-kill nil))
+    (dolist (buffer-name jo-kill-target-buffers)
+      (when (setq buffer-to-kill (get-buffer buffer-name))
+        (kill-buffer buffer-to-kill)))
     (if (not (equal projectile-project-name nil))
-	     (when (get-buffer (setq current-buffer (format "%s-%s" "*compilation*" projectile-project-name)))
-	       (kill-buffer current-buffer)))
+	     (when (get-buffer (setq buffer-to-kill (format "%s-%s" "*compilation*" projectile-project-name)))
+	       (kill-buffer buffer-to-kill)))
     (delete-above-below-window))
   )
 
@@ -741,6 +741,13 @@ With argument ARG, do this that many times."
 
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 
+(use-package google-translate
+  :ensure t)
+(with-eval-after-load 'google-translate
+  (setq google-translate-default-source-language "en")
+  (setq google-translate-default-target-language "ko")
+  (global-set-key (kbd "C-c g d") 'google-translate-at-point))
+
 (require 'jong-elisp)
 (require 'jong-term)
 (require 'jong-scheme)
@@ -762,7 +769,7 @@ With argument ARG, do this that many times."
  '(eyebrowse-mode t)
  '(package-selected-packages
    (quote
-    (company-quickhelp go-guru go-dlv flycheck-compile popwin flymake-go go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
+    (google-translate company-quickhelp go-guru go-dlv flycheck-compile popwin flymake-go go-errcheck helm-go-package go-stacktracer go-eldoc go-direx gocode emacs-go-direx emacs-go-eldoc prodigy eyebrowse go-flycheck direx company-go go-company go-mode cmake-mode elisp-refs tide js-comint js2-refactor indium flymake-json nodejs-repl js-commint sbt-mode ensime function-args functions-args autopair cargo emacs-racer rust-mode markdown-mode xterm-color use-package solarized-theme smart-compile register-list psvn multi-term magit hungry-delete helm-projectile helm-ag flycheck exec-path-from-shell evil elpy company-rtags company-jedi color-theme-sanityinc-tomorrow cmake-ide auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
