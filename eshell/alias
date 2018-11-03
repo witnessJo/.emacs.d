@@ -1,7 +1,8 @@
-alias 123 412 $*
-alias sl $*
-alias ff find-file $1
-alias ll ls -l $*
-alias name $*
-alias il $*
+alias nil ls $*
 alias (nil) $*
+alias il $*
+alias name $*
+alias ll ls -l $*
+alias ff find-file $1
+alias sl $*
+alias 123 412 $*
