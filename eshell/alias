@@ -1,8 +1,13 @@
-alias nil ls $*
-alias (nil) $*
-alias il $*
-alias name $*
-alias ll ls -l $*
-alias ff find-file $1
-alias sl $*
+alias s $*
+alias ls $*
+alias qtum-cli qtum-cli -testnet $*
+alias qtumd qtumd -testnet $*
 alias 123 412 $*
+alias sl $*
+alias ff find-file $1
+alias ll ls -l $*
+alias name $*
+alias il $*
+alias (nil) $*
+alias nil ls $*
+alias geth geth --datadir=/root/eth_testnet $*

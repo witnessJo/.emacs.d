@@ -48,6 +48,9 @@
     (exec-path-from-shell-copy-envs '("PATH" "GOROOT" "GOPATH"))))
 
 (add-to-list #'jo-kill-target-buffers "*jo-error*")
+(add-to-list #'jo-kill-target-buffers "*go-guru-output*")
+(add-to-list #'jo-kill-target-buffers "*Gofmt Errors*")
+
 (defun jo-set-go-bins ()
   "Check if GOPATH environment variable is set or not.
 And the environment variable was existing, Download go binaries from the internet..."
@@ -56,12 +59,14 @@ And the environment variable was existing, Download go binaries from the interne
         (buffer-error "*jo-error*")
         (list-url (list "github.com/golang/lint/golint"
                         "github.com/nsf/gocode"
+                        "github.com/mdempsky/gocode"
                         "github.com/k0kubun/pp"
                         "github.com/golang/lint/golint"
                         "github.com/rogpeppe/godef"
                         "github.com/dougm/goflymake"
                         "golang.org/x/tools/cmd/godoc"
-                        "golang.org/x/tools/cmd/guru")))
+                        "golang.org/x/tools/cmd/guru"
+                        "golang.org/x/tools/cmd/goimports")))
     (if (getenv "GOPATH")
         (progn
           (dolist (elt list-url cmd)
@@ -72,23 +77,31 @@ And the environment variable was existing, Download go binaries from the interne
       (message "There was not the GOPATH environment variable.")))
   )
 
-(defun jo-set-projectile-run-command ()
-  "Read user input command and set 'projectile-project-run-cmd'."
-  (interactive)
-  (let (user-input)
-    (if (not (equal "" (setq user-input (read-string "Enter the command : "))))
-        (progn
-          (setq projectile-project-run-cmd user-input)
-          (message "Changed projectile-project-run-cmd as %s" user-input))
-      (message "The command was empty..."))
-    ))
+;; (defun jo-set-projectile-run-command ()
+;;   "Read user input command and set 'projectile-project-run-cmd'."
+;;   (interactive)
+;;   (let (user-input)
+;;     (if (not (equal "" (setq user-input (read-string "Enter the command : "))))
+;;         (progn
+;;           (setq projectile-project-run-cmd user-input)
+;;           (message "Changed projectile-project-run-cmd as %s" user-input))
+;;       (message "The command was empty..."))
+;;     ))
 
 
 (add-to-list 'exec-path (expand-file-name "~/projects/goworks/bin/godef"))
+(add-to-list 'exec-path (expand-file-name "~/projects/goworks/bin"))
 
-;; (add-hook 'go-mode-hook (lambda ()
-;;                           (setq-default indent-tabs-mode nil)
-;;                           (setq-default tab-width 3)))
+
+(add-hook 'go-mode-hook (lambda ()
+                          (setq-default indent-tabs-mode nil)
+                          (setq-default tab-width 3)))
+
+;; (add-hook 'completion-at-point-functions 'go-complete-at-point)
+
+(setq gofmt-command "goimports")
+;; (add-hook 'before-save-hook 'gofmt-before-save)
+
 
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook 'gofmt-before-save)
@@ -98,13 +111,94 @@ And the environment variable was existing, Download go binaries from the interne
                               (set (make-local-variable 'compile-command)
                                    "go build -v && go test -v && go vet"))))
 
+(defun jo-debug-go-project ()
+  "Debug the go project with delve."
+  (interactive)
+  (let ((cmd nil)
+        (homedir nil))
+    (setq homedir (projectile-project-root))
+    (if homedir
+        (with-temp-buffer
+          (cd homedir)
+          (call-interactively 'dlv))
+      (message "Couldn't found the projectile root directory."))
+    ))
+
 
 (defun jo-projectile-run-project (&optional prompt)
   (interactive "P")
   (let ((compilation-read-command
-	 (or (not (projectile-run-command (projectile-compilation-dir)))
-	     prompt)))
+         (or (not (projectile-run-command (projectile-compilation-dir)))
+             prompt)))
     (projectile-run-project prompt)))
+
+
+(define-derived-mode chan-gogud-mode gud-mode "chan-gogud"
+  (setq font-lock-defaults '(go--build-font-lock-keywords))
+  )
+
+(defun chan-gogud-gdb ()
+  "This is delve wrapper based on 'gud-gdb mode."
+  (interactive)
+  (call-interactively 'dlv)
+  (chan-gogud-mode))
+
+
+(defun chan-gogud-exec-function (target-func)
+  "..."
+  (interactive)
+  (let ((base-line 0)
+        (target-line 0)
+        (current-line-buffer "")
+        (target-symbol "")
+        (target-offset 0)
+        )
+    
+    ;; Initailize other buffer cursor position...
+    (gud-refresh)
+
+    ;; Get Initial variables...
+    (setq target-line (line-number-at-pos))
+    (setq target-symbol (thing-at-point 'symbol))
+    (if (equal target-symbol nil)
+        (progn
+          (message "Target symbol was nil...")
+          (return)))
+
+    ;; Get current line buffer...
+    (setq current-line-buffer (buffer-substring-no-properties
+                               (line-beginning-position)
+                               (line-end-position)))
+
+    ;; Calculates what times symbol was shown from the line...
+    (setq target-offset
+          (- (- (- (point) (line-beginning-position))
+                (string-match ":" current-line-buffer)) 2))
+    
+    
+    ;; Get base-line from the gud buffer.
+    (goto-char (point-max))
+    (while (not (string-prefix-p "=>" (current-line-contents)))
+      (forward-line -1)
+      (if (equal (point) 0)
+          (progn
+            (message "Couldnt find the '=>' prefix...")
+            (return))))
+    
+    (setq base-line (line-number-at-pos))
+    
+    ;; Move other window and move the point to the target symbol.
+    (other-window 1)
+    (forward-line (- target-line base-line))
+    (line-beginning-position)
+    (goto-char (+ (point) target-offset))
+    (call-interactively target-func)
+    (other-window 1)
+    (with-no-warnings
+      (goto-line target-line))
+    ;; (message "target offset : %d target-symbol:%s, base line is : %d, target line is %d" target-offset target-symbol base-line target-line)
+    )
+  )
 
 (add-hook 'go-mode-hook (lambda ()
                           (setq indent-tabs-mode nil)
@@ -123,31 +217,56 @@ And the environment variable was existing, Download go binaries from the interne
                           (setq company-begin-commands '(self-insert-command))
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)
-
+                          
                           ;;setting go-eldocp
                           (set-face-attribute 'eldoc-highlight-function-argument nil
                                               :underline t :foreground "green"
                                               :weight 'bold)
-                          
+
                           (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
                           (local-set-key (kbd "C-c C-a") 'go-import-add)
                           (local-set-key (kbd "C-c C-g") 'go-goto-imports)
                           (local-set-key (kbd "C-c C-f") 'gofmt)
                           (local-set-key (kbd "C-c r .") 'godef-jump)
+                          (local-set-key (kbd "C-c r ,") 'go-guru-referrers)
+                          (local-set-key (kbd "C-c r i") 'go-guru-implements)
+                          (local-set-key (kbd "C-c r j") 'go-guru-definition)
+                          (local-set-key (kbd "C-c r d") 'go-guru-describe)
                           (local-set-key (kbd "C-c d d") 'godoc-at-point)
+                          (local-set-key (kbd "C-c g g") 'chan-gogud-gdb)
                           (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
                                            (compile "go build -v && go test -v && go vet")))
-                          (local-set-key (kbd "C-c r s") 'jo-set-projectile-run-command)
-			  (local-set-key (kbd "C-c r r") 'jo-projectile-run-project)
-                          ;; (local-set-key (kbd "C-c r r") 'projectile-run-project)
-                          ;; (local-set-key (kbd "C-c r r")
-                          ;;                (lambda() (interactive)
-                          ;;                  ;; (call-interactively 'projectile-run-project)
-                          ;;                  ;; (call-interactively 'autopair-newline)
-			  ;; 		   (projectile-run-project "the prompt")
-                          ;;                  ))
-                          ))
+                          (local-set-key (kbd "C-c r r") 'jo-projectile-run-project)
+                          (local-set-key (kbd "C-c M->")
+                                         (lambda () (interactive)
+                                           (other-window 1)
+                                           (call-interactively 'end-of-buffer)
+                                           (other-window -1)))
+                          )
+          )
+
+
+
+
+
+(add-hook 'chan-gogud-mode-hook (lambda ()
+                                  (local-set-key (kbd "C-c r .")
+                                                 (lambda () (interactive)
+                                                   (call-interactively 'gud-refresh)
+                                                   (chan-gogud-exec-function #'godef-jump)))
+                                  (local-set-key (kbd "C-c r ,")
+                                                 (lambda () (interactive)
+                                                   (call-interactively 'gud-refresh)
+                                                   (chan-gogud-exec-function #'go-guru-referrers)))
+                                  (local-set-key (kbd "C-c r i")
+                                                 (lambda () (interactive)
+                                                   (call-interactively 'gud-refresh)
+                                                   (chan-gogud-exec-function #'go-guru-implements)))
+                                  )
+          )
+
 
 
 (provide 'jong-go)
+;;;
