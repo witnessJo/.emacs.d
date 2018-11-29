@@ -172,16 +172,25 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; set a default font
-(when (member "courier" (font-family-list))
-  (set-face-attribute 'default nil :font "courier-12"))
+;; (when (member "courier" (font-family-list))
+;;   (set-face-attribute 'default nil :font "courier"))
 
 ;; set a default font
+(when (member "fixed" (font-family-list))
+  (set-face-attribute 'default nil :font "fixed-12")
+  (setq-default line-spacing 3))
+
 ;; (when (member "DejaVu Sans Mono" (font-family-list))
-;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono-12")
+;;   (setq-default line-spacing 3))
+
+
+
 
 ;; specify font for all unicode characters
 (when (member "Symbola" (font-family-list))
   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+
 
 ;; specify font for chinese characters using default chinese font on linux
 (when (member "WenQuanYi Micro Hei" (font-family-list))
@@ -888,7 +897,7 @@ With argument ARG, do this that many times."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:inherit nil :stipple nil :background "#002b36" :foreground "#839496" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "misc" :family "clearly")))))
 
 (put 'dired-find-alternate-file 'disabled nil)
 
