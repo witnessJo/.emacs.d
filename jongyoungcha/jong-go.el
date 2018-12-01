@@ -89,8 +89,8 @@ And the environment variable was existing, Download go binaries from the interne
 ;;     ))
 
 
-(add-to-list 'exec-path (expand-file-name "~/projects/goworks/bin/godef"))
-(add-to-list 'exec-path (expand-file-name "~/projects/goworks/bin"))
+(add-to-list 'exec-path (expand-file-name "~/goworks/bin/godef"))
+(add-to-list 'exec-path (expand-file-name "~/goworks/bin"))
 
 
 (add-hook 'go-mode-hook (lambda ()
@@ -137,10 +137,10 @@ And the environment variable was existing, Download go binaries from the interne
   (setq font-lock-defaults '(go--build-font-lock-keywords))
   )
 
-(defun chan-gogud-gdb ()
+(defun chan-gogud-gdb (&optional cmd)
   "This is delve wrapper based on 'gud-gdb mode."
   (interactive)
-  (call-interactively 'dlv)
+  (dlv cmd)
   (chan-gogud-mode))
 
 
@@ -200,6 +200,47 @@ And the environment variable was existing, Download go binaries from the interne
     )
   )
 
+
+(defun chan-run-dlv-interactively()
+  "Make run interactively!!!."
+  (interactive)
+  (let ((target-port nil)
+        (target-dir nil)
+        (output-buffer "*chan-run-dlv-interactively*")
+        (listen-process nil))
+    (if (equal (projectile-project-root) nil)
+        (setq target-dir (projectile-project-root))
+      (setq target-dir default-directory))
+    
+    ;; start headless delve
+    ;; (kill-buffer output-buffer)
+    (with-current-buffer (get-buffer-create output-buffer)
+      (erase-buffer)
+      (setq default-directory target-dir)
+      (setq listen-process (make-process :name "chan-dlv"
+                                         :buffer output-buffer
+                                         :command (list "dlv" "debug" "--headless")))
+      (while (equal (buffer-string) "")
+        (sleep-for 0.1))
+      
+      (progn
+        (goto-char (point-min))
+        (end-of-line)
+        (set-mark-command nil)
+        
+        (setq target-port (buffer-substring
+                           (progn (search-backward ":")
+                                  (forward-char 1)
+                                  (point))
+                           (line-end-position))))
+      (message "%s %s" default-directory target-port))
+    
+    (if (numberp (string-to-number target-port))
+        (chan-gogud-gdb (format "dlv connect :%s" target-port))
+      (message "Parsing listening port was failed..."))
+    )
+  )
+
 (add-hook 'go-mode-hook (lambda ()
                           (setq indent-tabs-mode nil)
                           (setq tab-width 4)
@@ -248,23 +289,23 @@ And the environment variable was existing, Download go binaries from the interne
 
 
 
-
-
-(add-hook 'chan-gogud-mode-hook (lambda ()
-                                  (local-set-key (kbd "C-c r .")
-                                                 (lambda () (interactive)
-                                                   (call-interactively 'gud-refresh)
-                                                   (chan-gogud-exec-function #'godef-jump)))
-                                  (local-set-key (kbd "C-c r ,")
-                                                 (lambda () (interactive)
-                                                   (call-interactively 'gud-refresh)
-                                                   (chan-gogud-exec-function #'go-guru-referrers)))
-                                  (local-set-key (kbd "C-c r i")
-                                                 (lambda () (interactive)
-                                                   (call-interactively 'gud-refresh)
-                                                   (chan-gogud-exec-function #'go-guru-implements)))
-                                  )
+(add-hook 'chan-gogud-mode-hook
+          (lambda () (local-set-key (kbd "C-c r .")
+                                    (lambda () (interactive)
+                                      (call-interactively 'gud-refresh)
+                                      (chan-gogud-exec-function #'godef-jump)))
+            (local-set-key (kbd "C-c r ,")
+                           (lambda () (interactive)
+                             (call-interactively 'gud-refresh)
+                             (chan-gogud-exec-function #'go-guru-referrers)))
+            (local-set-key (kbd "C-c r i")
+                           (lambda () (interactive)
+                             (call-interactively 'gud-refresh)
+                             (chan-gogud-exec-function #'go-guru-implements)))
+            )
           )
+
+
 
 
 

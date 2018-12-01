@@ -10,4 +10,4 @@ alias name $*
 alias il $*
 alias (nil) $*
 alias nil ls $*
-alias geth geth --datadir=/root/eth_testnet $*
+alias geth geth --datadir=~/testnet $*
