@@ -383,7 +383,15 @@ With argument ARG, do this that many times."
                               (call-interactively 'comint-kill-whole-line)
                               (call-interactively 'indent-for-tab-command)))
 
-(global-set-key (kbd "C-;") 'comment-line)
+(global-set-key (kbd "M-;") (lambda () (interactive)
+                              (let ((base-pos 0))
+                                (setq base-pos (point))
+                                (beginning-of-line)
+                                (call-interactively 'comment-line)
+                                (goto-char base-pos)
+                                (forward-line)
+                                )))
+
 
 (global-set-key (kbd "C-S-o") 'jo-open-line-above)
 (global-set-key (kbd "C-o") 'jo-open-line-below)
@@ -428,8 +436,8 @@ With argument ARG, do this that many times."
                                 (setq fword-pos (point))
                                 (setq target-string (buffer-substring base-pos fword-pos))
                                 (setq gap-length (string-match candidate-chars target-string))
-				(if (not (equal gap-length nil))
-				    (backward-char (- (- (length target-string) gap-length) 1)))
+                                (if (not (equal gap-length nil))
+                                    (backward-char (- (- (length target-string) gap-length) 1)))
                                 )))
 
 ;; Back word with candidate characters.
@@ -441,10 +449,10 @@ With argument ARG, do this that many times."
                                     (candindate-pos 0)
                                     (gap-length 0))
                                 (setq base-pos (point))
-				(if (equal (re-search-backward candidate-chars) nil)
-				    (progn
-				      (goto-char base-pos)
-				      (backward-word))))))
+                                (if (equal (re-search-backward candidate-chars) nil)
+                                    (progn
+                                      (goto-char base-pos)
+                                      (backward-word))))))
 
 
 (global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
