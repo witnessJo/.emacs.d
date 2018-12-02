@@ -8,7 +8,7 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
-	     '("marmalade" . "https://marmalade-repo.org/packages/"))
+             '("marmalade" . "https://marmalade-repo.org/packages/"))
 
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
@@ -53,8 +53,8 @@
   (interactive)
   (if (use-region-p)
       (let (pos1 pos2)
-	(setq pos1 (region-beginning) pos2 (region-end))
-	(- pos2 pos1))
+        (setq pos1 (region-beginning) pos2 (region-end))
+        (- pos2 pos1))
     -1
     )
   )
@@ -66,7 +66,7 @@
   (let (length)
     (setq length (my-get-selection-length))
     (if (equal length -1)
-	(message "regions is not activated...")
+        (message "regions is not activated...")
       (message "length : %d" length)
       )
     )
@@ -176,9 +176,7 @@ Version 2017-07-08"
 ;;   (set-face-attribute 'default nil :font "courier"))
 
 ;; set a default font
-(when (member "fixed" (font-family-list))
-  (set-face-attribute 'default nil :font "fixed")
-  (setq-default line-spacing 2))
+
 
 ;; (when (member "DejaVu Sans Mono" (font-family-list))
 ;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono-12")
@@ -188,13 +186,13 @@ Version 2017-07-08"
 
 
 ;; specify font for all unicode characters
-(when (member "Symbola" (font-family-list))
-  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+;; (when (member "Symbola" (font-family-list))
+;;   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
 
 ;; specify font for chinese characters using default chinese font on linux
-(when (member "WenQuanYi Micro Hei" (font-family-list))
-  (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
+;; (when (member "WenQuanYi Micro Hei" (font-family-list))
+;;   (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
 
 ;; (when (eq system-type 'darwin)
 ;;   (set-face-attribute 'default nil :family "monaco"))
@@ -372,6 +370,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
 (global-set-key (kbd "M-d") 'delete-word)
 
+
 (global-set-key [remap next-buffer] 'my-next-buffer)
 
 (setq confirm-kill-emacs 'y-or-n-p)
@@ -396,6 +395,9 @@ With argument ARG, do this that many times."
                                 (kill-buffer (buffer-name))
                                 (call-interactively 'other-window)))
 
+
+
+
 (global-set-key (kbd "C-S-M-;") 'windmove-left)
 (global-set-key (kbd "C-S-M-'") 'windmove-right)
 
@@ -411,6 +413,40 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-v") 'evil-scroll-page-up)
 (global-set-key (kbd "C-v") 'evil-scroll-page-down)
 
+
+
+;; Forward word with candidate characters.
+(global-set-key (kbd "M-f") (lambda () (interactive)
+                              (let ((candidate-chars "[\(\)\{\}\;]")
+                                    (target-string "")
+                                    (base-pos 0)
+                                    (fword-pos 0)
+                                    (candindate-pos 0)
+                                    (gap-length 0))
+                                (setq base-pos (point))
+                                (forward-word)
+                                (setq fword-pos (point))
+                                (setq target-string (buffer-substring base-pos fword-pos))
+                                (setq gap-length (string-match candidate-chars target-string))
+				(if (not (equal gap-length nil))
+				    (backward-char (- (- (length target-string) gap-length) 1)))
+                                )))
+
+;; Back word with candidate characters.
+(global-set-key (kbd "M-b") (lambda () (interactive)
+                              (let ((candidate-chars "[();:{}]")
+                                    (target-string "")
+                                    (base-pos 0)
+                                    (bword-pos 0)
+                                    (candindate-pos 0)
+                                    (gap-length 0))
+                                (setq base-pos (point))
+				(if (equal (re-search-backward candidate-chars) nil)
+				    (progn
+				      (goto-char base-pos)
+				      (backward-word))))))
+
+
 (global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
@@ -423,7 +459,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-x v") 'jo-show-buffer-other-window)
 (global-set-key (kbd "C-x C-v") 'jo-show-buffer-other-window)
 (global-set-key (kbd "C-x n") 'jo-show-buffer-other-window-move)
-(global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-windomw-move)
+(global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-window-move)
 (global-set-key (kbd "C-=") 'jo-isearch-forward-other-window)
 (global-set-key (kbd "C-+") 'jo-isearch-backward-other-window)
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
@@ -431,17 +467,17 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
 
 (global-set-key (kbd "C-c <") (lambda() (interactive)
-				(call-interactively 'eyebrowse-prev-window-config)
-				(message "slot : %s" (eyebrowse--get 'current-slot))))
+                                (call-interactively 'eyebrowse-prev-window-config)
+                                (message "slot : %s" (eyebrowse--get 'current-slot))))
 
 (global-set-key (kbd "C-c >") (lambda() (interactive)
-				(call-interactively 'eyebrowse-next-window-config)
-				(message "slot : %s" (eyebrowse--get 'current-slot))))
+                                (call-interactively 'eyebrowse-next-window-config)
+                                (message "slot : %s" (eyebrowse--get 'current-slot))))
 
 (global-set-key (kbd "C-c w w") (lambda() (interactive)
-				  (call-interactively 'eyebrowse-switch-to-window-config-1)
-				  (call-interactively 'eyebrowse-switch-to-window-config-2)
-				  (call-interactively 'eyebrowse-switch-to-window-config-3)))
+                                  (call-interactively 'eyebrowse-switch-to-window-config-1)
+                                  (call-interactively 'eyebrowse-switch-to-window-config-2)
+                                  (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
@@ -456,8 +492,8 @@ With argument ARG, do this that many times."
   (let ((dir default-directory))
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
-	(when (equal default-directory dir))
-	(my-reload-dir-locals-for-current-buffer)))))
+        (when (equal default-directory dir))
+        (my-reload-dir-locals-for-current-buffer)))))
 
 
 ;; default setting.
@@ -468,12 +504,12 @@ With argument ARG, do this that many times."
     (set-frame-parameter
      nil 'alpha
      (if (eql (cond ((numberp alpha) alpha)
-		    ((numberp (cdr alpha)) (cdr alpha))
-		    ;; Also handle undocumented (<active> <inactive>) form.
+                    ((numberp (cdr alpha)) (cdr alpha))
+                    ;; Also handle undocumented (<active> <inactive>) form.
 
-		    ((numberp (cadr alpha)) (cadr alpha)))
-	      100)
-	 '(85 . 50) '(100 . 100)))))
+                    ((numberp (cadr alpha)) (cadr alpha)))
+              100)
+         '(85 . 50) '(100 . 100)))))
 
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
@@ -498,9 +534,9 @@ With argument ARG, do this that many times."
   (set-face-background 'show-paren-match-face (face-background 'default))
   (if (boundp 'font-lock-comment-face)
       (set-face-foreground 'show-paren-match-face
-			   (face-foreground 'font-lock-comment-face))
+                           (face-foreground 'font-lock-comment-face))
     (set-face-foreground 'show-paren-match-face
-			 (face-foreground 'default)))
+                         (face-foreground 'default)))
   (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
 
 (require 'paren)
@@ -626,8 +662,8 @@ With argument ARG, do this that many times."
 ;;;; elisp develope environments ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'emacs-lisp-mode-hook
-	  (lambda()
-	    (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
+          (lambda()
+            (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  python develope environments  ;;;;
@@ -648,8 +684,8 @@ With argument ARG, do this that many times."
 (use-package company-jedi
   :ensure t)
 (add-hook 'python-mode-hook
-	  (lambda()
-	    (add-to-list 'company-backend 'company-jedi)))
+          (lambda()
+            (add-to-list 'company-backend 'company-jedi)))
 
 (global-set-key (kbd "C-c i") 'indent-region)
 
@@ -684,36 +720,36 @@ With argument ARG, do this that many times."
 
 (defvar jo-kill-target-buffers)
 (setq jo-kill-target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
-				   "*Warnings*" "*xref*" "*Node Shell*" "*Google Translate*"))
+                                   "*Warnings*" "*xref*" "*Node Shell*" "*Google Translate*"))
 (defun kill-temporary-buffers ()
   "Kill current buffer unconditionally."
   (interactive)
   (let ((buffer-modifinnnned-p nil)
-	(buffer-to-kill nil))
+        (buffer-to-kill nil))
     (dolist (buffer-name jo-kill-target-buffers)
       (when (setq buffer-to-kill (get-buffer buffer-name))
-	(kill-buffer buffer-to-kill)))
+        (kill-buffer buffer-to-kill)))
     (if (not (equal projectile-project-name nil))
-	(when (get-buffer (setq buffer-to-kill (format "%s-%s" "*compilation*" projectile-project-name)))
-	  (kill-buffer buffer-to-kill)))
+        (when (get-buffer (setq buffer-to-kill (format "%s-%s" "*compilation*" projectile-project-name)))
+          (kill-buffer buffer-to-kill)))
     (delete-above-below-window))
   )
 
 
 (global-set-key (kbd "C-g")
-		(lambda () (interactive)
-		  (kill-temporary-buffers)
-		  (keyboard-quit))
-		)
+                (lambda () (interactive)
+                  (kill-temporary-buffers)
+                  (keyboard-quit))
+                )
 
 (add-hook 'python-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
-	    (local-set-key (kbd "C-c c c") 'jyc-run-python)
-	    (local-set-key (kbd "C-g") 'kill-temporary-buffers)
-	    (local-set-key (kbd "C-S-g") 'close-compilation-window)
-	    (linum-mode t)
-	    ))
+          (lambda ()
+            (local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
+            (local-set-key (kbd "C-c c c") 'jyc-run-python)
+            (local-set-key (kbd "C-g") 'kill-temporary-buffers)
+            (local-set-key (kbd "C-S-g") 'close-compilation-window)
+            (linum-mode t)
+            ))
 
 
 
@@ -732,13 +768,13 @@ With argument ARG, do this that many times."
    If buffer is modified, ask about save before running etags."
   (let ((extension (file-name-extension (buffer-file-name))))
     (condition-case err
-	ad-do-it
+        ad-do-it
       (error (and (buffer-modified-p)
-		  (not (ding))
-		  (y-or-n-p "Buffer is modified, save it? ")
-		  (save-buffer))
-	     (er-refresh-etags extension)
-	     ad-do-it))))
+                  (not (ding))
+                  (y-or-n-p "Buffer is modified, save it? ")
+                  (save-buffer))
+             (er-refresh-etags extension)
+             ad-do-it))))
 
 (defun er-refresh-etags (&optional extension)
   "Run etags on all peer files in current dir and reload them silently."
@@ -772,8 +808,8 @@ With argument ARG, do this that many times."
 (use-package markdown-mode
   :ensure t  :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
-	 ("\\.md\\'" . markdown-mode)
-	 ("\\.markdown\\'" . markdown-mode))
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
@@ -798,4 +834,8 @@ With argument ARG, do this that many times."
 (require 'jong-network)
 
 (load-theme 'solarized-dark t)
+
+(when (member "fixed" (font-family-list))
+  (set-face-attribute 'default nil :font "fixed-12")
+  (setq-default line-spacing 2))
 
