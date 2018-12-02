@@ -390,6 +390,7 @@ With argument ARG, do this that many times."
                                 (call-interactively 'comment-line)
                                 (goto-char base-pos)
                                 (forward-line)
+                                (indent-for-tab-command)
                                 )))
 
 
@@ -402,7 +403,6 @@ With argument ARG, do this that many times."
                                 (call-interactively 'other-window)
                                 (kill-buffer (buffer-name))
                                 (call-interactively 'other-window)))
-
 
 
 
@@ -449,10 +449,13 @@ With argument ARG, do this that many times."
                                     (candindate-pos 0)
                                     (gap-length 0))
                                 (setq base-pos (point))
-                                (if (equal (re-search-backward candidate-chars) nil)
-                                    (progn
-                                      (goto-char base-pos)
-                                      (backward-word))))))
+                                (re-search-backward candidate-chars)
+                                (setq candindate-pos (point))
+                                (goto-char base-pos)
+                                (backward-word)
+                                (setq bword-pos (point))
+                                (if (> candindate-pos bword-pos)
+                                    (goto-char candindate-pos)))))
 
 
 (global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
