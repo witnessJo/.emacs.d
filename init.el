@@ -355,6 +355,44 @@ Version 2017-07-08"
   (other-window 1)
   )
 
+
+(defun chan-forward-word ()
+  "Chan 'forward-word."
+  (interactive)
+  (let ((candidate-chars "[\(\)\{\}\;]")
+        (target-string "")
+        (base-pos 0)
+        (fword-pos 0)
+        (candindate-pos 0)
+        (gap-length 0))
+    (setq base-pos (point))
+    (forward-word)
+    (setq fword-pos (point))
+    (setq target-string (buffer-substring base-pos fword-pos))
+    (setq gap-length (string-match candidate-chars target-string))
+    (if (not (equal gap-length nil))
+        (backward-char (- (- (length target-string) gap-length) 1))))
+  )
+
+(defun chan-backward-word ()
+  "Chan 'backward-word."
+  (interactive)
+  (let ((candidate-chars "[();:{}]")
+        (target-string "")
+        (base-pos 0)
+        (bword-pos 0)
+        (candindate-pos 0)
+        (gap-length 0))
+    (setq base-pos (point))
+    (search-backward-regexp candidate-chars nil 'noerror)
+    (setq candindate-pos (point))
+    (goto-char base-pos)
+    (backward-word)
+    (setq bword-pos (point))
+    (if (> candindate-pos bword-pos)
+        (goto-char candindate-pos)))
+  )
+
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of a word.
 With argument ARG, do this that many times."
@@ -423,39 +461,23 @@ With argument ARG, do this that many times."
 
 
 
+
+
 ;; Forward word with candidate characters.
-(global-set-key (kbd "M-f") (lambda () (interactive)
-                              (let ((candidate-chars "[\(\)\{\}\;]")
-                                    (target-string "")
-                                    (base-pos 0)
-                                    (fword-pos 0)
-                                    (candindate-pos 0)
-                                    (gap-length 0))
-                                (setq base-pos (point))
-                                (forward-word)
-                                (setq fword-pos (point))
-                                (setq target-string (buffer-substring base-pos fword-pos))
-                                (setq gap-length (string-match candidate-chars target-string))
-                                (if (not (equal gap-length nil))
-                                    (backward-char (- (- (length target-string) gap-length) 1)))
-                                )))
+(global-set-key (kbd "M-f") 'chan-forward-word)
+(global-set-key (kbd "M-F") (lambda () (interactive)
+                              (setq this-command-keys-shift-translated t)
+                              (if (equal (region-active-p) nil)
+                                  (call-interactively 'set-mark-command))
+                              (chan-forward-word)))
 
 ;; Back word with candidate characters.
-(global-set-key (kbd "M-b") (lambda () (interactive)
-                              (let ((candidate-chars "[();:{}]")
-                                    (target-string "")
-                                    (base-pos 0)
-                                    (bword-pos 0)
-                                    (candindate-pos 0)
-                                    (gap-length 0))
-                                (setq base-pos (point))
-                                (search-backward-regexp candidate-chars nil 'noerror)
-                                (setq candindate-pos (point))
-                                (goto-char base-pos)
-                                (backward-word)
-                                (setq bword-pos (point))
-                                (if (> candindate-pos bword-pos)
-                                    (goto-char candindate-pos)))))
+(global-set-key (kbd "M-b") 'chan-backward-word)
+(global-set-key (kbd "M-B") (lambda () (interactive)
+                              (setq this-command-keys-shift-translated t)
+                              (if (not (use-region-p))
+                                  (call-interactively 'set-mark-command))
+                              (chan-backward-word)))
 
 
 (global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
@@ -509,7 +531,7 @@ With argument ARG, do this that many times."
 
 ;; default setting.
 (defun toggle-transparency ()
-  "Transparency frame"
+  "Transparency frame."
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
     (set-frame-parameter
@@ -535,8 +557,8 @@ With argument ARG, do this that many times."
 (setq ring-bell-function 'ignore)
 
 (defun lispy-parens ()
-  "Setup parens display for lisp modes"
-  (setq show-paren-delay 0)
+  "Setup parens display for lisp modes."
+  (setq show-paren-delay 0)n
   (setq show-paren-style 'parenthesis)
 
   (show-paren-mode 1)

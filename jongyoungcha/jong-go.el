@@ -241,6 +241,7 @@ And the environment variable was existing, Download go binaries from the interne
     )
   )
 
+
 (add-hook 'go-mode-hook (lambda ()
                           (setq indent-tabs-mode nil)
                           (setq tab-width 4)
@@ -274,7 +275,9 @@ And the environment variable was existing, Download go binaries from the interne
                           (local-set-key (kbd "C-c r j") 'go-guru-definition)
                           (local-set-key (kbd "C-c r d") 'go-guru-describe)
                           (local-set-key (kbd "C-c d d") 'godoc-at-point)
-                          (local-set-key (kbd "C-c g g") 'chan-gogud-gdb)
+                          (local-set-key (kbd "C-c g g")
+					 (lambda () (interactive)
+					   (chan-gogud-gdb "dlv debug")))
                           (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
                                            (compile "go build -v && go test -v && go vet")))
