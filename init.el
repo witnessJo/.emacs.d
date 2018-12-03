@@ -449,7 +449,7 @@ With argument ARG, do this that many times."
                                     (candindate-pos 0)
                                     (gap-length 0))
                                 (setq base-pos (point))
-                                (re-search-backward candidate-chars)
+                                (search-backward-regexp candidate-chars nil 'noerror)
                                 (setq candindate-pos (point))
                                 (goto-char base-pos)
                                 (backward-word)
