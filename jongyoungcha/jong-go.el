@@ -137,11 +137,7 @@ And the environment variable was existing, Download go binaries from the interne
   (setq font-lock-defaults '(go--build-font-lock-keywords))
   )
 
-(defun chan-gogud-gdb (&optional cmd)
-  "This is delve wrapper based on 'gud-gdb mode."
-  (interactive)
-  (dlv cmd)
-  (chan-gogud-mode))
+
 
 
 (defun chan-gogud-exec-function (target-func)
@@ -151,8 +147,7 @@ And the environment variable was existing, Download go binaries from the interne
         (target-line 0)
         (current-line-buffer "")
         (target-symbol "")
-        (target-offset 0)
-        )
+        (target-offset 0))
     
     ;; Initailize other buffer cursor position...
     (gud-refresh)
@@ -201,12 +196,93 @@ And the environment variable was existing, Download go binaries from the interne
   )
 
 
-(defun chan-run-dlv-interactively()
+(defun chan-ether-send-transaction ()
+  "Send transaction coinbase to accounts[1]."
+  (interactive)
+  (let ((target-buffer "*chan-dlv-eshell*"))
+    (with-current-buffer target-buffer
+      ;; (eshell-return-to-prompt)
+      (goto-char (point-max))
+      (insert (format "eth.sendTransaction({from:eth.coinbase, to:eth.accounts[1], value:1})"))
+      (eshell-send-input)
+      (goto-char (point-max))
+      (eshell-return-to-prompt)
+      )
+    )
+  )
+
+(defun chan-ether-unlock-coinbase ()
+  "This is unlock coinbase."
+  (interactive)
+  (let ((target-buffer "*chan-dlv-eshell*"))
+    (with-current-buffer target-buffer
+      ;; (eshell-return-to-prompt)
+      (goto-char (point-max))
+      (insert (format "personal.unlockAccount(eth.coinbase)"))
+      (eshell-send-input)
+      (goto-char (point-max))
+      (eshell-return-to-prompt)
+      )
+    )
+  )
+
+
+(defun chan-ether-unlock-account1 ()
+  "This is unlock coinbase."
+  (interactive)
+  (let ((target-buffer "*chan-dlv-eshell*"))
+    (with-current-buffer target-buffer
+      ;; (eshell-return-to-prompt)
+      (goto-char (point-max))
+      (insert (format "personal.unlockAccount(eth.accounts[1])"))
+      (eshell-send-input)
+      (goto-char (point-max))
+      (eshell-return-to-prompt)
+      )
+    )
+  )
+
+
+(defun chan-ether-get-peers ()
+  "This is unlock coinbase."
+  (interactive)
+  (let ((target-buffer "*chan-dlv-eshell*"))
+    (with-current-buffer target-buffer
+      ;; (eshell-return-to-prompt)
+      (goto-char (point-max))
+      (insert (format "admin.peers"))
+      (eshell-send-input)
+      (goto-char (point-max))
+      (eshell-return-to-prompt)
+      )
+    )
+  )
+
+
+(defun chan-gogud-gdb (&optional cmd)
+  "This is delve wrapper based on 'gud-gdb mode."
+  (interactive)
+  (dlv cmd)
+  (chan-gogud-mode))
+
+
+(defun chan-run-dlv-client()
+  "Connect the dlv server!!!."
+  (interactive)
+  (let ((target-port ""))
+    (setq target-port (read-string "input listen port : "))
+    (dlv (format "dlv connect :%s" target-port))
+    (chan-gogud-mode)
+    )
+  )
+
+
+(defun chan-run-dlv-server()
   "Make run interactively!!!."
   (interactive)
   (let ((target-port nil)
         (target-dir nil)
-        (output-buffer "*chan-run-dlv-interactively*")
+        (output-buffer "*chan-dlv-eshell*")
         (listen-process nil))
     (if (equal (projectile-project-root) nil)
         (setq target-dir (projectile-project-root))
@@ -215,31 +291,49 @@ And the environment variable was existing, Download go binaries from the interne
     ;; start headless delve
     ;; (kill-buffer output-buffer)
     (with-current-buffer (get-buffer-create output-buffer)
+      (display-buffer output-buffer)
       (erase-buffer)
       (setq default-directory target-dir)
-      (setq listen-process (make-process :name "chan-dlv"
-                                         :buffer output-buffer
-                                         :command (list "dlv" "debug" "--headless")))
-      (while (equal (buffer-string) "")
-        (sleep-for 0.1))
+      (call-interactively 'eshell-mode)
       
-      (progn
-        (goto-char (point-min))
-        (end-of-line)
-        (set-mark-command nil)
-        
-        (setq target-port (buffer-substring
-                           (progn (search-backward ":")
-                                  (forward-char 1)
-                                  (point))
-                           (line-end-position))))
-      (message "%s %s" default-directory target-port))
-    
-    (if (numberp (string-to-number target-port))
-        (chan-gogud-gdb (format "dlv connect :%s" target-port))
-      (message "Parsing listening port was failed..."))
-    )
-  )
+      ;; (eshell-return-to-prompt)
+      (insert (format "cd %s" target-dir))
+      (eshell-send-input)
+      (goto-char (point-max))
+      (eshell-return-to-prompt)
+
+      ;; (sleep-for 2)
+      (insert "dlv debug --headless")
+      (goto-char (point-max))
+      (eshell-send-input)
+      (eshell-return-to-prompt)
+      (read-only-mode -1)
+      (goto-char (point-min))
+      
+      ;; (call-interactively 'previous-linen)
+      
+      (setq target-port (buffer-substring
+                         (progn (search-backward ":")
+                                (forward-char 1)
+                                (point))
+                         (line-end-position)))
+      (message "%s %s" default-directory target-port)
+      (if (numberp (string-to-number target-port))
+          (chan-gogud-gdb (format "dlv connect :%s" target-port))
+        (message "Parsing listening port was failed...")))
+    ))
+
+;; (goto-char (point-max))
+
+
+
+
+;; (setq listen-process (make-process :name "chan-dlv"
+;;                                    :buffer output-buffer
+;;                                    :command (list "dlv" "debug" "--headless")))
+
+;; )
+;; )
 
 
 (add-hook 'go-mode-hook (lambda ()
@@ -276,8 +370,8 @@ And the environment variable was existing, Download go binaries from the interne
                           (local-set-key (kbd "C-c r d") 'go-guru-describe)
                           (local-set-key (kbd "C-c d d") 'godoc-at-point)
                           (local-set-key (kbd "C-c g g")
-					 (lambda () (interactive)
-					   (chan-gogud-gdb "dlv debug")))
+                                         (lambda () (interactive)
+                                           (chan-gogud-gdb "dlv debug")))
                           (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
                                            (compile "go build -v && go test -v && go vet")))
