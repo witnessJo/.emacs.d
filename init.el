@@ -459,8 +459,8 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-v") 'evil-scroll-page-up)
 (global-set-key (kbd "C-v") 'evil-scroll-page-down)
 
-
-
+(global-set-key (kbd "M-p") 'evil-jump-backward)
+(global-set-key (kbd "M-n") 'evil-jump-forward)
 
 
 ;; Forward word with candidate characters.
@@ -854,6 +854,7 @@ With argument ARG, do this that many times."
   (setq google-translate-default-target-language "ko")
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
+(require 'chan-cursor-tracker)
 (require 'jong-elisp)
 (require 'jong-term)
 (require 'jong-scheme)
