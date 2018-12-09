@@ -246,6 +246,22 @@ Version 2017-07-08"
 (use-package prodigy
   :ensure t)
 
+(use-package auto-dim-other-buffers
+  :init
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(auto-dim-other-buffers-face ((t (:background "#022222")))))
+  (add-hook 'after-init-hook
+            (lambda ()
+              (when (fboundp 'auto-dim-other-buffers-mode)
+                (auto-dim-other-buffers-mode t))))
+  :ensure t)
+
+
+
 (use-package hungry-delete
   :ensure t)
 (global-hungry-delete-mode)
