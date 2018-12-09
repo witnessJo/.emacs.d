@@ -486,7 +486,6 @@ With argument ARG, do this that many times."
 (global-set-key [remap next-buffer] 'jong-next-buffer)
 (global-set-key [remap previous-buffer] 'jong-prev-buffer)
 
-(global-set-key (kbd "C-c b r") 'rename-buffer)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-c b") 'jo-show-buffer-other-window)
