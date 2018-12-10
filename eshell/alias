@@ -11,3 +11,4 @@ alias il $*
 alias (nil) $*
 alias nil ls $*
 alias geth geth --datadir=~/testnet $*
+alias geth-init geth --datadir=~/testnet init ~/testnet/genesis.json

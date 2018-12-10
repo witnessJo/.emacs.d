@@ -20,6 +20,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(global-hl-line-mode t)
+(set-cursor-color "#bb4466")
+
 (defun my-show-eshell ()
   (interactive)
   (let (cmd)
@@ -183,8 +186,6 @@ Version 2017-07-08"
 ;;   (setq-default line-spacing 3))
 
 
-
-
 ;; specify font for all unicode characters
 ;; (when (member "Symbola" (font-family-list))
 ;;   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
@@ -249,10 +250,6 @@ Version 2017-07-08"
 (use-package auto-dim-other-buffers
   :init
   (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
    '(auto-dim-other-buffers-face ((t (:background "#022222")))))
   (add-hook 'after-init-hook
             (lambda ()
@@ -508,8 +505,8 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-c C-b") 'jo-show-buffer-other-window)
 (global-set-key (kbd "C-x n") 'jo-show-buffer-other-window-move)
 (global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-window-move)
-(global-set-key (kbd "C-=") 'jo-isearch-forward-other-window)
-(global-set-key (kbd "C-+") 'jo-isearch-backward-other-window)
+(global-set-key (kbd "C-c C-s") 'jo-isearch-forward-other-window)
+(global-set-key (kbd "C-c C-r") 'jo-isearch-backward-other-window)
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
 (global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window -15)))
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
@@ -631,15 +628,10 @@ With argument ARG, do this that many times."
   (company-quickhelp-mode)
   (setq company-quickhelp-delay 0.1))
 
-
-
 (use-package magit
   :ensure t
   :config
   (setq git-commit-summary-max-length 1000))
-
-;; (use-package psvn
-;;   :ensure t)
 
 (use-package projectile
   :ensure t)
@@ -766,7 +758,9 @@ With argument ARG, do this that many times."
     nil))
   )
 
-(defvar jo-kill-target-buffers)
+;; (defvar jo-kill-target-buffers)
+(defcustom  jo-kill-target-buffers
+  :type 'list)
 (setq jo-kill-target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
                                    "*Warnings*" "*xref*" "*Node Shell*" "*Google Translate*"))
 (defun kill-temporary-buffers ()
