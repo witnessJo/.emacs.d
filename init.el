@@ -405,10 +405,13 @@ Version 2017-07-08"
     (setq bword-pos (point))
     (goto-char base-pos)
     (if (> candidate-pos bword-pos)
-        (delete-region candidate-pos base-pos)
-      (delete-region bword-pos base-pos))
+        (ignore-errors (delete-region candidate-pos base-pos))
+      (ignore-errors (delete-region bword-pos base-pos)))
+    (when (equal (point) base-pos)
+      (while 1 (call-interactively 'backward-delete-char)))
     )
   )
+
 
 (defun chan-copy-current-line ()
   "Chan 'copy current line."
