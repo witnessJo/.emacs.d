@@ -20,8 +20,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(global-hl-line-mode t)
-(set-cursor-color "#bb4466")
 
 (defun my-show-eshell ()
   (interactive)
@@ -164,40 +162,6 @@ Version 2017-07-08"
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; char encoding environment ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(set-default-coding-systems 'utf-8-unix)
-(set-language-environment 'UTF-8)
-
-;;;;;;;;;;;;;;;;;;;;;;;;
-;; set the font style ;;
-;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; set a default font
-;; (when (member "courier" (font-family-list))
-;;   (set-face-attribute 'default nil :font "courier"))
-
-;; set a default font
-
-
-;; (when (member "DejaVu Sans Mono" (font-family-list))
-;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono-12")
-;;   (setq-default line-spacing 3))
-
-
-;; specify font for all unicode characters
-;; (when (member "Symbola" (font-family-list))
-;;   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
-
-
-;; specify font for chinese characters using default chinese font on linux
-;; (when (member "WenQuanYi Micro Hei" (font-family-list))
-;;   (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
-
-;; (when (eq system-type 'darwin)
-;;   (set-face-attribute 'default nil :family "monaco"))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
@@ -250,13 +214,12 @@ Version 2017-07-08"
 (use-package auto-dim-other-buffers
   :init
   (custom-set-faces
-   '(auto-dim-other-buffers-face ((t (:background "#022222")))))
+   '(auto-dim-other-buffers-face ((t (:background "#102020")))))
   (add-hook 'after-init-hook
             (lambda ()
               (when (fboundp 'auto-dim-other-buffers-mode)
                 (auto-dim-other-buffers-mode t))))
   :ensure t)
-
 
 
 (use-package hungry-delete
@@ -372,7 +335,7 @@ Version 2017-07-08"
 (defun chan-forward-word ()
   "Chan 'forward-word."
   (interactive)
-  (let ((candidate-chars "[\(\)\{\}\;]")
+  (let ((candidate-chars "[\(\)\{\}\;\:]")
         (target-string "")
         (base-pos 0)
         (fword-pos 0)
@@ -387,15 +350,15 @@ Version 2017-07-08"
         (backward-char (- (- (length target-string) gap-length) 1))))
   )
 
+
 (defun chan-backward-word ()
   "Chan 'backward-word."
   (interactive)
-  (let ((candidate-chars "[();:{}]")
+  (let ((candidate-chars "[\(\)\;\:\{\}]")
         (target-string "")
         (base-pos 0)
         (bword-pos 0)
-        (candindate-pos 0)
-        (gap-length 0))
+        (candindate-pos 0))
     (setq base-pos (point))
     (search-backward-regexp candidate-chars nil 'noerror)
     (setq candindate-pos (point))
@@ -405,6 +368,58 @@ Version 2017-07-08"
     (if (> candindate-pos bword-pos)
         (goto-char candindate-pos)))
   )
+
+(defun chan-forward-delete-word ()
+  "Chan 'forward-delete-word."
+  (interactive)
+  (let ((candidate-chars "[\(\)\;\:\{\} ]")
+        (target-string "")
+        (base-pos 0)
+        (fword-pos 0)
+        (candidate-pos 0))
+    (setq base-pos (point))
+    (search-forward-regexp candidate-chars nil 'noerror)
+    (setq candidate-pos (point))
+    (forward-word)
+    (setq fword-pos (point))
+    (goto-char base-pos)
+    (if (> candidate-pos fword-pos)
+        (delete-region base-pos fword-pos)
+      (delete-region base-pos candidate-pos))
+    )
+  )
+
+
+(defun chan-backward-delete-word ()
+  "Chan 'backward-delete-word."
+  (interactive)
+  (let ((candidate-chars "[\(\)\;\:\{\} ]")
+        (target-string "")
+        (base-pos 0)
+        (bword-pos 0)
+        (candidate-pos 0))
+    (setq base-pos (point))
+    (search-backward-regexp candidate-chars nil 'noerror)
+    (setq candidate-pos (point))
+    (backward-word)
+    (setq bword-pos (point))
+    (goto-char base-pos)
+    (if (> candidate-pos bword-pos)
+        (delete-region candidate-pos base-pos)
+      (delete-region bword-pos base-pos))
+    )
+  )
+
+(defun chan-copy-current-line ()
+  "Chan 'copy current line."
+  (interactive)
+  (let ((prev-pos (point))
+        (start-line-pos (progn (beginning-of-line) (point)))
+        (end-line-pos (progn (end-of-line) (point))))
+    (kill-new (buffer-substring start-line-pos (+ end-line-pos 1)))
+    (goto-char prev-pos))
+  )
+
 
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of a word.
@@ -464,6 +479,11 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-<backspace>") 'hungry-delete-backward)
 (global-set-key (kbd "C-<deletechar>") 'hungry-delete-forward)
 
+(global-set-key (kbd "M-d") 'chan-forward-delete-word)
+(global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
+(global-set-key (kbd "C-M-y") 'chan-copy-current-line)
+
+
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
 (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
 (global-set-key (kbd "C-h C-SPC") 'helm-all-mark-rings)
@@ -474,6 +494,7 @@ With argument ARG, do this that many times."
 
 (global-set-key (kbd "M-p") 'evil-jump-backward)
 (global-set-key (kbd "M-n") 'evil-jump-forward)
+
 
 
 ;; Forward word with candidate characters.
@@ -877,8 +898,44 @@ With argument ARG, do this that many times."
 (require 'jong-network)
 
 (load-theme 'solarized-dark t)
+(global-hl-line-mode t)
+(set-cursor-color "#bb4466")
 
 (when (member "fixed" (font-family-list))
   (set-face-attribute 'default nil :font "fixed-12")
   (setq-default line-spacing 2))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; char encoding environment ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(set-default-coding-systems 'utf-8-unix)
+(set-language-environment 'UTF-8)
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; set the font style ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; set a default font
+;; (when (member "courier" (font-family-list))
+;;   (set-face-attribute 'default nil :font "courier"))
+
+;; set a default font
+
+
+;; (when (member "DejaVu Sans Mono" (font-family-list))
+;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono-12")
+;;   (setq-default line-spacing 3))
+
+
+;; specify font for all unicode characters
+;; (when (member "Symbola" (font-family-list))
+;;   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+
+
+;; specify font for chinese characters using default chinese font on linux
+;; (when (member "WenQuanYi Micro Hei" (font-family-list))
+;;   (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
+
+;; (when (eq system-type 'darwin)
+;;   (set-face-attribute 'default nil :family "monaco"))
 

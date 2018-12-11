@@ -199,7 +199,7 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-ether-send-transaction ()
   "Send transaction coinbase to accounts[1]."
   (interactive)
-  (let ((target-buffer "*chan-dlv-eshell*"))
+  (let ((target-buffer "*chan-dlv-server*"))
     (with-current-buffer target-buffer
       ;; (eshell-return-to-prompt)
       (goto-char (point-max))
@@ -211,14 +211,27 @@ And the environment variable was existing, Download go binaries from the interne
     )
   )
 
-(defun chan-ether-unlock-coinbase ()
+(defun chan-ether-new-account ()
   "This is unlock coinbase."
   (interactive)
-  (let ((target-buffer "*chan-dlv-eshell*"))
+  (let ((target-buffer "*chan-dlv-server*"))
     (with-current-buffer target-buffer
-      ;; (eshell-return-to-prompt)
       (goto-char (point-max))
-      (insert (format "personal.unlockAccount(eth.coinbase)"))
+      (insert (format "personal.newAccount(\"jongyoungcha\")"))
+      (eshell-send-input)
+      (goto-char (point-max))
+      (eshell-return-to-prompt)
+      )
+    )
+  )
+
+(defun chan-ether-unlock-account0 ()
+  "This is unlock coinbase."
+  (interactive)
+  (let ((target-buffer "*chan-dlv-server*"))
+    (with-current-buffer target-buffer
+      (goto-char (point-max))
+      (insert (format "personal.unlockAccount(eth.accounts[0], \"jongyoungcha\", 0)"))
       (eshell-send-input)
       (goto-char (point-max))
       (eshell-return-to-prompt)
@@ -230,11 +243,10 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-ether-unlock-account1 ()
   "This is unlock coinbase."
   (interactive)
-  (let ((target-buffer "*chan-dlv-eshell*"))
+  (let ((target-buffer "*chan-dlv-server*"))
     (with-current-buffer target-buffer
-      ;; (eshell-return-to-prompt)
       (goto-char (point-max))
-      (insert (format "personal.unlockAccount(eth.accounts[1])"))
+      (insert (format "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)"))
       (eshell-send-input)
       (goto-char (point-max))
       (eshell-return-to-prompt)
@@ -246,7 +258,7 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-ether-get-peers ()
   "This is unlock coinbase."
   (interactive)
-  (let ((target-buffer "*chan-dlv-eshell*"))
+  (let ((target-buffer "*chan-dlv-server*"))
     (with-current-buffer target-buffer
       ;; (eshell-return-to-prompt)
       (goto-char (point-max))
@@ -282,7 +294,7 @@ And the environment variable was existing, Download go binaries from the interne
   (interactive)
   (let ((target-port nil)
         (target-dir nil)
-        (output-buffer "*chan-dlv-eshell*")
+        (output-buffer "*chan-dlv-server*")
         (listen-process nil))
     (if (equal (projectile-project-root) nil)
         (setq target-dir (projectile-project-root))
