@@ -405,10 +405,10 @@ Version 2017-07-08"
     (setq bword-pos (point))
     (goto-char base-pos)
     (if (> candidate-pos bword-pos)
-        (ignore-errors (delete-region candidate-pos base-pos))
-      (ignore-errors (delete-region bword-pos base-pos)))
+        (ignore-errors (delete-region (1+ candidate-pos) base-pos))
+      (ignore-errors (delete-region (1+ bword-pos) base-pos)))
     (when (equal (point) base-pos)
-      (while 1 (call-interactively 'backward-delete-char)))
+      (ignore-errors (delete-region (1- base-pos) base-pos)))
     )
   )
 
@@ -438,7 +438,6 @@ With argument ARG, do this that many times."
 
 (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
 (global-set-key (kbd "M-d") 'delete-word)
-
 
 (global-set-key [remap next-buffer] 'my-next-buffer)
 
