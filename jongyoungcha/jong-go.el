@@ -188,7 +188,6 @@ And the environment variable was existing, Download go binaries from the interne
     (other-window 1)
     (with-no-warnings
       (goto-line target-line))
-    ;; (message "target offset : %d target-symbol:%s, base line is : %d, target line is %d" target-offset target-symbol base-line target-line)
     )
   )
 
@@ -196,8 +195,28 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-gogud-gdb (&optional cmd)
   "This is delve wrapper based on 'gud-gdb mode."
   (interactive)
-  (dlv cmd)
-  (chan-gogud-mode))
+  (if (equal cmd nil)
+      (setq cmd "dlv debug"))
+  (condition-case ex
+      (with-current-buffer (get-buffer "main.go")
+        (dlv cmd)
+        (chan-gogud-mode))
+    (message "There was not a main.go buffer."))
+  )
+
+
+(defun chan-gogud-gdb-cs ()
+  "Create dlv with server and client mode."
+  (interactive)
+  (condition-case ex
+      (progn
+        (with-current-buffer (get-buffer "main.go")
+          (call-interactively 'chan-run-dlv-server))
+        ;;parsing port
+        (with-current-buffer (get-buffer "main.go")
+          (call-interactively 'chan-run-dlv-client)))
+    (messgae "There was not a main.go buffer."))
+  )
 
 
 (defun chan-run-dlv-client()
@@ -256,14 +275,6 @@ And the environment variable was existing, Download go binaries from the interne
           (chan-gogud-gdb (format "dlv connect :%s" target-port))
         (message "Parsing listening port was failed...")))
     ))
-
-
-;; (setq listen-process (make-process :name "chan-dlv"
-;;                                    :buffer output-buffer
-;;                                    :command (list "dlv" "debug" "--headless")))
-
-;; )
-;; )
 
 
 (add-hook 'go-mode-hook (lambda ()
@@ -331,9 +342,6 @@ And the environment variable was existing, Download go binaries from the interne
                              (chan-gogud-exec-function #'go-guru-implements)))
             )
           )
-
-
-
 
 
 (provide 'jong-go)
