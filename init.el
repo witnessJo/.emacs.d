@@ -665,7 +665,7 @@ With argument ARG, do this that many times."
   :ensure t
   :init
   :config
-  (setq projectile-indexing-method 'alien)
+  (setq projectile-indexing-method 'hybrid)
   (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
   (setq projectile-globally-ignored-directories (append '(".svn") projectile-globally-ignored-directories))
   ;; (setq projectile-enable-caching t)
@@ -895,6 +895,7 @@ With argument ARG, do this that many times."
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
 (require 'chan-cursor-tracker)
+(require 'jong-tramp)
 (require 'jong-elisp)
 (require 'jong-term)
 (require 'jong-scheme)
@@ -950,3 +951,4 @@ With argument ARG, do this that many times."
 ;; (when (eq system-type 'darwin)
 ;;   (set-face-attribute 'default nil :family "monaco"))
 
+v

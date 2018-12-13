@@ -1,13 +1,41 @@
+;;;
 
-;;; 
+(require 'cl)
+
 (defcustom ether-target-eshell
   :type 'string)
 (setq ether-target-eshell "*chan-dlv-server*")
 
+(cl-defstruct ether-node
+  name
+  host
+  user
+  passwd
+  testnet-dir)
 
-(defcustom ether-private-dir
-  :type 'string)
-(setq ether-private-dir "~/testnet")
+(defcustom ether-node-list
+  :type 'list)
+(setq ether-node-list (list
+		       (make-ether-node
+			:name "ethernode1"
+			:host "192.168.130.101"
+			:user "jongyoungcha"
+			:passwd "jongyoungcha"
+			:testnet-dir "~/testnet")
+		       (make-ether-node
+			:name "ethernode2"
+			:host "192.168.130.102"
+			:user "jongyoungcha"
+			:passwd "jongyoungcha"
+			:testnet-dir "~/testnet")))
+
+
+(defun chan-init-directory ()
+  (interactive)
+  "Chan make"
+  ;;; TODO ------ :)
+  )
+
 
 
 (defun chan-check-dlv-server-buffer ()
@@ -100,7 +128,6 @@
         (eshell-return-to-prompt)
         (goto-char (point-max))
         (eshell-return-to-prompt)
-        
         ;; (eshell-command (format "echo test!!!"))
         )
     )
