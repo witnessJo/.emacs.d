@@ -134,10 +134,7 @@ And the environment variable was existing, Download go binaries from the interne
 
 
 (define-derived-mode chan-gogud-mode gud-mode "chan-gogud"
-  (setq font-lock-defaults '(go--build-font-lock-keywords))
-  )
-
-
+  (setq font-lock-defaults '(go--build-font-lock-keywords)))
 
 
 (defun chan-gogud-exec-function (target-func)
@@ -192,81 +189,6 @@ And the environment variable was existing, Download go binaries from the interne
     (with-no-warnings
       (goto-line target-line))
     ;; (message "target offset : %d target-symbol:%s, base line is : %d, target line is %d" target-offset target-symbol base-line target-line)
-    )
-  )
-
-
-(defun chan-ether-send-transaction ()
-  "Send transaction coinbase to accounts[1]."
-  (interactive)
-  (let ((target-buffer "*chan-dlv-server*"))
-    (with-current-buffer target-buffer
-      ;; (eshell-return-to-prompt)
-      (goto-char (point-max))
-      (insert (format "eth.sendTransaction({from:eth.coinbase, to:eth.accounts[1], value:1})"))
-      (eshell-send-input)
-      (goto-char (point-max))
-      (eshell-return-to-prompt)
-      )
-    )
-  )
-
-(defun chan-ether-new-account ()
-  "This is unlock coinbase."
-  (interactive)
-  (let ((target-buffer "*chan-dlv-server*"))
-    (with-current-buffer target-buffer
-      (goto-char (point-max))
-      (insert (format "personal.newAccount(\"jongyoungcha\")"))
-      (eshell-send-input)
-      (goto-char (point-max))
-      (eshell-return-to-prompt)
-      )
-    )
-  )
-
-(defun chan-ether-unlock-account0 ()
-  "This is unlock coinbase."
-  (interactive)
-  (let ((target-buffer "*chan-dlv-server*"))
-    (with-current-buffer target-buffer
-      (goto-char (point-max))
-      (insert (format "personal.unlockAccount(eth.accounts[0], \"jongyoungcha\", 0)"))
-      (eshell-send-input)
-      (goto-char (point-max))
-      (eshell-return-to-prompt)
-      )
-    )
-  )
-
-
-(defun chan-ether-unlock-account1 ()
-  "This is unlock coinbase."
-  (interactive)
-  (let ((target-buffer "*chan-dlv-server*"))
-    (with-current-buffer target-buffer
-      (goto-char (point-max))
-      (insert (format "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)"))
-      (eshell-send-input)
-      (goto-char (point-max))
-      (eshell-return-to-prompt)
-      )
-    )
-  )
-
-
-(defun chan-ether-get-peers ()
-  "This is unlock coinbase."
-  (interactive)
-  (let ((target-buffer "*chan-dlv-server*"))
-    (with-current-buffer target-buffer
-      ;; (eshell-return-to-prompt)
-      (goto-char (point-max))
-      (insert (format "admin.peers"))
-      (eshell-send-input)
-      (goto-char (point-max))
-      (eshell-return-to-prompt)
-      )
     )
   )
 
@@ -334,10 +256,6 @@ And the environment variable was existing, Download go binaries from the interne
           (chan-gogud-gdb (format "dlv connect :%s" target-port))
         (message "Parsing listening port was failed...")))
     ))
-
-;; (goto-char (point-max))
-
-
 
 
 ;; (setq listen-process (make-process :name "chan-dlv"

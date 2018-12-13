@@ -385,8 +385,13 @@ Version 2017-07-08"
     (goto-char base-pos)
     (if (> candidate-pos fword-pos)
         (delete-region base-pos fword-pos)
-      (delete-region base-pos candidate-pos))
-    )
+      (delete-region base-pos (1- candidate-pos )))
+    (when (equal (point) base-pos)
+      (if (equal (string (char-after (point))) " ")
+	(while (equal (string (char-after (point))) " ")
+	  (delete-region (point) (1+ (point))))
+	(delete-region (point) (1+ (point))))
+      ))
   )
 
 
@@ -657,18 +662,21 @@ With argument ARG, do this that many times."
   (setq git-commit-summary-max-length 1000))
 
 (use-package projectile
-  :ensure t)
+  :ensure t
+  :init
+  :config
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
+  (setq projectile-globally-ignored-directories (append '(".svn") projectile-globally-ignored-directories))
+  ;; (setq projectile-enable-caching t)
+  )
+
+
+
+
 (use-package helm-projectile
   :ensure t)
 
-(require 'projectile)
-
-
-(with-eval-after-load 'projectile
-  (projectile-mode t)
-  (setq projectile-enable-caching t)
-  (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
-  )
 (with-eval-after-load 'helm-projectile
   (setq helm-projectile-fuzzy-match nil))
 
@@ -897,6 +905,7 @@ With argument ARG, do this that many times."
 (require 'jong-nodejs)
 (require 'jong-minor-eos)
 (require 'jong-go)
+(require 'jong-ether-test)
 (require 'jong-network)
 
 (load-theme 'solarized-dark t)
