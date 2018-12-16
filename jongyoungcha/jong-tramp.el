@@ -1,7 +1,6 @@
-
 (require 'tramp)
 (setq tramp-default-method "ssh")
+(add-to-list 'tramp-remote-path '~/goworks/bin/)
 
-;; (defcustom tramp-connection-format)
 
 (provide 'jong-tramp)

@@ -6,6 +6,8 @@
   :type 'string)
 (setq ether-target-eshell "*chan-dlv-server*")
 
+
+
 (cl-defstruct ether-node
   name
   host
@@ -42,11 +44,11 @@
                        ;; :privkey-path "~/node_privs/node2_rsa"
                        ;; :testnet-dir "~/testnet"))
                        (make-ether-node
-                        :name "node_inner"
+                        :name "ethernode_inner"
                         :host "192.168.56.102"
                         :user "jongyoungcha"
                         :passwd "jongyoungcha"
-                        :privkey-path "~/node_privs/nodeinner_rsa"
+                        :privkey-path "~/node_privs/ethernode_inner"
                         :testnet-dir "~/testnet")))
 
 
@@ -82,7 +84,7 @@
     (with-current-buffer (get-buffer-create target-buffer)
       (display-buffer target-buffer)
       (eshell-command "ls")
-      (eshell-command (format "ssh node_inner"))
+      (eshell-command (format "ssh ethernode_inner"))
       )))
 
 (defun chan-get-ether-enode-information (node)
@@ -109,23 +111,44 @@
 
 (defun chan-init-ethernodes ()
   (interactive)
-  (let ((target-buffer))
-    (dolist (elem-node ether-node-list)
-      (setq target-buffer (format "*eshell-%s*" (ether-node-name elem-node)))
-      (with-current-buffer (get-buffer-create target-buffer)
-        (eshell-mode)
-        (display-buffer target-buffer)
-        (chan-eshell-exec-cmd (current-buffer)
-                              "ssh node_inner")
+  (let ((target-buffer)
+	(base-host)
+	(genesis-json))
 
-        ))))
+    (setq genesis-json (with-temp-buffer
+			 (insert-file-contents "~/testnet/genesis.json")
+			 (buffer-string)))
+    
+    (dolist (elem-node ether-node-list)
+      (setq base-host "ssh:ethernode_inner:")
+      (setq target-buffer (format "*%s*" (ether-node-name elem-node)))
+      (with-current-buffer (get-buffer-create target-buffer)
+	(setq default-directory "/ssh:ethernode_inner:~")
+	(start-file-process "rm" (get-buffer-create target-buffer)
+			    "/bin/bash" "-c" "rm -rf ~/testnet")
+	(start-file-process "mkdir" (get-buffer-create target-buffer)
+			    "/bin/bash" "-c" "mkdir ~/testnet")
+	(copy-file "~/testnet/genesis.json" "/ssh:ethernode_inner:~/testnet/genesis.json")
+	(start-file-process "cat" (get-buffer-create target-buffer)
+			    "/bin/bash" "-c" (format "echo \"%s\" >> ~/testnet/genesis.json" genesis-json))
+	(start-file-process "~/goworks/bin/geth" (get-buffer-create target-buffer)
+			    "/bin/bash" "-c" "~/goworks/bin/geth --datadir=~/testnet init ~/testnet/genesis.json")
+	(start-file-process "~/goworks/bin/geth" (get-buffer-create target-buffer)
+			    "/bin/bash" "-c" "~/goworks/bin/geth --datadir=~/testnet console")
+	(ignore-errors (call-interactively 'shell-mode))
+	(goto-char (point-max))
+	(insert "eth")
+	(autopair-newline))
+      (display-buffer target-buffer)
+
+      )))
 
 
 (defun chan-init-ethernode (target-buffer)
   "'target-buffer' must be a 'eshell-mode buffer."
   (with-current-buffer target-buffer
-    (chan-eshell-exec-cmd (current-buffer)
-                          (format "rm -rf %s" (ether-node-testnet-dir elem-node)))
+    ;; (chan-eshell-exec-cmd (current-buffer)
+    ;; (format "rm -rf %s" (ether-node-testnet-dir elem-node)))
     (chan-eshell-exec-cmd (current-buffer)
                           (format "geth --datadir=%s init %s/genesis.json"
                                   (ether-node-testnet-dir elem-node)
@@ -242,3 +265,4 @@
   )
 
 (provide 'jong-ether-test)
+

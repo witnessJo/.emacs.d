@@ -949,3 +949,17 @@ With argument ARG, do this that many times."
 ;;   (set-face-attribute 'default nil :family "monaco"))
 
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (auto-package-update xterm-color xref-js2 use-package tide solarized-theme smart-compile racer prodigy popwin pcap-mode nodejs-repl magit js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-ag google-translate go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx ggtags flymake-go flycheck-haskell eyebrowse exec-path-from-shell evil ensime elpy elisp-refs company-rtags company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo autopair auto-highlight-symbol auto-dim-other-buffers auto-complete anaconda-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-dim-other-buffers-face ((t (:background "#102020")))))
