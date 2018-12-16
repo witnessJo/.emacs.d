@@ -905,8 +905,10 @@ With argument ARG, do this that many times."
 (require 'jong-network)
 
 (load-theme 'sanityinc-tomorrow-blue t)
+(set-background-color "#112244")
+(set-cursor-color "#ff4444")
+
 (global-hl-line-mode t)
-(set-cursor-color "#bb4466")
 
 (when (member "fixed" (font-family-list))
   (set-face-attribute 'default nil :font "fixed-12")
