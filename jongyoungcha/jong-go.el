@@ -205,25 +205,13 @@ And the environment variable was existing, Download go binaries from the interne
   )
 
 
-(defun chan-gogud-gdb-cs ()
-  "Create dlv with server and client mode."
-  (interactive)
-  (condition-case ex
-      (progn
-        (with-current-buffer (get-buffer "main.go")
-          (call-interactively 'chan-run-dlv-server))
-        ;;parsing port
-        (with-current-buffer (get-buffer "main.go")
-          (call-interactively 'chan-run-dlv-client)))
-    (messgae "There was not a main.go buffer."))
-  )
-
-
-(defun chan-run-dlv-client()
+(defun chan-run-dlv-client(&optional port)
   "Connect the dlv server!!!."
   (interactive)
   (let ((target-port ""))
-    (setq target-port (read-string "input listen port : "))
+    (if (equal port nil)
+        (setq target-port (read-string "input listen port : "))
+      (setq target-port port))
     (dlv (format "dlv connect :%s" target-port))
     (chan-gogud-mode)
     )
@@ -233,10 +221,11 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-run-dlv-server()
   "Make run interactively!!!."
   (interactive)
-  (let ((target-port nil)
-        (target-dir nil)
+  (let ((target-dir nil)
         (output-buffer "*chan-dlv-server*")
         (listen-process nil))
+    ;; (target-port nil)
+
     (if (equal (projectile-project-root) nil)
         (setq target-dir (projectile-project-root))
       (setq target-dir default-directory))
@@ -245,7 +234,7 @@ And the environment variable was existing, Download go binaries from the interne
     ;; (kill-buffer output-buffer)
     (with-current-buffer (get-buffer-create output-buffer)
       (display-buffer output-buffer)
-      (erase-buffer)
+      ;; (erase-buffer)
       (setq default-directory target-dir)
       (call-interactively 'eshell-mode)
       
@@ -253,28 +242,40 @@ And the environment variable was existing, Download go binaries from the interne
       (insert (format "cd %s" target-dir))
       (eshell-send-input)
       (goto-char (point-max))
-      (eshell-return-to-prompt)
+      (ignore-errors (eshell-return-to-prompt))
 
       ;; (sleep-for 2)
       (insert "dlv debug --headless")
-      (goto-char (point-max))
       (eshell-send-input)
-      (eshell-return-to-prompt)
-      (read-only-mode -1)
-      (goto-char (point-min))
-      
-      ;; (call-interactively 'previous-linen)
-      
-      (setq target-port (buffer-substring
-                         (progn (search-backward ":")
-                                (forward-char 1)
-                                (point))
-                         (line-end-position)))
-      (message "%s %s" default-directory target-port)
-      (if (numberp (string-to-number target-port))
-          (chan-gogud-gdb (format "dlv connect :%s" target-port))
-        (message "Parsing listening port was failed...")))
-    ))
+      (goto-char (point-max))
+      (ignore-errors (eshell-return-to-prompt))
+      ))
+  )
+
+
+(defun chan-gogud-gdb-cs ()
+  "Create dlv with server and client mode."
+  (interactive)
+  (let ((port)
+        (start-pos)
+        (end-pos))
+    (condition-case ex
+        (progn
+          (with-current-buffer (get-buffer "main.go")
+            (chan-run-dlv-server))
+          (sleep-for 1.5)
+          (setq port (with-current-buffer (get-buffer-create "*chan-dlv-server*")
+                       (goto-char (point-max))
+                       (forward-line -1)
+                       (end-of-line)
+                       (setq end-pos (point))
+                       (re-search-backward ":")
+                       (setq start-pos (1+ (point)))
+                       (buffer-substring start-pos end-pos)))
+          (with-current-buffer (get-buffer "main.go")
+            (chan-run-dlv-client port)))
+      (messgae "There was not a main.go buffer.")))
+  )
 
 
 (add-hook 'go-mode-hook (lambda ()

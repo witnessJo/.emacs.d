@@ -671,9 +671,6 @@ With argument ARG, do this that many times."
   ;; (setq projectile-enable-caching t)
   )
 
-
-
-
 (use-package helm-projectile
   :ensure t)
 
@@ -951,4 +948,4 @@ With argument ARG, do this that many times."
 ;; (when (eq system-type 'darwin)
 ;;   (set-face-attribute 'default nil :family "monaco"))
 
-v
+
