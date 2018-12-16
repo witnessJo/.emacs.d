@@ -177,8 +177,6 @@ Version 2017-07-08"
 (use-package helm
   :ensure t)
 
-(require 'pos-tip)
-
 (setq helm-split-window-in-side-p t)
 
 (require 'helm-bookmark)
@@ -906,7 +904,7 @@ With argument ARG, do this that many times."
 (require 'jong-ether-test)
 (require 'jong-network)
 
-(load-theme 'solarized-dark t)
+(load-theme 'sanityinc-tomorrow-blue t)
 (global-hl-line-mode t)
 (set-cursor-color "#bb4466")
 

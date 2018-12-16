@@ -85,9 +85,13 @@
       (eshell-command (format "ssh node_inner"))
       )))
 
-(defun chan-get-ether-peer-informaition (node)
+(defun chan-get-ether-enode-information (node)
+  "Connect to ethererum node and when get the enode information return the value."
   (interactive)
-  ()
+  ;; Check if there is geth binary file.
+  ;; Connect to the serve with eshell.
+  ;; Get node information with geth command.
+  ;; Parse stdout of geth command and return node information.
   )
 
 
@@ -98,28 +102,37 @@
     (with-current-buffer (get-buffer-create target-buffer)
       (dolist (elem-node ether-node-list)
         (chan-eshell-exec-cmd (current-buffer)
-                              (format "admin.addPeer(\"%s\")" ))
+                              (format "admin.addPeer(\"%s\")" (chan-get-ether-enode-information elem-node)))
+        ()
         ))))
 
 
-(defun chan-init-ether-nodes ()
+(defun chan-init-ethernodes ()
   (interactive)
-  (let ((target-buffer "*EShell Command Output*"))
+  (let ((target-buffer))
     (dolist (elem-node ether-node-list)
+      (setq target-buffer (format "*eshell-%s*" (ether-node-name elem-node)))
       (with-current-buffer (get-buffer-create target-buffer)
         (eshell-mode)
         (display-buffer target-buffer)
         (chan-eshell-exec-cmd (current-buffer)
                               "ssh node_inner")
-        (chan-eshell-exec-cmd (current-buffer)
-                              (format "rm -rf %s" (ether-node-testnet-dir elem-node)))
-        (chan-eshell-exec-cmd (current-buffer)
-                              (format "geth --datadir=%s init %s/genesis.json"
-                                      (ether-node-testnet-dir elem-node)
-                                      (ether-node-testnet-dir elem-node)))
-        (chan-eshell-exec-cmd (current-buffer)
-                              (format "geth --datadir=%s console" (ether-node-testnet-dir elem-node)))
+
         ))))
+
+
+(defun chan-init-ethernode (target-buffer)
+  "'target-buffer' must be a 'eshell-mode buffer."
+  (with-current-buffer target-buffer
+    (chan-eshell-exec-cmd (current-buffer)
+                          (format "rm -rf %s" (ether-node-testnet-dir elem-node)))
+    (chan-eshell-exec-cmd (current-buffer)
+                          (format "geth --datadir=%s init %s/genesis.json"
+                                  (ether-node-testnet-dir elem-node)
+                                  (ether-node-testnet-dir elem-node)))
+    (chan-eshell-exec-cmd (current-buffer)
+                          (format "geth --datadir=%s console" (ether-node-testnet-dir elem-node))))
+  )
 
 
 (defun ether-test-test ()
@@ -224,7 +237,6 @@
         (eshell-return-to-prompt)
         (goto-char (point-max))
         (eshell-return-to-prompt)
-        ;; (eshell-command (format "echo test!!!"))
         )
     )
   )
