@@ -660,7 +660,7 @@ With argument ARG, do this that many times."
   (setq git-commit-summary-max-length 1000))
 
 (use-package projectile
-  :ensure tn
+  :ensure t
   :init
   :config
   (projectile-global-mode)
@@ -705,12 +705,12 @@ With argument ARG, do this that many times."
   (exec-path-from-shell-copy-envs '("PATH" "GOPATH")))
 
 (use-package ido
-  :ensure t)
-(require 'ido)
-(ido-mode t)
-(setq ido-everywhere t)
-(setq ido-enable-flex-matching t)
-
+  :ensure t
+  :config
+  :init
+  (ido-mode t)
+  (setq ido-enable-flex-matching t))
+z
 (use-package  flycheck
   :ensure t
   :init
@@ -957,7 +957,7 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (auto-package-update xterm-color xref-js2 use-package tide solarized-theme smart-compile racer prodigy popwin pcap-mode nodejs-repl magit js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-ag google-translate go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx ggtags flymake-go flycheck-haskell eyebrowse exec-path-from-shell evil ensime elpy elisp-refs company-rtags company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo autopair auto-highlight-symbol auto-dim-other-buffers auto-complete anaconda-mode))))
+    (tn auto-package-update xterm-color xref-js2 use-package tide solarized-theme smart-compile racer prodigy popwin pcap-mode nodejs-repl magit js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-ag google-translate go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx ggtags flymake-go flycheck-haskell eyebrowse exec-path-from-shell evil ensime elpy elisp-refs company-rtags company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo autopair auto-highlight-symbol auto-dim-other-buffers auto-complete anaconda-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

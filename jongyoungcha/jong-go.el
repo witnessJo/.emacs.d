@@ -300,7 +300,7 @@ And the environment variable was existing, Download go binaries from the interne
                           (local-set-key (kbd "C-c g g")
                                          (lambda () (interactive)
                                            (chan-gogud-gdb "dlv debug")))
-                          (local-set-key (kbd "C-c g c") 'chan-run-dlv-Cs)
+                          (local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
                           (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
                                            (compile "go build -v && go test -v && go vet")))
