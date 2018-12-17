@@ -9,7 +9,6 @@
 (cl-defstruct ether-node
   name
   host
-  enode
   user
   passwd
   privkey-path
@@ -20,10 +19,17 @@
 (setq main-node (make-ether-node
                  :name "ethermain"
                  :host "192.168.130.100"
-                 :enode "enode://0fdc5ec82ef963a19cde7861554f0ddb06e5f1021de35b89bff8824f20e6a7094f5ab8c37d0c7682f18e76d0641ec593741b7f8cbff8cf9f5e9c31e10da69009@192.168.130.100:30303?discport=0"
                  :user "jongyoungcha"
                  :passwd "jongyoungcha"
                  :testnet-dir "~/testnet"))
+
+(defcustom main-node-info
+  :type 'string)
+(setq main-node-info "")
+
+(defcustom genesis-json-path
+  :type 'string)
+(setq genesis-json-path "~/genesis.json")
 
 
 (defcustom ether-node-list
@@ -33,14 +39,12 @@
                        ;; :name "ethernode1"
                        ;; :host "192.168.130.101"
                        ;; :user "jongyoungcha"
-                       ;; :enode ""
                        ;; :passwd "jongyoungcha"
                        ;; :privkey-path "~/ethernode_keys/ethernode1_rsa"
                        ;; :testnet-dir "~/testnet")
                        ;; (make-ether-node
                        ;; :name "ethernode2"
                        ;; :host "192.168.130.102"
-                       ;; :enode ""
                        ;; :user "jongyoungcha"
                        ;; :passwd "jongyoungcha"
                        ;; :privkey-path "~/ethernode_keys/ethernode2_rsa"
@@ -116,9 +120,7 @@
   (interactive)
   (let ((target-buffer)
         (base-host)
-        (genesis-json-path)
         (testnet-dir))
-    (setq genesis-json-path "~/testnet/genesis.json")
     (dolist (elem-node ether-node-list)
       (setq base-host (format "/ssh:%s" (ether-node-name elem-node)))
       (setq testnet-dir (ether-node-testnet-dir elem-node))
@@ -170,16 +172,55 @@
                           (format "geth --datadir=%s console" (ether-node-testnet-dir elem-node))))
   )
 
-
-(defun ether-test-test ()
+(defun chan-init-local-ethernode ()
   (interactive)
-  (connect-node main-node)
+  (let ((magic-second 0))
+    (with-current-buffer (get-buffer "main.go")
+      (chan-run-dlv-cs)
+      (while (not (get-buffer "*gud-connect*"))
+        (if (> (1+ magic-second) 5))
+        (message "waiting...")
+        (sleep-for 1))
+
+      (condition-case ex
+          (with-current-buffer (get-buffer "*gud-connect*")
+            (ignore-errors (delete-directory "~/testnet" t))
+            (make-directory "~/testnet")
+            (copy-file genesis-json-path "~/testnet" t)
+            (goto-char (point-max))
+            (insert "r --datadir=~/testnet init /home/jongyoungcha/testnet/genesis.json")
+            (autopair-newline)
+            (insert "c")
+            (autopair-newline)
+            (insert "r --datadir=~/testnet --nodiscover console")
+            (autopair-newline)
+            (insert "c")
+            (autopair-newline))
+        (message "running delve of local ethernode was failed..."))
+
+      (condition-case ex
+          (with-current-buffer (get-buffer "*chan-dlv-server*")
+            (autopair-newline)
+            (insert "personal.newAccount(\"jongyoungcha\")")
+            (autopair-newline)
+            (insert "personal.newAccount(\"jongyoungcha\")")
+            (autopair-newline)
+            (insert "personal.unlockAccount(eth.accounts[0] ,\"jongyoungcha\", 0)")
+            (autopair-newline)
+            (insert "personal.unlockAccount(eth.accounts[1] ,\"jongyoungcha\", 0)")
+            (autopair-newline))
+        (message "running init new node was failed..."))))
+  )
+
+
+(defun chan-get-local-enodeinfo ()
+  (interactive)
   )
 
 
 
 (defun chan-check-dlv-server-buffer ()
-  "Check is there target buffer..."
+  "Check is there tat buffer..."
   (let ((target-buffer))
     (if (setq target-buffer (get-buffer ether-target-eshell))
         target-buffer

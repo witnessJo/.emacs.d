@@ -234,7 +234,6 @@ And the environment variable was existing, Download go binaries from the interne
       (display-buffer output-buffer)
       (setq default-directory target-dir)
       (ignore-errors (async-shell-command "dlv debug --headless" (current-buffer) "*jo-error*"))
-      (term-line-mode)
       ))
   )
 
@@ -244,12 +243,17 @@ And the environment variable was existing, Download go binaries from the interne
   (interactive)
   (let ((port)
         (start-pos)
-        (end-pos))
+        (end-pos)
+        (magic-seconds 0))
     (condition-case ex
         (progn
           (with-current-buffer (get-buffer "main.go")
             (chan-run-dlv-server))
-          (sleep-for 2)
+
+          ;; (while (> (1+ magic-seconds) 4)
+          ;; (message "waiting...")
+          (sleep-for 4)
+          
           (setq port (with-current-buffer (get-buffer-create "*chan-dlv-server*")
                        (goto-char (point-max))
                        (forward-line -1)
@@ -260,7 +264,7 @@ And the environment variable was existing, Download go binaries from the interne
                        (buffer-substring start-pos end-pos)))
           (with-current-buffer (get-buffer "main.go")
             (chan-run-dlv-client port)))
-      (messgae "There was not a main.go buffer.")))
+      (message "There was not a main.go buffer.")))
   )
 
 
