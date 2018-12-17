@@ -212,7 +212,7 @@ Version 2017-07-08"
 (use-package auto-dim-other-buffers
   :init
   (custom-set-faces
-   '(auto-dim-other-buffers-face ((t (:background "#102020")))))
+   '(auto-dim-other-buffers-face ((t (:background "#222222")))))
   (add-hook 'after-init-hook
             (lambda ()
               (when (fboundp 'auto-dim-other-buffers-mode)
@@ -660,13 +660,14 @@ With argument ARG, do this that many times."
   (setq git-commit-summary-max-length 1000))
 
 (use-package projectile
-  :ensure t
+  :ensure tn
   :init
   :config
+  (projectile-global-mode)
   (setq projectile-indexing-method 'hybrid)
   (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
   (setq projectile-globally-ignored-directories (append '(".svn") projectile-globally-ignored-directories))
-  ;; (setq projectile-enable-caching t)
+  (setq projectile-enable-caching t)
   )
 
 (use-package helm-projectile
@@ -905,7 +906,7 @@ With argument ARG, do this that many times."
 (require 'jong-network)
 
 (load-theme 'sanityinc-tomorrow-blue t)
-(set-background-color "#112244")
+(set-background-color "#11223F")
 (set-cursor-color "#ff4444")
 
 (global-hl-line-mode t)
@@ -940,7 +941,7 @@ With argument ARG, do this that many times."
 ;; (when (member "Symbola" (font-family-list))
 ;;   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
-
+'l
 ;; specify font for chinese characters using default chinese font on linux
 ;; (when (member "WenQuanYi Micro Hei" (font-family-list))
 ;;   (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))

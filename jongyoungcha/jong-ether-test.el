@@ -140,7 +140,6 @@
 	(insert "eth")
 	(autopair-newline))
       (display-buffer target-buffer)
-
       )))
 
 
