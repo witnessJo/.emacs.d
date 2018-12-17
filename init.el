@@ -212,7 +212,7 @@ Version 2017-07-08"
 (use-package auto-dim-other-buffers
   :init
   (custom-set-faces
-   '(auto-dim-other-buffers-face ((t (:background "#222222")))))
+   '(auto-dim-other-buffers-face ((t (:background "#102020")))))
   (add-hook 'after-init-hook
             (lambda ()
               (when (fboundp 'auto-dim-other-buffers-mode)
@@ -789,7 +789,7 @@ With argument ARG, do this that many times."
 (defcustom  jo-kill-target-buffers
   :type 'list)
 (setq jo-kill-target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
-                                   "*Warnings*" "*xref*" "*Node Shell*" "*Google Translate*"))
+                                   "*Warnings*" "*xref*" "*Node Shell*" "*Google Translyeate*"))
 (defun kill-temporary-buffers ()
   "Kill current buffer unconditionally."
   (interactive)
@@ -906,7 +906,7 @@ With argument ARG, do this that many times."
 (require 'jong-network)
 
 (load-theme 'sanityinc-tomorrow-blue t)
-(set-background-color "#11223F")
+(set-background-color "#102033")
 (set-cursor-color "#ff4444")
 
 (global-hl-line-mode t)
@@ -941,7 +941,7 @@ With argument ARG, do this that many times."
 ;; (when (member "Symbola" (font-family-list))
 ;;   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
-'l
+
 ;; specify font for chinese characters using default chinese font on linux
 ;; (when (member "WenQuanYi Micro Hei" (font-family-list))
 ;;   (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))

@@ -213,8 +213,7 @@ And the environment variable was existing, Download go binaries from the interne
         (setq target-port (read-string "input listen port : "))
       (setq target-port port))
     (dlv (format "dlv connect :%s" target-port))
-    (chan-gogud-mode)
-    )
+    (chan-gogud-mode))
   )
 
 
@@ -231,29 +230,16 @@ And the environment variable was existing, Download go binaries from the interne
       (setq target-dir default-directory))
     
     ;; start headless delve
-    ;; (kill-buffer output-buffer)
     (with-current-buffer (get-buffer-create output-buffer)
       (display-buffer output-buffer)
-      ;; (erase-buffer)
       (setq default-directory target-dir)
-      (call-interactively 'eshell-mode)
-      
-      ;; (eshell-return-to-prompt)
-      (insert (format "cd %s" target-dir))
-      (eshell-send-input)
-      (goto-char (point-max))
-      (ignore-errors (eshell-return-to-prompt))
-
-      ;; (sleep-for 2)
-      (insert "dlv debug --headless")
-      (eshell-send-input)
-      (goto-char (point-max))
-      (ignore-errors (eshell-return-to-prompt))
+      (ignore-errors (async-shell-command "dlv debug --headless" (current-buffer) "*jo-error*"))
+      (term-line-mode)
       ))
   )
 
 
-(defun chan-gogud-gdb-cs ()
+(defun chan-run-dlv-cs ()
   "Create dlv with server and client mode."
   (interactive)
   (let ((port)
@@ -263,7 +249,7 @@ And the environment variable was existing, Download go binaries from the interne
         (progn
           (with-current-buffer (get-buffer "main.go")
             (chan-run-dlv-server))
-          (sleep-for 1.5)
+          (sleep-for 2)
           (setq port (with-current-buffer (get-buffer-create "*chan-dlv-server*")
                        (goto-char (point-max))
                        (forward-line -1)
@@ -314,6 +300,7 @@ And the environment variable was existing, Download go binaries from the interne
                           (local-set-key (kbd "C-c g g")
                                          (lambda () (interactive)
                                            (chan-gogud-gdb "dlv debug")))
+                          (local-set-key (kbd "C-c g c") 'chan-run-dlv-Cs)
                           (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
                                            (compile "go build -v && go test -v && go vet")))
