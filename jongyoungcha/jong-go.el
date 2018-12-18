@@ -314,6 +314,7 @@ And the environment variable was existing, Download go binaries from the interne
                                            (other-window 1)
                                            (call-interactively 'end-of-buffer)
                                            (other-window -1)))
+
                           )
           )
 

@@ -386,9 +386,9 @@ Version 2017-07-08"
       (delete-region base-pos (1- candidate-pos )))
     (when (equal (point) base-pos)
       (if (equal (string (char-after (point))) " ")
-	(while (equal (string (char-after (point))) " ")
-	  (delete-region (point) (1+ (point))))
-	(delete-region (point) (1+ (point))))
+          (while (equal (string (char-after (point))) " ")
+            (delete-region (point) (1+ (point))))
+        (delete-region (point) (1+ (point))))
       ))
   )
 
@@ -549,6 +549,26 @@ With argument ARG, do this that many times."
                                   (call-interactively 'eyebrowse-switch-to-window-config-1)
                                   (call-interactively 'eyebrowse-switch-to-window-config-2)
                                   (call-interactively 'eyebrowse-switch-to-window-config-3)))
+
+
+(global-set-key (kbd "<f8>") (lambda () (interactive)
+                              (call-interactively 'gud-print)))
+(global-set-key (kbd "<f9>") (lambda () (interactive)
+                              (call-interactively 'gud-break)))
+(global-set-key (kbd "<f10>") (lambda () (interactive)
+                               (call-interactively 'gud-nexti)))
+(global-set-key (kbd "<f11>") (lambda () (interactive)
+				(call-interactively 'gud-stepi)))
+(global-set-key (kbd "<f12>") (lambda () (interactive)
+				(if (get-buffer "*gud-debug*")
+				    (with-current-buffer (get-buffer "*gud-debug*")
+				      (progn (goto-char (point-max))
+					     (insert "clearall")
+					     (autopair-newline))
+				      (with-current-buffer (get-buffer "*gud-connect*")
+					(progn (goto-char (point-max))
+					       (insert "clearall")
+					       (autopair-newline)))))))
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
@@ -819,7 +839,6 @@ With argument ARG, do this that many times."
             (local-set-key (kbd "C-S-g") 'close-compilation-window)
             (linum-mode t)
             ))
-
 
 
 (defun create-tags (dir-name)

@@ -35,27 +35,27 @@
 (defcustom ether-node-list
   :type 'list)
 (setq ether-node-list (list
-                       ;; (make-ether-node
-                       ;; :name "ethernode1"
-                       ;; :host "192.168.130.101"
-                       ;; :user "jongyoungcha"
-                       ;; :passwd "jongyoungcha"
-                       ;; :privkey-path "~/ethernode_keys/ethernode1_rsa"
-                       ;; :testnet-dir "~/testnet")
-                       ;; (make-ether-node
-                       ;; :name "ethernode2"
-                       ;; :host "192.168.130.102"
-                       ;; :user "jongyoungcha"
-                       ;; :passwd "jongyoungcha"
-                       ;; :privkey-path "~/ethernode_keys/ethernode2_rsa"
-                       ;; :testnet-dir "~/testnet")
                        (make-ether-node
-                        :name "ethernodeinner"
-                        :host "192.168.56.102"
+                        :name "ethernode1"
+                        :host "192.168.130.101"
                         :user "jongyoungcha"
                         :passwd "jongyoungcha"
-                        :privkey-path "~/ethernode_keys/ethernodeinner_rsa"
+                        :privkey-path "~/ethernode_keys/ethernode1_rsa"
                         :testnet-dir "~/testnet")
+                       (make-ether-node
+                        :name "ethernode2"
+                        :host "192.168.130.102"
+                        :user "jongyoungcha"
+                        :passwd "jongyoungcha"
+                        :privkey-path "~/ethernode_keys/ethernode2_rsa"
+                        :testnet-dir "~/testnet")
+                       ;; (make-ether-node
+                       ;; :name "ethernodeinner"
+                       ;; :host "192.168.56.102"
+                       ;; :user "jongyoungcha"
+                       ;; :passwd "jongyoungcha"
+                       ;; :privkey-path "~/ethernode_keys/ethernodeinner_rsa"
+                       ;; :testnet-dir "~/testnet")
                        ))
 
 
@@ -94,14 +94,6 @@
       (eshell-command (format "ssh ethernode_inner"))
       )))
 
-;; (defun chan-get-ether-enode-information (node)
-;;   "Connect to ethererum node and when get the enode information return the value."
-;;   (interactive)
-;;   ;; Check if there is geth binary file.
-;;   ;; Connect to the serve with eshell.
-;;   ;; Get node information with geth command.
-;;   ;; Parse stdout of geth command and return node information.
-;;   )
 
 (defun chan-add-peer-ethernode (target-buffer)
   (interactive)
@@ -127,20 +119,10 @@
       (setq target-buffer (format "*%s*" (ether-node-name elem-node)))
       (with-current-buffer (get-buffer-create target-buffer)
         (setq default-directory (format "%s:~" base-host))
-        (start-file-process "rm" (get-buffer-create target-buffer)
-                            "/bin/bash" "-c" (format "rm -rf %s" testnet-dir))
-        (start-file-process "mkdir" (get-buffer-create target-buffer)
-                            "/bin/bash" "-c" (format "mkdir %s" testnet-dir))
-        (copy-file genesis-json-path (format "%s:~/testnet/genesis.json" base-host))
         (start-file-process "~/goworks/bin/geth"
                             (get-buffer-create target-buffer)
                             "/bin/bash" "-c"
-                            (format "~/goworks/bin/geth --datadir=%s init %s/genesis.json"
-                                    testnet-dir testnet-dir))
-        (start-file-process "~/goworks/bin/geth"
-                            (get-buffer-create target-buffer)
-                            "/bin/bash" "-c"
-                            (format "~/goworks/bin/geth --datadir=%s console" testnet-dir))
+                            (format "~/goworks/bin/geth --nodiscover --datadir=%s console" testnet-dir))
         (ignore-errors (call-interactively 'term-mode))
         
         (goto-char (point-max))
@@ -172,7 +154,7 @@
                           (format "geth --datadir=%s console" (ether-node-testnet-dir elem-node))))
   )
 
-(defun chan-init-local-ethernode ()
+(defun chan-run-local-ethernode ()
   (interactive)
   (let ((magic-second 0))
     (with-current-buffer (get-buffer "main.go")
@@ -184,14 +166,6 @@
 
       (condition-case ex
           (with-current-buffer (get-buffer "*gud-connect*")
-            (ignore-errors (delete-directory "~/testnet" t))
-            (make-directory "~/testnet")
-            (copy-file genesis-json-path "~/testnet" t)
-            (goto-char (point-max))
-            (insert "r --datadir=~/testnet init /home/jongyoungcha/testnet/genesis.json")
-            (autopair-newline)
-            (insert "c")
-            (autopair-newline)
             (insert "r --datadir=~/testnet --nodiscover console")
             (autopair-newline)
             (insert "c")
@@ -213,9 +187,15 @@
   )
 
 
-(defun chan-get-local-enodeinfo ()
+(defun chan-init-local-enodeinfo ()
   (interactive)
-  )
+  (with-current-buffer (get-buffer-create "*chan-buffer*")
+    (display-buffer (current-buffer))
+    (ignore-errors (delete-directory "~/testnet" t))
+    (ignore-errors (make-directory "~/testnet"))
+    (copy-file genesis-json-path "~/testnet" t)
+    (shell-command "geth --datadir=~/testnet init /home/jongyoungcha/testnet/genesis.json" (current-buffer))
+  ))
 
 
 
