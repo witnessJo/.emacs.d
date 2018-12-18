@@ -97,11 +97,7 @@ And the environment variable was existing, Download go binaries from the interne
                           (setq-default indent-tabs-mode nil)
                           (setq-default tab-width 3)))
 
-;; (add-hook 'completion-at-point-functions 'go-complete-at-point)
-
 (setq gofmt-command "goimports")
-;; (add-hook 'before-save-hook 'gofmt-before-save)
-
 
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook 'gofmt-before-save)

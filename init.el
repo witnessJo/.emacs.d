@@ -422,7 +422,7 @@ Version 2017-07-08"
   (let ((prev-pos (point))
         (start-line-pos (progn (beginning-of-line) (point)))
         (end-line-pos (progn (end-of-line) (point))))
-    (kill-new (buffer-substring start-line-pos (+ end-line-pos 1)))
+    (kill-new (buffer-substring start-line-pos end-line-pos)))
     (goto-char prev-pos))
   )
 
@@ -487,6 +487,11 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-d") 'chan-forward-delete-word)
 (global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
 (global-set-key (kbd "C-M-y") 'chan-copy-current-line)
+(global-set-key (kbd "C-y") (lambda ()
+                              (interactive)
+                              (electric-newline-and-maybe-indent)
+                              (call-interactively 'yank)
+                              ))
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)

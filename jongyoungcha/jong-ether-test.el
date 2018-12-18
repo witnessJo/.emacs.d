@@ -163,9 +163,10 @@
         (if (> (1+ magic-second) 5))
         (message "waiting...")
         (sleep-for 1))
-
+      
       (condition-case ex
           (with-current-buffer (get-buffer "*gud-connect*")
+            (goto-char (point-max))
             (insert "r --datadir=~/testnet --nodiscover console")
             (autopair-newline)
             (insert "c")
@@ -195,7 +196,7 @@
     (ignore-errors (make-directory "~/testnet"))
     (copy-file genesis-json-path "~/testnet" t)
     (shell-command "geth --datadir=~/testnet init /home/jongyoungcha/testnet/genesis.json" (current-buffer))
-  ))
+    ))
 
 
 
