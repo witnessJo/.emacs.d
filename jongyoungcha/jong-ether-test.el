@@ -172,20 +172,22 @@
             (insert "c")
             (autopair-newline))
         (message "running delve of local ethernode was failed..."))
-
-      (condition-case ex
-          (with-current-buffer (get-buffer "*chan-dlv-server*")
-            (autopair-newline)
-            (insert "personal.newAccount(\"jongyoungcha\")")
-            (autopair-newline)
-            (insert "personal.newAccount(\"jongyoungcha\")")
-            (autopair-newline)
-            (insert "personal.unlockAccount(eth.accounts[0] ,\"jongyoungcha\", 0)")
-            (autopair-newline)
-            (insert "personal.unlockAccount(eth.accounts[1] ,\"jongyoungcha\", 0)")
-            (autopair-newline))
-        (message "running init new node was failed..."))))
+      
+      ;; (condition-case ex
+      ;; (with-current-buffer (get-buffer "*chan-dlv-server*")
+      ;; (autopair-newline)
+      ;; (insert "personal.newAccount(\"jongyoungcha\")")
+      ;; (autopair-newline)
+      ;; (insert "personal.newAccount(\"jongyoungcha\")")
+      ;; (autopair-newline)
+      ;; (insert "personal.unlockAccount(eth.accounts[0] ,\"jongyoungcha\", 0)")
+      ;; (autopair-newline)
+      ;; (insert "personal.unlockAccount(eth.accounts[1] ,\"jongyoungcha\", 0)")
+      ;; (autopair-newline))
+      ;; (message "running init new node was failed..."))))
+      ))
   )
+    
 
 
 (defun chan-init-local-enodeinfo ()
