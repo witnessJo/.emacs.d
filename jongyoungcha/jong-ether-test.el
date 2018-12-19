@@ -140,20 +140,6 @@
         )))
   )
 
-
-(defun chan-init-ethernode (target-buffer)
-  "'target-buffer' must be a 'eshell-mode buffer."
-  (with-current-buffer target-buffer
-    ;; (chan-eshell-exec-cmd (current-buffer)
-    ;; (format "rm -rf %s" (ether-node-testnet-dir elem-node)))
-    (chan-eshell-exec-cmd (current-buffer)
-                          (format "geth --datadir=%s init %s/genesis.json"
-                                  (ether-node-testnet-dir elem-node)
-                                  (ether-node-testnet-dir elem-node)))
-    (chan-eshell-exec-cmd (current-buffer)
-                          (format "geth --datadir=%s console" (ether-node-testnet-dir elem-node))))
-  )
-
 (defun chan-run-local-ethernode ()
   (interactive)
   (let ((magic-second 0))
@@ -171,130 +157,133 @@
             (autopair-newline)
             (insert "c")
             (autopair-newline))
-        (message "running delve of local ethernode was failed..."))
-      
-      ;; (condition-case ex
-      ;; (with-current-buffer (get-buffer "*chan-dlv-server*")
-      ;; (autopair-newline)
-      ;; (insert "personal.newAccount(\"jongyoungcha\")")
-      ;; (autopair-newline)
-      ;; (insert "personal.newAccount(\"jongyoungcha\")")
-      ;; (autopair-newline)
-      ;; (insert "personal.unlockAccount(eth.accounts[0] ,\"jongyoungcha\", 0)")
-      ;; (autopair-newline)
-      ;; (insert "personal.unlockAccount(eth.accounts[1] ,\"jongyoungcha\", 0)")
-      ;; (autopair-newline))
-      ;; (message "running init new node was failed..."))))
-      ))
+        (message "running delve of local ethernode was failed...")))
+    )
   )
-    
 
 
 (defun chan-init-local-enodeinfo ()
   (interactive)
-  (with-current-buffer (get-buffer-create "*chan-buffer*")
-    (display-buffer (current-buffer))
-    (ignore-errors (delete-directory "~/testnet" t))
-    (ignore-errors (make-directory "~/testnet"))
-    (copy-file genesis-json-path "~/testnet" t)
-    (shell-command "geth --datadir=~/testnet init /home/jongyoungcha/testnet/genesis.json" (current-buffer))
-    ))
-
-
-
-(defun chan-check-dlv-server-buffer ()
-  "Check is there tat buffer..."
-  (let ((target-buffer))
-    (if (setq target-buffer (get-buffer ether-target-eshell))
-        target-buffer
-      nil))
-  )
-
-(defun chan-ether-send-transaction ()
-  "Send transaction coinbase to accounts[1]."
-  (interactive)
-  (condition-case ex
-      (with-current-buffer ether-target-eshell
-        (goto-char (point-max))
-        (insert (format "eth.sendTransaction({from:eth.coinbase, to:eth.accounts[1], value:1})"))
-        (eshell-send-input)
-        (goto-char (point-max))
-        (eshell-return-to-prompt))
-    (message ex))
-  )
-
-(defun chan-ether-new-account ()
-  "This is unlock coinbase."
-  (interactive)
-  (condition-case ex
-      (with-current-buffer ether-target-eshell
-        (goto-char (point-max))
-        (insert (format "personal.newAccount(\"jongyoungcha\")"))
-        (eshell-send-input)
-        (goto-char (point-max))
-        (eshell-return-to-prompt))
-    (message ex))
-  )
-
-
-(defun chan-ether-unlock-account0 ()
-  "This is unlock coinbase."
-  (interactive)
-  (condition-case ex
-      (with-current-buffer ether-target-eshell
-        (goto-char (point-max))
-        (insert (format "personal.unlockAccount(eth.accounts[0], \"jongyoungcha\", 0)"))
-        (eshell-send-input)
-        (goto-char (point-max))
-        (eshell-return-to-prompt))
-    (message ex))
-  )
-
-
-(defun chan-ether-unlock-account1 ()
-  "This is unlock coinbase."
-  (interactive)
-  (condition-case ex
-      (with-current-buffer ether-target-eshell
-        (goto-char (point-max))
-        (insert (format "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)"))
-        (eshell-send-input)
-        (goto-char (point-max))
-        (eshell-return-to-prompt))
-    (message ex))
-  )
-
-
-(defun chan-ether-get-peers ()
-  "This is unlock coinbase."
-  (interactive)
-  (condition-case ex
-      (with-current-buffer ether-target-eshell
-        (goto-char (point-max))
-        (insert (format "admin.peers"))
-        (eshell-send-input)
-        (goto-char (point-max))
-        (eshell-return-to-prompt))
-    (message ex))
-  )
-
-
-(defun chan-ether-init-testnet ()
-  "Initialize the testnet."
-  (interactive)
-  (condition-case ex
-      ;; (with-current-buffer (eshell-return-to-prompt)
-      (with-current-buffer (get-buffer "*eshell*")
-        ;; (insert (format "admin.peers"))
-        (goto-char (point-max))
-        (Insert "ls")
-        (eshell-send-input)
-        (eshell-return-to-prompt)
-        (goto-char (point-max))
-        (eshell-return-to-prompt)
-        )
+  (let ((genesis-output-buffer "*chan-init-ether-local-genesis")
+        (account-output-buffer "*chan-init-ether-local-account*"))
+    (with-current-buffer (get-buffer-create genesis-output-buffer)
+      (ignore-errors (shell-mode))
+      (display-buffer (current-buffer))
+      (ignore-errors (delete-directory "~/testnet" t))
+      (ignore-errors (make-directory "~/testnet"))
+      (copy-file genesis-json-path "~/testnet" t)
+      (call-process-shell-command
+       "geth --datadir=~/testnet init ~/testnet/genesis.json" nil (current-buffer)))
+      
+    (with-current-buffer (get-buffer-create account-output-buffer)
+      (start-process-shell-command "geth" account-output-buffer "geth --datadir=~/testnet --nodiscover console")
+      (display-buffer (current-buffer))
+      (ignore-errors (shell-mode))
+      (goto-char (point-max))
+      (insert "personal.newAccount(\"jongyoungcha\")")
+      (autopair-newline)
+      (insert "personal.newAccount(\"jongyoungcha\")")
+      (autopair-newline)
+      (insert "personal.unlockAccount(eth.accounts[0], \"jongyoungcha\", 0)" )
+      (autopair-newline)
+      (insert "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)")
+      (autopair-newline))
+      )
     )
-  )
 
-(provide 'jong-ether-test)
+  (defun chan-check-dlv-server-buffer ()
+    "Check is there tat buffer..."
+    (let ((target-buffer))
+      (if (setq target-buffer (get-buffer ether-target-eshell))
+          target-buffer
+        nil))
+    )
+
+  (defun chan-ether-send-transaction ()
+    "Send transaction coinbase to accounts[1]."
+    (interactive)
+    (condition-case ex
+        (with-current-buffer ether-target-eshell
+          (goto-char (point-max))
+          (insert (format "eth.sendTransaction({from:eth.coinbase, to:eth.accounts[1], value:1})"))
+          (eshell-send-input)
+          (goto-char (point-max))
+          (eshell-return-to-prompt))
+      (message ex))
+    )
+
+  (defun chan-ether-new-account ()
+    "This is unlock coinbase."
+    (interactive)
+    (condition-case ex
+        (with-current-buffer ether-target-eshell
+          (goto-char (point-max))
+          (insert (format "personal.newAccount(\"jongyoungcha\")"))
+          (eshell-send-input)
+          (goto-char (point-max))
+          (eshell-return-to-prompt))
+      (message ex))
+    )
+
+
+  (defun chan-ether-unlock-account0 ()
+    "This is unlock coinbase."
+    (interactive)
+    (condition-case ex
+        (with-current-buffer ether-target-eshell
+          (goto-char (point-max))
+          (insert (format "personal.unlockAccount(eth.accounts[0], \"jongyoungcha\", 0)"))
+          (eshell-send-input)
+          (goto-char (point-max))
+          (eshell-return-to-prompt))
+      (message ex))
+    )
+
+
+  (defun chan-ether-unlock-account1 ()
+    "This is unlock coinbase."
+    (interactive)
+    (condition-case ex
+        (with-current-buffer ether-target-eshell
+          (goto-char (point-max))
+          (insert (format "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)"))
+          (eshell-send-input)
+          (goto-char (point-max))
+          (eshell-return-to-prompt))
+      (message ex))
+    )
+
+
+  (defun chan-ether-get-peers ()
+    "This is unlock coinbase."
+    (interactive)
+    (condition-case ex
+        (with-current-buffer ether-target-eshell
+          (goto-char (point-max))
+          (insert (format "admin.peers"))
+          (eshell-send-input)
+          (goto-char (point-max))
+          (eshell-return-to-prompt))
+      (message ex))
+    )
+
+
+  (defun chan-ether-init-testnet ()
+    "Initialize the testnet."
+    (interactive)
+    (condition-case ex
+        ;; (with-current-buffer (eshell-return-to-prompt)
+        (with-current-buffer (get-buffer "*eshell*")
+          ;; (insert (format "admin.peers"))
+          (goto-char (point-max))
+          (Insert "ls")
+          (eshell-send-input)
+          (eshell-return-to-prompt)
+          (goto-char (point-max))
+          (eshell-return-to-prompt)
+          )
+      )
+    )
+
+  (provide 'jong-ether-test)
 
