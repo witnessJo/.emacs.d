@@ -204,7 +204,10 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-run-dlv-client(&optional port)
   "Connect the dlv server!!!."
   (interactive)
-  (let ((target-port ""))
+  (let ((target-port "")
+        (target-buffer "gud-connect"))
+    (if (get-buffer target-buffer)
+        (kill-buffer target-buffer))
     (if (equal port nil)
         (setq target-port (read-string "input listen port : "))
       (setq target-port port))
@@ -220,6 +223,9 @@ And the environment variable was existing, Download go binaries from the interne
         (output-buffer "*chan-dlv-server*")
         (listen-process nil))
     ;; (target-port nil)
+
+    (if (get-buffer output-buffer)
+        (kill-buffer output-buffer))
 
     (if (equal (projectile-project-root) nil)
         (setq target-dir (projectile-project-root))

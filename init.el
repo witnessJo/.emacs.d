@@ -422,10 +422,8 @@ Version 2017-07-08"
   (let ((prev-pos (point))
         (start-line-pos (progn (beginning-of-line) (point)))
         (end-line-pos (progn (end-of-line) (point))))
-    (kill-new (buffer-substring start-line-pos end-line-pos)))
-    (goto-char prev-pos))
-  )
-
+    (kill-new (buffer-substring start-line-pos end-line))
+    (goto-char prev-pos)))
 
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of a word.
@@ -557,11 +555,11 @@ With argument ARG, do this that many times."
 
 
 (global-set-key (kbd "<f8>") (lambda () (interactive)
-                              (call-interactively 'gud-print)))
+			       (call-interactively 'gud-print)))
 (global-set-key (kbd "<f9>") (lambda () (interactive)
-                              (call-interactively 'gud-break)))
+			       (call-interactively 'gud-break)))
 (global-set-key (kbd "<f10>") (lambda () (interactive)
-                               (call-interactively 'gud-nexti)))
+				(call-interactively 'gud-nexti)))
 (global-set-key (kbd "<f11>") (lambda () (interactive)
 				(call-interactively 'gud-stepi)))
 (global-set-key (kbd "<f12>") (lambda () (interactive)
