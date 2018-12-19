@@ -235,8 +235,8 @@ And the environment variable was existing, Download go binaries from the interne
     (with-current-buffer (get-buffer-create output-buffer)
       (display-buffer output-buffer)
       (setq default-directory target-dir)
-      (ignore-errors (async-shell-command "dlv debug --headless" (current-buffer) "*jo-error*"))
-      ))
+      (ignore-errors (async-shell-command "dlv debug --headless" (current-buffer) "*jo-error*"))))
+  ;; (call-process-shell-command "dlv debug --headless" nil (current-buffer))))
   )
 
 
@@ -244,99 +244,100 @@ And the environment variable was existing, Download go binaries from the interne
   "Create dlv with server and client mode."
   (interactive)
   (let ((port)
-        (start-pos)
-        (end-pos)
-        (magic-seconds 0))
+	(start-pos)
+	(end-pos)
+	(magic-seconds 0))
     (condition-case ex
-        (progn
-          (with-current-buffer (get-buffer "main.go")
-            (chan-run-dlv-server))
+	(progn
+	  (with-current-buffer (get-buffer "main.go")
+	    (chan-run-dlv-server))
 
-          ;; (while (> (1+ magic-seconds) 4)
-          ;; (message "waiting...")
-          (sleep-for 4)
-          
-          (setq port (with-current-buffer (get-buffer-create "*chan-dlv-server*")
-                       (goto-char (point-max))
-                       (forward-line -1)
-                       (end-of-line)
-                       (setq end-pos (point))
-                       (re-search-backward ":")
-                       (setq start-pos (1+ (point)))
-                       (buffer-substring start-pos end-pos)))
-          (with-current-buffer (get-buffer "main.go")
-            (chan-run-dlv-client port)))
+	  ;; (while (> (1+ magic-seconds) 4)
+	  ;; (message "waiting...")
+	  (sleep-for 4)
+	  
+	  (setq port (with-current-buffer (get-buffer-create "*chan-dlv-server*")
+		       (goto-char (point-max))
+		       (forward-line -1)
+		       (end-of-line)
+		       (setq end-pos (point))
+		       (re-search-backward ":")
+		       (setq start-pos (1+ (point)))
+		       (buffer-substring start-pos end-pos)))
+	  (with-current-buffer (get-buffer "main.go")
+	    (chan-run-dlv-client port)))
       (message "There was not a main.go buffer.")))
   )
 
 
 (add-hook 'go-mode-hook (lambda ()
-                          (setq indent-tabs-mode nil)
-                          (setq tab-width 4)
-                          
-                          ;; syntax highlight
-                          (go-guru-hl-identifier-mode)
-                          
-                          (go-eldoc-setup)
-                          (add-hook 'before-save-hook 'gofmt-before-save)
+			  (setq indent-tabs-mode nil)
+			  (setq tab-width 4)
+			  
+			  ;; syntax highlight
+			  (go-guru-hl-identifier-mode)
+			  
+			  (go-eldoc-setup)
+			  (add-hook 'before-save-hook 'gofmt-before-save)
 
-                          ;; setting company-go mode...
-                          (setq company-tooltip-limit 20)
-                          (setq company-idle-delay .3)
-                          (setq company-echo-delay 0)
-                          (setq company-begin-commands '(self-insert-command))
-                          (set (make-local-variable 'company-backends) '(company-go))
-                          (company-mode)
-                          
-                          ;;setting go-eldocp
-                          (set-face-attribute 'eldoc-highlight-function-argument nil
-                                              :underline t :foreground "green"
-                                              :weight 'bold)
+			  ;; setting company-go mode...
+			  (setq company-tooltip-limit 20)
+			  (setq company-idle-delay .3)
+			  (setq company-echo-delay 0)
+			  (setq company-begin-commands '(self-insert-command))
+			  (set (make-local-variable 'company-backends) '(company-go))
+			  (company-mode)
+			  
+			  ;;setting go-eldocp
+			  (set-face-attribute 'eldoc-highlight-function-argument nil
+					      :underline t :foreground "green"
+					      :weight 'bold)
 
-                          (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-                          (local-set-key (kbd "C-c C-a") 'go-import-add)
-                          (local-set-key (kbd "C-c C-g") 'go-goto-imports)
-                          (local-set-key (kbd "C-c C-f") 'gofmt)
-                          (local-set-key (kbd "C-c r .") 'godef-jump)
-                          (local-set-key (kbd "C-c r ,") 'go-guru-referrers)
-                          (local-set-key (kbd "C-c r i") 'go-guru-implements)
-                          (local-set-key (kbd "C-c r j") 'go-guru-definition)
-                          (local-set-key (kbd "C-c r d") 'go-guru-describe)
-                          (local-set-key (kbd "C-c d d") 'godoc-at-point)
-                          (local-set-key (kbd "C-c g g")
-                                         (lambda () (interactive)
-                                           (chan-gogud-gdb "dlv debug")))
-                          (local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
-                          (local-set-key (kbd "C-c c c")
-                                         (lambda () (interactive)
-                                           (compile "go build -v && go test -v && go vet")))
-                          (local-set-key (kbd "C-c r r") 'jo-projectile-run-project)
-                          (local-set-key (kbd "C-c M->")
-                                         (lambda () (interactive)
-                                           (other-window 1)
-                                           (call-interactively 'end-of-buffer)
-                                           (other-window -1)))
+			  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
+			  (local-set-key (kbd "C-c C-a") 'go-import-add)
+			  (local-set-key (kbd "C-c C-g") 'go-goto-imports)
+			  (local-set-key (kbd "C-c C-f") 'gofmt)
+			  (local-set-key (kbd "C-c r .") 'godef-jump)
+			  (local-set-key (kbd "C-c r ,") 'go-guru-referrers)
+			  (local-set-key (kbd "C-c r i") 'go-guru-implements)
+			  (local-set-key (kbd "C-c r j") 'go-guru-definition)
+			  (local-set-key (kbd "C-c r d") 'go-guru-describe)
+			  (local-set-key (kbd "C-c d d") 'godoc-at-point)
+			  (local-set-key (kbd "C-c g g")
+					 (lambda () (interactive)
+					   (chan-gogud-gdb "dlv debug")))
+			  
+			  (local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
+			  (local-set-key (kbd "C-c c c")
+					 (lambda () (interactive)
+					   (compile "go build -v && go test -v && go vet")))
+			  (local-set-key (kbd "C-c r r") 'jo-projectile-run-project)
+			  (local-set-key (kbd "C-c M->")
+					 (lambda () (interactive)
+					   (other-window 1)
+					   (call-interactively 'end-of-buffer)
+					   (other-window -1)))
 
-                          )
-          )
+			  )
+	  )
 
 
 
 (add-hook 'chan-gogud-mode-hook
-          (lambda () (local-set-key (kbd "C-c r .")
-                                    (lambda () (interactive)
-                                      (call-interactively 'gud-refresh)
-                                      (chan-gogud-exec-function #'godef-jump)))
-            (local-set-key (kbd "C-c r ,")
-                           (lambda () (interactive)
-                             (call-interactively 'gud-refresh)
-                             (chan-gogud-exec-function #'go-guru-referrers)))
-            (local-set-key (kbd "C-c r i")
-                           (lambda () (interactive)
-                             (call-interactively 'gud-refresh)
-                             (chan-gogud-exec-function #'go-guru-implements)))
-            )
-          )
+	  (lambda () (local-set-key (kbd "C-c r .")
+				    (lambda () (interactive)
+				      (call-interactively 'gud-refresh)
+				      (chan-gogud-exec-function #'godef-jump)))
+	    (local-set-key (kbd "C-c r ,")
+			   (lambda () (interactive)
+			     (call-interactively 'gud-refresh)
+			     (chan-gogud-exec-function #'go-guru-referrers)))
+	    (local-set-key (kbd "C-c r i")
+			   (lambda () (interactive)
+			     (call-interactively 'gud-refresh)
+			     (chan-gogud-exec-function #'go-guru-implements)))
+	    )
+	  )
 
 
 (provide 'jong-go)
