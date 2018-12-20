@@ -932,7 +932,6 @@ With argument ARG, do this that many times."
 (load-theme 'sanityinc-tomorrow-blue t)
 (set-background-color "#102033")
 (set-cursor-color "#ff4444")
-
 (global-hl-line-mode t)
 
 (when (member "fixed" (font-family-list))

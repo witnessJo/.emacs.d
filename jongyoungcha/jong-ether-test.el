@@ -149,7 +149,6 @@
         (if (> (1+ magic-second) 5))
         (message "waiting...")
         (sleep-for 1))
-      
       (condition-case ex
           (with-current-buffer (get-buffer "*gud-connect*")
             (goto-char (point-max))
@@ -164,19 +163,20 @@
 
 (defun chan-init-local-enodeinfo ()
   (interactive)
-  (let ((genesis-output-buffer "*chan-init-ether-local-genesis")
+  (let ((genesis-output-buffer "*chan-init-ether-local-genesis*")
         (account-output-buffer "*chan-init-ether-local-account*"))
     (with-current-buffer (get-buffer-create genesis-output-buffer)
       (ignore-errors (shell-mode))
+      (goto-char (point-max))
       (display-buffer (current-buffer))
       (ignore-errors (delete-directory "~/testnet" t))
       (ignore-errors (make-directory "~/testnet"))
-      (copy-file genesis-json-path "~/testnet" t)
+      (copy-file genesis-json-path "~/testnet/genesis.json" t)
       (call-process-shell-command
-       "geth --datadir=~/testnet init ~/testnet/genesis.json" nil (current-buffer)))
-      
+       "geth --datadir=~/testnet --cache=2048 init ~/testnet/genesis.json" nil t))
+    
     (with-current-buffer (get-buffer-create account-output-buffer)
-      (start-process-shell-command "geth" account-output-buffer "geth --datadir=~/testnet --nodiscover console")
+      (start-process-shell-command "geth" account-output-buffer "geth --datadir=~/testnet --nodiscover --cache=2048 console")
       (display-buffer (current-buffer))
       (ignore-errors (shell-mode))
       (goto-char (point-max))
@@ -188,102 +188,95 @@
       (autopair-newline)
       (insert "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)")
       (autopair-newline))
-      )
     )
+  )
 
-  (defun chan-check-dlv-server-buffer ()
-    "Check is there tat buffer..."
-    (let ((target-buffer))
-      (if (setq target-buffer (get-buffer ether-target-eshell))
-          target-buffer
-        nil))
+
+(defun chan-ether-send-transaction ()
+  "Send transaction coinbase to accounts[1]."
+  (interactive)
+  (condition-case ex
+      (with-current-buffer ether-target-eshell
+        (goto-char (point-max))
+        (insert (format "eth.sendTransaction({from:eth.coinbase, to:eth.accounts[1], value:1})"))
+        (eshell-send-input)
+        (goto-char (point-max))
+        (eshell-return-to-prompt))
+    (message ex))
+  )
+
+(defun chan-ether-new-account ()
+  "This is unlock coinbase."
+  (interactive)
+  (condition-case ex
+      (with-current-buffer ether-target-eshell
+        (goto-char (point-max))
+        (insert (format "personal.newAccount(\"jongyoungcha\")"))
+        (eshell-send-input)
+        (goto-char (point-max))
+        (eshell-return-to-prompt))
+    (message ex))
+  )
+
+
+(defun chan-ether-unlock-account0 ()
+  "This is unlock coinbase."
+  (interactive)
+  (condition-case ex
+      (with-current-buffer ether-target-eshell
+        (goto-char (point-max))
+        (insert (format "personal.unlockAccount(eth.accounts[0], \"jongyoungcha\", 0)"))
+        (eshell-send-input)
+        (goto-char (point-max))
+        (eshell-return-to-prompt))
+    (message ex))
+  )
+
+
+(defun chan-ether-unlock-account1 ()
+  "This is unlock coinbase."
+  (interactive)
+  (condition-case ex
+      (with-current-buffer ether-target-eshell
+        (goto-char (point-max))
+        (insert (format "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)"))
+        (eshell-send-input)
+        (goto-char (point-max))
+        (eshell-return-to-prompt))
+    (message ex))
+  )
+
+
+(defun chan-ether-get-peers ()
+  "This is unlock coinbase."
+  (interactive)
+  (condition-case ex
+      (with-current-buffer ether-target-eshell
+        (goto-char (point-max))
+        (insert (format "admin.peers"))
+        (eshell-send-input)
+        (goto-char (point-max))
+        (eshell-return-to-prompt))
+    (message ex))
+  )
+
+
+(defun chan-ether-init-testnet ()
+  "Initialize the testnet."
+  (interactive)
+  (condition-case ex
+      ;; (with-current-buffer (eshell-return-to-prompt)
+      (with-current-buffer (get-buffer "*eshell*")
+        ;; (insert (format "admin.peers"))
+        (goto-char (point-max))
+        (Insert "ls")
+        (eshell-send-input)
+        (eshell-return-to-prompt)
+        (goto-char (point-max))
+        (eshell-return-to-prompt)
+        )
     )
+  )
 
-  (defun chan-ether-send-transaction ()
-    "Send transaction coinbase to accounts[1]."
-    (interactive)
-    (condition-case ex
-        (with-current-buffer ether-target-eshell
-          (goto-char (point-max))
-          (insert (format "eth.sendTransaction({from:eth.coinbase, to:eth.accounts[1], value:1})"))
-          (eshell-send-input)
-          (goto-char (point-max))
-          (eshell-return-to-prompt))
-      (message ex))
-    )
-
-  (defun chan-ether-new-account ()
-    "This is unlock coinbase."
-    (interactive)
-    (condition-case ex
-        (with-current-buffer ether-target-eshell
-          (goto-char (point-max))
-          (insert (format "personal.newAccount(\"jongyoungcha\")"))
-          (eshell-send-input)
-          (goto-char (point-max))
-          (eshell-return-to-prompt))
-      (message ex))
-    )
-
-
-  (defun chan-ether-unlock-account0 ()
-    "This is unlock coinbase."
-    (interactive)
-    (condition-case ex
-        (with-current-buffer ether-target-eshell
-          (goto-char (point-max))
-          (insert (format "personal.unlockAccount(eth.accounts[0], \"jongyoungcha\", 0)"))
-          (eshell-send-input)
-          (goto-char (point-max))
-          (eshell-return-to-prompt))
-      (message ex))
-    )
-
-
-  (defun chan-ether-unlock-account1 ()
-    "This is unlock coinbase."
-    (interactive)
-    (condition-case ex
-        (with-current-buffer ether-target-eshell
-          (goto-char (point-max))
-          (insert (format "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)"))
-          (eshell-send-input)
-          (goto-char (point-max))
-          (eshell-return-to-prompt))
-      (message ex))
-    )
-
-
-  (defun chan-ether-get-peers ()
-    "This is unlock coinbase."
-    (interactive)
-    (condition-case ex
-        (with-current-buffer ether-target-eshell
-          (goto-char (point-max))
-          (insert (format "admin.peers"))
-          (eshell-send-input)
-          (goto-char (point-max))
-          (eshell-return-to-prompt))
-      (message ex))
-    )
-
-
-  (defun chan-ether-init-testnet ()
-    "Initialize the testnet."
-    (interactive)
-    (condition-case ex
-        ;; (with-current-buffer (eshell-return-to-prompt)
-        (with-current-buffer (get-buffer "*eshell*")
-          ;; (insert (format "admin.peers"))
-          (goto-char (point-max))
-          (Insert "ls")
-          (eshell-send-input)
-          (eshell-return-to-prompt)
-          (goto-char (point-max))
-          (eshell-return-to-prompt)
-          )
-      )
-    )
-
-  (provide 'jong-ether-test)
+(provide 'jong-ether-test)
 
