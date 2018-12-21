@@ -27,7 +27,7 @@
 (use-package avy
   :ensure t
   :config
-  (avy-setup-default)
+  ;; (avy-setup-default)
   ;; (avy-goto-char-timer)
   ;; (setq avy-all-windows-alt)
   :bind
