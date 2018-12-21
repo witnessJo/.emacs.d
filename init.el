@@ -1,15 +1,14 @@
 ;;; Avdded by Package.el.  This must come before configurations of
-;;; installed packages.  Don't delete this line.  If you don't want it,
+;;; installed packages.  Don't delete this line.  eIf you don't want it,
 ;;; just comment it out by adding a semicolon to the start of the line.
 ;;; You may delete these explanatory comments.
-
 (gnutls-available-p)
 
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
              '("marmalade" . "https://marmalade-repo.org/packages/"))
-    
+
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -20,10 +19,21 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;;; load common modules
+(add-to-list 'load-path "~/.emacs.d/jongyoungcha")
+
+;;; load compmon modules
 (require 'chan-cursor-tracker)
 
-
+(use-package avy
+  :ensure t
+  :config
+  (avy-setup-default)
+  (avy-goto-char-timer)
+  (setq avy-all-windows-alt)
+  :bind
+  ("C-'" . avy-goto-word-0)
+  ("C-;" . avy-goto-line))
+  
 (defun my-show-eshell ()
   (interactive)
   (let (cmd)
@@ -36,7 +46,8 @@
       (pop-to-buffer-same-window "*eshell*"))
     ))
 
-(defun jo-open-line-above ()
+
+(defun jong-open-line-above ()
   "Insert a newline above the current line and put point at beginning."
   (interactive)
   (unless (bolp)
@@ -45,7 +56,7 @@
   (forward-line -1)
   (indent-according-to-mode))
 
-(defun jo-open-line-below ()
+(defun jong-open-line-below ()
   "Insert a newline below the current line and put point at beginning."
   (interactive)
   (unless (eolp)
@@ -195,10 +206,10 @@ Version 2017-07-08"
 
 (require 'helm-config)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; you need ag binary                        ;;
-;; $ brew install the_silver_searcher        ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; you need to install ag binary      ;;
+;; $ brew install the_silver_searcher ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package helm-ag
   :ensure t)
 (with-eval-after-load 'helm-ag
@@ -305,7 +316,7 @@ Version 2017-07-08"
 (defun jo-show-buffer-other-window ()
   (interactive)
   (other-window -1)
-  (helm-buffers-list)
+  (Helm-buffers-list)
   (other-window 1)
   )
 
@@ -330,30 +341,38 @@ Version 2017-07-08"
   )
 
 
+(defcustom candidate-chars nil
+  "Why bother me."
+  :type 'string)
+(setq candidate-chars "[-\"\/=(){};:]")
+
 (defun chan-forward-word ()
   "Chan 'forward-word."
   (interactive)
-  (let ((candidate-chars "[-\"=[](){};:]")
-        (target-string "")
+  (let ((target-string "")
         (base-pos 0)
         (fword-pos 0)
-        (candindate-pos 0)
+        (candidate-pos 0)
         (gap-length 0))
     (setq base-pos (point))
     (forward-word)
     (setq fword-pos (point))
-    (setq target-string (buffer-substring base-pos fword-pos))
-    (setq gap-length (search-forward-regexp candidate-chars target-string))
-    (if (not (equal gap-length nil))
-        (backward-char (- (- (length target-string) gap-length) 1))))
+    (goto-char base-pos)
+    (ignore-errors (re-search-forward candidate-chars))
+    (setq candidate-pos (point))
+    (goto-char base-pos)
+    (if (< fword-pos candidate-pos)
+	(goto-char fword-pos)
+      (goto-char candidate-pos))
+    (message "base %s fword %s regex %s" base-pos fword-pos candidate-pos)
+    )
   )
 
 
 (defun chan-backward-word ()
   "Chan 'backward-word."
   (interactive)
-  (let ((candidate-chars "[-\"=[](){};:]")
-        (target-string "")
+  (let ((target-string "")
         (base-pos 0)
         (bword-pos 0)
         (candindate-pos 0))
@@ -370,8 +389,7 @@ Version 2017-07-08"
 (defun chan-forward-delete-word ()
   "Chan 'forward-delete-word."
   (interactive)
-  (let ((candidate-chars "[\(\)\;\:\{\} \]")
-        (target-string "")
+  (let ((target-string "")
         (base-pos 0)
         (fword-pos 0)
         (candidate-pos 0))
@@ -396,8 +414,7 @@ Version 2017-07-08"
 (defun chan-backward-delete-word ()
   "Chan 'backward-delete-word."
   (interactive)
-  (let ((candidate-chars "[\(\)\;\:\{\} ]")
-        (target-string "")
+  (let ((target-string "")
         (base-pos 0)
         (bword-pos 0)
         (candidate-pos 0))
@@ -422,8 +439,9 @@ Version 2017-07-08"
   (let ((prev-pos (point))
         (start-line-pos (progn (beginning-of-line) (point)))
         (end-line-pos (progn (end-of-line) (point))))
-    (kill-new (buffer-substring start-line-pos end-line-pos))
+    (kill-new (buffer-substring start-line-pos (1+ end-line-pos)))
     (goto-char prev-pos)))
+
 
 (defun delete-word (arg)
   "Delete characters forward until encountering the end of a word.
@@ -462,15 +480,14 @@ With argument ARG, do this that many times."
                                 )))
 
 
-(global-set-key (kbd "C-S-o") 'jo-open-line-above)
-(global-set-key (kbd "C-o") 'jo-open-line-below)
+(global-set-key (kbd "C-S-o") 'jong-open-line-above)
+(global-set-key (kbd "C-o") 'jong-open-line-below)
 
 
 (global-set-key (kbd "C-c k") (lambda() (interactive)
                                 (call-interactively 'other-window)
                                 (kill-buffer (buffer-name))
                                 (call-interactively 'other-window)))
-
 
 
 (global-set-key (kbd "C-S-M-;") 'windmove-left)
@@ -504,7 +521,7 @@ With argument ARG, do this that many times."
   (interactive)
   (if (mark t)
       (pop-to-mark-command)
-      (pop-global-mark)))
+    (pop-global-mark)))
 
 
 (global-set-key (kbd "C-x C-p") 'previous-buffer)
@@ -533,6 +550,8 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
 (global-set-key (kbd "C-x C-x") nil)
+(global-set-key (kbd "C-x x") nil)
+(global-set-key (kbd "C-x C-o") 'other-window)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-c b") 'jo-show-buffer-other-window)
@@ -908,7 +927,7 @@ With argument ARG, do this that many times."
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(add-to-list 'load-path "~/.emacs.d/jongyoungcha")
+
 
 (use-package google-translate
   :ensure t)
@@ -917,14 +936,6 @@ With argument ARG, do this that many times."
   (setq google-translate-default-target-language "ko")
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
-
-
-
-;; (require 'nice-jumper)
-;; (global-nice-jumper-mode t)
-;; (global-set-key (kbd "M-p") 'nice-jumper/backward)
-;; (define-key input-decode-map [?\M-p][meta-n])
-;; (global-set-key (kbd "M-n") 'nice-jumper/forward)
 
 
 (require 'jong-tramp)
@@ -994,7 +1005,7 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx go-guru go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color elisp-refs google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete auto-dim-other-buffers prodigy eyebrowse helm-ag helm yasnipppet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update use-package))))
+    (avy visual-regexp pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx go-guru go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color elisp-refs google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete auto-dim-other-buffers prodigy eyebrowse helm-ag helm yasnipppet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
