@@ -35,19 +35,26 @@
 (defcustom ether-node-list
   :type 'list)
 (setq ether-node-list (list
+                       ;; (make-ether-node
+                       ;; :name "ethernode1"
+                       ;; :host "192.168.130.101"
+                       ;; :user "jongyoungcha"
+                       ;; :passwd "jongyoungcha"
+                       ;; :privkey-path "~/.ssh/ethernode1_rsa"
+                       ;; :testnet-dir "~/testnet")
                        (make-ether-node
-                        :name "ethernode1"
-                        :host "192.168.130.101"
-                        :user "jongyoungcha"
-                        :passwd "jongyoungcha"
-                        :privkey-path "~/ethernode_keys/ethernode1_rsa"
+                        :name "channode1"
+                        :host "192.168.1.46"
+                        :user "root"
+                        :passwd "root"
+                        :privkey-path "~/.ssh/channode1_rsa"
                         :testnet-dir "~/testnet")
                        (make-ether-node
-                        :name "ethernode2"
-                        :host "192.168.130.102"
-                        :user "jongyoungcha"
-                        :passwd "jongyoungcha"
-                        :privkey-path "~/ethernode_keys/ethernode2_rsa"
+                        :name "channode3"
+                        :host "192.168.1.48"
+                        :user "root"
+                        :passwd "root"
+                        :privkey-path "~/.ssh/channode3_rsa"
                         :testnet-dir "~/testnet")
                        ;; (make-ether-node
                        ;; :name "ethernodeinner"
@@ -72,6 +79,44 @@
       (display-buffer node-buffer-name)
       (eshell-mode)
       )))
+
+
+(defun chan-make-node-infos (&optional dir)
+  (interactive)
+  (let((base-dir "~")
+       (output-buffer "*chan-nodes*")
+       (testnet-dir))
+    (if dir
+        (setq base-dir dir))
+    
+    (dolist (elem-node ether-node-list)
+      (with-current-buffer (get-buffer-create output-buffer)
+	(display-buffer output-buffer)
+	(eshell-command (format "ssh %s" (ether-node-name elem-node)) (current-buffer))
+	)
+      
+      ;; (ignore-errors (eshell-mode))
+      ;; (display-buffer (current-buffer))
+      ;; (setq default-directory (format "/ssh:%s@%s:~"
+      ;; (ether-node-user elem-node)
+      ;; (ether-node-host elem-node)))
+      ;; (call-process-shell-command (format "ssh %s" (ether-node-name elem-node)) nil (current-buffer))
+      ;; (display-buffer "*Eshell Command Output*")
+      ;; (if (locate-file "geth" exec-path)
+      ;; (progn
+      ;; (call-process-shell-command (format "geth --datadir=%s --nodiscover console"
+      ;; (ether-node-testnet-dir elem-node)))
+      ;; (ignore-errors (term-mode))
+      ;; (autopair-newline)
+      ;; (goto-char (point-max))
+      ;; (insert "amdin.nodeInfo.enode")
+      ;; (autopair-newline)
+      ;; )
+      ;; (insert "***Couldnt not found geth executable...***")
+      ;; )
+      )))
+
+
 
 (defun chan-eshell-exec-cmd (target-buffer cmd)
   (condition-case ex

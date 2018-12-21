@@ -9,7 +9,7 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
              '("marmalade" . "https://marmalade-repo.org/packages/"))
-
+    
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -19,6 +19,9 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
+;;; load common modules
+(require 'chan-cursor-tracker)
 
 
 (defun my-show-eshell ()
@@ -278,7 +281,6 @@ Version 2017-07-08"
 ;;   (other-window -1))
 
 (setq skippable-buffers '("^\\*Messages\\*" "^\\*scratch\\*" "^\\*Help\\*" "^\\*helm buffers\\*"))
-
 (defun jong-next-buffer ()
   "next-buffer that skips certain buffers"
   (interactive)
@@ -286,19 +288,17 @@ Version 2017-07-08"
   (dolist (skippable-buffer skippable-buffers)
     (when (string-match (buffer-name) skippable-buffer)
       (message "skip buffer: %s" skippable-buffer)
-      (next-buffer)
-      )
+      (next-buffer))
     ))
 
 (defun jong-prev-buffer ()
   "next-buffer that skips certain buffers"
   (interactive)
-  (previous-buffer)
+  (helm-previous-buffer)
   (dolist (skippable-buffer skippable-buffers)
     (when (string-match (buffer-name) skippable-buffer)
       (message "skip buffer: %s" skippable-buffer)
-      (previous-buffer)
-      )
+      (previous-buffer))
     ))
 
 
@@ -333,7 +333,7 @@ Version 2017-07-08"
 (defun chan-forward-word ()
   "Chan 'forward-word."
   (interactive)
-  (let ((candidate-chars "[\(\)\{\}\;\:]")
+  (let ((candidate-chars "[-\"=[](){};:]")
         (target-string "")
         (base-pos 0)
         (fword-pos 0)
@@ -343,7 +343,7 @@ Version 2017-07-08"
     (forward-word)
     (setq fword-pos (point))
     (setq target-string (buffer-substring base-pos fword-pos))
-    (setq gap-length (string-match candidate-chars target-string))
+    (setq gap-length (search-forward-regexp candidate-chars target-string))
     (if (not (equal gap-length nil))
         (backward-char (- (- (length target-string) gap-length) 1))))
   )
@@ -352,7 +352,7 @@ Version 2017-07-08"
 (defun chan-backward-word ()
   "Chan 'backward-word."
   (interactive)
-  (let ((candidate-chars "[\(\)\;\:\{\}]")
+  (let ((candidate-chars "[-\"=[](){};:]")
         (target-string "")
         (base-pos 0)
         (bword-pos 0)
@@ -370,7 +370,7 @@ Version 2017-07-08"
 (defun chan-forward-delete-word ()
   "Chan 'forward-delete-word."
   (interactive)
-  (let ((candidate-chars "[\(\)\;\:\{\} ]")
+  (let ((candidate-chars "[\(\)\;\:\{\} \]")
         (target-string "")
         (base-pos 0)
         (fword-pos 0)
@@ -422,7 +422,7 @@ Version 2017-07-08"
   (let ((prev-pos (point))
         (start-line-pos (progn (beginning-of-line) (point)))
         (end-line-pos (progn (end-of-line) (point))))
-    (kill-new (buffer-substring start-line-pos end-line))
+    (kill-new (buffer-substring start-line-pos end-line-pos))
     (goto-char prev-pos)))
 
 (defun delete-word (arg)
@@ -440,7 +440,6 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
 (global-set-key (kbd "M-d") 'delete-word)
 
-(global-set-key [remap next-buffer] 'my-next-buffer)
 
 (setq confirm-kill-emacs 'y-or-n-p)
 
@@ -466,8 +465,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-S-o") 'jo-open-line-above)
 (global-set-key (kbd "C-o") 'jo-open-line-below)
 
-(global-set-key (kbd "C-x C-x") 'other-window)
-(global-set-key (kbd "C-x C-p") 'other-window)
+
 (global-set-key (kbd "C-c k") (lambda() (interactive)
                                 (call-interactively 'other-window)
                                 (kill-buffer (buffer-name))
@@ -500,10 +498,19 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-v") 'evil-scroll-page-up)
 (global-set-key (kbd "C-v") 'evil-scroll-page-down)
 
-(global-set-key (kbd "M-p") 'evil-jump-backward)
-(global-set-key (kbd "M-n") 'evil-jump-forward)
+
+(defun pop-local-or-global-mark ()
+  "Pop to local mark if it exists or to the global mark if it does not."
+  (interactive)
+  (if (mark t)
+      (pop-to-mark-command)
+      (pop-global-mark)))
 
 
+(global-set-key (kbd "C-x C-p") 'previous-buffer)
+(global-set-key (kbd "C-x C-n") 'next-buffer)
+(global-set-key (kbd "M-n") 'pop-local-or-global-mark)
+(global-set-key (kbd "M-p") 'pop-local-or-global-mark)
 
 ;; Forward word with candidate characters.
 (global-set-key (kbd "M-f") 'chan-forward-word)
@@ -525,15 +532,13 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
-(global-set-key [remap next-buffer] 'jong-next-buffer)
-(global-set-key [remap previous-buffer] 'jong-prev-buffer)
-
+(global-set-key (kbd "C-x C-x") nil)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-c b") 'jo-show-buffer-other-window)
 (global-set-key (kbd "C-c C-b") 'jo-show-buffer-other-window)
-(global-set-key (kbd "C-x n") 'jo-show-buffer-other-window-move)
-(global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-window-move)
+;; (global-set-key (kbd "C-x n") 'jo-show-buffer-other-window-move)
+;; (global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-window-move)
 (global-set-key (kbd "C-c C-s") 'jo-isearch-forward-other-window)
 (global-set-key (kbd "C-c C-r") 'jo-isearch-backward-other-window)
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
@@ -912,7 +917,16 @@ With argument ARG, do this that many times."
   (setq google-translate-default-target-language "ko")
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
-(require 'chan-cursor-tracker)
+
+
+
+;; (require 'nice-jumper)
+;; (global-nice-jumper-mode t)
+;; (global-set-key (kbd "M-p") 'nice-jumper/backward)
+;; (define-key input-decode-map [?\M-p][meta-n])
+;; (global-set-key (kbd "M-n") 'nice-jumper/forward)
+
+
 (require 'jong-tramp)
 (require 'jong-elisp)
 (require 'jong-term)

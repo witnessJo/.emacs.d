@@ -236,8 +236,7 @@ And the environment variable was existing, Download go binaries from the interne
       (display-buffer output-buffer)
       (setq default-directory target-dir)
       (ignore-errors (async-shell-command "dlv debug --headless" (current-buffer) "*jo-error*"))
-      (call-interactively 'term-mode)))
-  ;; (call-process-shell-command "dlv debug --headless" nil (current-buffer))))
+      (ignore-errors (call-interactively 'term-mode))))
   )
 
 
