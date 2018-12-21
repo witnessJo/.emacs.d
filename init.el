@@ -28,8 +28,8 @@
   :ensure t
   :config
   (avy-setup-default)
-  (avy-goto-char-timer)
-  (setq avy-all-windows-alt)
+  ;; (avy-goto-char-timer)
+  ;; (setq avy-all-windows-alt)
   :bind
   ("C-'" . avy-goto-word-0)
   ("C-;" . avy-goto-line))
