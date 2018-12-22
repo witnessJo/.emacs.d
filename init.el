@@ -302,27 +302,27 @@ Version 2017-07-08"
     ))
 
 
-(defun jo-show-buffer-other-window ()
+(defun jong-show-buffer-other-window ()
   (interactive)
   (other-window -1)
   (helm-buffers-list)
   (other-window 1)
   )
 
-(defun jo-show-buffer-other-window-move ()
+(defun jong-show-buffer-other-window-move ()
   (interactive)
   (other-window -1)
   (helm-buffers-list)
   )
 
-(defun jo-isearch-forward-other-window ()
+(defun jong-isearch-forward-other-window ()
   (interactive)
   (other-window -1)
   (isearch-forward)
   (other-window 1)
   )
 
-(defun jo-isearch-backward-other-window ()
+(defun jong-isearch-backward-other-window ()
   (interactive)
   (other-window -1)
   (isearch-backward)
@@ -433,21 +433,23 @@ Version 2017-07-08"
     (goto-char prev-pos)))
 
 
-(defun delete-word (arg)
-  "Delete characters forward until encountering the end of a word.
-With argument ARG, do this that many times."
-  (interactive "p")
-  (delete-region (point) (progn (forward-word arg) (point))))
+;; (defun delete-word (arg)
+;; "Delete characters forward until encountering the end of a word.
+;; With argument ARG, do this that many times."
+;; (interactive "p")
+;; (delete-region (point) (progn (forward-word arg) (point))))
 
-(defun backward-delete-word (arg)
-  "Delete characters backward until encountering the beginning of a word.
-With argument ARG, do this that many times."
-  (interactive "p")
-  (delete-word (- arg)))
+;; (defun backward-delete-word (arg)
+;; "Delete characters backward until encountering the beginning of a word.
+;; With argument ARG, do this that many times."
+;; (interactive "p")
+;; (delete-word (- arg)))
 
-(global-set-key (kbd "M-<backspace>") 'backward-delete-word)
-(global-set-key (kbd "M-d") 'delete-word)
+(global-set-key (kbd "M-c") nil)
+(global-set-key (kbd "C-c C-x") nil)
 
+;; (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
+;; (global-set-key (kbd "M-d") 'delete-word)
 
 (setq confirm-kill-emacs 'y-or-n-p)
 
@@ -475,6 +477,8 @@ With argument ARG, do this that many times."
 
 
 (global-set-key (kbd "C-c k") (lambda() (interactive)
+                                (kill-buffer (buffer-name))))
+(global-set-key (kbd "M-c k") (lambda() (interactive)
                                 (call-interactively 'other-window)
                                 (kill-buffer (buffer-name))
                                 (call-interactively 'other-window)))
@@ -542,15 +546,14 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
-(global-set-key (kbd "C-x C-x") nil)
-(global-set-key (kbd "C-x x") 'other-window)
-(global-set-key (kbd "C-x C-o") 'other-window)
-(global-set-key (kbd "C-x b") 'helm-buffers-list)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "C-c b") 'jo-show-buffer-other-window)
-(global-set-key (kbd "C-c C-b") 'jo-show-buffer-other-window)
-(global-set-key (kbd "C-c C-s") 'jo-isearch-forward-other-window)
-(global-set-key (kbd "C-c C-r") 'jo-isearch-backward-other-window)
+(global-set-key (kbd "C-c x") 'other-window)
+(global-set-key (kbd "C-c o") 'other-window)
+(global-set-key (kbd "C-c b") 'helm-buffers-list)
+(global-set-key (kbd "C-c C-b") 'helm-buffers-list)
+(global-set-key (kbd "M-c b") 'jong-show-buffer-other-window)
+(global-set-key (kbd "M-c M-b") 'jong-show-buffer-other-window)
+(global-set-key (kbd "M-c C-s") 'jong-isearch-forward-other-window)
+(global-set-key (kbd "M-c C-r") 'jong-isearch-backward-other-window)
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
 (global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window -15)))
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
