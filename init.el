@@ -22,7 +22,7 @@
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 
 ;;; load compmon modules
-(require 'chan-cursor-tracker)
+;; (require 'jong-cursor-tracker)
 
 (use-package avy
   :ensure t
@@ -234,13 +234,6 @@ Version 2017-07-08"
   :ensure t)
 (global-hungry-delete-mode)
 
-;; Add self paranthesis completion function.
-;; (defun electric-pair ()
-;;   "If at end of line, insert character pair without surrounding spaces.
-;; Otherwise, just insert the typed character."
-;;   (interactive)
-;;   (if (eolp) (let (parens-require-spaces) (insert-pair)) (self-insert-command 1)))
-
 (use-package autopair
   :ensure t)
 (autopair-global-mode 1)
@@ -283,7 +276,7 @@ Version 2017-07-08"
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
 
-(defcustom skippable-buffer-patterns '("^.*helm.*")
+(defcustom skippable-buffer-patterns '("^.*\*helm.*" "*Buffer List*")
   "Buffer name patterns for skip and kill."
   :type 'list)
 
@@ -313,7 +306,7 @@ Version 2017-07-08"
 (defun jo-show-buffer-other-window ()
   (interactive)
   (other-window -1)
-  (Helm-buffers-list)
+  (helm-buffers-list)
   (other-window 1)
   )
 
@@ -341,7 +334,7 @@ Version 2017-07-08"
 (defcustom candidate-chars nil
   "Why bother me."
   :type 'string)
-(setq candidate-chars "[-\"\/=(){};:]")
+(setq candidate-chars "[-\"\'\/=(){};:]")
 
 (defun chan-forward-word ()
   "Chan 'forward-word."
@@ -436,7 +429,7 @@ Version 2017-07-08"
   (let ((prev-pos (point))
         (start-line-pos (progn (beginning-of-line) (point)))
         (end-line-pos (progn (end-of-line) (point))))
-    (kill-new (buffer-substring start-line-pos (1+ end-line-pos)))
+    (kill-new (buffer-substring start-line-pos end-line-pos))
     (goto-char prev-pos)))
 
 
@@ -497,9 +490,9 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-d") 'chan-forward-delete-word)
 (global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
 (global-set-key (kbd "C-M-y") 'chan-copy-current-line)
-(global-set-key (kbd "C-y") (lambda ()
+(global-set-key (kbd "C-S-y") (lambda ()
                               (interactive)
-                              (electric-newline-and-maybe-indent)
+                              (jong-open-line-below)
                               (call-interactively 'yank)
                               ))
 
@@ -523,8 +516,11 @@ With argument ARG, do this that many times."
 
 (global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-next-buffer)
-(global-set-key (kbd "M-n") 'pop-local-or-global-mark)
-(global-set-key (kbd "M-p") 'pop-local-or-global-mark)
+(global-set-key (kbd "M-n") 'evil-jump-forward)
+(global-set-key (kbd "M-p") 'evil-jump-backward)
+
+;; (define-key global-map [f9] 'point-undo)
+;; (define-key global-map [f10] 'point-redo)
 
 ;; Forward word with candidate characters.
 (global-set-key (kbd "M-f") 'chan-forward-word)
@@ -547,7 +543,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
 (global-set-key (kbd "C-x C-x") nil)
-(global-set-key (kbd "C-x x") nil)
+(global-set-key (kbd "C-x x") 'other-window)
 (global-set-key (kbd "C-x C-o") 'other-window)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
