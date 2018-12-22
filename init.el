@@ -27,13 +27,10 @@
 (use-package avy
   :ensure t
   :config
-  ;; (avy-setup-default)
-  ;; (avy-goto-char-timer)
-  ;; (setq avy-all-windows-alt)
   :bind
   ("C-'" . avy-goto-word-0)
   ("C-;" . avy-goto-line))
-  
+
 (defun my-show-eshell ()
   (interactive)
   (let (cmd)
@@ -70,8 +67,7 @@
       (let (pos1 pos2)
         (setq pos1 (region-beginning) pos2 (region-end))
         (- pos2 pos1))
-    -1
-    )
+    -1)
   )
 
 
@@ -82,8 +78,7 @@
     (setq length (my-get-selection-length))
     (if (equal length -1)
         (message "regions is not activated...")
-      (message "length : %d" length)
-      )
+      (message "length : %d" length))
     )
   )
 
@@ -188,23 +183,24 @@ Version 2017-07-08"
 (require 'yasnippet)
 (yas-global-mode 1)
 
+
 (use-package helm
-  :ensure t)
-
-(setq helm-split-window-in-side-p t)
-
-(require 'helm-bookmark)
-
-(with-eval-after-load 'helm
+  :ensure t
+  :init
+  :config
+  (setq helm-split-window-in-side-p t)
   (helm-mode 1)
   (setq helm-candidate-number-limit 500)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-  (global-set-key (kbd "C-x r l") 'helm-bookmarks)
-  )
+  (global-set-key (kbd "C-x r l") 'helm-bookmarks))
 
-(require 'helm-config)
+;; (useb-package helm-bookmarks
+;;   :ensure t
+;;   :config
+
+;; (require 'helm-config)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; you need to install ag binary      ;;
@@ -287,29 +283,30 @@ Version 2017-07-08"
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
 
-;; (defun my-prev-window ()
-;;   (interactive)
-;;   (other-window -1))
+(defcustom skippable-buffer-patterns '("^.*helm.*")
+  "Buffer name patterns for skip and kill."
+  :type 'list)
 
-(setq skippable-buffers '("^\\*Messages\\*" "^\\*scratch\\*" "^\\*Help\\*" "^\\*helm buffers\\*"))
 (defun jong-next-buffer ()
   "next-buffer that skips certain buffers"
   (interactive)
   (next-buffer)
-  (dolist (skippable-buffer skippable-buffers)
-    (when (string-match (buffer-name) skippable-buffer)
-      (message "skip buffer: %s" skippable-buffer)
-      (next-buffer))
+  (dolist (skippable-buffer-pattern skippable-buffer-patterns)
+    (when (string-match skippable-buffer-pattern (buffer-name))
+      (message "skip buffer: %s" (buffer-name))
+      (kill-buffer (current-buffer))
+      (jong-next-buffer))
     ))
 
 (defun jong-prev-buffer ()
   "next-buffer that skips certain buffers"
   (interactive)
-  (helm-previous-buffer)
-  (dolist (skippable-buffer skippable-buffers)
-    (when (string-match (buffer-name) skippable-buffer)
-      (message "skip buffer: %s" skippable-buffer)
-      (previous-buffer))
+  (previous-buffer)
+  (dolist (skippable-buffer-pattern skippable-buffer-patterns)
+    (when (string-match skippable-buffer-pattern (buffer-name))
+      (message "skip buffer: %s" (buffer-name))
+      (kill-buffer (current-buffer))
+      (jong-prev-buffer))
     ))
 
 
@@ -524,8 +521,8 @@ With argument ARG, do this that many times."
     (pop-global-mark)))
 
 
-(global-set-key (kbd "C-x C-p") 'previous-buffer)
-(global-set-key (kbd "C-x C-n") 'next-buffer)
+(global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
+(global-set-key (kbd "C-x C-n") 'jong-next-buffer)
 (global-set-key (kbd "M-n") 'pop-local-or-global-mark)
 (global-set-key (kbd "M-p") 'pop-local-or-global-mark)
 
@@ -599,7 +596,7 @@ With argument ARG, do this that many times."
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
-  "reload dir locals for the current buffer"
+vv  "reload dir locals for the current buffer"
   (interactive)
   (let ((enable-local-variables :all))
     (hack-dir-local-variables-non-file-buffer)))
@@ -1005,7 +1002,7 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (avy visual-regexp pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx go-guru go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color elisp-refs google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete auto-dim-other-buffers prodigy eyebrowse helm-ag helm yasnipppet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update use-package))))
+    (helm-bookmarks helm-bookmark avy visual-regexp pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx go-guru go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color elisp-refs google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete auto-dim-other-buffers prodigy eyebrowse helm-ag helm yasnipppet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
