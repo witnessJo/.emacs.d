@@ -144,7 +144,14 @@ And the environment variable was existing, Download go binaries from the interne
 (setq gofmt-command "goimports")
 
 (add-hook 'go-mode-hook 'go-eldoc-setup)
-(add-hook 'go-mode-hook 'gofmt-before-save)
+;; (add-hook 'go-mode-hook (lambda () (interactive)
+;; (add-hook 'company-after-completion-hook
+;; (lambda () (interactive)
+;; (dolist (buffer (buffer-list))
+;; (if (string-match "^\*godoc.*" (buffer-name buffer))
+;; (kill-buffer buffer)))))))
+
+;; (add-hook 'go-mode-hook 'gofmt-before-save)
 (add-hook 'go-mode-hook (lambda ()
                           (setq gofmt-command "goimports")
                           (if (not (string-match "go" compile-command))
@@ -164,13 +171,41 @@ And the environment variable was existing, Download go binaries from the interne
       (message "Couldn't found the projectile root directory."))
     ))
 
+(defcustom jong-go-run-command nil
+  "This is varialbe for project run"
+  :type 'string)
 
-(defun jo-projectile-run-project (&optional prompt)
-  (interactive "P")
-  (let ((compilation-read-command
-         (or (not (projectile-run-command (projectile-compilation-dir)))
-             prompt)))
-    (projectile-run-project prompt)))
+
+(defun jong-go-set-project-run-command ()
+  (interactive)
+  (let ((command))
+    (setq command (read-string "Enter the command : "))
+    (setq jong-go-run-command command)
+    (message "Next run command is : %s" jong-go-run-command)
+    ;;   "Read user input command and set 'projectile-project-run-cmd'."
+    ;;   (interactive)
+    ;;   (let (user-input)
+    ;;     (if (not (equal "" (setq user-input (read-string "Enter the command : "))))
+    ;;         (progn
+    ;;           (setq projectile-project-run-cmd user-input)
+    ;;           (message "Changed projectile-project-run-cmd as %s" user-input))
+    ;;       (message "The command was empty..."))
+    ;;     ))
+    )
+  )
+
+
+(defun jong-go-run-project ()
+  (interactive )
+  (let ((output-buffer "*jong-output*")))
+  (if jong-go-run-command
+      (shell-command jong-go-run-command)
+    (message "The command was not setted."))
+  )
+;; (let ((compilation-read-command
+;; (or (not (projectile-run-command (projectile-compilation-dir)))
+;; prompt)))
+;; (projectile-run-project prompt)))
 
 
 (define-derived-mode chan-gogud-mode gud-mode "chan-gogud"
@@ -321,10 +356,8 @@ And the environment variable was existing, Download go binaries from the interne
                           
                           ;; syntax highlight
                           (go-guru-hl-identifier-mode)
-                          
                           (go-eldoc-setup)
-                          (add-hook 'before-save-hook 'gofmt-before-save)
-
+                          
                           ;; setting company-go mode...
                           (setq company-tooltip-limit 20)
                           (setq company-idle-delay .3)
@@ -356,7 +389,8 @@ And the environment variable was existing, Download go binaries from the interne
                           (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
                                            (compile "go build -v && go test -v && go vet")))
-                          (local-set-key (kbd "C-c r r") 'jo-projectile-run-project)
+                          (local-set-key (kbd "C-c r r") 'jong-go-run-project)
+                          (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
                           (local-set-key (kbd "C-c M->")
                                          (lambda () (interactive)
                                            (other-window 1)
