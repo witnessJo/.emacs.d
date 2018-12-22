@@ -162,7 +162,6 @@ Version 2017-07-08"
 (defun exec-shell-command-with-buffer(cmd temp-buffer-name)
   (interactive)
   (with-output-to-temp-buffer temp-buffer-name
-    ;; (shell-command cmd temp-buffer-name "*Massage*")
     (async-shell-command cmd temp-buffer-name temp-buffer-name)
     (pop-to-buffer temp-buffer-name)
     ))
@@ -334,7 +333,8 @@ Version 2017-07-08"
 (defcustom candidate-chars nil
   "Why bother me."
   :type 'string)
-(setq candidate-chars "[-\"\'\/=(){};:]")
+(setq candidate-chars "[-\"\'\/=\(\){};:\.]")
+
 
 (defun chan-forward-word ()
   "Chan 'forward-word."
@@ -352,9 +352,9 @@ Version 2017-07-08"
     (setq candidate-pos (point))
     (goto-char base-pos)
     (if (< fword-pos candidate-pos)
-	(goto-char fword-pos)
+        (goto-char fword-pos)
       (goto-char candidate-pos))
-    (message "base %s fword %s regex %s" base-pos fword-pos candidate-pos)
+    ;; (message "base %s fword %s regex %s" base-pos fword-pos candidate-pos)
     )
   )
 
@@ -491,10 +491,10 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
 (global-set-key (kbd "C-M-y") 'chan-copy-current-line)
 (global-set-key (kbd "C-S-y") (lambda ()
-                              (interactive)
-                              (jong-open-line-below)
-                              (call-interactively 'yank)
-                              ))
+                                (interactive)
+                                (jong-open-line-below)
+                                (call-interactively 'yank)
+                                ))
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
@@ -549,8 +549,6 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-c b") 'jo-show-buffer-other-window)
 (global-set-key (kbd "C-c C-b") 'jo-show-buffer-other-window)
-;; (global-set-key (kbd "C-x n") 'jo-show-buffer-other-window-move)
-;; (global-set-key (kbd "C-x C-n") 'jo-show-buffer-other-window-move)
 (global-set-key (kbd "C-c C-s") 'jo-isearch-forward-other-window)
 (global-set-key (kbd "C-c C-r") 'jo-isearch-backward-other-window)
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
@@ -572,27 +570,27 @@ With argument ARG, do this that many times."
 
 
 (global-set-key (kbd "<f8>") (lambda () (interactive)
-			       (call-interactively 'gud-print)))
+                               (call-interactively 'gud-print)))
 (global-set-key (kbd "<f9>") (lambda () (interactive)
-			       (call-interactively 'gud-break)))
+                               (call-interactively 'gud-break)))
 (global-set-key (kbd "<f10>") (lambda () (interactive)
-				(call-interactively 'gud-nexti)))
+                                (call-interactively 'gud-nexti)))
 (global-set-key (kbd "<f11>") (lambda () (interactive)
-				(call-interactively 'gud-stepi)))
+                                (call-interactively 'gud-stepi)))
 (global-set-key (kbd "<f12>") (lambda () (interactive)
-				(if (get-buffer "*gud-debug*")
-				    (with-current-buffer (get-buffer "*gud-debug*")
-				      (progn (goto-char (point-max))
-					     (insert "clearall")
-					     (autopair-newline))
-				      (with-current-buffer (get-buffer "*gud-connect*")
-					(progn (goto-char (point-max))
-					       (insert "clearall")
-					       (autopair-newline)))))))
+                                (if (get-buffer "*gud-debug*")
+                                    (with-current-buffer (get-buffer "*gud-debug*")
+                                      (progn (goto-char (point-max))
+                                             (insert "clearall")
+                                             (autopair-newline))
+                                      (with-current-buffer (get-buffer "*gud-connect*")
+                                        (progn (goto-char (point-max))
+                                               (insert "clearall")
+                                               (autopair-newline)))))))
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
-vv  "reload dir locals for the current buffer"
+  vv  "reload dir locals for the current buffer"
   (interactive)
   (let ((enable-local-variables :all))
     (hack-dir-local-variables-non-file-buffer)))
@@ -679,21 +677,24 @@ vv  "reload dir locals for the current buffer"
 
 
 (use-package company
-  :ensure t)
-(with-eval-after-load 'company
+  :ensure t
+  :config
   (setq company-async-timeout 4)
-  (setq company-dabbrev-downcase nil)
+  ;; (setq company-dabbrev-downcase nil)
   (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 3)
   (global-set-key (kbd "C-<tab>") 'company-complete)
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  )
+  ;; (add-hook 'company-after-completion-hook 'kill-temporary-buffers))
+  
 
 (use-package company-quickhelp
-  :ensure t)
-(with-eval-after-load 'company-quickhelp
+  :ensure t
+  :config
   (company-quickhelp-mode)
   (setq company-quickhelp-delay 0.1))
-
+  
 (use-package magit
   :ensure t
   :config
@@ -826,30 +827,25 @@ vv  "reload dir locals for the current buffer"
   )
 
 ;; (defvar jo-kill-target-buffers)
-(defcustom  jo-kill-target-buffers
+(defcustom  jong-kill-buffer-patterns nil
+  "This is patters to kill buffer"
   :type 'list)
-(setq jo-kill-target-buffers (list "*RTags*" "*compilation*" "*Occur*" "*Help*"
-                                   "*Warnings*" "*xref*" "*Node Shell*" "*Google Translyeate*"))
-(defun kill-temporary-buffers ()
+(setq jong-kill-buffer-patterns (list "*RTags*" "*compilation*" "*Occur*" "*Help*" "^\*godoc.*"
+                                      "*Warnings*" "*xref*" "*Node Shell*" "*Google Translyeate*"
+                                      "*jong-output*"))
+(defun jong-kill-temporary-buffers ()
   "Kill current buffer unconditionally."
   (interactive)
-  (let ((buffer-modifinnnned-p nil)
-        (buffer-to-kill nil))
-    (dolist (buffer-name jo-kill-target-buffers)
-      (when (setq buffer-to-kill (get-buffer buffer-name))
-        (kill-buffer buffer-to-kill)))
-    (if (not (equal projectile-project-name nil))
-        (when (get-buffer (setq buffer-to-kill (format "%s-%s" "*compilation*" projectile-project-name)))
-          (kill-buffer buffer-to-kill)))
-    (delete-above-below-window))
-  )
+  (dolist (pattern jong-kill-buffer-patterns)
+    (dolist (buffer (buffer-list))
+      (when (string-match pattern (buffer-name buffer))
+        (kill-buffer buffer))))
+  (delete-above-below-window))
 
 
-(global-set-key (kbd "C-g")
-                (lambda () (interactive)
-                  (kill-temporary-buffers)
-                  (keyboard-quit))
-                )
+(global-set-key (kbd "C-g") (lambda () (interactive)
+                              (jong-kill-temporary-buffers)
+                              (keyboard-quit)))
 
 (add-hook 'python-mode-hook
           (lambda ()

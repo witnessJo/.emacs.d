@@ -41,15 +41,15 @@
   :ensure t)
 
 
-(defun jo-set-go-envs()
+(defun jong-set-go-envs()
   "Set environment variables relative with go."
   (interactive)
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-copy-envs '("PATH" "GOROOT" "GOPATH"))))
 
-(add-to-list #'jo-kill-target-buffers "*jo-error*")
-(add-to-list #'jo-kill-target-buffers "*go-guru-output*")
-(add-to-list #'jo-kill-target-buffers "*Gofmt Errors*")
+(add-to-list #'jong-kill-buffer-patterns "*jong-error*")
+(add-to-list #'jong-kill-buffer-patterns "*go-guru-output*")
+(add-to-list #'jong-kill-buffer-patterns "*Gofmt Errors*")
 
 (defun jong-get-imported-packages ()
   (interactive)
@@ -95,12 +95,12 @@
   )
 
 
-(defun jo-set-go-bins ()
+(defun jong-set-go-bins ()
   "Check if GOPATH environment variable is set or not.
 And the environment variable was existing, Download go binaries from the internet..."
   (interactive)
   (let ((cmd nil)
-        (buffer-error "*jo-error*")
+        (buffer-error "*jong-error*")
         (list-url (list "github.com/golang/lint/golint"
                         "github.com/nsf/gocode"
                         "github.com/mdempsky/gocode"
@@ -121,17 +121,6 @@ And the environment variable was existing, Download go binaries from the interne
       (message "There was not the GOPATH environment variable.")))
   )
 
-;; (defun jo-set-projectile-run-command ()
-;;   "Read user input command and set 'projectile-project-run-cmd'."
-;;   (interactive)
-;;   (let (user-input)
-;;     (if (not (equal "" (setq user-input (read-string "Enter the command : "))))
-;;         (progn
-;;           (setq projectile-project-run-cmd user-input)
-;;           (message "Changed projectile-project-run-cmd as %s" user-input))
-;;       (message "The command was empty..."))
-;;     ))
-
 
 (add-to-list 'exec-path (expand-file-name "~/goworks/bin/godef"))
 (add-to-list 'exec-path (expand-file-name "~/goworks/bin"))
@@ -144,21 +133,13 @@ And the environment variable was existing, Download go binaries from the interne
 (setq gofmt-command "goimports")
 
 (add-hook 'go-mode-hook 'go-eldoc-setup)
-;; (add-hook 'go-mode-hook (lambda () (interactive)
-;; (add-hook 'company-after-completion-hook
-;; (lambda () (interactive)
-;; (dolist (buffer (buffer-list))
-;; (if (string-match "^\*godoc.*" (buffer-name buffer))
-;; (kill-buffer buffer)))))))
-
-;; (add-hook 'go-mode-hook 'gofmt-before-save)
 (add-hook 'go-mode-hook (lambda ()
                           (setq gofmt-command "goimports")
                           (if (not (string-match "go" compile-command))
                               (set (make-local-variable 'compile-command)
                                    "go build -v && go test -v && go vet"))))
 
-(defun jo-debug-go-project ()
+(defun jong-debug-go-project ()
   "Debug the go project with delve."
   (interactive)
   (let ((cmd nil)
@@ -384,7 +365,7 @@ And the environment variable was existing, Download go binaries from the interne
                           (local-set-key (kbd "C-c g g")
                                          (lambda () (interactive)
                                            (chan-gogud-gdb "dlv debug")))
-                          
+                          (local-set-key (kbd "C-c s f") 'gofmt-before-save)
                           (local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
                           (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
@@ -396,7 +377,6 @@ And the environment variable was existing, Download go binaries from the interne
                                            (other-window 1)
                                            (call-interactively 'end-of-buffer)
                                            (other-window -1)))
-
                           )
           )
 
