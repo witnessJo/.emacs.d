@@ -31,6 +31,14 @@
   ("C-'" . avy-goto-word-0)
   ("C-;" . avy-goto-line))
 
+(global-font-lock-mode t)
+(transient-mark-mode 1)
+
+(use-package org
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+
 (defun my-show-eshell ()
   (interactive)
   (let (cmd)
@@ -333,7 +341,7 @@ Version 2017-07-08"
 (defcustom candidate-chars nil
   "Why bother me."
   :type 'string)
-(setq candidate-chars "[-\"\'\/=\(\){};:\.]")
+(setq candidate-chars "[-\"\'\/=\(\){};:\.,p]")
 
 
 (defun chan-forward-word ()
@@ -526,17 +534,17 @@ Version 2017-07-08"
 
 ;; Forward word with candidate characters.
 (global-set-key (kbd "M-f") 'chan-forward-word)
-(global-set-key (kbd "M-S-f") (lambda () (interactive)
+(global-set-key (kbd "M-F") (lambda () (interactive)
                                 (setq this-command-keys-shift-translated t)
-                                (if (equal (region-active-p) nil)
+				(if (equal (region-active-p) nil)
                                     (call-interactively 'set-mark-command))
                                 (chan-forward-word)))
 
 ;; Back word with candidate characters.
 (global-set-key (kbd "M-b") 'chan-backward-word)
-(global-set-key (kbd "M-S-b") (lambda () (interactive)
+(global-set-key (kbd "M-B") (lambda () (interactive)
                                 (setq this-command-keys-shift-translated t)
-                                (if (not (use-region-p))
+				(if (not (use-region-p))
                                     (call-interactively 'set-mark-command))
                                 (chan-backward-word)))
 
@@ -581,14 +589,18 @@ Version 2017-07-08"
                                   (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 
+
 (global-set-key (kbd "<f8>") (lambda () (interactive)
-                               (call-interactively 'gud-print)))
+                               (call-interactively 'gud-print)
+                               (call-interactively 'end-of-buffer)))
 (global-set-key (kbd "<f9>") (lambda () (interactive)
                                (call-interactively 'gud-break)))
 (global-set-key (kbd "<f10>") (lambda () (interactive)
-                                (call-interactively 'gud-nexti)))
+                                (call-interactively 'gud-next)
+                                (call-interactively 'end-of-buffer)))
 (global-set-key (kbd "<f11>") (lambda () (interactive)
-                                (call-interactively 'gud-stepi)))
+                                (call-interactively 'gud-step)
+                                (call-interactively 'end-of-buffer)))
 (global-set-key (kbd "<f12>") (lambda () (interactive)
                                 (if (get-buffer "*gud-debug*")
                                     (with-current-buffer (get-buffer "*gud-debug*")
@@ -1006,7 +1018,7 @@ Version 2017-07-08"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm-bookmarks helm-bookmark avy visual-regexp pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx go-guru go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color elisp-refs google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete auto-dim-other-buffers prodigy eyebrowse helm-ag helm yasnipppet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update use-package))))
+    (org-mode helm-bookmarks helm-bookmark avy visual-regexp pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx go-guru go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color elisp-refs google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete auto-dim-other-buffers prodigy eyebrowse helm-ag helm yasnipppet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
