@@ -432,7 +432,6 @@ Version 2017-07-08"
     (kill-new (buffer-substring start-line-pos end-line-pos))
     (goto-char prev-pos)))
 
-
 ;; (defun delete-word (arg)
 ;; "Delete characters forward until encountering the end of a word.
 ;; With argument ARG, do this that many times."
@@ -494,11 +493,10 @@ Version 2017-07-08"
 (global-set-key (kbd "M-d") 'chan-forward-delete-word)
 (global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
 (global-set-key (kbd "C-M-y") 'chan-copy-current-line)
-(global-set-key (kbd "C-S-y") (lambda ()
-                                (interactive)
-                                (jong-open-line-below)
-                                (call-interactively 'yank)
-                                ))
+(global-set-key (kbd "M-y") (lambda ()
+                              (interactive)
+                              (jong-open-line-below)
+                              (call-interactively 'yank)))
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
@@ -528,22 +526,33 @@ Version 2017-07-08"
 
 ;; Forward word with candidate characters.
 (global-set-key (kbd "M-f") 'chan-forward-word)
-(global-set-key (kbd "M-F") (lambda () (interactive)
-                              (setq this-command-keys-shift-translated t)
-                              (if (equal (region-active-p) nil)
-                                  (call-interactively 'set-mark-command))
-                              (chan-forward-word)))
+(global-set-key (kbd "M-S-f") (lambda () (interactive)
+                                (setq this-command-keys-shift-translated t)
+                                (if (equal (region-active-p) nil)
+                                    (call-interactively 'set-mark-command))
+                                (chan-forward-word)))
 
 ;; Back word with candidate characters.
 (global-set-key (kbd "M-b") 'chan-backward-word)
-(global-set-key (kbd "M-B") (lambda () (interactive)
-                              (setq this-command-keys-shift-translated t)
-                              (if (not (use-region-p))
-                                  (call-interactively 'set-mark-command))
-                              (chan-backward-word)))
+(global-set-key (kbd "M-S-b") (lambda () (interactive)
+                                (setq this-command-keys-shift-translated t)
+                                (if (not (use-region-p))
+                                    (call-interactively 'set-mark-command))
+                                (chan-backward-word)))
+
+(global-set-key (kbd "C-S-a") (lambda () (interactive)
+                                (if (not (use-region-p))
+                                    (call-interactively 'set-mark-command))
+                                (call-interactively 'move-beginning-of-line)))
+
+(global-set-key (kbd "C-S-e") (lambda () (interactive)
+                                (if (not (use-region-p))
+                                    (call-interactively 'set-mark-command))
+                                (call-interactively 'move-end-of-line)))
 
 
-(global-set-key (kbd "C-c v y") 'my-copy-linea-or-region)
+
+(global-set-key (kbd "C-c v y") 'my-copy-line-or-region)
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
 (global-set-key (kbd "C-c x") 'other-window)
@@ -689,15 +698,15 @@ Version 2017-07-08"
   (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode)
   )
-  ;; (add-hook 'company-after-completion-hook 'kill-temporary-buffers))
-  
+;; (add-hook 'company-after-completion-hook 'kill-temporary-buffers))
+
 
 (use-package company-quickhelp
   :ensure t
   :config
   (company-quickhelp-mode)
   (setq company-quickhelp-delay 0.1))
-  
+
 (use-package magit
   :ensure t
   :config
