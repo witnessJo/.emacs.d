@@ -549,17 +549,37 @@ Version 2017-07-08"
                               (chan-backward-word)))
 
 (global-set-key (kbd "C-S-a") (lambda () (interactive)
-			      ;; (setq this-command-keys-shift-translated t)
+			      (setq this-command-keys-shift-translated t)
                               (if (not (use-region-p))
 				  (call-interactively 'set-mark-command))
 			      (beginning-of-line)))
 
 
 (global-set-key (kbd "C-S-e") (lambda () (interactive)
-			      ;; (setq this-command-keys-shift-translated t)
+			      (setq this-command-keys-shift-translated t)
                               (if (not (use-region-p))
                                   (call-interactively 'set-mark-command))
 			      (end-of-line)))
+
+
+(global-set-key (kbd "C-S-a") (lambda () (interactive)
+			      (setq this-command-keys-shift-translated t)
+                              (if (not (use-region-p))
+				  (call-interactively 'set-mark-command))
+			      (beginning-of-line)))
+
+
+(global-set-key (kbd "C-S-p") (lambda () (interactive)
+			      (setq this-command-keys-shift-translated t)
+                              (if (not (use-region-p))
+				  (call-interactively 'set-mark-command))
+			      (forward-line -1)))
+
+(global-set-key (kbd "C-S-n") (lambda () (interactive)
+			      (setq this-command-keys-shift-translated t)
+                              (if (not (use-region-p))
+				  (call-interactively 'set-mark-command))
+			      (forward-line 1)))
 
 
 
@@ -592,19 +612,7 @@ Version 2017-07-08"
                                   (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 
-(global-set-key (kbd "<f8>") (lambda () (interactive)
-                               (call-interactively 'gud-cont)))
-(global-set-key (kbd "<f9>") (lambda () (interactive)
-                               (call-interactively 'gud-break)))
-(global-set-key (kbd "<f10>") (lambda () (interactive)
-                                (call-interactively 'gud-next)
-                                (call-interactively 'end-of-buffer)))
-(global-set-key (kbd "<f11>") (lambda () (interactive)
-                                (call-interactively 'gud-step)
-                                (call-interactively 'end-of-buffer)))
-(global-set-key (kbd "<f12>") (lambda () (interactive)
-				(call-interactively 'gud-print)
-				(call-interactively 'end-of-buffer)))
+
 ;; (global-set-key (kbd "<f12>") (lambda () (interactive)
 ;; (if (get-buffer "*gud-debug*")
 ;; (with-current-buffer (get-buffer "*gud-debug*")

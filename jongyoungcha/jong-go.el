@@ -51,6 +51,48 @@
 (add-to-list #'jong-kill-buffer-patterns "*go-guru-output*")
 (add-to-list #'jong-kill-buffer-patterns "*Gofmt Errors*")
 
+(defun jong-go-chan-gud-stepout ()
+  "Thiss is ..."
+  (interactive)
+  (let ((current-buffer-name (buffer-name))
+        (gud-buffer-pattern "^\*gud-debug.*")
+        (target-buffer nil)
+        (temp-buffer-list (buffer-list)))
+    ;; Current buffer is gud.
+    (if (and (string-match gud-buffer-pattern current-buffer-name)
+             (equal major-mode 'chan-gogud-mode))
+        (setq target-buffer (current-buffer))
+      (catch 'loop
+        (dolist (buffer temp-buffer-list)
+          (when (and (string-match gud-buffer-pattern (buffer-name buffer))
+                     (equal major-mode 'chan-gogud-mode))
+            (setq target-buffer buffer)
+            (throw 'loop buffer)))))
+
+  (when target-buffer
+    (with-current-buffer target-buffer
+      (goto-char (point-max))
+      (send-string (get-buffer-process (current-buffer)) "stepout\n")))
+  ))
+
+
+(defun jong-go-set-gud-shortcut ()
+  "Set shortcuts of gud for golang."
+  (local-set-key (kbd "<f8>") (lambda () (interactive)
+                                (call-interactively 'gud-cont)))
+  
+  (local-set-key (kbd "<f9>") (lambda () (interactive)
+                                (call-interactively 'gud-break)))
+  (local-set-key (kbd "<f10>") (lambda () (interactive)
+                                 (call-interactively 'gud-next)
+                                 (call-interactively 'end-of-buffer)))
+  (local-set-key (kbd "<f11>") (lambda () (interactive)
+                                 (call-interactively 'gud-step)
+                                 (call-interactively 'end-of-buffer)))
+  (local-set-key (kbd "<f12>") 'jong-go-chan-gud-stepout))
+
+
+
 (defun jong-get-imported-packages ()
   (interactive)
   (let ((output-buffer "*jong-output-buffer*")
@@ -163,15 +205,6 @@ And the environment variable was existing, Download go binaries from the interne
     (setq command (read-string "Enter the command : "))
     (setq jong-go-run-command command)
     (message "Next run command is : %s" jong-go-run-command)
-    ;;   "Read user input command and set 'projectile-project-run-cmd'."
-    ;;   (interactive)
-    ;;   (let (user-input)
-    ;;     (if (not (equal "" (setq user-input (read-string "Enter the command : "))))
-    ;;         (progn
-    ;;           (setq projectile-project-run-cmd user-input)
-    ;;           (message "Changed projectile-project-run-cmd as %s" user-input))
-    ;;       (message "The command was empty..."))
-    ;;     ))
     )
   )
 
@@ -183,10 +216,6 @@ And the environment variable was existing, Download go binaries from the interne
       (shell-command jong-go-run-command)
     (message "The command was not setted."))
   )
-;; (let ((compilation-read-command
-;; (or (not (projectile-run-command (projectile-compilation-dir)))
-;; prompt)))
-;; (projectile-run-project prompt)))
 
 
 (define-derived-mode chan-gogud-mode gud-mode "chan-gogud"
@@ -279,25 +308,25 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-run-dlv-server()
   "Make run interactively!!!."
   (interactive)
-  (let ((target-dir nil)
-        (output-buffer "*chan-dlv-server*")
-        (listen-process nil))
-    ;; (target-port nil)
+  (lest ((target-dir nil)
+         (output-buffer "*chan-dlv-server*")
+         (listen-process nil))
+        ;; (target-port nil)
 
-    (if (get-buffer output-buffer)
-        (kill-buffer output-buffer))
+        (if (get-buffer output-buffer)
+            (kill-buffer output-buffer))
 
-    (if (equal (projectile-project-root) nil)
-        (setq target-dir (projectile-project-root))
-      (setq target-dir default-directory))
-    
-    ;; start headless delve
-    (with-current-buffer (get-buffer-create output-buffer)
-      (display-buffer output-buffer)
-      (setq default-directory target-dir)
-      (ignore-errors (term-mode))
-      (start-process "dlv-server-debug" (current-buffer) "dlv" "debug" "--headless"))
-    )
+        (if (equal (projectile-project-root) nil)
+            (setq target-dir (projectile-project-root))
+          (setq target-dir default-directory))
+        
+        ;; start headless delve
+        (with-current-buffer (get-buffer-create output-buffer)
+          (display-buffer output-buffer)
+          (setq default-directory target-dir)
+          (ignore-errors (term-mode))
+          (start-process "dlv-server-debug" (current-buffer) "dlv" "debug" "--headless"))
+        )
   )
 
 
@@ -313,8 +342,6 @@ And the environment variable was existing, Download go binaries from the interne
           (with-current-buffer (get-buffer "main.go")
             (chan-run-dlv-server))
 
-          ;; (while (> (1+ magic-seconds) 4)
-          ;; (message "waiting...")
           (sleep-for 4)
           
           (setq port (with-current-buffer (get-buffer-create "*chan-dlv-server*")
@@ -331,6 +358,7 @@ And the environment variable was existing, Download go binaries from the interne
   )
 
 
+(add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'go-mode-hook (lambda ()
                           (setq indent-tabs-mode nil)
                           (setq tab-width 4)
@@ -383,7 +411,7 @@ And the environment variable was existing, Download go binaries from the interne
           )
 
 
-
+(add-hook 'chan-gogud-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'chan-gogud-mode-hook
           (lambda () (local-set-key (kbd "C-c r .")
                                     (lambda () (interactive)
