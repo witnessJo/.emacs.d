@@ -535,28 +535,31 @@ Version 2017-07-08"
 ;; Forward word with candidate characters.
 (global-set-key (kbd "M-f") 'chan-forward-word)
 (global-set-key (kbd "M-F") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-				(if (equal (region-active-p) nil)
-                                    (call-interactively 'set-mark-command))
-                                (chan-forward-word)))
+                              (setq this-command-keys-shift-translated t)
+			      (if (equal (region-active-p) nil)
+                                  (call-interactively 'set-mark-command))
+                              (chan-forward-word)))
 
 ;; Back word with candidate characters.
 (global-set-key (kbd "M-b") 'chan-backward-word)
 (global-set-key (kbd "M-B") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-				(if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (chan-backward-word)))
+                              (setq this-command-keys-shift-translated t)
+			      (if (not (use-region-p))
+                                  (call-interactively 'set-mark-command))
+                              (chan-backward-word)))
 
 (global-set-key (kbd "C-S-a") (lambda () (interactive)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (call-interactively 'move-beginning-of-line)))
+			      ;; (setq this-command-keys-shift-translated t)
+                              (if (not (use-region-p))
+				  (call-interactively 'set-mark-command))
+			      (beginning-of-line)))
+
 
 (global-set-key (kbd "C-S-e") (lambda () (interactive)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (call-interactively 'move-end-of-line)))
+			      ;; (setq this-command-keys-shift-translated t)
+                              (if (not (use-region-p))
+                                  (call-interactively 'set-mark-command))
+			      (end-of-line)))
 
 
 
@@ -589,10 +592,8 @@ Version 2017-07-08"
                                   (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 
-
 (global-set-key (kbd "<f8>") (lambda () (interactive)
-                               (call-interactively 'gud-print)
-                               (call-interactively 'end-of-buffer)))
+                               (call-interactively 'gud-cont)))
 (global-set-key (kbd "<f9>") (lambda () (interactive)
                                (call-interactively 'gud-break)))
 (global-set-key (kbd "<f10>") (lambda () (interactive)
@@ -602,15 +603,18 @@ Version 2017-07-08"
                                 (call-interactively 'gud-step)
                                 (call-interactively 'end-of-buffer)))
 (global-set-key (kbd "<f12>") (lambda () (interactive)
-                                (if (get-buffer "*gud-debug*")
-                                    (with-current-buffer (get-buffer "*gud-debug*")
-                                      (progn (goto-char (point-max))
-                                             (insert "clearall")
-                                             (autopair-newline))
-                                      (with-current-buffer (get-buffer "*gud-connect*")
-                                        (progn (goto-char (point-max))
-                                               (insert "clearall")
-                                               (autopair-newline)))))))
+				(call-interactively 'gud-print)
+				(call-interactively 'end-of-buffer)))
+;; (global-set-key (kbd "<f12>") (lambda () (interactive)
+;; (if (get-buffer "*gud-debug*")
+;; (with-current-buffer (get-buffer "*gud-debug*")
+;; (progn (goto-char (point-max))
+;; (insert "clearall")
+;; (autopair-newline))
+;; (with-current-buffer (get-buffer "*gud-connect*")
+;; (progn (goto-char (point-max))
+;; (insert "clearall")
+;; (autopair-newline)))))))
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
@@ -623,10 +627,10 @@ Version 2017-07-08"
   "for every buffer iwth the same `default-directory` as the current buffer's, reload dir-locals."
   (interactive)
   (let ((dir default-directory))
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-        (when (equal default-directory dir))
-        (my-reload-dir-locals-for-current-buffer)))))
+    (dolist (buffer (buffer-list))pppppp
+	    (with-current-buffer buffer
+              (when (equal default-directory dir))
+              (my-reload-dir-locals-for-current-buffer)))))
 
 
 ;; default setting.
