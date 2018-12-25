@@ -52,10 +52,10 @@
 (add-to-list #'jong-kill-buffer-patterns "*Gofmt Errors*")
 
 (defun jong-go-chan-gud-stepout ()
-  "Thiss is ..."
+  "This is ..."
   (interactive)
   (let ((current-buffer-name (buffer-name))
-        (gud-buffer-pattern "^\*gud-debug.*")
+        (gud-buffer-pattern "^\*gud-.*")
         (target-buffer nil)
         (temp-buffer-list (buffer-list)))
     ;; Current buffer is gud.
@@ -64,31 +64,41 @@
         (setq target-buffer (current-buffer))
       (catch 'loop
         (dolist (buffer temp-buffer-list)
-          (when (and (string-match gud-buffer-pattern (buffer-name buffer))
-                     (equal major-mode 'chan-gogud-mode))
-            (setq target-buffer buffer)
-            (throw 'loop buffer)))))
-
-  (when target-buffer
-    (with-current-buffer target-buffer
-      (goto-char (point-max))
-      (send-string (get-buffer-process (current-buffer)) "stepout\n")))
-  ))
+          (with-current-buffer buffer
+            (when (and (string-match gud-buffer-pattern (buffer-name buffer))
+                       (equal major-mode 'chan-gogud-mode))
+              (setq target-buffer buffer)
+              (message "im here!!!")
+              (throw 'loop buffer))))))
+    
+    (when target-buffer
+      (with-current-buffer target-buffer
+        (goto-char (point-max))
+        (send-string (get-buffer-process (current-buffer)) "stepout\n")))
+    ))
 
 
 (defun jong-go-set-gud-shortcut ()
   "Set shortcuts of gud for golang."
+  
+  (local-set-key (kbd "<f7>") (lambda () (interactive)
+                                (call-interactively 'gud-print)
+                                (call-interactively 'end-of-buffer)))
+  
   (local-set-key (kbd "<f8>") (lambda () (interactive)
                                 (call-interactively 'gud-cont)))
   
   (local-set-key (kbd "<f9>") (lambda () (interactive)
                                 (call-interactively 'gud-break)))
+  
   (local-set-key (kbd "<f10>") (lambda () (interactive)
                                  (call-interactively 'gud-next)
                                  (call-interactively 'end-of-buffer)))
+  
   (local-set-key (kbd "<f11>") (lambda () (interactive)
                                  (call-interactively 'gud-step)
                                  (call-interactively 'end-of-buffer)))
+  
   (local-set-key (kbd "<f12>") 'jong-go-chan-gud-stepout))
 
 
