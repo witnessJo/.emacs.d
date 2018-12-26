@@ -318,7 +318,7 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-run-dlv-server()
   "Make run interactively!!!."
   (interactive)
-  (lest ((target-dir nil)
+  (let ((target-dir nil)
          (output-buffer "*chan-dlv-server*")
          (listen-process nil))
         ;; (target-port nil)
