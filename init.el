@@ -599,8 +599,10 @@ Version 2017-07-08"
 (global-set-key (kbd "C-c v y") 'my-copy-line-or-region)
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
+(global-set-key (kbd "C-x C-o") 'other-window)
 (global-set-key (kbd "C-c x") 'other-window)
 (global-set-key (kbd "C-c o") 'other-window)
+(global-set-key (kbd "C-c C-o") 'other-window)
 (global-set-key (kbd "C-c b") 'helm-buffers-list)
 (global-set-key (kbd "C-c C-b") 'helm-buffers-list)
 (global-set-key (kbd "M-c b") 'jong-show-buffer-other-window)
@@ -869,7 +871,7 @@ Version 2017-07-08"
   "This is patters to kill buffer"
   :type 'list)
 (setq jong-kill-buffer-patterns (list "*RTags*" "*compilation*" "*Occur*" "*Help*" "^\*godoc.*"
-                                      "*Warnings*" "*xref*" "*Node Shell*" "*Google Translyeate*"
+                                      "*Warnings*" "*xref*" "*Node Shell*" "*Google Translate*"
                                       "*jong-output*"))
 (defun jong-kill-temporary-buffers ()
   "Kill current buffer unconditionally."
