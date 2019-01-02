@@ -319,24 +319,24 @@ And the environment variable was existing, Download go binaries from the interne
   "Make run interactively!!!."
   (interactive)
   (let ((target-dir nil)
-         (output-buffer "*chan-dlv-server*")
-         (listen-process nil))
-        ;; (target-port nil)
+        (output-buffer "*chan-dlv-server*")
+        (listen-process nil))
+    ;; (target-port nil)
 
-        (if (get-buffer output-buffer)
-            (kill-buffer output-buffer))
+    (if (get-buffer output-buffer)
+        (kill-buffer output-buffer))
 
-        (if (equal (projectile-project-root) nil)
-            (setq target-dir (projectile-project-root))
-          (setq target-dir default-directory))
-        
-        ;; start headless delve
-        (with-current-buffer (get-buffer-create output-buffer)
-          (display-buffer output-buffer)
-          (setq default-directory target-dir)
-          (ignore-errors (term-mode))
-          (start-process "dlv-server-debug" (current-buffer) "dlv" "debug" "--headless"))
-        )
+    (if (equal (projectile-project-root) nil)
+        (setq target-dir (projectile-project-root))
+      (setq target-dir default-directory))
+    
+    ;; start headless delve
+    (with-current-buffer (get-buffer-create output-buffer)
+      (display-buffer output-buffer)
+      (setq default-directory target-dir)
+      (start-process "dlv-server-debug" (current-buffer) "dlv" "debug" "--headless")
+      (ignore-errors (term-mode)))
+    )
   )
 
 

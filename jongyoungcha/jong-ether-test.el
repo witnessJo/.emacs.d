@@ -91,9 +91,9 @@
     
     (dolist (elem-node ether-node-list)
       (with-current-buffer (get-buffer-create output-buffer)
-	(display-buffer output-buffer)
-	(eshell-command (format "ssh %s" (ether-node-name elem-node)) (current-buffer))
-	)
+	     (display-buffer output-buffer)
+	     (eshell-command (format "ssh %s" (ether-node-name elem-node)) (current-buffer))
+	     )
       
       ;; (ignore-errors (eshell-mode))
       ;; (display-buffer (current-buffer))
@@ -197,7 +197,8 @@
       (condition-case ex
           (with-current-buffer (get-buffer "*gud-connect*")
             (goto-char (point-max))
-            (insert "r --datadir=~/testnet --nodiscover console")
+            ;; (insert "r --datadir=~/testnet --syncmode \"full\" --nodiscover --cache=2048 console")
+            (insert (format "r --datadir=~/testnet --bootnodes %s --cache=2048 console" (getenv "BOOTNODE")))
             (autopair-newline)
             (insert "c")
             (autopair-newline))
@@ -221,7 +222,7 @@
        "geth --datadir=~/testnet --cache=2048 init ~/testnet/genesis.json" nil t))
     
     (with-current-buffer (get-buffer-create account-output-buffer)
-      (start-process-shell-command "geth" account-output-buffer "geth --datadir=~/testnet --nodiscover --cache=2048 console")
+      (start-process-shell-command "geth" account-output-buffer (format "geth --datadir=~/testnet --bootnodes %s --cache=2048 console" (getenv "BOOTNODE")))
       (display-buffer (current-buffer))
       (ignore-errors (shell-mode))
       (goto-char (point-max))
@@ -232,7 +233,8 @@
       (insert "personal.unlockAccount(eth.accounts[0], \"jongyoungcha\", 0)" )
       (autopair-newline)
       (insert "personal.unlockAccount(eth.accounts[1], \"jongyoungcha\", 0)")
-      (autopair-newline))
+      (autopair-newline)
+      (ignore-errors (term-mode)))
     )
   )
 
