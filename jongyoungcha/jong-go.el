@@ -334,6 +334,7 @@ And the environment variable was existing, Download go binaries from the interne
     (with-current-buffer (get-buffer-create output-buffer)
       (display-buffer output-buffer)
       (setq default-directory target-dir)
+      (ignore-errors (term-mode))
       (start-process "dlv-server-debug" (current-buffer) "dlv" "debug" "--headless")
       (ignore-errors (term-mode)))
     )

@@ -423,7 +423,7 @@ Version 2017-07-08"
     (setq bword-pos (point))
     (goto-char base-pos)
     (if (> candidate-pos bword-pos)
-        (ignore-errors (delete-region (1+ candidate-pos) base-pos))
+v        (ignore-errors (delete-region (1+ candidate-pos) base-pos))
       (ignore-errors (delete-region (1+ bword-pos) base-pos)))
     (when (equal (point) base-pos)
       (ignore-errors (delete-region (1- base-pos) base-pos)))
@@ -512,8 +512,12 @@ Version 2017-07-08"
 (global-set-key (kbd "C-h C-SPC") 'helm-all-mark-rings)
 
 (global-set-key (kbd "C-d") 'delete-forward-char)
-(global-set-key (kbd "M-v") 'evil-scroll-page-up)
-(global-set-key (kbd "C-v") 'evil-scroll-page-down)
+(global-set-key (kbd "M-v") (lambda ()
+                              (interactive)
+                              (scroll-down-line 25)))
+(global-set-key (kbd "C-v") (lambda ()
+                              (interactive)
+                              (scroll-up-line 25)))
 
 
 (defun pop-local-or-global-mark ()
@@ -600,6 +604,7 @@ Version 2017-07-08"
 (global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
 (global-set-key (kbd "C-x C-o") 'other-window)
+(global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
 (global-set-key (kbd "C-c x") 'other-window)
 (global-set-key (kbd "C-c o") 'other-window)
 (global-set-key (kbd "C-c C-o") 'other-window)
@@ -988,8 +993,8 @@ Version 2017-07-08"
 (set-cursor-color "#ff4444")
 (global-hl-line-mode t)
 
-(when (member "fixed" (font-family-list))
-  (set-face-attribute 'default nil :font "fixed-12")
+(when (member "Courier" (font-family-list))
+  (set-face-attribute 'default nil :font "Courier-12")
   (setq-default line-spacing 2))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

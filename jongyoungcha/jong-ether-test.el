@@ -198,7 +198,7 @@
           (with-current-buffer (get-buffer "*gud-connect*")
             (goto-char (point-max))
             ;; (insert "r --datadir=~/testnet --syncmode \"full\" --nodiscover --cache=2048 console")
-            (insert (format "r --datadir=~/testnet --bootnodes %s --cache=2048 console" (getenv "BOOTNODE")))
+            (insert (format "r --datadir=~/testnet --bootnodes %s --syncmode \"full\" --cache=2048 console" (getenv "BOOTNODE")))
             (autopair-newline)
             (insert "c")
             (autopair-newline))
