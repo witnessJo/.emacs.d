@@ -423,7 +423,7 @@ Version 2017-07-08"
     (setq bword-pos (point))
     (goto-char base-pos)
     (if (> candidate-pos bword-pos)
-v        (ignore-errors (delete-region (1+ candidate-pos) base-pos))
+        (ignore-errors (delete-region (1+ candidate-pos) base-pos))
       (ignore-errors (delete-region (1+ bword-pos) base-pos)))
     (when (equal (point) base-pos)
       (ignore-errors (delete-region (1- base-pos) base-pos)))

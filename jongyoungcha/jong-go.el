@@ -47,6 +47,12 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-copy-envs '("PATH" "GOROOT" "GOPATH"))))
 
+;; (add-to-list 'exec-path (expand-file-name "~/goworks/bin/godef"))
+;; (add-to-list 'exec-path (expand-file-name "~/goworks/bin"))
+(add-to-list 'exec-path (expand-file-name (format "%s/bin" (getenv "GOPATH"))))
+;; (add-to-list 'exec-path (expand-file-name (format "%s/bin/godef" (getenv "GOPATH"))))
+
+
 (add-to-list #'jong-kill-buffer-patterns "*jong-error*")
 (add-to-list #'jong-kill-buffer-patterns "*go-guru-output*")
 (add-to-list #'jong-kill-buffer-patterns "*Gofmt Errors*")
@@ -174,8 +180,6 @@ And the environment variable was existing, Download go binaries from the interne
   )
 
 
-(add-to-list 'exec-path (expand-file-name "~/goworks/bin/godef"))
-(add-to-list 'exec-path (expand-file-name "~/goworks/bin"))
 
 
 (add-hook 'go-mode-hook (lambda ()
