@@ -341,8 +341,13 @@ Version 2017-07-08"
 (defcustom candidate-chars nil
   "Why bother me."
   :type 'string)
-(setq candidate-chars "[-\"\'\/=\(\){};:\.,p]")
+(setq candidate-chars "[-\"\'\/=\(\){};:\.,p ]")
 
+(defcustom prev-candidate-char nil
+  "Previous candidate char."
+  :type 'string)
+
+(setq prev-candidate-char nil)
 
 (defun chan-forward-word ()
   "Chan 'forward-word."
@@ -361,9 +366,14 @@ Version 2017-07-08"
     (goto-char base-pos)
     (if (< fword-pos candidate-pos)
         (goto-char fword-pos)
-      (goto-char candidate-pos))
-    ;; (message "base %s fword %s regex %s" base-pos fword-pos candidate-pos)
-    )
+      (progn (goto-char candidate-pos)
+             (setq prev-candidate-char (buffer-substring (point) (1+ (point))))
+             (if (equal prev-candidate-char " ")
+                 (call-interactively #'chan-forward-word))
+             ;; (message "%s" prev-candidate-char)
+             )
+      ))
+  ;; (message "base %s fword %s regex %s" base-pos fword-pos candidate-pos)
   )
 
 
@@ -381,8 +391,14 @@ Version 2017-07-08"
     (backward-word)
     (setq bword-pos (point))
     (if (> candindate-pos bword-pos)
-        (goto-char candindate-pos)))
+        (progn (goto-char candindate-pos)
+               (setq prev-candidate-char (buffer-substring (point) (1- (point))))
+               (message "%s" prev-candidate-char)
+               (if (equal prev-candidate-char " ")
+                   (call-interactively #'chan-backward-word)))
+      (goto-char bword-pos)))
   )
+
 
 (defun chan-forward-delete-word ()
   "Chan 'forward-delete-word."
@@ -423,10 +439,13 @@ Version 2017-07-08"
     (setq bword-pos (point))
     (goto-char base-pos)
     (if (> candidate-pos bword-pos)
-        (ignore-errors (delete-region (1+ candidate-pos) base-pos))
-      (ignore-errors (delete-region (1+ bword-pos) base-pos)))
-    (when (equal (point) base-pos)
-      (ignore-errors (delete-region (1- base-pos) base-pos)))
+        (progn
+          (ignore-errors (delete-region (1- candidate-pos) base-pos))
+          (setq prev-candidate-char (buffer-substring (point) (1- (point))))
+          (message "%s" prev-candidate-char)
+          (if (equal prev-candidate-char " ")
+              (call-interactively #'chan-backward-delete-word)))
+      (ignore-errors (delete-region (1- bword-pos) base-pos)))
     )
   )
 
