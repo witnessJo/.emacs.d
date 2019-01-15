@@ -1,6 +1,15 @@
 (use-package go-mode
   :ensure t)
 
+;; (use-package gocode
+;; :ensure t)
+
+(use-package go-autocomplete
+  :ensure t)
+
+;; (use-package auto-complete-config
+;; :ensure t)
+
 (use-package go-guru
   :ensure t)
 
@@ -158,7 +167,6 @@ And the environment variable was existing, Download go binaries from the interne
   (let ((cmd nil)
         (buffer-error "*jong-error*")
         (list-url (list "github.com/golang/lint/golint"
-                        "github.com/nsf/gocode"
                         "github.com/mdempsky/gocode"
                         "github.com/k0kubun/pp"
                         "github.com/golang/lint/golint"
@@ -380,6 +388,10 @@ And the environment variable was existing, Download go binaries from the interne
                           (go-guru-hl-identifier-mode)
                           (go-eldoc-setup)
                           
+                          ;; (require 'auto-complete-config)
+                          ;; (ac-config-default)
+                          
+                          
                           ;; setting company-go mode...
                           (setq company-tooltip-limit 20)
                           (setq company-idle-delay .3)
@@ -387,6 +399,7 @@ And the environment variable was existing, Download go binaries from the interne
                           (setq company-begin-commands '(self-insert-command))
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)
+                          
                           
                           ;;setting go-eldocp
                           (set-face-attribute 'eldoc-highlight-function-argument nil
