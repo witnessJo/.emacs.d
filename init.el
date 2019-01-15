@@ -52,6 +52,18 @@
     ))
 
 
+(defun jong-copy-current-dir ()
+  "Copy the current directory to the 'kill-ring."
+  (interactive)
+  (kill-new (file-name-directory buffer-file-name)))
+
+
+(defun jong-copy-current-path ()
+  "Copy the current path to the 'kill-ring."
+  (interactive)
+  (kill-new buffer-file-name))
+
+
 (defun jong-open-line-above ()
   "Insert a newline above the current line and put point at beginning."
   (interactive)
