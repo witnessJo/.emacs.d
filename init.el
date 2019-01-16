@@ -190,7 +190,6 @@ Version 2017-07-08"
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -383,17 +382,9 @@ Version 2017-07-08"
              (if (equal prev-candidate-char " ")
                  (call-interactively #'chan-forward-word))
              ;; (message "%s" prev-candidate-char)
-             )
-      ))
-  ;; (message "base %s fword %s regex %s" base-pos fword-pos candidate-pos)
+             ))
+    )
   )
-
-
-;; (defun chan-test ()
-;;   (interactive)
-;;   (message "%s" (string (char-after (point)))))
-
-
 
 
 (defun chan-backward-word ()
@@ -428,7 +419,6 @@ Version 2017-07-08"
         (candidate-pos 0)
 	(curr-char)
 	)
-    
     (setq base-pos (point))
     (search-forward-regexp candidate-chars nil 'noerror)
     (setq candidate-pos (point))
@@ -479,7 +469,6 @@ Version 2017-07-08"
       (ignore-errors (delete-region (1- bword-pos) base-pos)))
     )
   )
-
 
 
 (defun chan-copy-current-line ()
@@ -546,8 +535,8 @@ Version 2017-07-08"
 (global-set-key (kbd "C-S-M-'") 'windmove-right)
 
 (global-set-key (kbd "C-S-M-[") 'windmove-up)
-(global-set-key (kbd "C-<backspace>") 'hungry-delete-backward)
-(global-set-key (kbd "C-<deletechar>") 'hungry-delete-forward)
+;; (global-set-key (kbd "C-<backspace>") 'hungry-delete-backward)
+;; (global-set-key (kbd "C-<deletechar>") 'hungry-delete-forward)
 
 (global-set-key (kbd "M-d") 'chan-forward-delete-word)
 (global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
@@ -681,8 +670,6 @@ Version 2017-07-08"
 				  (call-interactively 'eyebrowse-switch-to-window-config-1)
 				  (call-interactively 'eyebrowse-switch-to-window-config-2)
 				  (call-interactively 'eyebrowse-switch-to-window-config-3)))
-
-
 
 
 (defun my-reload-dir-locals-for-current-buffer ()
