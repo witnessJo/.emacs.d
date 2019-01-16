@@ -389,6 +389,13 @@ Version 2017-07-08"
   )
 
 
+;; (defun chan-test ()
+;;   (interactive)
+;;   (message "%s" (string (char-after (point)))))
+
+
+
+
 (defun chan-backward-word ()
   "Chan 'backward-word."
   (interactive)
@@ -404,7 +411,7 @@ Version 2017-07-08"
     (setq bword-pos (point))
     (if (> candindate-pos bword-pos)
         (progn (goto-char candindate-pos)
-               (setq prev-candidate-char (buffer-substring (point) (1- (point))))
+               (setq prev-candidate-char (string (char-after (point))))
                (message "%s" prev-candidate-char)
                (if (equal prev-candidate-char " ")
                    (call-interactively #'chan-backward-word)))
@@ -418,7 +425,10 @@ Version 2017-07-08"
   (let ((target-string "")
         (base-pos 0)
         (fword-pos 0)
-        (candidate-pos 0))
+        (candidate-pos 0)
+	(curr-char)
+	)
+    
     (setq base-pos (point))
     (search-forward-regexp candidate-chars nil 'noerror)
     (setq candidate-pos (point))
@@ -427,23 +437,27 @@ Version 2017-07-08"
     (goto-char base-pos)
     (if (> candidate-pos fword-pos)
         (delete-region base-pos fword-pos)
-      (delete-region base-pos (1- candidate-pos )))
-    (when (equal (point) base-pos)
-      (if (equal (string (char-after (point))) " ")
-          (while (equal (string (char-after (point))) " ")
-            (delete-region (point) (1+ (point))))
-        (delete-region (point) (1+ (point))))
-      ))
+      (progn
+	(setq curr-char (string (char-after (point))))
+	(if (string-match curr-char "[ \n] ")
+	    (progn
+	      (call-interactively #'hungry-delete-forward)
+	      (message "!!"))
+	  (delete-region base-pos candidate-pos))))
+    )
   )
 
 
 (defun chan-backward-delete-word ()
   "Chan 'backward-delete-word."
   (interactive)
+
   (let ((target-string "")
         (base-pos 0)
         (bword-pos 0)
-        (candidate-pos 0))
+        (candidate-pos 0)
+	(curr-char)
+	)
     (setq base-pos (point))
     (search-backward-regexp candidate-chars nil 'noerror)
     (setq candidate-pos (point))
@@ -451,23 +465,29 @@ Version 2017-07-08"
     (setq bword-pos (point))
     (goto-char base-pos)
     (if (> candidate-pos bword-pos)
-        (progn
-          (ignore-errors (delete-region (1- candidate-pos) base-pos))
-          (setq prev-candidate-char (buffer-substring (point) (1- (point))))
-          (message "%s" prev-candidate-char)
-          (if (equal prev-candidate-char " ")
-              (call-interactively #'chan-backward-delete-word)))
+	(progn
+	  (setq curr-char (string (char-after (1- (point)))))
+	  ;; (message "!!!%s" curr-char)
+	  (if (string-match curr-char "[ \n] ")
+	      (call-interactively #'hungry-delete-backward)
+	    (progn
+	      ;; (setq prev-candidate-char (string (char-after (point))))
+	      (ignore-errors (delete-region candidate-pos base-pos))
+	      (goto-char candidate-pos)
+	      (message "%s candpos : %d bword-pos %d" prev-candidate-char candidate-pos bword-pos)
+	      )))
       (ignore-errors (delete-region (1- bword-pos) base-pos)))
     )
   )
+
 
 
 (defun chan-copy-current-line ()
   "Chan 'copy current line."
   (interactive)
   (let ((prev-pos (point))
-        (start-line-pos (progn (beginning-of-line) (point)))
-        (end-line-pos (progn (end-of-line) (point))))
+	(start-line-pos (progn (beginning-of-line) (point)))
+	(end-line-pos (progn (end-of-line) (point))))
     (kill-new (buffer-substring start-line-pos end-line-pos))
     (goto-char prev-pos)))
 
@@ -496,18 +516,18 @@ Version 2017-07-08"
 (setq set-mark-command-repeat-pop t)
 (global-set-key (kbd "S-SPC") 'toggle-korean-input-method)
 (global-set-key (kbd "C-k") (lambda () (interactive)
-                              (call-interactively 'comint-kill-whole-line)
-                              (call-interactively 'indent-for-tab-command)))
+			      (call-interactively 'comint-kill-whole-line)
+			      (call-interactively 'indent-for-tab-command)))
 
 (global-set-key (kbd "M-;") (lambda () (interactive)
-                              (let ((base-pos 0))
-                                (setq base-pos (point))
-                                (beginning-of-line)
-                                (call-interactively 'comment-line)
-                                (goto-char base-pos)
-                                (forward-line)
-                                (indent-for-tab-command)
-                                )))
+			      (let ((base-pos 0))
+				(setq base-pos (point))
+				(beginning-of-line)
+				(call-interactively 'comment-line)
+				(goto-char base-pos)
+				(forward-line)
+				(indent-for-tab-command)
+				)))
 
 
 (global-set-key (kbd "C-S-o") 'jong-open-line-above)
@@ -515,11 +535,11 @@ Version 2017-07-08"
 
 
 (global-set-key (kbd "C-c k") (lambda() (interactive)
-                                (kill-buffer (buffer-name))))
+				(kill-buffer (buffer-name))))
 (global-set-key (kbd "M-c k") (lambda() (interactive)
-                                (call-interactively 'other-window)
-                                (kill-buffer (buffer-name))
-                                (call-interactively 'other-window)))
+				(call-interactively 'other-window)
+				(kill-buffer (buffer-name))
+				(call-interactively 'other-window)))
 
 
 (global-set-key (kbd "C-S-M-;") 'windmove-left)
@@ -533,9 +553,9 @@ Version 2017-07-08"
 (global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
 (global-set-key (kbd "C-M-y") 'chan-copy-current-line)
 (global-set-key (kbd "M-y") (lambda ()
-                              (interactive)
-                              (jong-open-line-below)
-                              (call-interactively 'yank)))
+			      (interactive)
+			      (jong-open-line-below)
+			      (call-interactively 'yank)))
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
@@ -544,11 +564,11 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-d") 'delete-forward-char)
 (global-set-key (kbd "M-v") (lambda ()
-                              (interactive)
-                              (scroll-down-line 25)))
+			      (interactive)
+			      (scroll-down-line 25)))
 (global-set-key (kbd "C-v") (lambda ()
-                              (interactive)
-                              (scroll-up-line 25)))
+			      (interactive)
+			      (scroll-up-line 25)))
 
 
 (defun pop-local-or-global-mark ()
@@ -570,64 +590,64 @@ Version 2017-07-08"
 ;; Forward word with candidate characters.
 (global-set-key (kbd "M-f") 'chan-forward-word)
 (global-set-key (kbd "M-F") (lambda () (interactive)
-                              (setq this-command-keys-shift-translated t)
-                              (if (equal (region-active-p) nil)
-                                  (call-interactively 'set-mark-command))
-                              (chan-forward-word)))
+			      (setq this-command-keys-shift-translated t)
+			      (if (equal (region-active-p) nil)
+				  (call-interactively 'set-mark-command))
+			      (chan-forward-word)))
 
 ;; Back word with candidate characters.
 (global-set-key (kbd "M-b") 'chan-backward-word)
 (global-set-key (kbd "M-B") (lambda () (interactive)
-                              (setq this-command-keys-shift-translated t)
-                              (if (not (use-region-p))
-                                  (call-interactively 'set-mark-command))
-                              (chan-backward-word)))
+			      (setq this-command-keys-shift-translated t)
+			      (if (not (use-region-p))
+				  (call-interactively 'set-mark-command))
+			      (chan-backward-word)))
 
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (goto-char (1+ (point)))))
+				(setq this-command-keys-shift-translated t)
+				(if (not (use-region-p))
+				    (call-interactively 'set-mark-command))
+				(goto-char (1+ (point)))))
 
 (global-set-key (kbd "C-S-b") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (goto-char (1- (point)))))
+				(setq this-command-keys-shift-translated t)
+				(if (not (use-region-p))
+				    (call-interactively 'set-mark-command))
+				(goto-char (1- (point)))))
 
 (global-set-key (kbd "C-S-a") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (beginning-of-line)))
+				(setq this-command-keys-shift-translated t)
+				(if (not (use-region-p))
+				    (call-interactively 'set-mark-command))
+				(beginning-of-line)))
 
 
 (global-set-key (kbd "C-S-e") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (end-of-line)))
+				(setq this-command-keys-shift-translated t)
+				(if (not (use-region-p))
+				    (call-interactively 'set-mark-command))
+				(end-of-line)))
 
 
 (global-set-key (kbd "C-S-a") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (beginning-of-line)))
+				(setq this-command-keys-shift-translated t)
+				(if (not (use-region-p))
+				    (call-interactively 'set-mark-command))
+				(beginning-of-line)))
 
 
 (global-set-key (kbd "C-S-p") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (forward-line -1)))
+				(setq this-command-keys-shift-translated t)
+				(if (not (use-region-p))
+				    (call-interactively 'set-mark-command))
+				(forward-line -1)))
 
 (global-set-key (kbd "C-S-n") (lambda () (interactive)
-                                (setq this-command-keys-shift-translated t)
-                                (if (not (use-region-p))
-                                    (call-interactively 'set-mark-command))
-                                (forward-line 1)))
+				(setq this-command-keys-shift-translated t)
+				(if (not (use-region-p))
+				    (call-interactively 'set-mark-command))
+				(forward-line 1)))
 
 
 
@@ -650,17 +670,17 @@ Version 2017-07-08"
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
 
 (global-set-key (kbd "C-c <") (lambda() (interactive)
-                                (call-interactively 'eyebrowse-prev-window-config)
-                                (message "slot : %s" (eyebrowse--get 'current-slot))))
+				(call-interactively 'eyebrowse-prev-window-config)
+				(message "slot : %s" (eyebrowse--get 'current-slot))))
 
 (global-set-key (kbd "C-c >") (lambda() (interactive)
-                                (call-interactively 'eyebrowse-next-window-config)
-                                (message "slot : %s" (eyebrowse--get 'current-slot))))
+				(call-interactively 'eyebrowse-next-window-config)
+				(message "slot : %s" (eyebrowse--get 'current-slot))))
 
 (global-set-key (kbd "C-c w w") (lambda() (interactive)
-                                  (call-interactively 'eyebrowse-switch-to-window-config-1)
-                                  (call-interactively 'eyebrowse-switch-to-window-config-2)
-                                  (call-interactively 'eyebrowse-switch-to-window-config-3)))
+				  (call-interactively 'eyebrowse-switch-to-window-config-1)
+				  (call-interactively 'eyebrowse-switch-to-window-config-2)
+				  (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 
 
@@ -676,9 +696,9 @@ Version 2017-07-08"
   (interactive)
   (let ((dir default-directory))
     (dolist (buffer (buffer-list))pppppp
-            (with-current-buffer buffer
-              (when (equal default-directory dir))
-              (my-reload-dir-locals-for-current-buffer)))))
+	    (with-current-buffer buffer
+	      (when (equal default-directory dir))
+	      (my-reload-dir-locals-for-current-buffer)))))
 
 
 ;; default setting.
@@ -689,12 +709,12 @@ Version 2017-07-08"
     (set-frame-parameter
      nil 'alpha
      (if (eql (cond ((numberp alpha) alpha)
-                    ((numberp (cdr alpha)) (cdr alpha))
-                    ;; Also handle undocumented (<active> <inactive>) form.
+		    ((numberp (cdr alpha)) (cdr alpha))
+		    ;; Also handle undocumented (<active> <inactive>) form.
 
-                    ((numberp (cadr alpha)) (cadr alpha)))
-              100)
-         '(85 . 50) '(100 . 100)))))
+		    ((numberp (cadr alpha)) (cadr alpha)))
+	      100)
+	 '(85 . 50) '(100 . 100)))))
 
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
@@ -719,9 +739,9 @@ Version 2017-07-08"
   (set-face-background 'show-paren-match-face (face-background 'default))
   (if (boundp 'font-lock-comment-face)
       (set-face-foreground 'show-paren-match-face
-                           (face-foreground 'font-lock-comment-face))
+			   (face-foreground 'font-lock-comment-face))
     (set-face-foreground 'show-paren-match-face
-                         (face-foreground 'default)))
+			 (face-foreground 'default)))
   (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
 
 (require 'paren)
@@ -801,9 +821,9 @@ Version 2017-07-08"
   (interactive)
   (let (user-input)
     (if (not (equal "" (setq user-input (read-string "Enter the command : "))))
-        (progn
-          (setq projectile-project-run-cmd user-input)
-          (message "Changed projectile-project-run-cmd as %s" user-input))
+	(progn
+	  (setq projectile-project-run-cmd user-input)
+	  (message "Changed projectile-project-run-cmd as %s" user-input))
       (message "The command was empty..."))
     ))
 
@@ -846,8 +866,8 @@ Version 2017-07-08"
 ;;;; elisp develope environments ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'emacs-lisp-mode-hook
-          (lambda()
-            (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
+	  (lambda()
+	    (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  python develope environments  ;;;;
@@ -868,8 +888,8 @@ Version 2017-07-08"
 (use-package company-jedi
   :ensure t)
 (add-hook 'python-mode-hook
-          (lambda()
-            (add-to-list 'company-backend 'company-jedi)))
+	  (lambda()
+	    (add-to-list 'company-backend 'company-jedi)))
 
 (global-set-key (kbd "C-c i") 'indent-region)
 
@@ -907,30 +927,30 @@ Version 2017-07-08"
   "This is patters to kill buffer"
   :type 'list)
 (setq jong-kill-buffer-patterns (list "*RTags*" "*compilation*" "*Occur*" "*Help*" "^\*godoc.*"
-                                      "*Warnings*" "*xref*" "*Node Shell*" "*Google Translate*"
-                                      "*jong-output*"))
+				      "*Warnings*" "*xref*" "*Node Shell*" "*Google Translate*"
+				      "*jong-output*"))
 (defun jong-kill-temporary-buffers ()
   "Kill current buffer unconditionally."
   (interactive)
   (dolist (pattern jong-kill-buffer-patterns)
     (dolist (buffer (buffer-list))
       (when (string-match pattern (buffer-name buffer))
-        (kill-buffer buffer))))
+	(kill-buffer buffer))))
   (delete-above-below-window))
 
 
 (global-set-key (kbd "C-g") (lambda () (interactive)
-                              (jong-kill-temporary-buffers)
-                              (keyboard-quit)))
+			      (jong-kill-temporary-buffers)
+			      (keyboard-quit)))
 
 (add-hook 'python-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
-            (local-set-key (kbd "C-c c c") 'jyc-run-python)
-            (local-set-key (kbd "C-g") 'kill-temporary-buffers)
-            (local-set-key (kbd "C-S-g") 'close-compilation-window)
-            (linum-mode t)
-            ))
+	  (lambda ()
+	    (local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
+	    (local-set-key (kbd "C-c c c") 'jyc-run-python)
+	    (local-set-key (kbd "C-g") 'kill-temporary-buffers)
+	    (local-set-key (kbd "C-S-g") 'close-compilation-window)
+	    (linum-mode t)
+	    ))
 
 
 (defun create-tags (dir-name)
@@ -948,13 +968,13 @@ Version 2017-07-08"
    If buffer is modified, ask about save before running etags."
   (let ((extension (file-name-extension (buffer-file-name))))
     (condition-case err
-        ad-do-it
+	ad-do-it
       (error (and (buffer-modified-p)
-                  (not (ding))
-                  (y-or-n-p "Buffer is modified, save it? ")
-                  (save-buffer))
-             (er-refresh-etags extension)
-             ad-do-it))))
+		  (not (ding))
+		  (y-or-n-p "Buffer is modified, save it? ")
+		  (save-buffer))
+	     (er-refresh-etags extension)
+	     ad-do-it))))
 
 (defun er-refresh-etags (&optional extension)
   "Run etags on all peer files in current dir and reload them silently."
@@ -988,8 +1008,8 @@ Version 2017-07-08"
 (use-package markdown-mode
   :ensure t  :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
 
