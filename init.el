@@ -238,15 +238,15 @@ Version 2017-07-08"
 (use-package prodigy
   :ensure t)
 
-(use-package auto-dim-other-buffers
-  :init
-  (custom-set-faces
-   '(auto-dim-other-buffers-face ((t (:background "#101520")))))
-  (add-hook 'after-init-hook
-            (lambda ()
-              (when (fboundp 'auto-dim-other-buffers-mode)
-                (auto-dim-other-buffers-mode t))))
-  :ensure t)
+;; (use-package auto-dim-other-buffers
+;;   :init
+;;   (custom-set-faces
+;;    '(auto-dim-other-buffers-face ((t (:background "#101520")))))
+;;   (add-hook 'after-init-hook
+;;             (lambda ()
+;;               (when (fboundp 'auto-dim-other-buffers-mode)
+;;                 (auto-dim-other-buffers-mode t))))
+;;   :ensure t)
 
 
 (use-package hungry-delete

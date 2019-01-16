@@ -1,16 +1,13 @@
 (use-package go-mode
   :ensure t)
 
-;; (use-package gocode
-;; :ensure t)
-
 (use-package go-autocomplete
   :ensure t)
 
-;; (use-package auto-complete-config
-;; :ensure t)
-
 (use-package go-guru
+  :ensure t)
+
+(use-package godoctor
   :ensure t)
 
 (use-package direx
@@ -117,6 +114,7 @@
 
 
 (defun jong-get-imported-packages ()
+  "Get Imported package "
   (interactive)
   (let ((output-buffer "*jong-output-buffer*")
         (base-pos (point))
