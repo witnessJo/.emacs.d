@@ -250,7 +250,7 @@ Version 2017-07-08"
 
 (use-package hungry-delete
   :ensure t)
-(global-hungry-delete-mode)
+;; (global-hungry-delete-mode)
 
 (use-package autopair
   :ensure t)
@@ -419,54 +419,50 @@ Version 2017-07-08"
         (candidate-pos 0)
 	(curr-char)
 	)
-    (setq base-pos (point))
-    (search-forward-regexp candidate-chars nil 'noerror)
-    (setq candidate-pos (point))
-    (forward-word)
-    (setq fword-pos (point))
-    (goto-char base-pos)
-    (if (> candidate-pos fword-pos)
-        (delete-region base-pos fword-pos)
+    (setq curr-char (string (char-after (point))))
+    (if (string-match curr-char "[ \n\t] ")
+	(call-interactively #'hungry-delete-forward)
       (progn
-	(setq curr-char (string (char-after (point))))
-	(if (string-match curr-char "[ \n] ")
-	    (progn
-	      (call-interactively #'hungry-delete-forward)
-	      (message "!!"))
+	(setq base-pos (point))
+	(search-forward-regexp candidate-chars nil 'noerror)
+	(setq candidate-pos (point))
+	(forward-word)
+	(setq fword-pos (point))
+	(goto-char base-pos)
+	(if (> candidate-pos fword-pos)
+	    (delete-region base-pos fword-pos)
 	  (delete-region base-pos candidate-pos))))
     )
   )
 
 
+
 (defun chan-backward-delete-word ()
   "Chan 'backward-delete-word."
   (interactive)
-
   (let ((target-string "")
-        (base-pos 0)
-        (bword-pos 0)
-        (candidate-pos 0)
+	(base-pos 0)
+	(bword-pos 0)
+	(candidate-pos 0)
 	(curr-char)
 	)
-    (setq base-pos (point))
-    (search-backward-regexp candidate-chars nil 'noerror)
-    (setq candidate-pos (point))
-    (backward-word)
-    (setq bword-pos (point))
-    (goto-char base-pos)
-    (if (> candidate-pos bword-pos)
-	(progn
-	  (setq curr-char (string (char-after (1- (point)))))
-	  ;; (message "!!!%s" curr-char)
-	  (if (string-match curr-char "[ \n] ")
-	      (call-interactively #'hungry-delete-backward)
+    (setq curr-char (string (char-after (1- (point)))))
+    (if (string-match curr-char "[ \n] ")
+	(call-interactively #'hungry-delete-backward)
+      (progn
+	(setq base-pos (point))
+	(search-backward-regexp candidate-chars nil 'noerror)
+	(setq candidate-pos (point))
+	(backward-word)
+	(setq bword-pos (point))
+	(goto-char base-pos)
+	(if (> candidate-pos bword-pos)
 	    (progn
-	      ;; (setq prev-candidate-char (string (char-after (point))))
 	      (ignore-errors (delete-region candidate-pos base-pos))
 	      (goto-char candidate-pos)
-	      (message "%s candpos : %d bword-pos %d" prev-candidate-char candidate-pos bword-pos)
-	      )))
-      (ignore-errors (delete-region (1- bword-pos) base-pos)))
+	      (message "%s candpos : %d bword-pos %d" prev-candidate-char candidate-pos bword-pos))
+	  (ignore-errors (delete-region (1- bword-pos) base-pos)))
+	))
     )
   )
 
@@ -491,10 +487,10 @@ Version 2017-07-08"
 ;; With argument ARG, do this that many times."
 ;; (interactive "p")
 ;; (delete-word (- arg)))
-
+               
 (global-set-key (kbd "M-c") nil)
 (global-set-key (kbd "C-c C-x") nil)
-
+;; (global-set-key (kbd "<backspace>") 'delete-backward-char)
 ;; (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
 ;; (global-set-key (kbd "M-d") 'delete-word)
 
