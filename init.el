@@ -531,11 +531,10 @@ Version 2017-07-08"
 (global-set-key (kbd "C-S-M-'") 'windmove-right)
 
 (global-set-key (kbd "C-S-M-[") 'windmove-up)
-;; (global-set-key (kbd "C-<backspace>") 'hungry-delete-backward)
-;; (global-set-key (kbd "C-<deletechar>") 'hungry-delete-forward)
 
 (global-set-key (kbd "M-d") 'chan-forward-delete-word)
 (global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
+(global-set-key (kbd "C-<backspace>") nil)
 (global-set-key (kbd "C-M-y") 'chan-copy-current-line)
 (global-set-key (kbd "M-y") (lambda ()
 			      (interactive)

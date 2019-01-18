@@ -185,7 +185,7 @@
         )))
   )
 
-(defun chan-run-local-ethernode ()
+(defun jong-run-local-ethnode-console ()
   (interactive)
   (let ((magic-second 0))
     (with-current-buffer (get-buffer "main.go")
@@ -197,7 +197,6 @@
       (condition-case ex
           (with-current-buffer (get-buffer "*gud-connect*")
             (goto-char (point-max))
-            ;; (insert "r --datadir=~/testnet --syncmode \"full\" --nodiscover --cache=2048 console")
             (insert (format "r --datadir=~/testnet --bootnodes %s --syncmode \"full\" --cache=2048 console" (getenv "BOOTNODE")))
             (autopair-newline)
             (insert "c")
@@ -207,7 +206,30 @@
   )
 
 
-(defun chan-init-local-enodeinfo ()
+
+(defun jong-run-local-ethnode ()
+  (interactive)
+  (let ((magic-second 0))
+    (with-current-buffer (get-buffer "main.go")
+      (chan-run-dlv-cs)
+      (while (not (get-buffer "*gud-connect*"))
+        (if (> (1+ magic-second) 5))
+        (message "waiting...")
+        (sleep-for 1))
+      (condition-case ex
+          (with-current-buffer (get-buffer "*gud-connect*")
+            (goto-char (point-max))
+            (insert (format "r --datadir=~/testnet --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
+            (autopair-newline)
+            (insert "c")
+            (autopair-newline))
+        (message "running delve of local ethernode was failed...")))
+    )
+  )
+
+
+
+(defun jong-init-local-ethnode ()
   (interactive)
   (let ((genesis-output-buffer "*chan-init-ether-local-genesis*")
         (account-output-buffer "*chan-init-ether-local-account*"))
