@@ -349,21 +349,26 @@ And the environment variable was existing, Download go binaries from the interne
   )
 
 
-(defun chan-run-dlv-cs ()
+(defun chan-run-dlv-cs (&optional otherframe)
   "Create dlv with server and client mode."
   (interactive)
   (let ((port)
         (start-pos)
         (end-pos)
-        (magic-seconds 0))
+        (magic-seconds 0)
+        (main-file "main.go")
+        (second-frame "log-frame")
+        (target-frame)
+        (current-frame (selected-frame))
+        )
+    
     (condition-case ex
         (progn
-          (with-current-buffer (get-buffer "main.go")
+          (with-current-buffer (get-buffer main-file)
             (chan-run-dlv-server))
-
           (sleep-for 4)
           
-          (setq port (with-current-buffer (get-buffer-create "*chan-dlv-server*")
+          (setq port (with-current-buffer (get-buffer "*chan-dlv-server*")
                        (goto-char (point-max))
                        (forward-line -1)
                        (end-of-line)
@@ -371,10 +376,44 @@ And the environment variable was existing, Download go binaries from the interne
                        (re-search-backward ":")
                        (setq start-pos (1+ (point)))
                        (buffer-substring start-pos end-pos)))
-          (with-current-buffer (get-buffer "main.go")
+          (with-current-buffer (get-buffer main-file)
             (chan-run-dlv-client port)))
-      (message "There was not a main.go buffer.")))
+      (message "There was not a main.go buffer."))
+    
+    (when otherframe
+      (if (setq target-frame
+                (catch 'target
+                  (dolist (frame (frame-list))
+                    (if (equal second-frame (frame-parameter frame 'name))
+                        (throw 'target frame)))))
+          (progn
+            (select-frame-set-input-focus target-frame)
+            (switch-to-buffer "*chan-dlv-server*")
+            (select-frame-set-input-focus current-frame)
+            (switch-to-buffer-other-window main-file)
+            (other-window 1)
+            )
+        (progn
+          (setq target-frame (make-frame
+                              '((name . "log-frame"))
+                              ))
+          (select-frame-set-input-focus target-frame)
+          (switch-to-buffer "*chan-dlv-server*")
+          (select-frame-set-input-focus current-frame)
+          (switch-to-buffer-other-window main-file)
+          (other-window 1)
+          )))
+    )
   )
+
+(defun jong-run-dlv-cs-otherframe ()
+  "Create dlv with server (other-frame) and client mode."
+  (interactive)
+  (chan-run-dlv-cs t)
+  )
+
+
+
 
 
 (add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
@@ -388,7 +427,6 @@ And the environment variable was existing, Download go binaries from the interne
                           
                           ;; (require 'auto-complete-config)
                           ;; (ac-config-default)
-                          
                           
                           ;; setting company-go mode...
                           (setq company-tooltip-limit 20)
@@ -421,7 +459,8 @@ And the environment variable was existing, Download go binaries from the interne
                           (local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
                           (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
-                                           (compile "go build -v && go test -v && go vet")))
+                                           (compile "go build -v")))
+                          ;; (compile "go build -v && go test -v && go vet")))
                           (local-set-key (kbd "C-c r r") 'jong-go-run-project)
                           (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
                           (local-set-key (kbd "C-c M->")
