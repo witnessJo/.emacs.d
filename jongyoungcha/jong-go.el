@@ -413,9 +413,6 @@ And the environment variable was existing, Download go binaries from the interne
   )
 
 
-
-
-
 (add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'go-mode-hook (lambda ()
                           (setq indent-tabs-mode nil)
