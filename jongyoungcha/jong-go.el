@@ -355,36 +355,46 @@ And the environment variable was existing, Download go binaries from the interne
   (let ((port)
         (start-pos)
         (end-pos)
-        (magic-seconds 0)
+        (magic-seconds 20)
         (main-file "main.go")
-        (second-frame "log-frame")
+        (log-frame "log-frame")
+	     (input-frame "input-frame")
         (target-frame)
-        (current-frame (selected-frame))
-        )
-    
-    (condition-case ex
-        (progn
-          (with-current-buffer (get-buffer main-file)
-            (chan-run-dlv-server))
-          (sleep-for 4)
-          
-          (setq port (with-current-buffer (get-buffer "*chan-dlv-server*")
-                       (goto-char (point-max))
-                       (forward-line -1)
-                       (end-of-line)
-                       (setq end-pos (point))
-                       (re-search-backward ":")
-                       (setq start-pos (1+ (point)))
-                       (buffer-substring start-pos end-pos)))
-          (with-current-buffer (get-buffer main-file)
-            (chan-run-dlv-client port)))
-      (message "There was not a main.go buffer."))
+        (current-frame (selected-frame)))
+    (catch 'exit
+      (condition-case ex
+          (progn
+            ;; Run server dlv process.
+            (with-current-buffer (get-buffer main-file)
+              (chan-run-dlv-server))
+            ;; Waiting a server process reveal.
+            (setq port (with-current-buffer (get-buffer "*chan-dlv-server*")
+		                   (while (< (length (buffer-string)) 1)
+			                  (message "waiting the seconds : %d"
+                                    (setq magic-seconds (1- magic-seconds)))
+			                  (sleep-for 1)
+                           (when (equal magic-seconds 0)
+                             (throw 'exit magic-seconds)))
+                         (goto-char (point-max))
+                         (forward-line -1)
+                         (end-of-line)
+                         (setq end-pos (point))
+                         (re-search-backward ":")
+                         (setq start-pos (1+ (point)))
+                         (buffer-substring start-pos end-pos)))
+            ;; Run client dlv process.
+            (with-current-buffer (get-buffer main-file)
+              (chan-run-dlv-client port)))
+        (message "There was not a main.go buffer."))
+      (progn
+        (message "Waiting time was gone...")
+        nil))
     
     (when otherframe
       (if (setq target-frame
                 (catch 'target
                   (dolist (frame (frame-list))
-                    (if (equal second-frame (frame-parameter frame 'name))
+                    (if (equal log-frame (frame-parameter frame 'name))
                         (throw 'target frame)))))
           (progn
             (select-frame-set-input-focus target-frame)
