@@ -1018,7 +1018,6 @@ Version 2017-07-08"
 (require 'jong-go)
 (require 'jong-network)
 
-;; Test logics must be located end of the script
 (require 'jong-ether-test)
 
 (load-theme 'sanityinc-tomorrow-blue t)
@@ -1033,8 +1032,10 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; char encoding environment ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(set-default-coding-systems 'utf-8-unix)
-(set-language-environment 'UTF-8)
+;; (set-default-coding-systems 'utf-8-unix)
+;; (set-language-environment 'UTF-8)
+(set-language-environment "Korean")
+(prefer-coding-system 'utf-8)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; set the font style ;;
