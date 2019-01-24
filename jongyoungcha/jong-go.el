@@ -186,10 +186,6 @@ And the environment variable was existing, Download go binaries from the interne
 
 
 
-(add-hook 'go-mode-hook (lambda ()
-                          (setq-default indent-tabs-mode nil)
-                          (setq-default tab-width 3)))
-
 (setq gofmt-command "goimports")
 
 (add-hook 'go-mode-hook 'go-eldoc-setup)
@@ -425,7 +421,7 @@ And the environment variable was existing, Download go binaries from the interne
 
 (add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'go-mode-hook (lambda ()
-                          (setq indent-tabs-mode nil)
+                          (setq indent-tabs-mode t)
                           (setq tab-width 4)
                           
                           ;; syntax highlight

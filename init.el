@@ -348,7 +348,6 @@ Version 2017-07-08"
   (other-window 1)
   )
 
-
 (defcustom candidate-chars nil
   "Why bother me."
   :type 'string)
@@ -937,7 +936,7 @@ Version 2017-07-08"
 
 (defun create-tags (dir-name)
   "Create tags file."
-  (interactive "DDirectory: ")
+  (interactive "Directory: ")
   (eshell-command 
    (format "find %s -type f -name \"*.[ch]\" | etags -" dir-name)))
 
@@ -1036,6 +1035,10 @@ Version 2017-07-08"
 ;; (set-language-environment 'UTF-8)
 (set-language-environment "Korean")
 (prefer-coding-system 'utf-8)
+
+(setq-default indent-tabs-mode t)
+(setq-default tab-width 4)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; set the font style ;;
