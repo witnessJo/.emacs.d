@@ -197,8 +197,9 @@
       (condition-case ex
           (with-current-buffer (get-buffer "*gud-connect*")
             (goto-char (point-max))
-            (insert (format "r --datadir=~/testnet --bootnodes %s --syncmode \"full\" --cache=2048 console" (getenv "BOOTNODE")))
-            (autopair-newline)
+            ;; (insert (format "r --datadir=~/testnet --bootnodes %s --syncmode \"full\" --cache=2048 console" (getenv "BOOTNODE")))
+			(insert (format "r --datadir=~/testnet --syncmode \"full\" --cache=2048 console" (getenv "BOOTNODE")))
+						(autopair-newline)
             (insert "c")
             (autopair-newline))
         (message "running delve of local ethernode was failed...")))

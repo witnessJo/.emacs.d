@@ -547,11 +547,14 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-d") 'delete-forward-char)
 (global-set-key (kbd "M-v") (lambda ()
-			      (interactive)
-			      (scroll-down-line 25)))
+							  (interactive)
+							  ;; (call-interactively 'goto-line (+ (line-number-at-pos) 25))
+							  (forward-line -20)
+							  (recenter-top-bottom (line-number-at-pos))))
 (global-set-key (kbd "C-v") (lambda ()
-			      (interactive)
-			      (scroll-up-line 25)))
+							  (interactive)
+							  (forward-line 20)
+							  (recenter-top-bottom (line-number-at-pos))))
 
 
 (defun pop-local-or-global-mark ()
@@ -676,7 +679,7 @@ Version 2017-07-08"
   "for every buffer iwth the same `default-directory` as the current buffer's, reload dir-locals."
   (interactive)
   (let ((dir default-directory))
-    (dolist (buffer (buffer-list))pppppp
+    (dolist (buffer (buffer-list))
 	    (with-current-buffer buffer
 	      (when (equal default-directory dir))
 	      (my-reload-dir-locals-for-current-buffer)))))
