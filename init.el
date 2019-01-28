@@ -1043,6 +1043,11 @@ Version 2017-07-08"
 (setq-default tab-width 4)
 
 
+;; (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
+(setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --syncmode \"full\" --cache=2048"))
+(setq jong-go-run-default-path "~/goworks-berith/src/bitbucket.org/ibizsoftware/berith-chain/cmd/geth/")
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; set the font style ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
