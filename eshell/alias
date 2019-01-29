@@ -1,8 +1,9 @@
-alias sl  $*
-alias qtum-cli qtum-cli -testnet $*
-alias qtumd qtumd -testnet $*
-alias ff find-file $1
-alias ll ls -l
-alias name $*
-alias geth geth --datadir=~/testnet $*
+alias nil  $*
 alias geth-init geth --datadir=~/testnet init ~/testnet/genesis.json
+alias geth geth --datadir=~/testnet $*
+alias name $*
+alias ll ls -l
+alias ff find-file $1
+alias qtumd qtumd -testnet $*
+alias qtum-cli qtum-cli -testnet $*
+alias sl $*

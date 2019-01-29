@@ -14,6 +14,9 @@
   privkey-path
   testnet-dir)
 
+(setenv "BOOTNODE" "enode:\/\/c76ba3e26c694db780e78c4f0a48bcc681ed167fc1cc303167d1f595235ac356d02b24c605fdf251cbb0278a19196f6e61776a818f9d009eee2394952f4ab770@192.168.50.13:30310")
+
+
 (defcustom main-node
   :type 'ether-node)
 (setq main-node (make-ether-node
@@ -30,6 +33,11 @@
 (defcustom genesis-json-path
   :type 'string)
 (setq genesis-json-path "~/genesis.json")
+
+
+(defcustom genesis-poa-json-path
+  :type 'staring)
+(setq genesis-poa-json-path "~/genesis-poa.json")
 
 
 (defcustom ether-node-list
@@ -233,8 +241,7 @@
 
 
 
-(defun jong-init-local-ethnode ()
-  (interactive)
+(defun jong-init-local-ethnode (is-ethash)
   (let ((genesis-output-buffer "*chan-init-ether-local-genesis*")
         (account-output-buffer "*chan-init-ether-local-account*"))
     (with-current-buffer (get-buffer-create genesis-output-buffer)
@@ -243,7 +250,9 @@
       (display-buffer (current-buffer))
       (ignore-errors (delete-directory "~/testnet" t))
       (ignore-errors (make-directory "~/testnet"))
-      (copy-file genesis-json-path "~/testnet/genesis.json" t)
+	  (if is-ethash
+		  (copy-file genesis-json-path "~/testnet/genesis.json" t)
+		(copy-file genesis-json-path ))
       (call-process-shell-command
        "geth --datadir=~/testnet --cache=2048 init ~/testnet/genesis.json" nil t))
     
@@ -263,6 +272,18 @@
       (ignore-errors (term-mode)))
     )
   )
+
+
+(defun jong-init-local-ethnode-ethash ()
+  (interactive)
+  (jong-init-local-ethnode t))
+
+
+(defun jong-init-local-ethnode-clique ()
+  (interactive)
+  (jong-init-local-ethnode nil))
+
+
 
 
 (defun chan-ether-send-transaction ()

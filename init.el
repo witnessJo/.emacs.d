@@ -1022,9 +1022,10 @@ Version 2017-07-08"
 
 (require 'jong-ether-test)
 
-(load-theme 'sanityinc-tomorrow-blue t)
-(set-background-color "#102033")
-(set-cursor-color "#ff4444")
+;; (load-theme 'sanityinc-tomorrow-blue t)
+(load-theme 'solarized-dark t)
+;; (set-background-color "#103520")
+(set-cursor-color "#aa4444")
 (global-hl-line-mode t)
 
 (when (member "Courier" (font-family-list))
@@ -1043,8 +1044,9 @@ Version 2017-07-08"
 (setq-default tab-width 4)
 
 
-;; (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
-(setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --syncmode \"full\" --cache=2048"))
+(setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
+;; (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --syncmode \"full\" --cache=2048"))
+;; (setq jong-go-run-command (format "./geth --datadir=~/testnet --nodiscover --verbosity 4  --syncmode \"full\" --cache=2048"))
 (setq jong-go-run-default-path "~/goworks-berith/src/bitbucket.org/ibizsoftware/berith-chain/cmd/geth/")
 
 
@@ -1082,9 +1084,88 @@ Version 2017-07-08"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#373b41" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#c5c8c6"))
+ '(beacon-color "#cc6666")
+ '(compilation-message-face (quote default))
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#839496")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
+ '(custom-safe-themes
+   (quote
+	("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(fci-rule-color "#373b41")
+ '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
+ '(frame-background-mode (quote dark))
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-symbol-colors
+   (--map
+	(solarized-color-blend it "#002b36" 0.25)
+	(quote
+	 ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#93a1a1")
+ '(highlight-tail-colors
+   (quote
+	(("#073642" . 0)
+	 ("#546E00" . 20)
+	 ("#00736F" . 30)
+	 ("#00629D" . 50)
+	 ("#7B6000" . 60)
+	 ("#8B2C02" . 70)
+	 ("#93115C" . 85)
+	 ("#073642" . 100))))
+ '(hl-bg-colors
+   (quote
+	("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
+ '(hl-fg-colors
+   (quote
+	("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(hl-paren-colors (quote ("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900")))
+ '(magit-diff-use-overlays nil)
+ '(nrepl-message-colors
+   (quote
+	("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (go-autcomplete auto-complete-config go-autocomplete org-mode helm-bookmarks helm-bookmark avy visual-regexp pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx go-guru go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color elisp-refs google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete auto-dim-other-buffers prodigy eyebrowse helm-ag helm yasnipppet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update use-package))))
+	(go-autcomplete auto-complete-config go-autocomplete org-mode helm-bookmarks helm-bookmark avy visual-regexp pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx go-guru go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color elisp-refs google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete auto-dim-other-buffers prodigy eyebrowse helm-ag helm yasnipppet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update use-package)))
+ '(pos-tip-background-color "#073642")
+ '(pos-tip-foreground-color "#93a1a1")
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(term-default-bg-color "#002b36")
+ '(term-default-fg-color "#839496")
+ '(vc-annotate-background nil)
+ '(vc-annotate-background-mode nil)
+ '(vc-annotate-color-map
+   (quote
+	((20 . "#cc6666")
+	 (40 . "#de935f")
+	 (60 . "#f0c674")
+	 (80 . "#b5bd68")
+	 (100 . "#8abeb7")
+	 (120 . "#81a2be")
+	 (140 . "#b294bb")
+	 (160 . "#cc6666")
+	 (180 . "#de935f")
+	 (200 . "#f0c674")
+	 (220 . "#b5bd68")
+	 (240 . "#8abeb7")
+	 (260 . "#81a2be")
+	 (280 . "#b294bb")
+	 (300 . "#cc6666")
+	 (320 . "#de935f")
+	 (340 . "#f0c674")
+	 (360 . "#b5bd68"))))
+ '(vc-annotate-very-old-color nil)
+ '(weechat-color-list
+   (quote
+	(unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
+ '(xterm-color-names
+   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
+ '(xterm-color-names-bright
+   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
