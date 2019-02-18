@@ -714,7 +714,7 @@ Version 2017-07-08"
 
 (defun lispy-parens ()
   "Setup parens display for lisp modes."
-  (setq show-paren-delay 0)n
+  (setq show-paren-delay 0)
   (setq show-paren-style 'parenthesis)
 
   (show-paren-mode 1)
@@ -1026,7 +1026,7 @@ Version 2017-07-08"
 (load-theme 'solarized-dark t)
 ;; (set-background-color "#103520")
 (set-cursor-color "#aa4444")
-(set-face-background #'hl-line "#005000")
+(set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
 
 (when (member "Courier" (font-family-list))
@@ -1048,7 +1048,8 @@ Version 2017-07-08"
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 ;; (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --syncmode \"full\" --cache=2048"))
 ;; (setq jong-go-run-command (format "./geth --datadir=~/testnet --nodiscover --verbosity 4  --syncmode \"full\" --cache=2048"))
-(setq jong-go-run-default-path "~/goworks-berith/src/bitbucket.org/ibizsoftware/berith-chain/cmd/geth/")
+;; (setq jong-go-run-default-path "~/goworks-berith/src/bitbucket.org/ibizsoftware/berith-chain/cmd/geth/")
+(setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1097,7 +1098,7 @@ Version 2017-07-08"
  '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
    (quote
-	("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+	("82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(fci-rule-color "#373b41")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(frame-background-mode (quote dark))

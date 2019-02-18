@@ -223,60 +223,60 @@ And the environment variable was existing, Download go binaries from the interne
     (setq jong-go-run-command command)
     (setq jong-go-run-default-path default-directory)
     (message "Next run command : [%s], default path : [%s]"
-	     jong-go-run-command jong-go-run-default-path)
+			 jong-go-run-command jong-go-run-default-path)
     )
   )
 
 (defun jong-go-run-project ()
   (interactive )
   (let ((output-buffer-name "*jong-output*")
-	(output-buffer nil)
-	(program-name nil)
-	(program-args nil))
+		(output-buffer nil)
+		(program-name nil)
+		(program-args nil))
     (ignore-errors (kill-buffer output-buffer-name))
     (with-current-buffer (get-buffer-create output-buffer-name)
       (if jong-go-run-command
-	  (progn
-	    (display-buffer (current-buffer))
-	    (setq default-directory jong-go-run-default-path)
-	    (async-shell-command jong-go-run-command (current-buffer) (current-buffer)))
-	(start-process jong-go-run-command (current-buffer) program-name program-args))
+		  (progn
+			(display-buffer (current-buffer))
+			(setq default-directory jong-go-run-default-path)
+			(async-shell-command jong-go-run-command (current-buffer) (current-buffer)))
+		(start-process jong-go-run-command (current-buffer) program-name program-args))
       (message "The command was not setted.")))
   )
 
 (defun jong-go-run-project-otherframe ()
   (interactive)
   (let ((current-frame (selected-frame))
-	(output-buffer-name "*jong-output*")
-	(output-frame-name "log-frame")
-	(output-buffer nil)
-	(output-frame nil)
-	(program-name nil)
-	(program-args nil))
+		(output-buffer-name "*jong-output*")
+		(output-frame-name "log-frame")
+		(output-buffer nil)
+		(output-frame nil)
+		(program-name nil)
+		(program-args nil))
     
     (ignore-errors (kill-buffer output-buffer-name))
     (setq output-buffer (get-buffer-create output-buffer-name))
     (if (setq output-frame
-	      (catch 'found
-		(dolist (frame (frame-list))
-		  (if (equal output-frame-name (frame-parameter frame 'name))
-		      (throw 'found frame)))))
-	(progn
-	  (select-frame-set-input-focus output-frame)
-	  (switch-to-buffer output-buffer-name))
+			  (catch 'found
+				(dolist (frame (frame-list))
+				  (if (equal output-frame-name (frame-parameter frame 'name))
+					  (throw 'found frame)))))
+		(progn
+		  (select-frame-set-input-focus output-frame)
+		  (switch-to-buffer output-buffer-name))
       (progn
-	(setq output-frame (make-frame
-			    '((name . "log-frame"))
-			    ))
-	(select-frame-set-input-focus output-frame)
-	(switch-to-buffer output-buffer-name)))
+		(setq output-frame (make-frame
+							'((name . "log-frame"))
+							))
+		(select-frame-set-input-focus output-frame)
+		(switch-to-buffer output-buffer-name)))
     
     (with-current-buffer (get-buffer output-buffer)
       (if jong-go-run-command
-	  (progn
-	    (setq default-directory jong-go-run-default-path)
-	    (async-shell-command jong-go-run-command (current-buffer) (current-buffer)))
-	  (message "go-run-command was not setted...")))
+		  (progn
+			(setq default-directory jong-go-run-default-path)
+			(async-shell-command jong-go-run-command (current-buffer) (current-buffer)))
+		(message "go-run-command was not setted...")))
     (select-frame-set-input-focus current-frame)
     )
   )
@@ -358,9 +358,18 @@ And the environment variable was existing, Download go binaries from the interne
   "Connect the dlv server!!!."
   (interactive)
   (let ((target-port "")
-        (target-buffer "gud-connect"))
-    (if (get-buffer target-buffer)
-        (kill-buffer target-buffer))
+        (output-buffer "gud-connect")
+		(process-name nil))
+	
+	(when (get-buffer output-buffer)
+	  (with-current-buffer (get-buffer output-buffer)
+		(setq process-name (get-buffer-process (current-buffer)))
+		(interrupt-process process-name)
+		(while (get-buffer-process (current-buffer))
+		  (message "Killing process : %s " process-name)
+		  (sleep-for 1))
+		(kill-buffer (current-buffer))))
+	
     (if (equal port nil)
         (setq target-port (read-string "input listen port : "))
       (setq target-port port))
@@ -374,18 +383,35 @@ And the environment variable was existing, Download go binaries from the interne
   (interactive)
   (let ((target-dir nil)
         (output-buffer "*chan-dlv-server*")
+		(process-name nil)
         (listen-process nil))
-    ;; (target-port nil)
-
+	
     (if (get-buffer output-buffer)
         (kill-buffer output-buffer))
 
     (if (equal (projectile-project-root) nil)
         (setq target-dir (projectile-project-root))
       (setq target-dir default-directory))
+
+	;; kill current buffer
+	;; (with-current-buffer (get-buffer-create output-buffer)
+	;; (setq process-name )
+	;; (interrupt-process process-name)
+	;; (while (get-buffer-process (current-buffer))
+	;; (message "Killing process : %s " process-name)
+	;; (sleep-for 1))
+	;; (kill-buffer (current-buffer)))
+	
     
     ;; start headless delve
     (with-current-buffer (get-buffer-create output-buffer)
+	  (when (get-buffer-process (current-buffer))
+		(interrupt-process process-name)
+		(while (get-buffer-process (current-buffer))
+		  (message "Killing process : %s " process-name)
+		  (sleep-for 1))
+		(comint-clear-buffer))
+	  
       (display-buffer output-buffer)
       (setq default-directory target-dir)
       (ignore-errors (term-mode))
@@ -404,7 +430,7 @@ And the environment variable was existing, Download go binaries from the interne
         (magic-seconds 20)
         (main-file "main.go")
         (log-frame "log-frame")
-	(input-frame "input-frame")
+		(input-frame "input-frame")
         (target-frame)
         (current-frame (selected-frame)))
     (catch 'exit
@@ -415,10 +441,10 @@ And the environment variable was existing, Download go binaries from the interne
               (chan-run-dlv-server))
             ;; Waiting a server process reveal.
             (setq port (with-current-buffer (get-buffer "*chan-dlv-server*")
-		         (while (< (length (buffer-string)) 1)
-			   (message "waiting the seconds : %d"
+						 (while (< (length (buffer-string)) 1)
+						   (message "waiting the seconds : %d"
                                     (setq magic-seconds (1- magic-seconds)))
-			   (sleep-for 1)
+						   (sleep-for 1)
                            (when (equal magic-seconds 0)
                              (throw 'exit magic-seconds)))
                          (goto-char (point-max))
@@ -515,7 +541,7 @@ And the environment variable was existing, Download go binaries from the interne
                                            (compile "go build")))
                           ;; (compile "go build -v && go test -v && go vet")))
                           ;; (local-set-key (kbd "C-c r r") 'jong-go-run-project)
-			  (local-set-key (kbd "C-c r r") 'jong-go-run-project-otherframe)
+						  (local-set-key (kbd "C-c r r") 'jong-go-run-project-otherframe)
                           (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
                           (local-set-key (kbd "C-c M->")
                                          (lambda () (interactive)
