@@ -1040,7 +1040,7 @@ Version 2017-07-08"
 	  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
 (prefer-coding-system locale-value)
 (set-default-coding-systems locale-value)
-(set-language-environment 'UTF-8)
+(set-language-environment 'Korean)
 
 (setq-default file-name-coding-system locale-value)
 (setq-default locale-coding-system locale-value)
@@ -1048,10 +1048,10 @@ Version 2017-07-08"
 (set-keyboard-coding-system locale-value)
 (set-selection-coding-system locale-value)
 
-(when (string-match "^3" (or (getenv "HANGUL_KEYBOARD_TYPE") ""))
-  (setq default-korean-keyboard "3")
-  (setq default-input-method "korean-hangul3")
-  )
+;; (when (string-match "^3" (or (getenv "HANGUL_KEYBOARD_TYPE") ""))
+;; (setq default-korean-keyboard "3")
+;; (setq default-input-method "korean-hangul3")
+;; )
 
 (dynamic-completion-mode)
 
