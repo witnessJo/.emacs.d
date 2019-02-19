@@ -1036,11 +1036,20 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; char encoding environment ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(when (member "Courier" (font-family-list))
+  (set-face-attribute 'default nil :font "Courier-12")
+  (setq-default line-spacing 2))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; char encoding environment ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(set-language-environment "Korean")
+;; (set-default-coding-systems 'utf-8-unix)
 (setq locale-value
 	  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
 (prefer-coding-system locale-value)
 (set-default-coding-systems locale-value)
-(set-language-environment 'korean)
+(set-language-environment 'UTF-8)
 
 (setq-default file-name-coding-system locale-value)
 (setq-default locale-coding-system locale-value)
@@ -1054,15 +1063,6 @@ Version 2017-07-08"
 ;; )
 
 (dynamic-completion-mode)
-
-;; (set-language-environment "Korean")
-;; (setq-default file-name-coding-system 'utf-8)
-;; (prefer-coding-system 'utf-8)
-;; (set-default-coding-systems 'utf-8)
-;; (setq default-korean-keyboard "3")
-;; (setq default-input-method "korean-hangul3")
-;; (set-keyboard-coding-system)
-;; (prefer-coding-system 'utf-8)
 
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
