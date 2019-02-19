@@ -1040,7 +1040,7 @@ Version 2017-07-08"
 	  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
 (prefer-coding-system locale-value)
 (set-default-coding-systems locale-value)
-(set-language-environment 'Korean)
+(set-language-environment 'korean)
 
 (setq-default file-name-coding-system locale-value)
 (setq-default locale-coding-system locale-value)
