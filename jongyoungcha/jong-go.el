@@ -392,16 +392,6 @@ And the environment variable was existing, Download go binaries from the interne
         (setq target-dir (projectile-project-root))
       (setq target-dir default-directory))
 
-    ;; kill current buffer
-    ;; (with-current-buffer (get-buffer-create output-buffer)
-    ;; (setq process-name )
-    ;; (interrupt-process process-name)
-    ;; (while (get-buffer-process (current-buffer))
-    ;; (message "Killing process : %s " process-name)
-    ;; (sleep-for 1))
-    ;; (kill-buffer (current-buffer)))
-    
-    
     ;; start headless delve
     (with-current-buffer (get-buffer-create output-buffer)
       (when (get-buffer-process (current-buffer))

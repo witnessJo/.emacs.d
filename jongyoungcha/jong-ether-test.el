@@ -1,10 +1,15 @@
-;;;
 
 (require 'cl)
+;;; Code:
 
-(defcustom ether-target-eshell
+(defcustom ether-target-eshell nil
+  "Arguments about running ethereum node."
   :type 'string)
 (setq ether-target-eshell "*chan-dlv-server*")
+
+(defcustom jong-run-local-ethnode-args "--datadir=~/testnet --verbosity 4 --syncmode \"full\" --cache=2048"
+  "Arguments about running ethereum node."
+  :type 'string)
 
 (cl-defstruct ether-node
   name
@@ -217,6 +222,12 @@
 
 
 
+
+(defun jong-run-local-ethnode-set-args ()
+  "Arguments about running ethereum node."
+  (read-string "(Ether test) Please input the arguments :"  jong-run-local-ethnode-args)
+  (message "Setted arguemtns : %s", jong-run-local-ethnode-args))
+
 (defun jong-run-local-ethnode ()
   (interactive)
   (let ((magic-second 0))
@@ -230,7 +241,7 @@
           (with-current-buffer (get-buffer "*gud-connect*")
             (goto-char (point-max))
             ;; (insert (format "r --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
-			(insert (format "r --datadir=~/testnet --verbosity 4 --syncmode \"full\" --cache=2048"))
+			(insert (format "r %s" jong-run-local-ethnode-args))
             (autopair-newline)
             ;; (insert "c")
             ;; (autopair-newline)
