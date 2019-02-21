@@ -224,9 +224,11 @@
 
 
 (defun jong-run-local-ethnode-set-args ()
+  (interactive)
   "Arguments about running ethereum node."
-  (read-string "(Ether test) Please input the arguments :"  jong-run-local-ethnode-args)
-  (message "Setted arguemtns : %s", jong-run-local-ethnode-args))
+  (setq jong-run-local-ethnode-args (read-string "(Ether test) Please input the arguments :"))
+  (message "Next jong-run-local-ethnode()'s arguemtns : %s" jong-run-local-ethnode-args)
+  )
 
 (defun jong-run-local-ethnode ()
   (interactive)
