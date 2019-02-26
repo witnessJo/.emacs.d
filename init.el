@@ -39,7 +39,7 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
-(defun my-show-eshell ()
+(defun jong-go-eshell ()
   (interactive)
   (let (cmd)
     (setq cmd (format "%s %s" "cd" default-directory))
