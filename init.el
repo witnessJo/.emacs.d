@@ -39,6 +39,7 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
+
 (defun jong-go-eshell ()
   (interactive)
   (let (cmd)
@@ -74,6 +75,7 @@
   (forward-line -1)
   (indent-according-to-mode))
 
+
 (defun jong-open-line-below ()
   "Insert a newline below the current line and put point at beginning."
   (interactive)
@@ -81,7 +83,8 @@
     (end-of-line))
   (newline-and-indent))
 
-(defun my-get-selection-length ()
+
+(defun jong-get-selection-length ()
   "Get length of selection."
   (interactive)
   (if (use-region-p)
@@ -92,11 +95,11 @@
   )
 
 
-(defun my-show-selection-length ()
+(defun jong-show-selection-length ()
   "Show length of selection."
   (interactive)
   (let (length)
-    (setq length (my-get-selection-length))
+    (setq length (jong-get-selection-length))
     (if (equal length -1)
         (message "regions is not activated...")
       (message "length : %d" length))
@@ -104,10 +107,9 @@
   )
 
 
-(defun my-cut-line-or-region ()
+(defun jong-cut-line-or-region ()
   "Cut current line, or text selection
 When `universal-argument' is called first, cut whole buffer (respects `narrow-to-region').
-
 URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
 Version 2015-06-10"
   (interactive)
@@ -120,7 +122,7 @@ Version 2015-06-10"
              (kill-region (line-beginning-position) (line-beginning-position 2))))))
 
 
-(defun my-copy-line-or-region ()
+(defun jong-copy-line-or-region ()
   "Copy current line, or text selection.
 When called repeatedly, append copy subsequent lines.
 When `universal-argument' is called first, copy whole buffer (respects `narrow-to-region').
