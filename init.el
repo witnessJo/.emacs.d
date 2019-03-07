@@ -44,6 +44,7 @@
   (let (cmd)
     (setq cmd (format "%s %s" "cd" default-directory))
     (message cmd)
+    (call-interactively 'eshell)
     (with-current-buffer "*eshell*"
       (eshell-return-to-prompt)
       (insert cmd)
