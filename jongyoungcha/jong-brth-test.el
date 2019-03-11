@@ -1,6 +1,13 @@
 ;;; Code
 
 
+(defcustom jong-brth-node-list
+  (list "192.168.55.100"
+		"192.168.55.101"
+		"192.168.55.102"
+		"192.168.55.103"))
+
+
 
 (setq jong-brth-test-datadir (format "%s/%s" (getenv "HOME") "testdir"))
 (setq jong-brth-highlights
