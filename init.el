@@ -1000,7 +1000,6 @@ Version 2017-07-08"
   :init (setq markdown-command "multimarkdown"))
 
 
-
 (use-package google-translate
   :ensure t)
 (with-eval-after-load 'google-translate
@@ -1024,7 +1023,7 @@ Version 2017-07-08"
 (require 'jong-network)
 
 (require 'jong-ether-test)
-;; (require 'jong-brth-test)
+(require 'jong-brth-test)
 
 ;; (load-theme 'sanityinc-tomorrow-blue t)
 (load-theme 'solarized-dark t)
