@@ -172,13 +172,29 @@
   )
 
 
-(define-derived-mode jong-brth-log-mode eshell-mode "BRTH-LOG"
-  (setq font-lock-defaults '(jong-brth-highlights)))
+(defun jong-brth-all-node-attach ()
+  (interactive)
+  )
+
+
+(defun jong-brth-all-node-log ()
+  (interactive)
+  )
+
+
+(defun jong-brth-all-send-berith-to-coinbase ()
+  (interactive)
+  )
+
+
+;; (define-derived-mode jong-brth-log-mode eshell-mode "BRTH-LOG"
+;; (setq font-lock-defaults '(jong-brth-highlights)))
 
 
 (require 'shell)
 (global-set-key (kbd "C-c r b l") 'jong-brth-select-node-log)
 (global-set-key (kbd "C-c r b a") 'jong-brth-select-node-attach)
 (define-key shell-mode-map (kbd "C-c c") 'jong-brth-send-command)
+(define-key shell-mode-map (kbd "M-RET") 'nil)
 
 (provide 'jong-brth-test)
