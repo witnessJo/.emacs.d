@@ -14,31 +14,32 @@
   :type 'string)
 
 (defcustom jong-brth-node-list (list "192.168.55.100"
-				     "192.168.55.101"
-				     "192.168.55.102"
-				     "192.168.55.103"
-				     "192.168.0.160"
-				     "192.168.0.161"
-				     "192.168.0.162"
-				     "192.168.0.163")
+									 "192.168.55.101"
+									 "192.168.55.102"
+									 "192.168.55.103"
+									 "192.168.0.160"
+									 "192.168.0.161"
+									 "192.168.0.162"
+									 "192.168.0.163")
   "Berith node list."
   :type 'list)
 
 
-(defcustom jong-brth-node-commands (list "eth\n"
-					 "miner.start(1)\n"
-					 "miner.stop()\n"
-					 "miner.setEtherbase(eth.accounts[0])\n"
-					 "personal.newAccount(\"berith\")\n"
-					 "personal.unlockAccount(eth.accounts[0], \"berith\", 0)\n"
-					 "personal.lockAccount(eth.accounts[0], \"berith\", 0)\n"
-					 "web3.fromWei(berith.getStakeBalance(eth.accounts[0]), \"ether\")\n"
-					 "web3.fromWei(eth.getBalance(eth.coinbase), \"ether\")\n"
-					 "web3.fromWei(berith.getRewardBalance(eth.coinbase), \"ether\")\n"
-					 "berith.stake({from:eth.coinbase, value:1000000000000000000, staking:true})\n"
-					 "berith.stopStaking(eth.coinbase)\n"
-					 "eth.sendTransaction({from:eth.accounts[0], to:\"0x496732e14c615792dd9dc09404387938e3a8a407\", value:200000000000000000000})"
-					 "admin.addPeer(\"\")")
+(defcustom jong-brth-node-commands
+  (list "eth"
+		"miner.start(1)"
+		"miner.stop()"
+		"miner.setEtherbase(eth.accounts[0])"
+		"personal.newAccount(\"berith\")"
+		"personal.unlockAccount(eth.accounts[0], \"berith\", 0)"
+		"personal.lockAccount(eth.accounts[0], \"berith\", 0)"
+		"web3.fromWei(berith.getStakeBalance(eth.accounts[0]), \"ether\")"
+		"web3.fromWei(eth.getBalance(eth.coinbase), \"ether\")"
+		"web3.fromWei(berith.getRewardBalance(eth.coinbase), \"ether\")"
+		"berith.stake({from:eth.coinbase, value:1000000000000000000, staking:true})"
+		"berith.stopStaking(eth.coinbase)"
+		"eth.sendTransaction({from:eth.accounts[0], to:\"0x496732e14c615792dd9dc09404387938e3a8a407\", value:200000000000000000000})"
+		"admin.addPeer(\"\")")
 
   "Berith command list."
   :type 'list)
@@ -53,7 +54,7 @@
 (setq jong-brth-test-datadir (format "%s/%s" (getenv "HOME") "testdir"))
 (setq jong-brth-highlights
       '(("test\\|success\\|done\\|INFO\\|" . font-lock-function-name-face)
-	("failed\\|Failed\\|FAILED\\|warn\\|Warn\\|WARN\\|" . font-lock-warning-face)))
+		("failed\\|Failed\\|FAILED\\|warn\\|Warn\\|WARN\\|" . font-lock-warning-face)))
 
 
 (define-derived-mode jong-brth-attach-mode eshell-mode "BRTH-ATTCH"
@@ -61,9 +62,10 @@
 
 
 (defun jong-brth-exec-command (cmd)
-  "just execution of berith command."
+  "Just execution of berith command, 'cmd' is command."
   (goto-char (point-max))
   (insert (format "%s" cmd))
+  (comint-send-input)
   )
 
 (defun jong-brth-get-log-buffer-name (node-host)
@@ -72,28 +74,29 @@
 (defun jong-brth-show-node-log (node-host)
   "A."
   (let ((node-host-buffer-name (jong-brth-get-log-buffer-name node-host))
-	(node-host-buffer))
+		(node-host-buffer))
     (if (setq node-host-buffer (get-buffer node-host-buffer-name))
-	(if (get-buffer-process node-host-buffer)
-	    (progn
-	      (switch-to-buffer node-host-buffer)
-	      (goto-char (point-min))
-	      (goto-char (point-max)))
-	  (with-current-buffer (get-buffer-create node-host-buffer-name)
-	    (setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
-	    (ignore-errors (async-shell-command "tail -f ./geth.log" (current-buffer) (current-buffer)))
-	    (other-window 1)
-	    (sleep-for 1)
-	    (goto-char (point-min))
-	    (goto-char (point-max))
-	    ))
+		(if (get-buffer-process node-host-buffer)
+			(progn
+			  (switch-to-buffer node-host-buffer)
+			  (goto-char (point-min))
+			  (goto-char (point-max)))
+		  (with-current-buffer (get-buffer-create node-host-buffer-name)
+			(setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
+			(ignore-errors (async-shell-command "tail -f ./geth.log" (current-buffer) (current-buffer)))
+			(other-window 1)
+			(sleep-for 1)
+			(goto-char (point-min))
+			(goto-char (point-max))
+			))
       (with-current-buffer (get-buffer-create node-host-buffer-name)
-	(setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
-	(ignore-errors (async-shell-command "tail -f ./geth.log" (current-buffer) (current-buffer)))
-	(other-window 1)
-	(sleep-for 1)
-	(goto-char (point-min))
-	(goto-char (point-max)))
+		(setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
+		(ignore-errors (async-shell-command "tail -f ./geth.log" (current-buffer) (current-buffer)))
+		(other-window 1)
+		
+		(sleep-for 1)
+		(goto-char (point-min))
+		(goto-char (point-max)))
       ))
   )
 
@@ -101,11 +104,11 @@
   (interactive)
   (let ((selected-node nil))
     (setq selected-node  (helm :sources (helm-build-sync-source "Berith nodes for log."
-					  :candidates jong-brth-node-list
-					  :fuzzy-match t
-					  :action (lambda (node)
-						    node))
-			       :buffer "*jong-berith-nodes-log*"))
+										  :candidates jong-brth-node-list
+										  :fuzzy-match t
+										  :action (lambda (node)
+													node))
+							   :buffer "*jong-berith-nodes-log*"))
     (when selected-node (jong-brth-show-node-log selected-node)))
   )
 
@@ -116,29 +119,29 @@
 (defun jong-brth-show-node-attach (node-host)
   "A."
   (let ((node-host-buffer-name (jong-brth-get-attach-buffer-name node-host))
-	(node-host-buffer))
+		(node-host-buffer))
     (if (setq node-host-buffer (get-buffer node-host-buffer-name))
-	(if (get-buffer-process node-host-buffer)
-	    (progn
-	      (switch-to-buffer node-host-buffer)
-	      (goto-char (point-min))
-	      (goto-char (point-max)))
-	  (with-current-buffer (get-buffer-create node-host-buffer-name)
-	    (setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
-	    (ignore-errors (shell (current-buffer)))
-	    (jong-brth-exec-command "source ./.bash_profile\n")
-	    (jong-brth-exec-command "brth-attach\n")
-	    (goto-char (point-min))
-	    (goto-char (point-max))
-	    ))
+		(if (get-buffer-process node-host-buffer)
+			(progn
+			  (switch-to-buffer node-host-buffer)
+			  (goto-char (point-min))
+			  (goto-char (point-max)))
+		  (with-current-buffer (get-buffer-create node-host-buffer-name)
+			(setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
+			(ignore-errors (shell (current-buffer)))
+			(jong-brth-exec-command "source ./.bash_profile\n")
+			(jong-brth-exec-command "brth-attach\n")
+			(goto-char (point-min))
+			(goto-char (point-max))
+			))
       (with-current-buffer (get-buffer-create node-host-buffer-name)
-	(setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
-	(ignore-errors (shell (current-buffer)))
-	(jong-brth-exec-command "source ./.bash_profile\n")
-	(jong-brth-exec-command "brth-attach\n")
-	(goto-char (point-min))
-	(goto-char (point-max))
-	)
+		(setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
+		(ignore-errors (shell (current-buffer)))
+		(jong-brth-exec-command "source ./.bash_profile\n")
+		(jong-brth-exec-command "brth-attach\n")
+		(goto-char (point-min))
+		(goto-char (point-max))
+		)
       ))
   )
 
@@ -147,11 +150,11 @@
   (interactive)
   (let ((brth-command nil))
     (setq brth-command  (helm :sources (helm-build-sync-source "Berith Commands."
-					 :candidates jong-brth-node-commands
-					 :fuzzy-match t
-					 :action (lambda (node)
-						   node))
-			      :buffer "*Berith Commands*"))
+										 :candidates jong-brth-node-commands
+										 :fuzzy-match t
+										 :action (lambda (node)
+												   node))
+							  :buffer "*Berith Commands*"))
     
     (jong-brth-exec-command brth-command))
   )
@@ -162,11 +165,11 @@
   (interactive)
   (let ((selected-node nil))
     (setq selected-node (helm :sources (helm-build-sync-source "Berith nodes for attach."
-					 :candidates jong-brth-node-list
-					 :fuzzy-match t
-					 :action (lambda (node)
-						   node))
-			      :buffer "*jong-berith-nodes-attach*"))
+										 :candidates jong-brth-node-list
+										 :fuzzy-match t
+										 :action (lambda (node)
+												   node))
+							  :buffer "*jong-berith-nodes-attach*"))
     (when selected-node (jong-brth-show-node-attach selected-node))
     )
   )
@@ -174,11 +177,17 @@
 
 (defun jong-brth-all-node-attach ()
   (interactive)
+  (let ((value nil))
+	(dolist (elem jong-brth-node-list)
+	  (jong-brth-show-node-attach elem)))
   )
 
 
 (defun jong-brth-all-node-log ()
   (interactive)
+  (let ((value nil))
+	(dolist (elem jong-brth-node-list)
+	  (jong-brth-show-node-log elem)))
   )
 
 
