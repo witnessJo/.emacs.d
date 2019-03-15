@@ -190,14 +190,34 @@
 	  (jong-brth-show-node-log elem)))
   )
 
-
+;; (setq test-list '())
 (defun jong-brth-all-send-berith-to-coinbase ()
   (interactive)
+  (let ((coinbases (list))
+		(target-buffers (list))
+		(start-pos)
+		(end-pos))
+	(dolist (elem (buffer-list) coinbases)
+	  (when (string-match "^*brth-node-attach.*" (buffer-name elem))
+		(setq target-buffers (cons elem target-buffers)))
+	  )
+	(dolist (target-buffer target-buffers)
+	  (with-current-buffer target-buffer
+		(jong-brth-exec-command "eth.coinbase")
+		(sleep-for 1)
+		;; (message "%s" (point))
+		(forward-line -1)
+		(beginning-of-line)
+		(setq start-pos (point))
+		(end-of-line)
+		(setq end-pos (point))
+		(setq coinbases (cons (substring (buffer-string) (1- start-pos) end-pos) coinbases)))
+	  )
+	(dolist (coinbase coinbases)
+	  (jong-brth-exec-command (format "eth.sendTransaction({from:eth.accounts[0], to:%s, value:200000000000000000000})\n" coinbase))
+	  )
+	)
   )
-
-
-;; (define-derived-mode jong-brth-log-mode eshell-mode "BRTH-LOG"
-;; (setq font-lock-defaults '(jong-brth-highlights)))
 
 
 (require 'shell)
