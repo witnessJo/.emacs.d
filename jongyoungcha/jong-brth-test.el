@@ -19,8 +19,7 @@
 									 "192.168.55.103"
 									 "192.168.0.160"
 									 "192.168.0.161"
-									 "192.168.0.162"
-									 "192.168.0.163")
+									 "192.168.0.162")
   "Berith node list."
   :type 'list)
 
@@ -40,7 +39,6 @@
 		"berith.stopStaking(eth.coinbase)"
 		"eth.sendTransaction({from:eth.accounts[0], to:\"0x496732e14c615792dd9dc09404387938e3a8a407\", value:200000000000000000000})"
 		"admin.addPeer(\"\")")
-
   "Berith command list."
   :type 'list)
 
@@ -189,6 +187,55 @@
 	(dolist (elem jong-brth-node-list)
 	  (jong-brth-show-node-log elem)))
   )
+
+
+(defun jong-brth-get-attach-buffers ()
+  (let ((target-buffers))
+	(dolist (elem (buffer-list) coinbases)
+	  (when (string-match "^*brth-node-attach.*" (buffer-name elem))
+		(setq target-buffers (cons elem target-buffers))))
+	target-buffers
+	)
+  )
+
+(defun jong-brth-get-node-coinbases ()
+  (let ((coinbases (list))
+		(target-buffers))
+	(setq target-buffers (jong-brth-get-attach-buffers))
+	(dolist (target-buffer target-buffers)
+	  (with-current-buffer target-buffer
+		(jong-brth-exec-command "eth.coinbase")
+		(sleep-for 1)
+		;; (message "%s" (point))
+		(forward-line -1)
+		(beginning-of-line)
+		(setq start-pos (point))
+		(end-of-line)
+		(setq end-pos (point))
+		(setq coinbases (cons (substring (buffer-string) (1- start-pos) end-pos) coinbases)))
+	  )
+	coinbases
+	)
+  )
+
+
+(defun jong-brth-add-peers ()
+  (interactive)
+  (let ((buffers (jong-brth-get-attach-buffers))
+		(enode nil)
+		(node-host))
+	
+	;; Get enode information.
+	
+	;; Send addPeer() commands to other nodes.
+	)
+  )
+
+;; (defun brth-test-function ()
+;; (interactive)
+;; (print (jong-brth-get-node-coinbases))
+;; )
+
 
 ;; (setq test-list '())
 (defun jong-brth-all-send-berith-to-coinbase ()
