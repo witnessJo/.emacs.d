@@ -323,7 +323,6 @@
   )
 
 
-
 (require 'shell)
 (global-set-key (kbd "C-c r b l") 'jong-brth-select-node-log)
 (global-set-key (kbd "C-c r b a") 'jong-brth-select-node-attach)
@@ -331,5 +330,3 @@
 (define-key shell-mode-map (kbd "M-RET") 'nil)
 
 (provide 'jong-brth-test)
-admin.addPeer("enode://dd30d3029feb32e40a65db6a00d5f01d8fa6ff482fb53281975a52c851e360be1cd97a4cb16129270664432b0868480251a815d16f4157a82d6e14e711dcf4e9@192.168.0.161:30303?discport=9691")
-admin.addPeer("enode://ac8e52a6c5097df960d4ec8bb0d1227f2eabca2f51794c42b50dbd18c0c40420d92f59fbeb102ff15e8ac20c2b462fa43750d7e2ab94298184aa27bfd8b1098c@192.168.0.160:30303?discport=9709")admin.addPeer("enode://692c30f9089b76a65abcaef11fb24c23cafc2115c5fc0bc3fc66e57202ab8635bea0ecf5af85abf4933e46f2fad5bdd7aa01a957ce8c40bbebaf133c44beb5bf@192.168.0.160:30303?discport=9709")
