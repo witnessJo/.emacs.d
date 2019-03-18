@@ -191,7 +191,7 @@
 
 (defun jong-brth-get-attach-buffers ()
   (let ((target-buffers))
-	(dolist (elem (buffer-list) coinbases)
+	(dolist (elem (buffer-list))
 	  (when (string-match "^*brth-node-attach.*" (buffer-name elem))
 		(setq target-buffers (cons elem target-buffers))))
 	target-buffers
@@ -219,25 +219,7 @@
   )
 
 
-(defun jong-brth-add-peers ()
-  (interactive)
-  (let ((buffers (jong-brth-get-attach-buffers))
-		(enode nil)
-		(node-host))
-	
-	;; Get enode information.
-	
-	;; Send addPeer() commands to other nodes.
-	)
-  )
 
-;; (defun brth-test-function ()
-;; (interactive)
-;; (print (jong-brth-get-node-coinbases))
-;; )
-
-
-;; (setq test-list '())
 (defun jong-brth-all-send-berith-to-coinbase ()
   (interactive)
   (let ((coinbases (list))
@@ -258,6 +240,7 @@
 		(setq start-pos (point))
 		(end-of-line)
 		(setq end-pos (point))
+		
 		(setq coinbases (cons (substring (buffer-string) (1- start-pos) end-pos) coinbases)))
 	  )
 	(dolist (coinbase coinbases)
@@ -265,6 +248,64 @@
 	  )
 	)
   )
+
+
+(defun jong-brth-add-peers ()
+  "Run add peer to other nodes."
+  (interactive)
+  (let ((start-pos)
+		(end-pos)
+		(host-buffer-name)
+		(buffer-host)
+		(enode-full)
+		(enode-prefix)
+		(enode-host)
+		(enode-postfix)
+		(enode-completed)
+		(buffer-list)
+		(command-to-send))
+	
+	(with-current-buffer (current-buffer)
+	  ;; Get enode information.
+	  
+	  (jong-brth-exec-command "admin.nodeInfo.enode")
+	  (sleep-for 1)
+	  (goto-char (point-max))
+	  (forward-line -1)
+	  (beginning-of-line)
+	  (setq start-pos (1- (point)))
+	  (end-of-line)
+	  (setq end-pos (point))
+	  (setq enode-full (substring (buffer-string) start-pos end-pos))
+	  (message "%s" enode-full)
+
+	  ;; Get buffer origin host
+	  (setq host-buffer-name (buffer-name))
+	  (if (string-match "\\([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\\)" host-buffer-name)
+		  (setq buffer-host (match-string 1 host-buffer-name))))
+	
+	(if (string-match "^\\(.*@\\)\\(.*\\)\\(\:.*\\)" enode-full)
+		(progn
+		  (setq enode-prefix (match-string 1 enode-full))
+		  (setq enode-host (match-string 2 enode-full))
+		  (setq enode-postfix (match-string 3 enode-full))
+		  (print enode-prefix)
+		  (print enode-host)
+		  (print enode-postfix)))
+	(setq enode-completed (format "%s%s%s" enode-prefix buffer-host enode-postfix))
+	(message "%s" enode-completed)
+	(setq command-to-send (format "admin.addPeer(%s)" enode-completed))
+	(message "%s" command-to-send)
+	
+	(setq buffer-list (jong-brth-get-attach-buffers))
+	(dolist (buffer (buffer-list))
+	  (with-current-buffer buffer
+		(goto-char (point-max))
+		(ignore-errors (jong-brth-exec-command command-to-send)))
+	  )
+	)
+  )
+
 
 
 (require 'shell)
