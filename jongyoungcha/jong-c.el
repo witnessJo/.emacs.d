@@ -2,10 +2,58 @@
 ;;; c develope environments ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defvar jong-c-output-buffer "*jong-c-output*" "Jong c language output buffer.")
+(add-to-list #'jong-kill-buffer-patterns jong-c-output-buffer)
 
-(defun jyc-copy-init-cpp-project()
+(defcustom jong-c-bin-name nil
+  "Jong c language run command."
+  :type 'string)
+
+
+(defun jong-c-find-cmake-build (&optional target-dir)
   (interactive)
-  (dired-copy-file-recursive "~/.emacs.d/jongyoungcha/init_cpp_project/" default-directory nil nil nil 'always))
+  (let ((parent-dir))
+    (when (string= target-dir nil)
+      (setq target-dir default-directory))
+    (if (file-exists-p (format "%s/CMakeLists.txt" target-dir ))
+        (with-current-buffer (get-buffer-create jong-c-output-buffer)
+          (shell-command (format "cd \"%s\"; cmake .; make" target-dir)
+                         (current-buffer) (current-buffer))
+          (display-buffer (current-buffer)))
+      (unless (string= "/" target-dir)
+        (setq parent-dir (file-name-directory (directory-file-name target-dir)))
+        (jong-c-find-cmake-build parent-dir)
+        ))
+    )
+  )
+
+
+(defun jong-c-set-bin-name ()
+  (interactive)
+  (setq jong-c-bin-name (read-string "Set binary name to run : " ))
+  (message "Next jong-c-run-project()'s command is \"%s\"" jong-c-bin-name))
+
+
+(defun jong-c-run-project (&optional target-dir)
+  (interactive)
+  (let ((parent-dir))
+    (when (string= jong-c-bin-name nil)
+      (progn
+        (message "Not setted jong-c-bin-name variable : %s" jong-c-bin-name)
+        nil))
+    (when (string= target-dir nil)
+      (setq target-dir default-directory))
+    (if (file-exists-p (format "%s/%s" target-dir jong-c-bin-name))
+        (with-current-buffer (get-buffer-create jong-c-output-buffer)
+          (shell-command (format "cd \"%s\"; ./%s" target-dir jong-c-bin-name)
+                         (current-buffer) (current-buffer))
+          (display-buffer (current-buffer)))
+      (unless (string= "/" target-dir)
+        (setq parent-dir (file-name-directory (directory-file-name target-dir)))
+        (jong-c-run-project parent-dir))
+      )
+    )
+  )
 
 
 (defun jong-c-insert-predfine ()
@@ -51,8 +99,7 @@
               (delete-window-on (get-buffer "*compilation*"))
               (kill-buffer "*compilation*")))
         (compile "cmake . && ls ./Makefile && make -k"))
-    (message "%s" "Couldnt find CMakeList.txt"))
-  )
+    (message "%s" "Couldnt find CMakeList.txt")))
 
 
 (use-package smart-compile
@@ -72,7 +119,6 @@
   (rtags-enable-standard-keybindings)
   (add-hook 'rtags-jump-hook (lambda ()
                                (push-mark (point))))
-
   
   (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
@@ -95,20 +141,6 @@
   (lambda()
     (cmake-ide-setup)))
 
-(add-hook 'c-mode-common-hook
-          (lambda()
-            (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
-            (local-set-key (kbd "C-c c c") 'compile)
-            (local-set-key (kbd "C-c c m") 'jo-compile-cmake)
-            (local-set-key (kbd "C-g") 'kill-temporary-buffers)
-            (local-set-key (kbd "C-S-g") 'close-compilation-window)
-            (local-set-key (kbd "C-c f f") 'ff-find-other-file)
-            (defun enable-autoreload-for-dir-locals ()
-              (when (and (buffer-file-name)
-                         (equal dir-locals-file
-                                (file-name-nondirectory (buffer-file-name))))
-                (add-hook (make-variable-buffer-local 'after-save-hook)
-                          'my-reload-dir-locals-for-all-buffer-in-this-directory)))))
 
 ;; Set linux indent style
 (defvar c-default-style)
@@ -156,8 +188,22 @@
   :ensure t)
 (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
 
+(add-hook 'c-mode-common-hook
+          (lambda()
+            (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
+            (local-set-key (kbd "C-c c c") 'jong-c-find-cmake-build)
+            (local-set-key (kbd "C-c r s") 'jong-c-set-bin-name)
+            (local-set-key (kbd "C-c r r") 'jong-c-run-project)
+            (local-set-key (kbd "C-c c m") 'jo-compile-cmake)
+            (local-set-key (kbd "C-S-g") 'close-compilation-window)
+            (local-set-key (kbd "C-c f f") 'ff-find-other-file)))
 
-
+;; (defun enable-autoreload-for-dir-locals ()
+;; (when (and (buffer-file-name)
+;; (equal dir-locals-file
+;; (file-name-nondirectory (buffer-file-name))))
+;; (add-hook (make-variable-buffer-local 'after-save-hook)
+;; 'my-reload-dir-locals-for-all-buffer-in-this-directory)))
 
 
 
