@@ -1031,6 +1031,11 @@ Version 2017-07-08"
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Alias coding system for windows ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-coding-system-alias 'cp65001 'utf-8)
+
 (when (member "Courier" (font-family-list))
   (set-face-attribute 'default nil :font "Courier-12")
   (setq-default line-spacing 2))
