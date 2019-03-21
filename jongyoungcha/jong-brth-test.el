@@ -309,7 +309,7 @@
 	(message "%s" command-to-send)
 	
 	(setq buffer-list (jong-brth-get-attach-buffers))
-	(dolist (buffer (buffer-list))
+	(dolist (buffer buffer-list)
 	  (with-current-buffer buffer
 		(goto-char (point-max))
 		(ignore-errors (jong-brth-exec-command command-to-send)))
@@ -318,8 +318,31 @@
   )
 
 
+
 (defun jong-brth-set-all-things ()
   (interactive)
+  )
+
+
+(defun jong-brth-send-transactions ()
+  (interactive)
+  (let ((period-miliseconds)
+		(target-address)
+		(times)
+		(command))
+	;; (setq target-address (read-string "The address to send :" ))
+	;; (setq period-miliseconds (string-to-number (read-string "The perios between transactions (milliseconds) : ")))
+	;; (setq times (string-to-number (read-string "How many times : ")))
+	(setq target-address "0xd3d78151950c063fedc6c9b8083e09502205c079")
+	(setq period-miliseconds 10)
+	(setq times 1000)
+	
+	(dotimes (i times)
+	  (setq command (format "eth.sendTransaction({from:eth.accounts[0], to:\"%s\", value:1000000000000000000})" target-address))
+	  (sleep-for 0 period-miliseconds)
+	  (jong-brth-exec-command command)
+	  )
+	)
   )
 
 
