@@ -5,7 +5,7 @@
 ;; (list (regexp-quote "/ssh:user@randomhost.you.domain:")
 ;; "remote-shell" "/bin/bash"))
 
-(defcustom jong-brth-user "root"
+(defcustom jong-brth-user "berith"
   "ID for connection."
   :type 'string)
 
@@ -20,8 +20,9 @@
 									 "192.168.0.160"
 									 "192.168.0.161"
 									 "192.168.0.162"
-									 "34.237.211.223"
-									 "3.210.9.228")
+									 "34.237.211.223" ;;AWS
+									 "3.210.9.228"    ;;AWS
+									 )
   "Berith node list."
   :type 'list)
 
