@@ -16,7 +16,7 @@
 ;; (setq enode-string "enode://f0fc178cb69163c3193ec19f134ec9f1d8459810fcfe90aedcd279e088f30ec8c1cbb2d62e6c7089679ea383001a355c7104e83b134f17d8318c08445a568a0a@192.168.0.160:30303?discport=9302")
 
 ;; (when (setq matched (string-match "^.*@\\(.*\\)\?" local))
-;; (replace-regexp-in-string "^.*@\\(.*\\)\?" )
+;; (replcae-regexp-in-string "^.*@\\(.*\\)\?" )
 ;; (setq matched (string-match "^\\(.*@\\)\\(.*\\)\\(\?.*\\)"))
 ;; (regexp-builder)
 ;; (if (string-match "^\\(.*@\\)\\(.*\\)\\(\:.*\\)" enode-string)
