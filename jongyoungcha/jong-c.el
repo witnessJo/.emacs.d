@@ -6,20 +6,17 @@
 (add-to-list #'jong-kill-buffer-patterns jong-c-output-buffer)
 
 
-(defcustom jong-c-bin-name nil
-  "Jong c language run command."
-  :type 'string)
+(defvar jong-c-bin-name nil)
+  ;; "Jong c language run command."
+  ;; :type 'string)
 
+(defvar jong-c-gud-buffer-name nil)
+  ;; "Jong c gud-buffer name."
+  ;; :type 'string)
 
-(defcustom jong-c-gud-buffer-name nil
-  "Jong c gud-buffer name."
-  :type 'string)
-
-
-(defcustom jong-c-gud-args nil
-  "Jong c debug-mode arguments."
-  :type 'string)
-
+(defvar jong-c-gud-args nil)
+  ;; "Jong c debug-mode arguments."
+;; :type 'string)
 
 (define-derived-mode jong-c-gud-mode  gud-mode "jong-gud-mode"
   (setq font-lock-defaults '(modern-c++-font-lock-keywords)))
@@ -29,7 +26,7 @@
   (interactive)
   (call-interactively 'gud-gdb)
   (jong-c-gud-mode))
-
+  
 
 (defun jong-c-gud-find-buffer ()
   (interactive)
