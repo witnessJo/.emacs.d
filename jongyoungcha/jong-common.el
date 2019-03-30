@@ -28,12 +28,12 @@
 (defun jong-common-send-command-to-buffer (cmd &optional buffer)
   "Send string to the sub process"
   (let ((target-buffer nil))
-	(if (equal buffer nil)
-		(setq target-buffer buffer)
-	  (setq target-buffer (current-buffer)))
-	(with-current-buffer target-buffer
-	  (comint-send-input cmd))
-	)
+	 (if (equal buffer nil)
+		  (setq target-buffer buffer)
+	   (setq target-buffer (current-buffer)))
+	 (with-current-buffer target-buffer
+	   (comint-send-input cmd))
+	 )
   )
 
 
@@ -44,8 +44,8 @@
   (let ((path-to-find)
         (parent-dir))
     
-	(when (equal DIRECTORY "/")
-	  (error (format "Coudlnt find the target file (\"%s\") (Last directory was \"/\")" FILENAME)))
+	 (when (equal DIRECTORY "/")
+	   (error (format "Coudlnt find the target file (\"%s\") (Last directory was \"/\")" FILENAME)))
     
     (if (equal DIRECTORY nil)
         (setq DIRECTORY default-directory))
@@ -64,12 +64,12 @@
 (defun jong-common-walkup-and-find-dot-dir-locals-el()
   (interactive)
   (let ((file-name ".dir-locals.el")
-		(file-path))
-	(setq file-path (jong-common-walkup-and-find-file file-name))
-	(if file-path
-		(find-file file-path)
-	  (message "Couldnt find the \".dir-locals.el\""))
-	)
+		  (file-path))
+	 (setq file-path (jong-common-walkup-and-find-file file-name))
+	 (if file-path
+		  (find-file file-path)
+	   (message "Couldnt find the \".dir-locals.el\""))
+	 )
   )
 
 
@@ -99,24 +99,24 @@
     
     (setq target-path (format "%s%s" target-directory ".dir-locals.el"))
     (unless (file-exists-p target-path)
-	  (setq template
+	   (setq template
             (concat "(\n"
                     (concat
                      "(nil . (\n")
                     (format "(projectile-project-root . \"%s\")\n" target-directory)
                     (format "(jong-common-build-command . \"none\")\n")
-					(format "(jong-common-compile-default-dir . \"%s\")\n" target-directory)
+					     (format "(jong-common-compile-default-dir . \"%s\")\n" target-directory)
                     (format "(jong-common-compile-command . \"none\")\n")
-					(format "(jong-common-run-default-dir . \"%s\")\n" target-directory)
+					     (format "(jong-common-run-default-dir . \"%s\")\n" target-directory)
                     (format "(jong-common-run-command . \"none\")\n")
-					(format "(jong-common-debug-default-dir . \"%s\")\n" target-directory)
+					     (format "(jong-common-debug-default-dir . \"%s\")\n" target-directory)
                     (format "(jong-common-debug-command . \"none\")\n")
                     "))\n"
-					")\n"
-					))
-	  (write-region template nil target-path))
-	;; (print template)
-	(find-file target-path))
+					     ")\n"
+					     ))
+	   (write-region template nil target-path))
+	 ;; (print template)
+	 (find-file target-path))
   )
 
 
@@ -127,7 +127,7 @@
     
     (setq target-directory (jong-common-walkup-and-find-projectile-project-root))
     (unless (file-exists-p target-directory)
-	  (error "Couldnt find \".projectile\" file"))
+	   (error "Couldnt find \".projectile\" file"))
     (setq target-path (format "%s%s" target-directory ".dir-locals.el"))
     (find-file target-path)
     )
@@ -135,43 +135,39 @@
 
 (defun jong-common-build-project ()
   (interactive)
-  (let ((base-directory)
-		(cmd))
-    ;; (async-start
-    ;; (lambda ()
-    ;; (message "Start build")
-    ;; (message "I'll wait 3 seconds..")
-	;; 222)
-    ;; (lambda (result)
-    ;; (message "It's done...222: %s" result)
-    ;; )
-    ;; )
-	(setq base-directory (format "%s/%s"
-								 projectile-project-root
-								 (directory-file-name (file-name-directory ))
-								 ))
-
+  (let ((cmd))
     (with-current-buffer (get-buffer-create jong-common-output-buffer)
-	  (run-s)
-	  (display-buffer (current-buffer))
-	  (insert "Start build")
-	  (insert "I'll wait 3 seconds..")
-	  ;; (async-start
-	  ;;  (lambda ()
-	  ;; 	 (message "Start build")
-	  ;; 	 (message "I'll wait 3 seconds..")
-	  ;; 	 222
-	  ;; 	 )
-	  ;;  (lambda (result)
-	  ;; 	 (insert "It's done...%s" result)
-	  ;; 	 )
-	  ;;  )
-	  )
+      (if (and (boundp 'projectile-project-root) (boundp 'jong-common-build-command))
+          (progn
+            (jong-reload-dir-locals-for-current-buffer)
+            (setq cmd (format "%s/%s" projectile-project-root jong-common-build-command))
+            (insert (format "Run the command $ %s" cmd))
+            (display-buffer (current-buffer))
+            (setq default-directory projectile-project-root)
+            (ignore-errors (async-shell-command jong-common-build-command (current-buffer) (current-buffer)))
+            )
+        (message "\"projectile-project-root\" and \"jong-common-build-command were not binded."))
+      )
     )
   )
 
 (defun jong-common-compile-project ()
-  (interactive))
+  (interactive)
+  (let ((cmd))
+    (with-current-buffer (get-buffer-create jong-common-output-buffer)
+      (if (and (boundp 'jong-common-compile-default-dir) (boundp 'jong-common-compile-command))
+          (progn
+            (jong-reload-dir-locals-for-current-buffer)
+            (setq default-directory jong-common-compile-default-dir)
+            (setq cmd (format "%s/%s" jong-common-compile-default-dir jong-common-compile-command))
+            (insert (format "Run the command $ %s" cmd))
+            (display-buffer (current-buffer))
+            (ignore-errors (async-shell-command jong-common-build-command (current-buffer) (current-buffer)))
+            )
+        (message "\"projectile-project-root\" and \"jong-common-build-command were not binded."))
+      )
+    )
+  )
 
 (defun jong-common-run-project ()
   (interactive))
@@ -183,7 +179,11 @@
   (interactive)
   )
 
-;; (global-set-key)
+(global-set-key (kbd "C-c c m") 'jong-common-make-dot-dir-locals-el)
+(global-set-key (kbd "C-c c v") 'jong-common-visit-dot-dir-locals-el)
+(global-set-key (kbd "C-c c b") 'jong-common-build-project)
+(global-set-key (kbd "C-c c c") 'jong-common-compile-project)
+(global-set-key (kbd "C-c c d") 'jong-common-debug-project)
 
 
 (provide 'jong-common)

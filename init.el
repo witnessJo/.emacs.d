@@ -682,24 +682,24 @@ Version 2017-07-08"
 								  (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 
-(defun my-reload-dir-locals-for-current-buffer ()
-  vv  "reload dir locals for the current buffer"
+(defun jong-reload-dir-locals-for-current-buffer ()
+  "reload dir locals for the current buffer"
   (interactive)
   (let ((enable-local-variables :all))
     (hack-dir-local-variables-non-file-buffer)))
 
-(defun my-reload-dir-locals-for-all-buffer-in-this-directory ()
+(defun jong-reload-dir-locals-for-all-buffer-in-this-directory ()
   "for every buffer iwth the same `default-directory` as the current buffer's, reload dir-locals."
   (interactive)
   (let ((dir default-directory))
     (dolist (buffer (buffer-list))
 	  (with-current-buffer buffer
 		(when (equal default-directory dir))
-		(my-reload-dir-locals-for-current-buffer)))))
+		(jong-reload-dir-locals-for-current-buffer)))))
 
 
 ;; default setting.
-(defun toggle-transparency ()
+(defun toggle-transparency ()n
   "Transparency frame."
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
@@ -1122,3 +1122,17 @@ Version 2017-07-08"
 ;;   (set-face-attribute 'default nil :family "monaco"))
 
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   (quote
+	((projectile-project-root . "/home/jongyoungcha/projects/hdac/")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
