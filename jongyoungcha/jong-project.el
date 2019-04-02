@@ -187,10 +187,6 @@
   )
 
 
-(defun jong-test ()
-  (interactive)
-  )
-
 (global-set-key (kbd "C-c c m") 'jong-project-make-dot-dir-locals-el)
 (global-set-key (kbd "C-c c v") 'jong-project-visit-dot-dir-locals-el)
 (global-set-key (kbd "C-c c b") 'jong-project-build-project)
