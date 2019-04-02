@@ -1016,7 +1016,7 @@ Version 2017-07-08"
   (setq google-translate-default-target-language "ko")
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
-
+(require 'jong-common)
 (require 'jong-project)
 (require 'jong-tramp)
 (require 'jong-elisp)

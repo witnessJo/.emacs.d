@@ -1,0 +1,6 @@
+;;; Code
+
+
+
+(provide 'jong-common)
+
