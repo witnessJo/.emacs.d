@@ -1017,7 +1017,7 @@ Version 2017-07-08"
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
 
-(require 'jong-common)
+(require 'jong-project)
 (require 'jong-tramp)
 (require 'jong-elisp)
 (require 'jong-term)
