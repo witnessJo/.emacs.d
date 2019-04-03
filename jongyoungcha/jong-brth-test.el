@@ -22,7 +22,7 @@
 									          "192.168.0.162"
 									          "34.237.211.223" ;;AWS
 									          "3.210.9.228"    ;;AWS
-									          )
+											  )
   "Berith node list."
   :type 'list)
 
@@ -38,7 +38,7 @@
 		  "web3.fromWei(berith.getStakeBalance(eth.accounts[0]), \"ether\")"
 		  "web3.fromWei(eth.getBalance(eth.coinbase), \"ether\")"
 		  "web3.fromWei(berith.getRewardBalance(eth.coinbase), \"ether\")"
-		  "berith.stake({from:eth.coinbase, value:1000000000000000000, staking:true})"
+		  "berith.stake({from:eth.coinbase, value:1000000000000000000})"
 		  "berith.stopStaking(eth.coinbase)"
 		  "eth.sendTransaction({from:eth.accounts[0], to:\"0x496732e14c615792dd9dc09404387938e3a8a407\", value:200000000000000000000})"
 		  "admin.addPeer(\"\")")
@@ -131,12 +131,6 @@
 			   (setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
 			   (ignore-errors (shell (current-buffer)))
 			   (jong-brth-exec-command "source ./.bash_profile\n")
-			   ;; (jong-brth-exec-command "brth-kill")
-			   ;; (sleep-for 1)
-			   ;; (jong-brth-exec-command "brth-init-poa")
-			   ;; (sleep-for 1)
-			   ;; (jong-brth-exec-command "brth-run")
-			   ;; (sleep-for 1)
 			   (jong-brth-exec-command "brth-attach\n")
 			   (goto-char (point-min))
 			   (goto-char (point-max))
@@ -145,12 +139,6 @@
 		  (setq default-directory (format "/ssh:%s@%s:" jong-brth-user node-host))
 		  (ignore-errors (shell (current-buffer)))
 		  (jong-brth-exec-command "source ./.bash_profile\n")
-		  ;; (jong-brth-exec-command "brth-kill")
-		  ;; (sleep-for 1)
-		  ;; (jong-brth-exec-command "brth-init-poa")
-		  ;; (sleep-for 1)
-		  ;; (jong-brth-exec-command "brth-run")
-		  ;; (sleep-for 1)
 		  (jong-brth-exec-command "brth-attach\n")
 		  (goto-char (point-min))
 		  (goto-char (point-max))
@@ -180,8 +168,9 @@
     (setq selected-nodes (helm :sources (helm-build-sync-source "Berith nodes for attach."
 										            :candidates jong-brth-node-list
 										            :fuzzy-match t
-										            :action (lambda (node)
-												                node))
+										            :action (lambda (nodes)
+															  (setq nodes (helm-marked-candidates))
+												              nodes))
 							          :buffer "*jong-berith-nodes-attach*"))
     (dolist (brth-node selected-nodes)
       (jong-brth-show-node-attach brth-node))
