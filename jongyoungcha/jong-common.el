@@ -16,6 +16,16 @@
   )
 
 
+(defun jong-common-process-exit-code-and-output (program &rest args)
+  "Run PROGRAM with ARGS and return the exit code and output in a list."
+  (interactive)
+  (with-temp-buffer
+	(list (apply 'call-process program nil (current-buffer) nil args)
+		  (buffer-string)))
+  )
+
+
+
 
 
 (global-set-key (kbd "C-c C-f") 'jong-common-find-file-other-window)
