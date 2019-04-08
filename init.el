@@ -692,7 +692,7 @@ Version 2017-07-08"
 
 
 ;; default setting.
-(defun toggle-transparency ()n
+(defun toggle-transparency ()
   "Transparency frame."
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
