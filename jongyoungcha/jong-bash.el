@@ -19,7 +19,7 @@
   (add-hook 'shell-dynamic-complete-functions
 			'bash-completion-dynamic-complete))
 
-n
+
 (defun jong-bash-bashdb ()
   (interactive)
   (let ((ret (car (jong-common-process-exit-code-and-output "which" "bashdb"))))
@@ -33,6 +33,9 @@ n
 	  (message "Couldnt find the bashdb binary..."))
     )
   )
+
+(defun jong-bash-send-command ()
+  (interactive))
 
 
 (provide 'jong-bash)
