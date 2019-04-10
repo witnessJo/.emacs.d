@@ -25,11 +25,26 @@
   )
 
 
-
+(defun jong-common-find-file-other-window-string (string)
+  "Run PROGRAM with ARGS and return the exit code and output in a list."
+  (interactive)
+  (let ((file-path)
+		(target-line)
+		(regex-pattern "^\\(.+\\):\\(.+\\)$"))
+	(if (and (stringp string) (string-match regex-pattern string))
+		(progn
+		  (setq file-path (match-string 1 string))
+		  (setq target-line (string-to-number (match-string 2 string)))
+		  (find-file-other-window file-path)
+		  (with-no-warnings (goto-line target-line))
+		  (other-window -1))
+	  (message "regex buildind failed..."))
+	)
+  )
 
 
 (global-set-key (kbd "C-c C-f") 'jong-common-find-file-other-window)
- 
+
 
 
 (provide 'jong-common)
