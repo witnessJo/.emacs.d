@@ -408,7 +408,7 @@ Version 2017-07-08"
     (if (> candindate-pos bword-pos)
         (progn (goto-char candindate-pos)
                (setq prev-candidate-char (string (char-after (point))))
-               (message "%s" prev-candidate-char)
+               ;; (message "%s" prev-candidate-char)
                (if (equal prev-candidate-char " ")
                    (call-interactively #'chan-backward-word)))
       (goto-char bword-pos)))
@@ -465,7 +465,8 @@ Version 2017-07-08"
 			(progn
 			  (ignore-errors (delete-region candidate-pos base-pos))
 			  (goto-char candidate-pos)
-			  (message "%s candpos : %d bword-pos %d" prev-candidate-char candidate-pos bword-pos))
+			  ;; (message "%s candpos : %d bword-pos %d" prev-candidate-char candidate-pos bword-pos)
+			  )
 		  (ignore-errors (delete-region (1- bword-pos) base-pos)))
 		))
     )
