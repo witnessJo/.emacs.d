@@ -203,8 +203,8 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package evil
-  :ensure t)
+;; (use-package evil
+;; :ensure t)
 
 (use-package yasnippet
   :ensure t)
@@ -573,8 +573,8 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-next-buffer)
-(global-set-key (kbd "M-n") 'evil-jump-forward)
-(global-set-key (kbd "M-p") 'evil-jump-backward)
+;; (global-set-key (kbd "M-n") 'evil-jump-forward)
+;; (global-set-key (kbd "M-p") 'evil-jump-backward)
 
 ;; (define-key global-map [f9] 'point-undo)
 ;; (define-key global-map [f10] 'point-redo)
@@ -1010,15 +1010,16 @@ Version 2017-07-08"
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
 
+(require 'jong-elisp)
 (require 'jong-common)
 (require 'jong-bash)
 (require 'jong-project)
 (require 'jong-tramp)
-(require 'jong-elisp)
 (require 'jong-term)
 (require 'jong-scheme)
 (require 'jong-cmake)
 (require 'jong-c)
+(require 'jong-java)
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-nodejs)
@@ -1124,7 +1125,7 @@ Version 2017-07-08"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(bash-completion pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx godoctor go-guru go-autocomplete go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime modern-cpp-font-lock helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color log4e elisp-refs elisp-slime-nav dash-functional helm-dash google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete prodigy eyebrowse helm-ag helm yasnippet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update async avy use-package)))
+	(lsp-java bash-completion pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx godoctor go-guru go-autocomplete go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime modern-cpp-font-lock helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color log4e elisp-refs elisp-slime-nav dash-functional helm-dash google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete prodigy eyebrowse helm-ag helm yasnippet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update async avy use-package)))
  '(safe-local-variable-values
    (quote
 	((projectile-project-root . "/home/jongyoungcha/projects/aleth/")
