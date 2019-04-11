@@ -9,20 +9,83 @@
 (defun jong-java-install-maven ()
   (interactive)
   (let ((maven-uri "http://mirror.navercorp.com/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz")
-		(target-file "apache-maven-3.6.0-bin.tar.gz")
-		(extracted-dir "apache-maven-3.6.0")
-		(cmd))
-	(setq cmd (concat
-			   "cd;"
-			   (format "wget %s;" maven-uri)
-			   (format "tar -xvf %s;" target-file)
-			   (format "cd %s" extracted-dir)))
-	(with-current-buffer (get-buffer-create jong-java-output-buffer-name)
-	  (display-buffer (current-buffer))
-	  (async-shell-command cmd (current-buffer) (current-buffer))
-	  )
-	)
+		  (target-file "apache-maven-3.6.0-bin.tar.gz")
+		  (extracted-dir "apache-maven-3.6.0")
+		  (cmd))
+	 (setq cmd (concat
+			      "cd;"
+			      (format "wget %s;" maven-uri)
+			      (format "tar -xvf %s;" target-file)
+			      (format "cd %s" extracted-dir)))
+	 (with-current-buffer (get-buffer-create jong-java-output-buffer-name)
+	   (display-buffer (current-buffer))
+	   (async-shell-command cmd (current-buffer) (current-buffer))
+	   )
+	 )
   )
+
+
+(defun jong-java-install-jdee-server ()
+  (interactive)
+  (let ((jdee-source-uri "https://github.com/jdee-emacs/jdee-server.git")
+		  (clone-dir "jdee-server")
+		  (cmd))
+	 (setq cmd (concat
+			      "cd;"
+			      (format "git clone %s;" jdee-source-uri)
+			      (format "cd %s;" clone-dir)
+               "mvn -Dmaven.test.skip=true package"))
+	 (with-current-buffer (get-buffer-create jong-java-output-buffer-name)
+	   (display-buffer (current-buffer))
+	   (async-shell-command cmd (current-buffer) (current-buffer))
+	   )
+	 )
+  )
+
+(use-package autodisass-java-bytecode
+  :ensure t
+  :defer t)
+
+(use-package meghanada
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'java-mode-hook
+            (lambda ()
+              (google-set-c-style)
+              (google-make-newline-indent)
+              (meghanada-mode t)
+              (smartparens-mode t)
+              (rainbow-delimiters-mode t)
+              (highlight-symbol-mode t)
+              (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+  :config
+  (use-package realgud
+    :ensure t)
+  (setq indent-tabs-mode nil)
+  ;; (setq tab-width 2)
+  ;; (setq c-basic-offset 2)
+  (setq meghanada-server-remote-debug t)
+  (setq meghanada-javac-xlint "-Xlint:all,-processing")
+  :bind
+  (:map meghanada-mode-map
+        ("C-S-t" . meghanada-switch-testcase)
+        ("M-RET" . meghanada-local-variable)
+        ("C-M-." . helm-imenu)
+        ("M-r" . meghanada-reference)
+        ("M-t" . meghanada-typeinfo)
+        ("C-z" . hydra-meghanada/body))
+  :commands
+  (meghanada-mode))
+
+
+(use-package jdee
+  :ensure t
+  :config
+  (custom-set-variables
+   '(jdee-server-dir "")))
+
+(use-package ant :ensure t)
 
 
 (use-package projectile :ensure t)
