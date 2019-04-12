@@ -42,50 +42,38 @@
 	 )
   )
 
+
+(defun jong-java-install-eclim-server ()
+  (interactive)
+  (let ((cmd))
+    (setq cmd (concat
+               "cd;"
+               (format "wget https://mirrors.tuna.tsinghua.edu.cn/eclipse/technology/epp/downloads/release/2019-03/R/eclipse-jee-2019-03-R-linux-gtk-x86_64.tar.gz;")
+               "tar -xvf eclipse-jee-2019-03-R-linux-gtk-x86_64.tar.gz;"
+               (format "wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin;")
+               "chmod 744 ./eclim_2.8.0.bin;"
+               "./eclim_2.8.0.bin;"
+               ))
+    (with-current-buffer (get-buffer-create jong-java-output-buffer-name)
+	   (display-buffer (current-buffer))
+	   (async-shell-command cmd (current-buffer) (current-buffer))
+	   )
+    )
+  )
+
 (use-package autodisass-java-bytecode
   :ensure t
   :defer t)
 
-(use-package meghanada
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'java-mode-hook
-            (lambda ()
-              (google-set-c-style)
-              (google-make-newline-indent)
-              (meghanada-mode t)
-              (smartparens-mode t)
-              (rainbow-delimiters-mode t)
-              (highlight-symbol-mode t)
-              (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
-  :config
-  (use-package realgud
-    :ensure t)
-  (setq indent-tabs-mode nil)
-  ;; (setq tab-width 2)
-  ;; (setq c-basic-offset 2)
-  (setq meghanada-server-remote-debug t)
-  (setq meghanada-javac-xlint "-Xlint:all,-processing")
-  :bind
-  (:map meghanada-mode-map
-        ("C-S-t" . meghanada-switch-testcase)
-        ("M-RET" . meghanada-local-variable)
-        ("C-M-." . helm-imenu)
-        ("M-r" . meghanada-reference)
-        ("M-t" . meghanada-typeinfo)
-        ("C-z" . hydra-meghanada/body))
-  :commands
-  (meghanada-mode))
-
-
-(use-package jdee
+(use-package eclim
   :ensure t
   :config
+  (setq eclimd-autostart t)
   (custom-set-variables
-   '(jdee-server-dir "")))
-
-(use-package ant :ensure t)
+   '(eclim-eclipse-dirs '((format "%s/eclipse" (getenv "HOME"))))
+   '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
+   )
+  )
 
 
 (use-package projectile :ensure t)
@@ -119,7 +107,8 @@
 (use-package dap-java :after (lsp-java))
 (use-package lsp-java-treemacs :after (treemacs))
 
-
+(define-key java-mode-map (kbd "C-c c r") 'eclim-run-class)
+(define-key java-mode-map (kbd "C-c c p") 'eclim-project-create)
 (define-key java-mode-map (kbd "C-c r r") 'lsp-rename)
 (define-key java-mode-map (kbd "C-c r .") 'lsp-find-definition)
 (define-key java-mode-map (kbd "C-c r ,") 'lsp-find-references)
@@ -136,6 +125,7 @@
 (define-key java-mode-map (kbd "<f12>") 'dap-step-in)
 
 (add-hook 'java-mode-hook (lambda ()
+                            (eclim-mode t)
 						          ))
 
 (provide 'jong-java)

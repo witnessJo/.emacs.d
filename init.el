@@ -1127,14 +1127,14 @@ Version 2017-07-08"
  '(jdee-server-dir "")
  '(package-selected-packages
    (quote
-	(realgud meghanada ant jdee lsp-java bash-completion pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx godoctor go-guru go-autocomplete go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime modern-cpp-font-lock helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color log4e elisp-refs elisp-slime-nav dash-functional helm-dash google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete prodigy eyebrowse helm-ag helm yasnippet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update async avy use-package)))
+    (eclim elim realgud meghanada ant jdee lsp-java bash-completion pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx godoctor go-guru go-autocomplete go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime modern-cpp-font-lock helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color log4e elisp-refs elisp-slime-nav dash-functional helm-dash google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete prodigy eyebrowse helm-ag helm yasnippet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update async avy use-package)))
  '(safe-local-variable-values
    (quote
-	((projectile-project-root . "/home/jongyoungcha/projects/testJava/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/aleth/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/Chanker/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/bitcoin/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/hdac/")))))
+    ((projectile-project-root . "/home/jongyoungcha/projects/testJava/")
+     (projectile-project-root . "/home/jongyoungcha/projects/aleth/")
+     (projectile-project-root . "/home/jongyoungcha/projects/Chanker/")
+     (projectile-project-root . "/home/jongyoungcha/projects/bitcoin/")
+     (projectile-project-root . "/home/jongyoungcha/projects/hdac/")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
