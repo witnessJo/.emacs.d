@@ -6,6 +6,8 @@
 (defconst jong-java-output-buffer-name "*jong-java-debug*"
   "A Debug Buffur of java.")
 
+(add-to-list #'jong-kill-buffer-patterns "\\*out\\*[\\<2\\>]*")
+
 (defun jong-java-install-maven ()
   (interactive)
   (let ((maven-uri "http://mirror.navercorp.com/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz")
@@ -61,9 +63,6 @@
     )
   )
 
-(use-package autodisass-java-bytecode
-  :ensure t
-  :defer t)
 
 (use-package eclim
   :ensure t
@@ -114,18 +113,19 @@
 (define-key java-mode-map (kbd "C-c r ,") 'lsp-find-references)
 (define-key java-mode-map (kbd "C-c d d") 'lsp-ui-doc-show)
 (define-key java-mode-map (kbd "C-g") (lambda()
-                                        (interactive)
-                                        (jong-kill-temporary-buffers)
-                                        (lsp-ui-doc-hide)))
+										          (interactive)
+										          (jong-kill-temporary-buffers)
+										          (lsp-ui-doc-hide)))
 
 (define-key java-mode-map (kbd "<f5>") 'dap-java-debug)
+(define-key java-mode-map (kbd "<f8>") 'dap-continue)
 (define-key java-mode-map (kbd "<f9>") 'dap-breakpoint-toggle)
 (define-key java-mode-map (kbd "<f10>") 'dap-next)
 (define-key java-mode-map (kbd "<f11>") 'dap-step-in)
 (define-key java-mode-map (kbd "<f12>") 'dap-step-in)
 
 (add-hook 'java-mode-hook (lambda ()
-                            (eclim-mode t)
+                            ;; (eclim-mode t)
 						          ))
 
 (provide 'jong-java)
