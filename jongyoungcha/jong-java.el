@@ -87,8 +87,6 @@
   :diminish lsp-ui
   :init (lsp-ui-mode)
   :config
-  (eldoc-mode nil)
-  (global-eldoc-mode -1)
   (setq lsp-ui-peek-enable nil)
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-doc-enable nil)

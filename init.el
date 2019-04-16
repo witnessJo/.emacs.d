@@ -1029,6 +1029,7 @@ Version 2017-07-08"
 (require 'jong-go)
 (require 'jong-network)
 (require 'jong-http)
+(require 'jong-html)
 
 (require 'jong-ether-test)
 (require 'jong-brth-test)
@@ -1128,17 +1129,9 @@ Version 2017-07-08"
  ;; If there is more than one, they won't work right.
  '(eclim-eclipse-dirs (quote ((format "%s/eclipse" (getenv "HOME")))))
  '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
- '(jdee-server-dir "")
  '(package-selected-packages
    (quote
-	(restclient restclinet eclim elim realgud meghanada ant jdee lsp-java bash-completion pcap-mode go-dlv go-errcheck helm-go-package go-stacktracer flymake-go go-direx go-eldoc company-go popwin direx godoctor go-guru go-autocomplete go-mode tide indium js-comint nodejs-repl xref-js2 js2-refactor js2-mode flycheck-haskell haskell-mode ensime modern-cpp-font-lock helm-gtags ggtags cmake-ide company-rtags rtags smart-compile cmake-mode xterm-color log4e elisp-refs elisp-slime-nav dash-functional helm-dash google-translate cargo racer rust-mode anaconda-mode company-jedi elpy auto-highlight-symbol flycheck exec-path-from-shell helm-projectile projectile magit company-quickhelp company auto-complete autopair hungry-delete prodigy eyebrowse helm-ag helm yasnippet evil solarized-theme color-theme-sanityinc-tomorrow auto-package-update async avy use-package)))
- '(safe-local-variable-values
-   (quote
-	((projectile-project-root . "/home/jongyoungcha/projects/testJava/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/aleth/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/Chanker/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/bitcoin/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/hdac/")))))
+	(web-mode xterm-color xref-js2 use-package treemacs tide solarized-theme smart-compile restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit lsp-ui lsp-java log4e js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx go-autocomplete ggtags flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs eclim dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo bash-completion autopair autodisass-java-bytecode auto-package-update auto-highlight-symbol anaconda-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
