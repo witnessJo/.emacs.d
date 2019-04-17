@@ -7,15 +7,15 @@
 
 
 (defvar jong-c-bin-name nil)
-  ;; "Jong c language run command."
-  ;; :type 'string)
+;; "Jong c language run command."
+;; :type 'string)
 
 (defvar jong-c-gud-buffer-name nil)
-  ;; "Jong c gud-buffer name."
-  ;; :type 'string)
+;; "Jong c gud-buffer name."
+;; :type 'string)
 
 (defvar jong-c-gud-args nil)
-  ;; "Jong c debug-mode arguments."
+;; "Jong c debug-mode arguments."
 ;; :type 'string)
 
 (define-derived-mode jong-c-gud-mode  gud-mode "jong-gud-mode"
@@ -26,7 +26,7 @@
   (interactive)
   (call-interactively 'gud-gdb)
   (jong-c-gud-mode))
-  
+
 
 (defun jong-c-gud-find-buffer ()
   (interactive)
@@ -207,32 +207,6 @@
                                 (setq c-basic-offset 3)))
 
 
-(use-package ggtags
-  :ensure t)
-
-(eval-after-load "ggtags"
-  '(progn
-     (define-key ggtags-mode-map (kbd "C-c g .") (lambda ()
-												               (interactive)
-												               (evil--jumps-push)
-												               (call-interactively 'ggtags-find-definition)))
-     (define-key ggtags-mode-map (kbd "C-c g ,") (lambda ()
-												               (interactive)
-												               (evil--jumps-push)
-												               (call-interactively 'ggtags-find-reference)))))
-
-(use-package helm-gtags
-  :ensure t)
-(add-hook 'c-mode-common-hook
-		    (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode)
-			     (ggtags-mode 1))))
-
-
-(add-hook 'c-mode-hook 'helm-gtags-mode)
-(add-hook 'c++-mode-hook 'helm-gtags-mode)
-(add-hook 'asm-mode-hook 'helm-gtags-mode)
-
 
 (use-package modern-cpp-font-lock
   :ensure t)
@@ -246,7 +220,12 @@
             (local-set-key (kbd "C-c r r") 'jong-c-run-project)
             (local-set-key (kbd "C-c c m") 'jo-compile-cmake)
             (local-set-key (kbd "C-S-g") 'close-compilation-window)
-            (local-set-key (kbd "C-c f f") 'ff-find-other-file)))
+            (local-set-key (kbd "C-c f f") 'ff-find-other-file)
+            (local-set-key (kbd "C-c r .") (lambda ()
+                                             (interactive)
+                                             (xref-push-marker-stack)
+                                             (rtags-find-symbol-at-point)))
+            ))
 
 ;; (defun enable-autoreload-for-dir-locals ()
 ;; (when (and (buffer-file-name)
