@@ -32,8 +32,6 @@
 
 (defun jong-common-navi-show-buffer-with-pos (string)
   )
- 
-
 
 (defun jong-common-navi-move-pos-forward ()
   (interactive)
@@ -43,8 +41,8 @@
   (interactive)
   )
 
-(add-hook 'deactivate-mark-hook (lambda ()
-								  (jong-common-navi-push-jong-ring (car mark-ring))))
+;; (add-hook 'deactivate-mark-hook (lambda ()
+;; (jong-common-navi-push-jong-ring (car mark-ring))))
 
 
 

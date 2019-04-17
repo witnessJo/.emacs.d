@@ -818,7 +818,7 @@ Version 2017-07-08"
     ))
 
 (global-set-key (kbd "C-c p p") 'projectile-switch-project)
-(global-set-key (kbd "C-c p f") 'projectile-find-file-in-known-projects)
+(global-set-key (kbd "C-c p f") 'projectile-find-file)
 (global-set-key (kbd "C-c p c") 'projectile-compile-project)
 (global-set-key (kbd "C-c p r") 'projectile-run-project)
 (global-set-key (kbd "C-c p s") 'jo-set-projectile-run-command)
@@ -1068,6 +1068,7 @@ Version 2017-07-08"
 (prefer-coding-system locale-value)
 (set-default-coding-systems locale-value)
 (set-language-environment 'UTF-8)
+(set-input-method 'korean-hangul)
 
 (setq-default file-name-coding-system locale-value)
 (setq-default locale-coding-system locale-value)

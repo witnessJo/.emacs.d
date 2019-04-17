@@ -7,6 +7,7 @@
   "A Debug Buffur of java.")
 
 (add-to-list #'jong-kill-buffer-patterns "\\*out\\*[\\<2\\>]*")
+(add-to-list #'jong-kill-buffer-patterns "*HTTP Response*")
 
 (defun jong-java-install-maven ()
   (interactive)
