@@ -256,7 +256,6 @@ Version 2017-07-08"
 
 (use-package hungry-delete
   :ensure t)
-;; (global-hungry-delete-mode)
 
 (use-package autopair
   :ensure t)
@@ -1010,7 +1009,7 @@ Version 2017-07-08"
   (setq google-translate-default-target-language "ko")
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
-
+(require 'jong-env-setting)
 (require 'jong-elisp)
 (require 'jong-common)
 (require 'jong-bash)
