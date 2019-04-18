@@ -28,12 +28,6 @@
   (jong-c-gud-mode))
 
 
-(defun jong-c-gud-find-buffer ()
-  (interactive)
-  (let ((jong-c-output-buffer))
-    )
-  )
-
 (defun jong-c-gud-set-args ()
   (interactive)
   (let ((target-buffer nil)
@@ -160,23 +154,25 @@
 			     )))
 
 (use-package rtags
-  :ensure t)
-(with-eval-after-load 'rtags
+  :ensure t
+  :config
   (setq rtags-autostart-diagnostics t)
   (rtags-diagnostics)
   (setq rtags-completions-enabled t)
   (global-company-mode)
   (rtags-enable-standard-keybindings)
   (add-hook 'rtags-jump-hook (lambda ()
-							          (push-mark (point))))
+							          (push-mark (point))
+                               (xref-push-marker-stack)))
   
   (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-
+  
   (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
   )
+
 
 (use-package company-rtags
   :ensure t)
@@ -192,60 +188,44 @@
     (cmake-ide-setup)))
 
 
-;; Set linux indent style
-(defvar c-default-style)
-(defvar c-basic-offset)
+(use-package modern-cpp-font-lock
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode))
+
+
+(defun jong-c-setting-environment()
+  "Setting environment and key bindings."
+  
+  ;; Set linux indent style
+  (defvar c-default-style)
+  (defvar c-basic-offset)
+  (setq c-default-style "linux")
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 3)
+  (setq c-basic-offset 3)
+  
+
+  (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
+  (local-set-key (kbd "C-c c c") 'jong-c-find-cmake-build)
+  (local-set-key (kbd "C-c r s") 'jong-c-set-bin-name)
+  (local-set-key (kbd "C-c r r") 'jong-c-run-project)
+  (local-set-key (kbd "C-c c m") 'jo-compile-cmake)
+  (local-set-key (kbd "C-S-g") 'close-compilation-window)
+  (local-set-key (kbd "C-c f f") 'ff-find-other-file)
+  (local-set-key (kbd "C-c r .") (lambda ()
+                                   (interactive)
+                                   ;; (xref-push-marker-stack)
+                                   (rtags-find-symbol-at-point)))
+  )
 
 ;; Add flycheck c++ modep
 (add-hook 'c++-mode-hook (lambda ()
-						         (setq flycheck-gcc-language-standard "c++11")))
+						         (setq flycheck-gcc-language-standard "c++14")))
 
-(add-hook 'c-mode-common-hook (lambda ()
-                                (setq c-default-style "linux")
-                                (setq-default indent-tabs-mode nil)
-                                (setq-default tab-width 3)
-                                (setq c-basic-offset 3)))
-
-
-
-(use-package modern-cpp-font-lock
-  :ensure t)
-(add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
-
-(add-hook 'c-mode-common-hook
-		    (lambda()
-            (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
-            (local-set-key (kbd "C-c c c") 'jong-c-find-cmake-build)
-            (local-set-key (kbd "C-c r s") 'jong-c-set-bin-name)
-            (local-set-key (kbd "C-c r r") 'jong-c-run-project)
-            (local-set-key (kbd "C-c c m") 'jo-compile-cmake)
-            (local-set-key (kbd "C-S-g") 'close-compilation-window)
-            (local-set-key (kbd "C-c f f") 'ff-find-other-file)
-            (local-set-key (kbd "C-c r .") (lambda ()
-                                             (interactive)
-                                             (xref-push-marker-stack)
-                                             (rtags-find-symbol-at-point)))
-            ))
-
-;; (defun enable-autoreload-for-dir-locals ()
-;; (when (and (buffer-file-name)
-;; (equal dir-locals-file
-;; (file-name-nondirectory (buffer-file-name))))
-;; (add-hook (make-variable-buffer-local 'after-save-hook)
-;; 'my-reload-dir-locals-for-all-buffer-in-this-directory)))
-
-
-
-;; Set key bindings
-;; (eval-after-load "helm-gtags"
-;;   '(progn
-;;      (define-key helm-gtags-mode-map (kbd "M-t") 'helm-gtags-find-tag)
-;;      (define-key helm-gtags-mode-map (kbd "M-r") 'helm-gtags-find-rtag)
-;;      (define-key helm-gtags-mode-map (kbd "M-s") 'helm-gtags-find-symbol)
-;;      (define-key helm-gtags-mode-map (kbd "M-g M-p") 'helm-gtags-parse-file)
-;;      (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-;;      (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
-;;      (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)))
+(add-hook 'c-mode-hook 'jong-c-set-key)
+(add-hook 'c++-mode-hook 'jong-c-set-key)
+(add-hook 'objc-mode-hook 'jong-c-set-key)
 
 
 (provide 'jong-c)
