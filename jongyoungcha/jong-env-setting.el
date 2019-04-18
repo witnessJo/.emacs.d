@@ -3,9 +3,12 @@
 (cond
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   (progn
-	;; (global-set-key [C-kanji] (lookup-key global-map (kbd "C-S")))
-	;; (global-set-key [C-kanji] 'set-mark-command)
 	(define-key key-translation-map [C-kanji] (kbd "C-SPC"))
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;; Alias coding system for windows ;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	(define-coding-system-alias 'cp65001 'utf-8)
+	
 	(message "Windows")
 	))
  ((string-equal system-type "darwin") ; Mac OS X

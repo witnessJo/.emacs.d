@@ -1040,11 +1040,6 @@ Version 2017-07-08"
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Alias coding system for windows ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define-coding-system-alias 'cp65001 'utf-8)
-(define-coding-system-alias 'cp65001 'utf-8)
 
 (when (member "Courier" (font-family-list))
   (set-face-attribute 'default nil :font "Courier-12")
@@ -1074,11 +1069,6 @@ Version 2017-07-08"
 (set-terminal-coding-system locale-value)
 (set-keyboard-coding-system locale-value)
 (set-selection-coding-system locale-value)
-
-;; (when (string-match "^3" (or (getenv "HANGUL_KEYBOARD_TYPE") ""))
-;; (setq default-korean-keyboard "3")
-;; (setq default-input-method "korean-hangul3")
-;; )
 
 (dynamic-completion-mode)
 
