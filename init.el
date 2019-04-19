@@ -1124,7 +1124,10 @@ Version 2017-07-08"
 	(web-mode xterm-color xref-js2 use-package treemacs tide solarized-theme smart-compile restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit lsp-ui lsp-java log4e js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx go-autocomplete ggtags flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs eclim dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo bash-completion autopair autodisass-java-bytecode auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
    (quote
-	((projectile-project-root . "/home/jongyoungcha/projects/aleth/")))))
+	((projectile-project-root . "/Users/joyeongchan/projects/jyc-cheat/jyc-cheat-client/")
+	 (projectile-project-name . "jyc_cheat_client")
+	 (cmake-ide--build-dir-var . "./")
+	 (projectile-project-root . "/home/jongyoungcha/projects/aleth/")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

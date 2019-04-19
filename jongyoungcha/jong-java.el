@@ -51,7 +51,7 @@
   (let ((cmd))
     (setq cmd (concat
                "cd;"
-               (format "wget https://mirrors.tuna.tsinghua.edu.cn/eclipse/technology/epp/downloads/release/2019-03/R/eclipse-jee-2019-03-R-linux-gtk-x86_64.tar.gz;")
+               (format "wget http://mirrors.neusoft.edu.cn/eclipse/technology/epp/downloads/release/2019-03/R/eclipse-jee-2019-03-R-linux-gtk-x86_64.tar.gz")
                "tar -xvf eclipse-jee-2019-03-R-linux-gtk-x86_64.tar.gz;"
                (format "wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin;")
                "chmod 744 ./eclim_2.8.0.bin;"
