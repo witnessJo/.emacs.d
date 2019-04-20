@@ -6,43 +6,31 @@
 (defconst jong-java-output-buffer-name "*jong-java-debug*"
   "A Debug Buffur of java.")
 
-(add-to-list #'jong-kill-buffer-patterns "\\*out\\*[\\<2\\>]*")
+(defcustom jong-java-process-names-to-kill '("PlatformServerApplication")
+  "Target Processes to kill in java mode."
+  :group 'jong-java
+  :type 'list)
+
+(add-to-list #'jong-kill-buffer-patterns jong-java-output-buffer-name)
+;; (add-to-list #'jong-kill-buffer-patterns "\\*out\\*[\\<2\\>]*")
 (add-to-list #'jong-kill-buffer-patterns "*HTTP Response*")
 
 (defun jong-java-install-maven ()
   (interactive)
   (let ((maven-uri "http://mirror.navercorp.com/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz")
-		  (target-file "apache-maven-3.6.0-bin.tar.gz")
-		  (extracted-dir "apache-maven-3.6.0")
-		  (cmd))
-	 (setq cmd (concat
-			      "cd;"
-			      (format "wget %s;" maven-uri)
-			      (format "tar -xvf %s;" target-file)
-			      (format "cd %s" extracted-dir)))
-	 (with-current-buffer (get-buffer-create jong-java-output-buffer-name)
-	   (display-buffer (current-buffer))
-	   (async-shell-command cmd (current-buffer) (current-buffer))
-	   )
-	 )
-  )
-
-
-(defun jong-java-install-jdee-server ()
-  (interactive)
-  (let ((jdee-source-uri "https://github.com/jdee-emacs/jdee-server.git")
-		  (clone-dir "jdee-server")
-		  (cmd))
-	 (setq cmd (concat
-			      "cd;"
-			      (format "git clone %s;" jdee-source-uri)
-			      (format "cd %s;" clone-dir)
-               "mvn -Dmaven.test.skip=true package"))
-	 (with-current-buffer (get-buffer-create jong-java-output-buffer-name)
-	   (display-buffer (current-buffer))
-	   (async-shell-command cmd (current-buffer) (current-buffer))
-	   )
-	 )
+	(target-file "apache-maven-3.6.0-bin.tar.gz")
+	(extracted-dir "apache-maven-3.6.0")
+	(cmd))
+    (setq cmd (concat
+	       "cd;"
+	       (format "wget %s;" maven-uri)
+	       (format "tar -xvf %s;" target-file)
+	       (format "cd %s" extracted-dir)))
+    (with-current-buffer (get-buffer-create jong-java-output-buffer-name)
+      (display-buffer (current-buffer))
+      (async-shell-command cmd (current-buffer) (current-buffer))
+      )
+    )
   )
 
 
@@ -58,10 +46,29 @@
                "./eclim_2.8.0.bin;"
                ))
     (with-current-buffer (get-buffer-create jong-java-output-buffer-name)
-	   (display-buffer (current-buffer))
-	   (async-shell-command cmd (current-buffer) (current-buffer))
-	   )
+      (display-buffer (current-buffer))
+      (async-shell-command cmd (current-buffer) (current-buffer))
+      )
     )
+  )
+
+
+(defun jong-java-kill-target-processes ()
+  (interactive)
+  (let ((cmd)
+	(pid)
+	(pname))
+    (with-current-buffer (get-buffer-create jong-java-output-buffer-name)
+      (dolist (pname jong-java-process-names-to-kill)
+	(display-buffer (current-buffer))
+	(setq cmd (format "ps -ef | grep %s | awk '{print $2}' | xargs -i kill -9 {}" pname))
+	(async-shell-command cmd (current-buffer) (current-buffer)))
+      )
+    )
+  )
+
+(defun jong-java-debug-mode-screen ()
+  (interactive)
   )
 
 
@@ -71,8 +78,8 @@
   (setq eclimd-autostart t)
   (custom-set-variables
    '(eclim-eclipse-dirs '((format "%s/eclipse" (getenv "HOME"))))
-   '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
-   )
+   '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME"))))
+  (global-eclim-mode)
   )
 
 
@@ -96,15 +103,18 @@
 (use-package lsp-java :ensure t :after lsp
   :config (add-hook 'java-mode-hook 'lsp))
 
-(use-package dap-mode
-  :ensure t :after lsp-mode
-  :config
-  (dap-mode t)
-  (dap-ui-mode t))
+;; (use-package dap-mode
+;; :ensure t :after lsp-mode
+;; :config
+;; (dap-mode t)
+;; (dap-ui-mode t))
 
 (use-package dap-java :after (lsp-java))
 (use-package lsp-java-treemacs :after (treemacs))
 
+
+
+(define-key java-mode-map (kbd "C-c c k") 'jong-java-kill-target-processes)
 (define-key java-mode-map (kbd "C-c c r") 'eclim-run-class)
 (define-key java-mode-map (kbd "C-c c p") 'eclim-project-create)
 (define-key java-mode-map (kbd "C-c r r") 'lsp-rename)
@@ -112,11 +122,22 @@
 (define-key java-mode-map (kbd "C-c r ,") 'lsp-find-references)
 (define-key java-mode-map (kbd "C-c d d") 'lsp-ui-doc-show)
 (define-key java-mode-map (kbd "C-g") (lambda()
-										          (interactive)
-										          (jong-kill-temporary-buffers)
-										          (lsp-ui-doc-hide)))
+					(interactive)
+					(display-buffer (get-buffer "*out*"))
+					(ignore-errors (with-current-buffer (get-buffer "*out*")
+							 ((set (make-local-variable 'window-point-insertion-type) t)))
+						       (jong-kill-temporary-buffers)
+						       (lsp-ui-doc-hide)
+						       (keyboard-quit))))
 
-(define-key java-mode-map (kbd "<f5>") 'dap-java-debug)
+(define-key java-mode-map (kbd "<f5>") (lambda()
+					 (interactive)
+					 (call-interactively 'dap-java-debug)
+					 (other-window 1)
+					 (keyboard-quit)
+					 (sleep-for 1)
+					 (display-buffer (get-buffer "*out*"))))
+
 (define-key java-mode-map (kbd "<f8>") 'dap-continue)
 (define-key java-mode-map (kbd "<f9>") 'dap-breakpoint-toggle)
 (define-key java-mode-map (kbd "<f10>") 'dap-next)
@@ -124,7 +145,6 @@
 (define-key java-mode-map (kbd "<f12>") 'dap-step-in)
 
 (add-hook 'java-mode-hook (lambda ()
-                            ;; (eclim-mode t)
-						          ))
+			    ))
 
 (provide 'jong-java)
