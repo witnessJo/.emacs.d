@@ -363,7 +363,7 @@ Version 2017-07-08"
 
 (setq prev-candidate-char nil)
 
-(defun chan-forward-word ()
+(defun jong-forward-word ()
   "Chan 'forward-word."
   (interactive)
   (let ((target-string "")
@@ -390,7 +390,7 @@ Version 2017-07-08"
   )
 
 
-(defun chan-backward-word ()
+(defun jong-backward-word ()
   "Chan 'backward-word."
   (interactive)
   (let ((target-string "")
@@ -561,7 +561,6 @@ Version 2017-07-08"
 							  (forward-line 20)
 							  (recenter-top-bottom (line-number-at-pos))))
 
-
 (defun pop-local-or-global-mark ()
   "Pop to local mark if it exists or to the global mark if it does not."
   (interactive)
@@ -569,30 +568,25 @@ Version 2017-07-08"
       (pop-to-mark-command)
     (pop-global-mark)))
 
-
 (global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-next-buffer)
-;; (global-set-key (kbd "M-n") 'evil-jump-forward)
-;; (global-set-key (kbd "M-p") 'evil-jump-backward)
 
-;; (define-key global-map [f9] 'point-undo)
-;; (define-key global-map [f10] 'point-redo)
 
 ;; Forward word with candidate characters.
-(global-set-key (kbd "M-f") 'chan-forward-word)
+(global-set-key (kbd "M-f") 'jong-forward-word)
 (global-set-key (kbd "M-F") (lambda () (interactive)
 							  (setq this-command-keys-shift-translated t)
 							  (if (equal (region-active-p) nil)
 								  (call-interactively 'set-mark-command))
-							  (chan-forward-word)))
+							  (jong-forward-word)))
 
 ;; Back word with candidate characters.
-(global-set-key (kbd "M-b") 'chan-backward-word)
+(global-set-key (kbd "M-b") 'jong-backward-word)
 (global-set-key (kbd "M-B") (lambda () (interactive)
 							  (setq this-command-keys-shift-translated t)
 							  (if (not (use-region-p))
 								  (call-interactively 'set-mark-command))
-							  (chan-backward-word)))
+							  (jong-backward-word)))
 
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
@@ -640,10 +634,6 @@ Version 2017-07-08"
 									(call-interactively 'set-mark-command))
 								(forward-line 1)))
 
-
-
-(global-set-key (kbd "C-c v y") 'my-copy-line-or-region)
-(global-set-key (kbd "C-c v x") 'my-cut-line-or-region)
 
 (global-set-key (kbd "C-x C-o") 'other-window)
 (global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
@@ -765,9 +755,8 @@ Version 2017-07-08"
   :ensure t
   :config
   (setq company-async-timeout 4)
-  ;; (setq company-dabbrev-downcase nil)
-  (setq company-idle-delay 0.1)
-  (setq company-minimum-prefix-length 3)
+  (setq company-idle-delay 0.01)
+  (setq company-minimum-prefix-length 2)
   (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode)
   )
@@ -777,7 +766,9 @@ Version 2017-07-08"
   :ensure t
   :config
   (company-quickhelp-mode)
-  (setq company-quickhelp-delay 0.1))
+  (setq company-quickhelp-delay nil)
+  (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)
+  )
 
 (use-package magit
   :ensure t

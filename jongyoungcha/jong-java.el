@@ -69,7 +69,9 @@
 
 (defun jong-java-debug-mode-screen ()
   (interactive)
-  )
+  (jong-common-set-window-1-2 (buffer-name (current-buffer)) "*out*" "*dap-ui-repl*"))
+
+
 
 
 (use-package eclim
@@ -143,8 +145,6 @@
 (define-key java-mode-map (kbd "<f10>") 'dap-next)
 (define-key java-mode-map (kbd "<f11>") 'dap-step-in)
 (define-key java-mode-map (kbd "<f12>") 'dap-step-in)
-
-(add-hook 'java-mode-hook (lambda ()
-			    ))
+(define-key java-mode-map (kbd "C-=") 'jong-dap-debug-goto-repl)
 
 (provide 'jong-java)
