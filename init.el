@@ -382,7 +382,7 @@ Version 2017-07-08"
       (progn (goto-char candidate-pos)
              (setq prev-candidate-char (buffer-substring (point) (1+ (point))))
              (if (equal prev-candidate-char " ")
-                 (call-interactively #'chan-forward-word))
+                 (call-interactively #'jong-forward-word))
              ;; (message "%s" prev-candidate-char)
              ))
     )
@@ -407,12 +407,12 @@ Version 2017-07-08"
                (setq prev-candidate-char (string (char-after (point))))
                ;; (message "%s" prev-candidate-char)
                (if (equal prev-candidate-char " ")
-                   (call-interactively #'chan-backward-word)))
+                   (call-interactively #'jong-backward-word)))
       (goto-char bword-pos)))
   )
 
 
-(defun chan-forward-delete-word ()
+(defun jong-forward-delete-word ()
   "Chan 'forward-delete-word."
   (interactive)
   (let ((target-string "")
@@ -439,7 +439,7 @@ Version 2017-07-08"
 
 
 
-(defun chan-backward-delete-word ()
+(defun jong-backward-delete-word ()
   "Chan 'backward-delete-word."
   (interactive)
   (let ((target-string "")
@@ -470,7 +470,7 @@ Version 2017-07-08"
   )
 
 
-(defun chan-copy-current-line ()
+(defun jong-copy-current-line ()
   "Chan 'copy current line."
   (interactive)
   (let ((prev-pos (point))
@@ -535,10 +535,10 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-S-M-[") 'windmove-up)
 
-(global-set-key (kbd "M-d") 'chan-forward-delete-word)
-(global-set-key (kbd "M-<backspace>") 'chan-backward-delete-word)
+(global-set-key (kbd "M-d") 'jong-forward-delete-word)
+(global-set-key (kbd "M-<backspace>") 'jong-backward-delete-word)
 (global-set-key (kbd "C-<backspace>") nil)
-(global-set-key (kbd "C-M-y") 'chan-copy-current-line)
+(global-set-key (kbd "C-M-y") 'jong-copy-current-line)
 (global-set-key (kbd "M-y") (lambda ()
 							  (interactive)
 							  (jong-open-line-below)
