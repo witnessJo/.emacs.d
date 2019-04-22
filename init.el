@@ -36,7 +36,6 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
-
 (use-package async
   :ensure t
   :config
@@ -1025,9 +1024,6 @@ Version 2017-07-08"
 (require 'jong-ether-test)
 (require 'jong-brth-test)
 
-;; (load-theme 'sanityinc-tomorrow-blue t)
-(load-theme 'solarized-dark t)
-;; (set-background-color "#103520")
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
