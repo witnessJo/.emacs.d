@@ -1,5 +1,6 @@
 ;;; Code:
 
+(require 'misc)
 
 (use-package which-key
   :ensure t

@@ -268,7 +268,7 @@ Version 2017-07-08"
     (find-alternate-file "..")))
 
 ;; Remove the key esc esc esc remove other window
-(defadvice keyboard-escape-quit (around my-keyboard-escape-quit activate)
+(defadvice keyboard-escape-quit (around jong-keyboard-escape-quit activate)
   (let (orig-one-window-p)
     (fset 'orig-one-window-p (symbol-function 'one-window-p))
     (fset 'one-window-p (lambda (&optional nomini all-frames) t))
@@ -437,6 +437,27 @@ Version 2017-07-08"
     )
   )
 
+(defvar jong-subword-forward-regexp "\\W?[[:upper:]]*[[:digit:][:lower:]]+\\|\\W?[[:upper:]]+\\|[^[:word:][:space:]_\n]+")
+
+(defvar jong-subword-backward-regexp "[[:space:][:word:]_\n][^\n[:space:][:word:]_]+\\|\\(\\W\\|[[:lower:]]\\)[[:upper:]]\\|\\W\\w+")
+
+(defun jong-subword-forward-internal () ""
+       (interactive)
+       (let ((case-fold-search nil))
+         (re-search-forward jong-subword-forward-regexp nil t))
+       (goto-char (match-end 0)))
+
+(defun jong-subword-backward-internal () ""
+       (interactive)
+       (let ((case-fold-search nil))
+         (if (re-search-backward jong-subword-backward-regexp nil "don't panic!")
+             (goto-char (1+ (match-beginning 0))))))
+
+(setq subword-forward-regexp 'jong-subword-forward-regexp)
+(setq subword-backward-regexp 'jong-subword-backward-regexp)
+(setq subword-backward-function 'jong-subword-backward-internal)
+(setq subword-forward-function 'jong-subword-forward-internal)
+
 
 
 (defun jong-backward-delete-word ()
@@ -479,23 +500,8 @@ Version 2017-07-08"
     (kill-new (buffer-substring start-line-pos end-line-pos))
     (goto-char prev-pos)))
 
-;; (defun delete-word (arg)
-;; "Delete characters forward until encountering the end of a word.
-;; With argument ARG, do this that many times."
-;; (interactive "p")
-;; (delete-region (point) (progn (forward-word arg) (point))))
-
-;; (defun backward-delete-word (arg)
-;; "Delete characters backward until encountering the beginning of a word.
-;; With argument ARG, do this that many times."
-;; (interactive "p")
-;; (delete-word (- arg)))
-
 (global-set-key (kbd "M-c") nil)
 (global-set-key (kbd "C-c C-x") nil)
-;; (global-set-key (kbd "<backspace>") 'delete-backward-char)
-;; (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
-;; (global-set-key (kbd "M-d") 'delete-word)
 
 (setq confirm-kill-emacs 'y-or-n-p)
 
@@ -572,7 +578,7 @@ Version 2017-07-08"
 
 
 ;; Forward word with candidate characters.
-(global-set-key (kbd "M-f") 'jong-forward-word)
+(global-set-key (kbd "M-f") 'jong-subword-forward-internal)
 (global-set-key (kbd "M-F") (lambda () (interactive)
 							  (setq this-command-keys-shift-translated t)
 							  (if (equal (region-active-p) nil)
@@ -580,7 +586,7 @@ Version 2017-07-08"
 							  (jong-forward-word)))
 
 ;; Back word with candidate characters.
-(global-set-key (kbd "M-b") 'jong-backward-word)
+(global-set-key (kbd "M-b") 'jong-subword-backward-internal)
 (global-set-key (kbd "M-B") (lambda () (interactive)
 							  (setq this-command-keys-shift-translated t)
 							  (if (not (use-region-p))
