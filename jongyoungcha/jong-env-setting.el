@@ -9,10 +9,6 @@
 	
 	(define-key key-translation-map [C-kanji] (kbd "C-SPC"))
 	
-	(when (member "Consolas" (font-family-list))
-	  (set-face-attribute 'default nil :font "Consolas-12")
-	  (setq-default line-spacing 2))
-
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;; Alias coding system for windows ;;
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -31,15 +27,16 @@
  
  ((string-equal system-type "gnu/linux") ; linux
   (progn
-	(when (member "Consolas" (font-family-list))
-	  (set-face-attribute 'default nil :font "Consolas-12")
-	  (setq-default line-spacing 2))
-	
 	(set-language-environment "Korean")
 	(load-theme 'solarized-dark t)
 	(setq jong-env-locale-value
 		  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
+
 	(message "Linux"))))
+
+(when (member "Consolas" (font-family-list))
+  (set-face-attribute 'default nil :font "Consolas-12")
+  (setq-default line-spacing 2))
 
 (prefer-coding-system jong-env-locale-value)
 (set-default-coding-systems jong-env-locale-value)
