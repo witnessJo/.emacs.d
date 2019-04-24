@@ -194,9 +194,6 @@ Version 2017-07-08"
     (pop-to-buffer temp-buffer-name)
     ))
 
-;; add themes
-(use-package color-theme-sanityinc-tomorrow :ensure t)
-(use-package solarized-theme :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;

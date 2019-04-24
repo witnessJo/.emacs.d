@@ -6,9 +6,11 @@
 (cond
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   (progn
+	
 	(define-key key-translation-map [C-kanji] (kbd "C-SPC"))
+	
 	(when (member "Consolas" (font-family-list))
-	  (set-face-attribute 'default nil :font "Consolas-11")
+	  (set-face-attribute 'default nil :font "Consolas-12")
 	  (setq-default line-spacing 2))
 
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -29,6 +31,10 @@
  
  ((string-equal system-type "gnu/linux") ; linux
   (progn
+	(when (member "Consolas" (font-family-list))
+	  (set-face-attribute 'default nil :font "Consolas-12")
+	  (setq-default line-spacing 2))
+	
 	(set-language-environment "Korean")
 	(load-theme 'solarized-dark t)
 	(setq jong-env-locale-value
