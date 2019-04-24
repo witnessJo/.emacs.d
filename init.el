@@ -437,28 +437,6 @@ Version 2017-07-08"
     )
   )
 
-(defvar jong-subword-forward-regexp "\\W?[[:upper:]]*[[:digit:][:lower:]]+\\|\\W?[[:upper:]]+\\|[^[:word:][:space:]_\n]+")
-
-(defvar jong-subword-backward-regexp "[[:space:][:word:]_\n][^\n[:space:][:word:]_]+\\|\\(\\W\\|[[:lower:]]\\)[[:upper:]]\\|\\W\\w+")
-
-(defun jong-subword-forward-internal () ""
-       (interactive)
-       (let ((case-fold-search nil))
-         (re-search-forward jong-subword-forward-regexp nil t))
-       (goto-char (match-end 0)))
-
-(defun jong-subword-backward-internal () ""
-       (interactive)
-       (let ((case-fold-search nil))
-         (if (re-search-backward jong-subword-backward-regexp nil "don't panic!")
-             (goto-char (1+ (match-beginning 0))))))
-
-(setq subword-forward-regexp 'jong-subword-forward-regexp)
-(setq subword-backward-regexp 'jong-subword-backward-regexp)
-(setq subword-backward-function 'jong-subword-backward-internal)
-(setq subword-forward-function 'jong-subword-forward-internal)
-
-
 
 (defun jong-backward-delete-word ()
   "Chan 'backward-delete-word."
@@ -489,6 +467,37 @@ Version 2017-07-08"
 		))
     )
   )
+
+(defvar jong-subword-forward-regexp "\\W?[[:upper:]]*[[:digit:][:lower:]]+\\|\\W?[[:upper:]]+\\|[^[:word:][:space:]_\n]+")
+
+(defvar jong-subword-backward-regexp "[[:space:][:word:]_\n][^\n[:space:][:word:]_]+\\|\\(\\W\\|[[:lower:]]\\)[[:upper:]]\\|\\W\\w+")
+
+(defun jong-subword-forward-internal () ""
+       (interactive)
+       (let ((case-fold-search nil))
+         (re-search-forward jong-subword-forward-regexp nil t))
+       (goto-char (match-end 0)))
+
+(defun jong-subword-backward-internal () ""
+       (interactive)
+       (let ((case-fold-search nil))
+         (if (re-search-backward jong-subword-backward-regexp nil "don't panic!")
+             (goto-char (1+ (match-beginning 0))))))
+
+(setq subword-forward-regexp 'jong-subword-forward-regexp)
+(setq subword-backward-regexp 'jong-subword-backward-regexp)
+(setq subword-backward-function 'jong-subword-backward-internal)
+(setq subword-forward-function 'jong-subword-forward-internal)
+
+(defun jong-subword-forward-delete-word ()
+  (interactive)
+  )
+
+
+(defun jong-subword-backword-delete-word ()
+  (interactive)
+  )
+
 
 
 (defun jong-copy-current-line ()
@@ -583,7 +592,7 @@ Version 2017-07-08"
 							  (setq this-command-keys-shift-translated t)
 							  (if (equal (region-active-p) nil)
 								  (call-interactively 'set-mark-command))
-							  (jong-forward-word)))
+							  (jong-subword-forward-internal)))
 
 ;; Back word with candidate characters.
 (global-set-key (kbd "M-b") 'jong-subword-backward-internal)
@@ -591,7 +600,7 @@ Version 2017-07-08"
 							  (setq this-command-keys-shift-translated t)
 							  (if (not (use-region-p))
 								  (call-interactively 'set-mark-command))
-							  (jong-backward-word)))
+							  (jong-subword-backward-internal)))
 
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
@@ -1029,45 +1038,6 @@ Version 2017-07-08"
 
 (require 'jong-ether-test)
 (require 'jong-brth-test)
-
-(set-cursor-color "#aa4444")
-(set-face-background #'hl-line "#004500")
-(global-hl-line-mode t)
-
-
-(when (member "Courier" (font-family-list))
-  (set-face-attribute 'default nil :font "Courier-12")
-  (setq-default line-spacing 2))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; char encoding environment ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(when (member "Courier" (font-family-list))
-  (set-face-attribute 'default nil :font "Courier-12")
-  (setq-default line-spacing 2))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; char encoding environment ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(set-language-environment "Korean")
-;; (set-default-coding-systems 'utf-8-unix)
-(setq locale-value
-	  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
-(prefer-coding-system locale-value)
-(set-default-coding-systems locale-value)
-(set-language-environment 'UTF-8)
-(set-input-method 'korean-hangul)
-
-(setq-default file-name-coding-system locale-value)
-(setq-default locale-coding-system locale-value)
-(set-terminal-coding-system locale-value)
-(set-keyboard-coding-system locale-value)
-(set-selection-coding-system locale-value)
-
-(dynamic-completion-mode)
-
-(setq-default indent-tabs-mode t)
-(setq-default tab-width 4)
 
 
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
