@@ -5,6 +5,9 @@
 (defconst jong-project-output-buffer "*jong-project-output*")
 (defconst jong-project-debug-buffer "*jong-project-debug*")
 
+(add-to-list 'jong-kill-buffer-patterns jong-project-output-buffer)
+(add-to-list 'jong-kill-buffer-patterns jong-project-debug-buffer)
+
 (defvar-local jong-project-build-command nil)
 (defvar-local jong-project-compile-default-dir nil)
 (defvar-local jong-project-compile-command nil)
@@ -191,6 +194,7 @@
 (global-set-key (kbd "C-c c v") 'jong-project-visit-dot-dir-locals-el)
 (global-set-key (kbd "C-c c b") 'jong-project-build-project)
 (global-set-key (kbd "C-c c c") 'jong-project-compile-project)
+(global-set-key (kbd "C-c c r") 'jong-project-run-project)
 (global-set-key (kbd "C-c c d") 'jong-project-debug-project)
 
 

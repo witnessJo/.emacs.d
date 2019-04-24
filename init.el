@@ -1021,7 +1021,7 @@ Version 2017-07-08"
 (require 'jong-scheme)
 (require 'jong-cmake)
 (require 'jong-c)
-(require 'jong-java)
+;; (require 'jong-java)
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-nodejs)

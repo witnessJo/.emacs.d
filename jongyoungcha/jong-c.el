@@ -205,11 +205,11 @@
   (setq-default tab-width 3)
   (setq c-basic-offset 3)
   
-
+  
   (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
   (local-set-key (kbd "C-c c c") 'jong-c-find-cmake-build)
-  (local-set-key (kbd "C-c r s") 'jong-c-set-bin-name)
-  (local-set-key (kbd "C-c r r") 'jong-c-run-project)
+  ;; (local-set-key (kbd "C-c r s") 'jong-c-set-bin-name)
+  ;; (local-set-key (kbd "C-c r r") 'jong-c-run-project)
   (local-set-key (kbd "C-c c m") 'jo-compile-cmake)
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
   (local-set-key (kbd "C-c f f") 'ff-find-other-file)
@@ -217,15 +217,15 @@
                                    (interactive)
                                    ;; (xref-push-marker-stack)
                                    (rtags-find-symbol-at-point)))
+  (local-set-key (kbd "C-c f f") 'ff-find-other-file)
   )
 
 ;; Add flycheck c++ modep
+(add-hook 'c-mode-hook 'jong-c-setting-environment)
+(add-hook 'c++-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook (lambda ()
 						         (setq flycheck-gcc-language-standard "c++14")))
-
-(add-hook 'c-mode-hook 'jong-c-set-key)
-(add-hook 'c++-mode-hook 'jong-c-set-key)
-(add-hook 'objc-mode-hook 'jong-c-set-key)
+(add-hook 'objc-mode-hook 'jong-c-setting-environment)
 
 
 (provide 'jong-c)
