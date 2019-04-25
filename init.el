@@ -234,20 +234,8 @@ Version 2017-07-08"
 (with-eval-after-load 'helm-ag
   (global-set-key (kbd "C-c a g") 'helm-do-ag))
 
-
 (use-package prodigy
   :ensure t)
-
-;; (use-package auto-dim-other-buffers
-;;   :init
-;;   (custom-set-faces
-;;    '(auto-dim-other-buffers-face ((t (:background "#101520")))))
-;;   (add-hook 'after-init-hook
-;;             (lambda ()
-;;               (when (fboundp 'auto-dim-other-buffers-mode)
-;;                 (auto-dim-other-buffers-mode t))))
-;;   :ensure t)
-
 
 (use-package hungry-delete
   :ensure t)
@@ -488,13 +476,21 @@ Version 2017-07-08"
 
 (defun jong-subword-forward-delete-word ()
   (interactive)
+  (let ((prev-pos (point))
+		(next-pos (progn (call-interactively 'jong-subword-forward-internal)
+						 (point))))
+	(delete-region prev-pos next-pos)
+	)
   )
-
 
 (defun jong-subword-backword-delete-word ()
   (interactive)
+  (let ((prev-pos (point))
+		(next-pos (progn (call-interactively 'jong-subword-backward-internal)
+						 (point))))
+	(delete-region next-pos prev-pos)
+	)
   )
-
 
 
 (defun jong-copy-current-line ()
@@ -541,14 +537,8 @@ Version 2017-07-08"
 								(kill-buffer (buffer-name))
 								(call-interactively 'other-window)))
 
-
-(global-set-key (kbd "C-S-M-;") 'windmove-left)
-(global-set-key (kbd "C-S-M-'") 'windmove-right)
-
-(global-set-key (kbd "C-S-M-[") 'windmove-up)
-
-(global-set-key (kbd "M-d") 'jong-forward-delete-word)
-(global-set-key (kbd "M-<backspace>") 'jong-backward-delete-word)
+(global-set-key (kbd "M-d") 'jong-subword-forward-delete-word)
+(global-set-key (kbd "M-<backspace>") 'jong-subword-backword-delete-word)
 (global-set-key (kbd "C-<backspace>") nil)
 (global-set-key (kbd "C-M-y") 'jong-copy-current-line)
 (global-set-key (kbd "M-y") (lambda ()
@@ -1035,42 +1025,8 @@ Version 2017-07-08"
 (require 'jong-ether-test)
 (require 'jong-brth-test)
 
-
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
-;; (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --syncmode \"full\" --cache=2048"))
-;; (setq jong-go-run-command (format "./geth --datadir=~/testnet --nodiscover --verbosity 4  --syncmode \"full\" --cache=2048"))
-;; (setq jong-go-run-default-path "~/goworks-berith/src/bitbucket.org/ibizsoftware/berith-chain/cmd/geth/")
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;
-;; set the font style ;;
-;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; set a default font
-;; (when (member "courier" (font-family-list))
-;;   (set-face-attribute 'default nil :font "courier"))
-
-;; set a default font
-
-
-;; (when (member "DejaVu Sans Mono" (font-family-list))
-;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono-12")
-;;   (setq-default line-spacing 3))
-
-
-;; specify font for all unicode characters
-;; (when (member "Symbola" (font-family-list))
-;;   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
-
-
-;; specify font for chinese characters using default chinese font on linux
-;; (when (member "WenQuanYi Micro Hei" (font-family-list))
-;;   (set-fontset-font t '(#x4e00 . #x9fff) "WenQuanYi Micro Hei" ))
-
-;; (when (eq system-type 'darwin)
-;;   (set-face-attribute 'default nil :family "monaco"))
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
