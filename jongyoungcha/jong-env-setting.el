@@ -29,6 +29,8 @@
   (progn
 	(set-language-environment "Korean")
 	(load-theme 'solarized-dark t)
+   ;; (load-theme 'sanityinc-tomorrow-night t)
+	;; (load-theme 'sanityinc-tomorrow-blue t)
 	(setq jong-env-locale-value
 		  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
 
