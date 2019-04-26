@@ -1,21 +1,7 @@
 # -*- mode: snippet -*-
-# name: if ( cond1 )
-#{
-#	${exp1};
-#}
-#else
-#{
-#	${exp2};
-#}
-#
+# name: else { ... }
 # key: else
 # --
-
-if ( ${cond1} )
-{
-	${exp1};
-}
-else
-{
-	${exp2};
-}
+else${1: {
+    $0
+}}
