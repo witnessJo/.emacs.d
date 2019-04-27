@@ -45,6 +45,12 @@
   :ensure t
   :no-require t)
 
+(use-package syntax-subword
+  :ensure t
+  :config
+  (global-syntax-subword-mode)
+  (setq syntax-subword-skip-spaces t))
+  
 
 (defun jong-go-eshell ()
   (interactive)
@@ -453,44 +459,44 @@ Version 2017-07-08"
     )
   )
 
-(defvar jong-subword-forward-regexp "\\W?[[:upper:]]*[[:digit:][:lower:]]+\\|\\W?[[:upper:]]+\\|[^[:word:][:space:]_\n]+")
+;; (defvar jong-subword-forward-regexp "\\W?[[:upper:]]*[[:digit:][:lower:]]+\\|\\W?[[:upper:]]+\\|[^[:word:][:space:]_\n]+")
 
-(defvar jong-subword-backward-regexp "[[:space:][:word:]_\n][^\n[:space:][:word:]_]+\\|\\(\\W\\|[[:lower:]]\\)[[:upper:]]\\|\\W\\w+")
+;; (defvar jong-subword-backward-regexp "[[:space:][:word:]_\n][^\n[:space:][:word:]_]+\\|\\(\\W\\|[[:lower:]]\\)[[:upper:]]\\|\\W\\w+")
 
-(defun jong-subword-forward-internal () ""
-       (interactive)
-       (let ((case-fold-search nil))
-         (re-search-forward jong-subword-forward-regexp nil t))
-       (goto-char (match-end 0)))
+;; (defun jong-subword-forward-internal () ""
+;; (interactive)
+;; (let ((case-fold-search nil))
+;; (re-search-forward jong-subword-forward-regexp nil t))
+;; (goto-char (match-end 0)))
 
-(defun jong-subword-backward-internal () ""
-       (interactive)
-       (let ((case-fold-search nil))
-         (if (re-search-backward jong-subword-backward-regexp nil "don't panic!")
-             (goto-char (1+ (match-beginning 0))))))
+;; (defun jong-subword-backward-internal () ""
+;; (interactive)
+;; (let ((case-fold-search nil))
+;; (if (re-search-backward jong-subword-backward-regexp nil "don't panic!")
+;; (goto-char (1+ (match-beginning 0))))))
 
-(setq subword-forward-regexp 'jong-subword-forward-regexp)
-(setq subword-backward-regexp 'jong-subword-backward-regexp)
-(setq subword-backward-function 'jong-subword-backward-internal)
-(setq subword-forward-function 'jong-subword-forward-internal)
+;; (setq subword-forward-regexp 'jong-subword-forward-regexp)
+;; (setq subword-backward-regexp 'jong-subword-backward-regexp)
+;; (setq subword-backward-function 'jong-subword-backward-internal)
+;; (setq subword-forward-function 'jong-subword-forward-internal)
 
-(defun jong-subword-forward-delete-word ()
-  (interactive)
-  (let ((prev-pos (point))
-		  (next-pos (progn (call-interactively 'jong-subword-forward-internal)
-						       (point))))
-	 (delete-region prev-pos next-pos)
-	 )
-  )
+;; (defun jong-subword-forward-delete-word ()
+;; (interactive)
+;; (let ((prev-pos (point))
+;; (next-pos (progn (call-interactively 'jong-subword-forward-internal)
+;; (point))))
+;; (delete-region prev-pos next-pos)
+;; )
+;; )
 
-(defun jong-subword-backword-delete-word ()
-  (interactive)
-  (let ((prev-pos (point))
-		  (next-pos (progn (call-interactively 'jong-subword-backward-internal)
-						       (point))))
-	 (delete-region next-pos prev-pos)
-	 )
-  )
+;; (defun jong-subword-backword-delete-word ()
+;; (interactive)
+;; (let ((prev-pos (point))
+;; (next-pos (progn (call-interactively 'jong-subword-backward-internal)
+;; (point))))
+;; (delete-region next-pos prev-pos)
+;; )
+;; )
 
 
 (defun jong-copy-current-line ()
@@ -537,9 +543,7 @@ Version 2017-07-08"
 								        (kill-buffer (buffer-name))
 								        (call-interactively 'other-window)))
 
-(global-set-key (kbd "M-d") 'jong-subword-forward-delete-word)
-(global-set-key (kbd "M-<backspace>") 'jong-subword-backword-delete-word)
-(global-set-key (kbd "C-<backspace>") nil)
+
 (global-set-key (kbd "C-M-y") 'jong-copy-current-line)
 (global-set-key (kbd "M-y") (lambda ()
 							         (interactive)
@@ -574,20 +578,26 @@ Version 2017-07-08"
 
 
 ;; Forward word with candidate characters.
-(global-set-key (kbd "M-f") 'jong-subword-forward-internal)
-(global-set-key (kbd "M-F") (lambda () (interactive)
-							         (setq this-command-keys-shift-translated t)
-							         (if (equal (region-active-p) nil)
-								          (call-interactively 'set-mark-command))
-							         (jong-subword-forward-internal)))
+;; (global-set-key (kbd "M-f") 'jong-subword-forward-internal)
+;; (global-set-key (kbd "M-F") (lambda () (interactive)
+;; (setq this-command-keys-shift-translated t)
+;; (if (equal (region-active-p) nil)
+;; (call-interactively 'set-mark-command))
+;; (jong-subword-forward-internal)))
 
 ;; Back word with candidate characters.
-(global-set-key (kbd "M-b") 'jong-subword-backward-internal)
-(global-set-key (kbd "M-B") (lambda () (interactive)
-							         (setq this-command-keys-shift-translated t)
-							         (if (not (use-region-p))
-								          (call-interactively 'set-mark-command))
-							         (jong-subword-backward-internal)))
+;; (global-set-key (kbd "M-b") 'jong-subword-backward-internal)
+;; (global-set-key (kbd "M-B") (lambda () (interactive)
+;; (setq this-command-keys-shift-translated t)
+;; (if (not (use-region-p))
+;; (call-interactively 'set-mark-command))
+;; (jong-subword-backward-internal)))
+;; (global-set-key (kbd "M-d") 'jong-subword-forward-delete-word)
+;; (global-set-key (kbd "M-<backspace>") 'jong-subword-backword-delete-word)
+;; (global-set-key (kbd "C-<backspace>") nil)
+
+;; (global-subword-mode 1)
+(global-superword-mode 1)
 
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
@@ -751,7 +761,6 @@ Version 2017-07-08"
 (use-package auto-complete
   :ensure t)
 
-
 (use-package company
   :ensure t
   :config
@@ -830,8 +839,9 @@ Version 2017-07-08"
 (use-package  flycheck
   :ensure t
   :init
-  (global-flycheck-mode t))
-
+  (global-flycheck-mode t)
+  (set-face-attribute 'flycheck-fringe-warning nil :foreground (face-attribute 'fringe :background )))
+  
 (use-package auto-highlight-symbol
   :ensure t
   :init)
@@ -1050,54 +1060,56 @@ Version 2017-07-08"
  '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
    (quote
-	 ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
  '(eclim-eclipse-dirs (quote ((format "%s/eclipse" (getenv "HOME")))))
  '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
  '(fci-rule-color "#073642")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(frame-background-mode (quote dark))
+ '(global-flycheck-mode t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
-	 (solarized-color-blend it "#002b36" 0.25)
-	 (quote
-	  ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+    (solarized-color-blend it "#002b36" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
  '(highlight-symbol-foreground-color "#93a1a1")
  '(highlight-tail-colors
    (quote
-	 (("#073642" . 0)
-	  ("#546E00" . 20)
-	  ("#00736F" . 30)
-	  ("#00629D" . 50)
-	  ("#7B6000" . 60)
-	  ("#8B2C02" . 70)
-	  ("#93115C" . 85)
-	  ("#073642" . 100))))
+    (("#073642" . 0)
+     ("#546E00" . 20)
+     ("#00736F" . 30)
+     ("#00629D" . 50)
+     ("#7B6000" . 60)
+     ("#8B2C02" . 70)
+     ("#93115C" . 85)
+     ("#073642" . 100))))
  '(hl-bg-colors
    (quote
-	 ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
+    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
  '(hl-fg-colors
    (quote
-	 ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(hl-paren-colors (quote ("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900")))
+ '(lsp-ui-flycheck-enable t)
  '(magit-diff-use-overlays nil)
  '(nrepl-message-colors
    (quote
-	 ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-	 (smartparens dummyparens which-key web-mode xterm-color xref-js2 use-package treemacs tide solarized-theme smart-compile restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit lsp-ui lsp-java log4e js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx go-autocomplete ggtags flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs eclim dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo bash-completion autopair autodisass-java-bytecode auto-package-update auto-highlight-symbol anaconda-mode)))
+    (syntax-subword smartparens dummyparens which-key web-mode xterm-color xref-js2 use-package treemacs tide solarized-theme smart-compile restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit lsp-ui lsp-java log4e js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx go-autocomplete ggtags flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs eclim dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo bash-completion autopair autodisass-java-bytecode auto-package-update auto-highlight-symbol anaconda-mode)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
    (quote
-	 ((cmake-tab-width . 4)
-	  (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
-	  (projectile-project-root . "/home/jongyoungcha/projects/Chanker/")
-	  (projectile-project-root . "/Users/joyeongchan/projects/jyc-cheat/jyc-cheat-client/")
-	  (projectile-project-name . "jyc_cheat_client")
-	  (cmake-ide--build-dir-var . "./")
-	  (projectile-project-root . "/home/jongyoungcha/projects/aleth/"))))
+    ((cmake-tab-width . 4)
+     (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
+     (projectile-project-root . "/home/jongyoungcha/projects/Chanker/")
+     (projectile-project-root . "/Users/joyeongchan/projects/jyc-cheat/jyc-cheat-client/")
+     (projectile-project-name . "jyc_cheat_client")
+     (cmake-ide--build-dir-var . "./")
+     (projectile-project-root . "/home/jongyoungcha/projects/aleth/"))))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
@@ -1105,28 +1117,28 @@ Version 2017-07-08"
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map
    (quote
-	 ((20 . "#dc322f")
-	  (40 . "#c8805d801780")
-	  (60 . "#bec073400bc0")
-	  (80 . "#b58900")
-	  (100 . "#a5008e550000")
-	  (120 . "#9d0091000000")
-	  (140 . "#950093aa0000")
-	  (160 . "#8d0096550000")
-	  (180 . "#859900")
-	  (200 . "#66aa9baa32aa")
-	  (220 . "#57809d004c00")
-	  (240 . "#48559e556555")
-	  (260 . "#392a9faa7eaa")
-	  (280 . "#2aa198")
-	  (300 . "#28669833af33")
-	  (320 . "#279993ccbacc")
-	  (340 . "#26cc8f66c666")
-	  (360 . "#268bd2"))))
+    ((20 . "#dc322f")
+     (40 . "#c8805d801780")
+     (60 . "#bec073400bc0")
+     (80 . "#b58900")
+     (100 . "#a5008e550000")
+     (120 . "#9d0091000000")
+     (140 . "#950093aa0000")
+     (160 . "#8d0096550000")
+     (180 . "#859900")
+     (200 . "#66aa9baa32aa")
+     (220 . "#57809d004c00")
+     (240 . "#48559e556555")
+     (260 . "#392a9faa7eaa")
+     (280 . "#2aa198")
+     (300 . "#28669833af33")
+     (320 . "#279993ccbacc")
+     (340 . "#26cc8f66c666")
+     (360 . "#268bd2"))))
  '(vc-annotate-very-old-color nil)
  '(weechat-color-list
    (quote
-	 (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
+    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
  '(xterm-color-names
    ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
  '(xterm-color-names-bright
@@ -1136,4 +1148,4 @@ Version 2017-07-08"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(flycheck-fringe-error ((t (:background "DarkOrange4" :foreground "#FF6E64" :weight bold)))))

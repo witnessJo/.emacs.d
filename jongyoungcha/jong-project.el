@@ -136,7 +136,7 @@
   )
 
 
-(defun jong-project-exec-command (directory cmd)
+(defun jong-project-exec-command (directory cmd &optional after-func)
   (interactive)
   
   (unless (file-directory-p directory)
@@ -150,7 +150,11 @@
 	 (setq default-directory directory)
 	 (insert (format "Run the command $ %s" cmd))
 	 (goto-char (point-max))
-	 (ignore-errors (async-shell-command cmd (current-buffer) (current-buffer))))
+	 (ignore-errors (async-shell-command cmd (current-buffer) (current-buffer)))
+    (fundamental-mode)
+    (when (functionp after-func)
+      (funcall after-func))
+    )
   )
 
 
@@ -167,8 +171,11 @@
   (interactive)
   (jong-reload-dir-locals-for-current-buffer)
   (if (and (boundp 'jong-project-compile-default-dir) (boundp 'jong-project-compile-command))
-	   (jong-project-exec-command jong-project-compile-default-dir jong-project-compile-command)
-	 (message "\"projectile-project-root\" and \"jong-project-build-command were not binded."))
+	   (jong-project-exec-command jong-project-compile-default-dir
+                                 jong-project-compile-command
+                                 (lambda ()
+                                   (compilation-mode)))
+    (message "\"projectile-project-root\" and \"jong-project-build-command were not binded."))
   )
 
 
