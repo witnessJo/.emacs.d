@@ -48,9 +48,7 @@
 (use-package syntax-subword
   :ensure t
   :config
-  (global-syntax-subword-mode)
-  (setq syntax-subword-skip-spaces t))
-  
+  (global-syntax-subword-mode))
 
 (defun jong-go-eshell ()
   (interactive)
@@ -597,7 +595,7 @@ Version 2017-07-08"
 ;; (global-set-key (kbd "C-<backspace>") nil)
 
 ;; (global-subword-mode 1)
-(global-superword-mode 1)
+;; (global-superword-mode 1)
 
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)

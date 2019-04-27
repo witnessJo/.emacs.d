@@ -144,19 +144,22 @@
   
   (when (or (equal cmd nil) (string= cmd ""))
 	 (error (format "Couldnt find  %s\"" cmd)))
-  
+
   (with-current-buffer (get-buffer-create jong-project-output-buffer)
-	 (display-buffer (current-buffer))
 	 (setq default-directory directory)
 	 (insert (format "Run the command $ %s" cmd))
-	 (goto-char (point-max))
-	 (ignore-errors (async-shell-command cmd (current-buffer) (current-buffer)))
+    
+    (ignore-errors (async-shell-command cmd (current-buffer) (current-buffer)))
+    (sleep-for 0.1)
+    (set (make-local-variable 'window-point-insertion-type) t)
+    (display-buffer (current-buffer))
+    (goto-char (point-max))
     (fundamental-mode)
+    
     (when (functionp after-func)
       (funcall after-func))
     )
   )
-
 
 (defun jong-project-build-project ()
   (interactive)
