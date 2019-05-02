@@ -577,19 +577,19 @@ Version 2017-07-08"
 
 ;; Forward word with candidate characters.
 ;; (global-set-key (kbd "M-f") 'jong-subword-forward-internal)
-;; (global-set-key (kbd "M-F") (lambda () (interactive)
-;; (setq this-command-keys-shift-translated t)
-;; (if (equal (region-active-p) nil)
-;; (call-interactively 'set-mark-command))
-;; (jong-subword-forward-internal)))
+(global-set-key (kbd "M-S-f") (lambda () (interactive)
+                              (setq this-command-keys-shift-translated t)
+                              (if (equal (region-active-p) nil)
+                                  (call-interactively 'set-mark-command))
+                              (forward-word)))
 
 ;; Back word with candidate characters.
 ;; (global-set-key (kbd "M-b") 'jong-subword-backward-internal)
-;; (global-set-key (kbd "M-B") (lambda () (interactive)
-;; (setq this-command-keys-shift-translated t)
-;; (if (not (use-region-p))
-;; (call-interactively 'set-mark-command))
-;; (jong-subword-backward-internal)))
+(global-set-key (kbd "M-S-b") (lambda () (interactive)
+                              (setq this-command-keys-shift-translated t)
+                              (if (not (use-region-p))
+                                  (call-interactively 'set-mark-command))
+                              (backward-word)))
 ;; (global-set-key (kbd "M-d") 'jong-subword-forward-delete-word)
 ;; (global-set-key (kbd "M-<backspace>") 'jong-subword-backword-delete-word)
 ;; (global-set-key (kbd "C-<backspace>") nil)
@@ -839,7 +839,7 @@ Version 2017-07-08"
   :init
   (global-flycheck-mode t)
   (set-face-attribute 'flycheck-fringe-warning nil :foreground (face-attribute 'fringe :background )))
-  
+
 (use-package auto-highlight-symbol
   :ensure t
   :init)
@@ -1024,7 +1024,7 @@ Version 2017-07-08"
 (require 'jong-scheme)
 (require 'jong-cmake)
 (require 'jong-c)
-(require 'jong-java)
+;; (require 'jong-java)
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-nodejs)
@@ -1101,7 +1101,8 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
    (quote
-    ((cmake-tab-width . 4)
+    ((projectile-project-root . "/home/jongyoungcha/projects/bitcoin/")
+     (cmake-tab-width . 4)
      (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
      (projectile-project-root . "/home/jongyoungcha/projects/Chanker/")
      (projectile-project-root . "/Users/joyeongchan/projects/jyc-cheat/jyc-cheat-client/")

@@ -3,6 +3,7 @@
 ;;; Code:
 
 (defconst jong-project-output-buffer "*jong-project-output*")
+;; (defconst jong-project-output-buffer "*compilation*")
 (defconst jong-project-debug-buffer "*jong-project-debug*")
 
 (add-to-list 'jong-kill-buffer-patterns jong-project-output-buffer)
@@ -27,6 +28,8 @@
 (setq enable-local-variables t)
 (setq enable-local-eval t)
 
+
+(add-hook 'shell-mode-hook 'compilation-shell-minor-mode)
 
 (defun jong-project-send-command-to-buffer (cmd &optional buffer)
   "Send string to the sub process"
@@ -135,30 +138,28 @@
     )
   )
 
-
 (defun jong-project-exec-command (directory cmd &optional after-func)
   (interactive)
-  
-  (unless (file-directory-p directory)
-	 (error (format "Couldnt find the directory %s\"" directory)))
-  
-  (when (or (equal cmd nil) (string= cmd ""))
-	 (error (format "Couldnt find  %s\"" cmd)))
-
-  (with-current-buffer (get-buffer-create jong-project-output-buffer)
-	 (setq default-directory directory)
-	 (insert (format "Run the command $ %s" cmd))
+  (let ((default-directory directory)
+        (proc))
+    (unless (file-directory-p directory)
+	   (error (format "Couldnt find the directory %s\"" directory)))
     
-    (ignore-errors (async-shell-command cmd (current-buffer) (current-buffer)))
-    (sleep-for 0.1)
-    (set (make-local-variable 'window-point-insertion-type) t)
-    (display-buffer (current-buffer))
-    (goto-char (point-max))
-    (fundamental-mode)
-    
-    (when (functionp after-func)
-      (funcall after-func))
-    )
+    (when (or (equal cmd nil) (string= cmd ""))
+	   (error (format "Couldnt find  %s\"" cmd)))
+    (set-process-sentinel
+     (make-process  :name "jong-command"
+				        :buffer jong-project-output-buffer
+                    :stderr jong-project-output-buffer
+				        :command (list (format "%s/%s" directory cmd))
+				        :coding 'no-conversion)
+     (lambda (p e)
+       (ignore-errors (with-current-buffer (get-buffer jong-project-output-buffer)
+                        (compilation-mode)
+                        (compilation-shell-minor-mode))
+                      (when (functionp after-func)
+                        (funcall after-func)))))
+    (display-buffer (get-buffer-create jong-project-output-buffer)))
   )
 
 (defun jong-project-build-project ()
@@ -174,10 +175,10 @@
   (interactive)
   (jong-reload-dir-locals-for-current-buffer)
   (if (and (boundp 'jong-project-compile-default-dir) (boundp 'jong-project-compile-command))
-	   (jong-project-exec-command jong-project-compile-default-dir
-                                 jong-project-compile-command
-                                 (lambda ()
-                                   (compilation-mode)))
+	   (jong-project-exec-command jong-project-compile-default-dir jong-project-compile-command)
+    ;; jong-project-compile-command
+    ;; (lambda ()
+    ;; (compilation-mode)))
     (message "\"projectile-project-root\" and \"jong-project-build-command were not binded."))
   )
 
