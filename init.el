@@ -554,15 +554,34 @@ Version 2017-07-08"
 (global-set-key (kbd "C-h C-SPC") 'helm-all-mark-rings)
 
 (global-set-key (kbd "C-d") 'delete-forward-char)
+
+
+(defun jong-forward-line (number)
+  (interactive)
+  (let ((curr-column (- (point) (progn (beginning-of-line)
+                                       (point))))
+        (max-column)
+        (target-column))
+    (when (not (numberp number))
+      (error "Number was not Integer"))
+    
+    (forward-line number)
+    (setq target-column (+ (point) curr-column))
+    (setq max-column (progn (end-of-line)
+                            (point)))
+    (if (> target-column max-column)
+        (goto-char max-column)
+      (goto-char target-column))
+	 (recenter-top-bottom (line-number-at-pos)))
+  )
+
 (global-set-key (kbd "M-v") (lambda ()
 							         (interactive)
-							         ;; (call-interactively 'goto-line (+ (line-number-at-pos) 25))
-							         (forward-line -20)
-							         (recenter-top-bottom (line-number-at-pos))))
+                              (jong-forward-line -20)))
+
 (global-set-key (kbd "C-v") (lambda ()
 							         (interactive)
-							         (forward-line 20)
-							         (recenter-top-bottom (line-number-at-pos))))
+                              (jong-forward-line 20)))
 
 (defun pop-local-or-global-mark ()
   "Pop to local mark if it exists or to the global mark if it does not."
@@ -578,18 +597,18 @@ Version 2017-07-08"
 ;; Forward word with candidate characters.
 ;; (global-set-key (kbd "M-f") 'jong-subword-forward-internal)
 (global-set-key (kbd "M-S-f") (lambda () (interactive)
-                              (setq this-command-keys-shift-translated t)
-                              (if (equal (region-active-p) nil)
-                                  (call-interactively 'set-mark-command))
-                              (forward-word)))
+                                (setq this-command-keys-shift-translated t)
+                                (if (equal (region-active-p) nil)
+                                    (call-interactively 'set-mark-command))
+                                (forward-word)))
 
 ;; Back word with candidate characters.
 ;; (global-set-key (kbd "M-b") 'jong-subword-backward-internal)
 (global-set-key (kbd "M-S-b") (lambda () (interactive)
-                              (setq this-command-keys-shift-translated t)
-                              (if (not (use-region-p))
-                                  (call-interactively 'set-mark-command))
-                              (backward-word)))
+                                (setq this-command-keys-shift-translated t)
+                                (if (not (use-region-p))
+                                    (call-interactively 'set-mark-command))
+                                (backward-word)))
 ;; (global-set-key (kbd "M-d") 'jong-subword-forward-delete-word)
 ;; (global-set-key (kbd "M-<backspace>") 'jong-subword-backword-delete-word)
 ;; (global-set-key (kbd "C-<backspace>") nil)
