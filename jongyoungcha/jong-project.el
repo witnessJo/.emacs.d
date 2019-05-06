@@ -140,7 +140,9 @@
 
 (defun jong-project-exec-command (directory cmd &optional after-func)
   (interactive)
-  (let ((default-directory directory)
+  (let ((default-directory (if (not (file-directory-p directory))
+                               (error "The directory was not existing")
+                             directory))
         (proc))
     (unless (file-directory-p directory)
 	   (error (format "Couldnt find the directory %s\"" directory)))
@@ -148,11 +150,12 @@
     (when (or (equal cmd nil) (string= cmd ""))
 	   (error (format "Couldnt find  %s\"" cmd)))
     (set-process-sentinel
-     (make-process  :name "jong-command"
-				        :buffer jong-project-output-buffer
-                    :stderr jong-project-output-buffer
-				        :command (list (format "%s/%s" directory cmd))
-				        :coding 'no-conversion)
+     (start-file-process-shell-command "*jong-command*" jong-project-output-buffer cmd)
+     ;; (make-process  :name "jong-command"
+	  ;; :buffer jong-project-output-buffer
+     ;; :stderr jong-project-output-buffer
+	  ;; :command (list (format "%s/%s" directory cmd))
+	  ;; :coding 'no-conversion)
      (lambda (p e)
        (ignore-errors (with-current-buffer (get-buffer jong-project-output-buffer)
                         (compilation-mode)
