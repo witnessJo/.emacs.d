@@ -554,19 +554,23 @@ Version 2017-07-08"
       (pop-to-mark-command)
     (pop-global-mark)))
 
-
-(global-set-key (kbd "M-i") (lambda () (interactive) (forward-line -1)))
-(global-set-key (kbd "M-j") 'backward-char)
-(global-set-key (kbd "M-k") (lambda () (interactive) (forward-line 1)))
-(global-set-key (kbd "M-l") 'forward-char)
-
-
 (global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-next-buffer)
 
+(global-set-key (kbd "M-w") (lambda () (interactive) (forward-line -1)))
+(global-set-key (kbd "M-a") 'backward-char)
+(global-set-key (kbd "M-s") (lambda () (interactive) (forward-line 1)))
+(global-set-key (kbd "M-d") 'forward-char)
 
+(global-set-key (kbd "C-M-w") 'copy-region-as-kill)
 
 ;; Back word with candidate characters.
+(global-set-key (kbd "M-F") (lambda () (interactive)
+                              (setq this-command-keys-shift-translated t)
+                              (if (not (use-region-p))
+                                  (call-interactively 'set-mark-command))
+                              (forward-word)))
+
 (global-set-key (kbd "M-B") (lambda () (interactive)
                               (setq this-command-keys-shift-translated t)
                               (if (not (use-region-p))
