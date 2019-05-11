@@ -218,7 +218,9 @@
 (add-hook 'c-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook (lambda ()
-						         (setq flycheck-gcc-language-standard "c++14")))
+						         (setq flycheck-gcc-language-standard "c++14")
+                           (setq flycheck-clang-language-standard "c++14")
+                           (setq company-clang-arguments '("-std=c++14"))))
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
 
 

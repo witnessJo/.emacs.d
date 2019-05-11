@@ -149,13 +149,9 @@
     
     (when (or (equal cmd nil) (string= cmd ""))
 	   (error (format "Couldnt find  %s\"" cmd)))
+    (when (get-buffer jong-project-output-buffer) (kill-buffer jong-project-output-buffer))
     (set-process-sentinel
      (start-file-process-shell-command "*jong-command*" jong-project-output-buffer cmd)
-     ;; (make-process  :name "jong-command"
-	  ;; :buffer jong-project-output-buffer
-     ;; :stderr jong-project-output-buffer
-	  ;; :command (list (format "%s/%s" directory cmd))
-	  ;; :coding 'no-conversion)
      (lambda (p e)
        (ignore-errors (with-current-buffer (get-buffer jong-project-output-buffer)
                         (compilation-mode)

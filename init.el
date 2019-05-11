@@ -585,7 +585,7 @@ Version 2017-07-08"
     (define-key map (kbd "M-<backspace>") 'syntax-subword-backward-kill)
     (define-key map (kbd "C-<backspace>") 'syntax-subword-kill)
     (global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
-    (global-set-key (kbd "C-x C-n") 'jong-nextuffer)
+    (global-set-key (kbd "C-x C-n") 'jong-next-buffer)
     (global-set-key (kbd "C-S-w") 'copy-region-as-kill)
     map)
   "jong-keys-minor-mode keymap.")
@@ -664,7 +664,7 @@ Version 2017-07-08"
 				(forward-line 1)))
 
 
-(global-set-key (kbd "C-=") 'jong-switch-last-two-buffers)
+(global-set-key (kbd "C--") 'jong-switch-last-two-buffers)
 (global-set-key (kbd "C-x C-o") 'other-window)
 (global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
 (global-set-key (kbd "C-c x") 'other-window)
@@ -676,8 +676,8 @@ Version 2017-07-08"
 (global-set-key (kbd "M-c M-b") 'jong-show-buffer-other-window)
 (global-set-key (kbd "M-c C-s") 'jong-isearch-forward-other-window)
 (global-set-key (kbd "M-c C-r") 'jong-isearch-backward-other-window)
-(global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
-(global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window -15)))
+(global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window -15)))
+(global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window 15)))
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
 
 (global-set-key (kbd "C-c <") (lambda() (interactive)
