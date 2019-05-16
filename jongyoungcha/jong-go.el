@@ -20,12 +20,16 @@
   :ensure t)
 
 (use-package go-eldoc
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook go-mode-hook 'go-eldoc-setup))
+
+(use-package go-complete
+  :ensure t
+  :config
+  (add-hook 'completion-at-point 'go-complete-at-point))
 
 (use-package go-direx
-  :ensure t)
-
-(use-package go-eldoc
   :ensure t)
 
 (use-package flycheck
@@ -44,7 +48,12 @@
   :ensure t)
 
 (use-package go-dlv
+  :ensure t
+  )
+
+(use-package go-rename
   :ensure t)
+
 
 
 (defun jong-set-go-envs()
@@ -172,7 +181,8 @@ And the environment variable was existing, Download go binaries from the interne
                         "github.com/dougm/goflymake"
                         "golang.org/x/tools/cmd/godoc"
                         "golang.org/x/tools/cmd/guru"
-                        "golang.org/x/tools/cmd/goimports")))
+                        "golang.org/x/tools/cmd/goimports"
+						"golang.org/x/tools/cmd/gopls")))
     (if (getenv "GOPATH")
         (progn
           (dolist (elt list-url cmd)
@@ -492,7 +502,6 @@ And the environment variable was existing, Download go binaries from the interne
                           
                           ;; syntax highlight
                           (go-guru-hl-identifier-mode)
-                          (go-eldoc-setup)
                           
                           ;; (require 'auto-complete-config)
                           ;; (ac-config-default)
