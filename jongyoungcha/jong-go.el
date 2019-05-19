@@ -22,12 +22,22 @@
 (use-package go-eldoc
   :ensure t
   :config
-  (add-hook go-mode-hook 'go-eldoc-setup))
+  (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 (use-package go-complete
   :ensure t
   :config
   (add-hook 'completion-at-point 'go-complete-at-point))
+
+;; (use-package go-imports
+;; :ensure t
+;; :config
+;; (add-hook 'go-mode-hook
+;; #'(lambda()
+;; (require 'go-imports)
+;; (define-key go-mode-map (kbd "C-c ") 'go-imports-insert-import)
+;; (define-key go-mode-map (kdb "C-c g l") 'go-imports-reload-packages-list)))
+;; )
 
 (use-package go-direx
   :ensure t)
@@ -48,12 +58,16 @@
   :ensure t)
 
 (use-package go-dlv
-  :ensure t
-  )
+  :ensure t)
 
 (use-package go-rename
   :ensure t)
 
+(use-package dap-mode
+  :ensure t)
+
+(use-package lsp-mode
+  :ensure t)
 
 
 (defun jong-set-go-envs()

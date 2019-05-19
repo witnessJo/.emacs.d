@@ -29,7 +29,7 @@
   (progn
 	(set-language-environment "Korean")
 	(load-theme 'solarized-dark t)
-	(with-no-warnings (setq projectile-indexing-method 'native))
+	(with-no-warnings (setq projectile-indexing-method 'hybrid))
    ;; (load-theme 'sanityinc-tomorrow-night t)
 	;; (load-theme 'sanityinc-tomorrow-blue t)
 	(setq jong-env-locale-value
