@@ -20,10 +20,10 @@
   :ensure t)
 
 (use-package go-eldoc
-  :ensure t
-  :config
-  (add-hook go-mode-hook 'go-eldoc-setup))
-
+  :ensure t)
+  ;; :config
+  ;; (add-hook go-mode-hook 'go-eldoc-setup))
+  
 (use-package go-complete
   :ensure t
   :config
