@@ -415,21 +415,21 @@ Version 2017-07-08"
         (base-pos 0)
         (fword-pos 0)
         (candidate-pos 0)
-	(curr-char)
-	)
+		(curr-char)
+		)
     (setq curr-char (string (char-after (point))))
     (if (string-match curr-char "[ \n\t] ")
-	(call-interactively #'hungry-delete-forward)
+		(call-interactively #'hungry-delete-forward)
       (progn
-	(setq base-pos (point))
-	(search-forward-regexp candidate-chars nil 'noerror)
-	(setq candidate-pos (point))
-	(forward-word)
-	(setq fword-pos (point))
-	(goto-char base-pos)
-	(if (> candidate-pos fword-pos)
-	    (delete-region base-pos fword-pos)
-	  (delete-region base-pos candidate-pos))))
+		(setq base-pos (point))
+		(search-forward-regexp candidate-chars nil 'noerror)
+		(setq candidate-pos (point))
+		(forward-word)
+		(setq fword-pos (point))
+		(goto-char base-pos)
+		(if (> candidate-pos fword-pos)
+			(delete-region base-pos fword-pos)
+		  (delete-region base-pos candidate-pos))))
     )
   )
 
@@ -438,29 +438,29 @@ Version 2017-07-08"
   "Chan 'backward-delete-word."
   (interactive)
   (let ((target-string "")
-	(base-pos 0)
-	(bword-pos 0)
-	(candidate-pos 0)
-	(curr-char)
-	)
+		(base-pos 0)
+		(bword-pos 0)
+		(candidate-pos 0)
+		(curr-char)
+		)
     (setq curr-char (string (char-after (1- (point)))))
     (if (string-match curr-char "[ \n] ")
-	(call-interactively #'hungry-delete-backward)
+		(call-interactively #'hungry-delete-backward)
       (progn
-	(setq base-pos (point))
-	(search-backward-regexp candidate-chars nil 'noerror)
-	(setq candidate-pos (point))
-	(backward-word)
-	(setq bword-pos (point))
-	(goto-char base-pos)
-	(if (> candidate-pos bword-pos)
-	    (progn
-	      (ignore-errors (delete-region candidate-pos base-pos))
-	      (goto-char candidate-pos)
-	      ;; (message "%s candpos : %d bword-pos %d" prev-candidate-char candidate-pos bword-pos)
-	      )
-	  (ignore-errors (delete-region (1- bword-pos) base-pos)))
-	))
+		(setq base-pos (point))
+		(search-backward-regexp candidate-chars nil 'noerror)
+		(setq candidate-pos (point))
+		(backward-word)
+		(setq bword-pos (point))
+		(goto-char base-pos)
+		(if (> candidate-pos bword-pos)
+			(progn
+			  (ignore-errors (delete-region candidate-pos base-pos))
+			  (goto-char candidate-pos)
+			  ;; (message "%s candpos : %d bword-pos %d" prev-candidate-char candidate-pos bword-pos)
+			  )
+		  (ignore-errors (delete-region (1- bword-pos) base-pos)))
+		))
     )
   )
 
@@ -469,8 +469,8 @@ Version 2017-07-08"
   "Chan 'copy current line."
   (interactive)
   (let ((prev-pos (point))
-	(start-line-pos (progn (beginning-of-line) (point)))
-	(end-line-pos (progn (end-of-line) (point))))
+		(start-line-pos (progn (beginning-of-line) (point)))
+		(end-line-pos (progn (end-of-line) (point))))
     (kill-new (buffer-substring start-line-pos end-line-pos))
     (goto-char prev-pos)))
 
@@ -484,18 +484,18 @@ Version 2017-07-08"
 (setq set-mark-command-repeat-pop t)
 (global-set-key (kbd "S-SPC") 'toggle-korean-input-method)
 (global-set-key (kbd "C-k") (lambda () (interactive)
-			      (call-interactively 'comint-kill-whole-line)
-			      (call-interactively 'indent-for-tab-command)))
+							  (call-interactively 'comint-kill-whole-line)
+							  (call-interactively 'indent-for-tab-command)))
 
 (global-set-key (kbd "M-;") (lambda () (interactive)
-			      (let ((base-pos 0))
-				(setq base-pos (point))
-				(beginning-of-line)
-				(call-interactively 'comment-line)
-				(goto-char base-pos)
-				(forward-line)
-				(indent-for-tab-command)
-				)))
+							  (let ((base-pos 0))
+								(setq base-pos (point))
+								(beginning-of-line)
+								(call-interactively 'comment-line)
+								(goto-char base-pos)
+								(forward-line)
+								(indent-for-tab-command)
+								)))
 
 
 (global-set-key (kbd "C-S-o") 'jong-open-line-above)
@@ -503,18 +503,18 @@ Version 2017-07-08"
 
 
 (global-set-key (kbd "C-c k") (lambda() (interactive)
-				(kill-buffer (buffer-name))))
+								(kill-buffer (buffer-name))))
 (global-set-key (kbd "M-c k") (lambda() (interactive)
-				(call-interactively 'other-window)
-				(kill-buffer (buffer-name))
-				(call-interactively 'other-window)))
+								(call-interactively 'other-window)
+								(kill-buffer (buffer-name))
+								(call-interactively 'other-window)))
 
 
 (global-set-key (kbd "C-M-y") 'jong-copy-current-line)
 (global-set-key (kbd "M-y") (lambda ()
-			      (interactive)
-			      (jong-open-line-below)
-			      (call-interactively 'yank)))
+							  (interactive)
+							  (jong-open-line-below)
+							  (call-interactively 'yank)))
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
@@ -543,11 +543,11 @@ Version 2017-07-08"
     (recenter-top-bottom (line-number-at-pos))))
 
 (global-set-key (kbd "M-v") (lambda ()
-			      (interactive)
+							  (interactive)
                               (jong-forward-line -20)))
 
 (global-set-key (kbd "C-v") (lambda ()
-			      (interactive)
+							  (interactive)
                               (jong-forward-line 20)))
 
 (defun pop-local-or-global-mark ()
@@ -560,34 +560,39 @@ Version 2017-07-08"
 
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "M-w") (lambda () (interactive) (forward-line -1)))
-    (define-key map (kbd "C-M-w") (lambda () (interactive) (forward-line -1)))
-	(define-key map (kbd "C-<up>") (lambda () (interactive) (forward-line -1)))
+    (define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
+    (define-key map (kbd "C-M-w") (lambda () (interactive) (jong-forward-line -1)))
+	(define-key map (kbd "C-<up>") (lambda () (interactive) (jong-forward-line -1)))
     (define-key map (kbd "M-a") 'backward-char)
-    (define-key map (kbd "M-s") (lambda () (interactive) (forward-line 1)))
-    (define-key map (kbd "C-M-s") (lambda () (interactive) (forward-line 1)))
-	(define-key map (kbd "C-<down>") (lambda () (interactive) (forward-line 1)))
+    (define-key map (kbd "M-s") (lambda () (interactive) (jong-forward-line 1)))
+    (define-key map (kbd "C-M-s") (lambda () (interactive) (jong-forward-line 1)))
+	(define-key map (kbd "C-<down>") (lambda () (interactive) (jong-forward-line 1)))
     (define-key map (kbd "M-d") 'forward-char)
-    (define-key map (kbd "C-M-d") 'syntax-subword-forward)
-    (define-key map (kbd "C-M-a") 'syntax-subword-backward)
-    (define-key map (kbd "C-M-S-d") (lambda () (interactive)
-				      (setq this-command-keys-shift-translated t)
-				      (if (not (use-region-p))
-					  (call-interactively 'set-mark-command))
-				      (forward-word)))
+    (define-key map (kbd "C-M-d") 'syntax-subword-backward)
+	(define-key map (kbd "C-M-a") 'syntax-subword-backward)
     (define-key map (kbd "C-M-S-a") (lambda () (interactive)
-				      (setq this-command-keys-shift-translated t)
-				      (if (not (use-region-p))
-					  (call-interactively 'set-mark-command))
-				      (backward-word)))
+									  (setq this-command-keys-shift-translated t)
+									  (if (not (use-region-p))
+										  (call-interactively 'set-mark-command))
+									  (backward-word)))
+    (define-key map (kbd "C-M-S-d") (lambda () (interactive)
+									  (setq this-command-keys-shift-translated t)
+									  (if (not (use-region-p))
+										  (call-interactively 'set-mark-command))
+									  (forward-word)))
     (define-key map (kbd "M-e") 'forward-sentence)
     (define-key map (kbd "M-q") 'backward-sentence)
-    (define-key map (kbd "M-<backspace>") 'syntax-subword-backward-kill)
-    (define-key map (kbd "C-<backspace>") 'syntax-subword-kill)
-    (global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
-    (global-set-key (kbd "C-x C-n") 'jong-next-buffer)
-    (global-set-key (kbd "C-S-w") 'copy-region-as-kill)
-    map)
+    (define-key map (kbd "M-<backspace>") (lambda () (interactive)
+											(progn (call-interactively 'syntax-subword-backward-kill)
+												   (pop kill-ring))))
+	(define-key map (kbd "C-<backspace>") (lambda () (interactive)
+											(progn (call-interactively 'syntax-subword-kill)
+												   (pop kill-ring))))
+	
+	(global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
+	(global-set-key (kbd "C-x C-n") 'jong-next-buffer)
+	(global-set-key (kbd "C-S-w") 'copy-region-as-kill)
+	map)
   "jong-keys-minor-mode keymap.")
 
 
@@ -607,63 +612,59 @@ Version 2017-07-08"
 
 ;; Back word with candidate characters.
 (global-set-key (kbd "M-F") (lambda () (interactive)
-                              (setq this-command-keys-shift-translated t)
-                              (if (not (use-region-p))
-                                  (call-interactively 'set-mark-command))
-                              (forward-word)))
+							  (setq this-command-keys-shift-translated t)
+							  (if (not (use-region-p))
+								  (call-interactively 'set-mark-command))
+							  (forward-word)))
 
 (global-set-key (kbd "M-B") (lambda () (interactive)
-                              (setq this-command-keys-shift-translated t)
-                              (if (not (use-region-p))
-                                  (call-interactively 'set-mark-command))
-                              (backward-word)))
+							  (setq this-command-keys-shift-translated t)
+							  (if (not (use-region-p))
+								  (call-interactively 'set-mark-command))
+							  (backward-word)))
 
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
-				(setq this-command-keys-shift-translated t)
-				(if (not (use-region-p))
-				    (call-interactively 'set-mark-command))
-				(goto-char (1+ (point)))))
+								(setq this-command-keys-shift-translated t)
+								(if (not (use-region-p))
+									(call-interactively 'set-mark-command))
+								(goto-char (1+ (point)))))
 
 (global-set-key (kbd "C-S-b") (lambda () (interactive)
-				(setq this-command-keys-shift-translated t)
-				(if (not (use-region-p))
-				    (call-interactively 'set-mark-command))
-				(goto-char (1- (point)))))
+								(setq this-command-keys-shift-translated t)
+								(if (not (use-region-p))
+									(call-interactively 'set-mark-command))
+								(goto-char (1- (point)))))
 
 (global-set-key (kbd "C-S-a") (lambda () (interactive)
-				(setq this-command-keys-shift-translated t)
-				(if (not (use-region-p))
-				    (call-interactively 'set-mark-command))
-				(beginning-of-line)))
-
+								(setq this-command-keys-shift-translated t)
+								(if (not (use-region-p))
+									(call-interactively 'set-mark-command))
+								(beginning-of-line)))
 
 (global-set-key (kbd "C-S-e") (lambda () (interactive)
-				(setq this-command-keys-shift-translated t)
-				(if (not (use-region-p))
-				    (call-interactively 'set-mark-command))
-				(end-of-line)))
-
+								(setq this-command-keys-shift-translated t)
+								(if (not (use-region-p))
+									(call-interactively 'set-mark-command))
+								(end-of-line)))
 
 (global-set-key (kbd "C-S-a") (lambda () (interactive)
-				(setq this-command-keys-shift-translated t)
-				(if (not (use-region-p))
-				    (call-interactively 'set-mark-command))
-				(beginning-of-line)))
-
+								(setq this-command-keys-shift-translated t)
+								(if (not (use-region-p))
+									(call-interactively 'set-mark-command))
+								(beginning-of-line)))
 
 (global-set-key (kbd "C-S-p") (lambda () (interactive)
-				(setq this-command-keys-shift-translated t)
-				(if (not (use-region-p))
-				    (call-interactively 'set-mark-command))
-				(forward-line -1)))
+								(setq this-command-keys-shift-translated t)
+								(if (not (use-region-p))
+									(call-interactively 'set-mark-command))
+								(forward-line -1)))
 
 (global-set-key (kbd "C-S-n") (lambda () (interactive)
-				(setq this-command-keys-shift-translated t)
-				(if (not (use-region-p))
-				    (call-interactively 'set-mark-command))
-				(forward-line 1)))
-
+								(setq this-command-keys-shift-translated t)
+								(if (not (use-region-p))
+									(call-interactively 'set-mark-command))
+								(forward-line 1)))
 
 (global-set-key (kbd "C--") 'jong-switch-last-two-buffers)
 (global-set-key (kbd "C-x C-o") 'other-window)
@@ -682,33 +683,33 @@ Version 2017-07-08"
 (global-set-key (kbd "C-x w b") 'switch-to-buffer-other-window)
 
 (global-set-key (kbd "C-c <") (lambda() (interactive)
-				(call-interactively 'eyebrowse-prev-window-config)
-				(message "slot : %s" (eyebrowse--get 'current-slot))))
+								(call-interactively 'eyebrowse-prev-window-config)
+								(message "slot : %s" (eyebrowse--get 'current-slot))))
 
 (global-set-key (kbd "C-c >") (lambda() (interactive)
-				(call-interactively 'eyebrowse-next-window-config)
-				(message "slot : %s" (eyebrowse--get 'current-slot))))
+								(call-interactively 'eyebrowse-next-window-config)
+								(message "slot : %s" (eyebrowse--get 'current-slot))))
 
 (global-set-key (kbd "C-c w w") (lambda() (interactive)
-				  (call-interactively 'eyebrowse-switch-to-window-config-1)
-				  (call-interactively 'eyebrowse-switch-to-window-config-2)
-				  (call-interactively 'eyebrowse-switch-to-window-config-3)))
+								  (call-interactively 'eyebrowse-switch-to-window-config-1)
+								  (call-interactively 'eyebrowse-switch-to-window-config-2)
+								  (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 
 (defun jong-reload-dir-locals-for-current-buffer ()
   "reload dir locals for the current buffer"
   (interactive)
   (let ((enable-local-variables :all))
-    (hack-dir-local-variables-non-file-buffer)))
+	(hack-dir-local-variables-non-file-buffer)))
 
 (defun jong-reload-dir-locals-for-all-buffer-in-this-directory ()
   "for every buffer iwth the same `default-directory` as the current buffer's, reload dir-locals."
   (interactive)
   (let ((dir default-directory))
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-	(when (equal default-directory dir))
-	(jong-reload-dir-locals-for-current-buffer)))))
+	(dolist (buffer (buffer-list))
+	  (with-current-buffer buffer
+		(when (equal default-directory dir))
+		(jong-reload-dir-locals-for-current-buffer)))))
 
 
 ;; default setting.
@@ -716,15 +717,15 @@ Version 2017-07-08"
   "Transparency frame."
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
-    (set-frame-parameter
-     nil 'alpha
-     (if (eql (cond ((numberp alpha) alpha)
-		    ((numberp (cdr alpha)) (cdr alpha))
-		    ;; Also handle undocumented (<active> <inactive>) form.
+	(set-frame-parameter
+	 nil 'alpha
+	 (if (eql (cond ((numberp alpha) alpha)
+					((numberp (cdr alpha)) (cdr alpha))
+					;; Also handle undocumented (<active> <inactive>) form.
 
-		    ((numberp (cadr alpha)) (cadr alpha)))
-	      100)
-	 '(85 . 50) '(100 . 100)))))
+					((numberp (cadr alpha)) (cadr alpha)))
+			  100)
+		 '(85 . 50) '(100 . 100)))))
 
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
@@ -748,10 +749,10 @@ Version 2017-07-08"
   (show-paren-mode 1)
   (set-face-background 'show-paren-match-face (face-background 'default))
   (if (boundp 'font-lock-comment-face)
-      (set-face-foreground 'show-paren-match-face
-			   (face-foreground 'font-lock-comment-face))
-    (set-face-foreground 'show-paren-match-face
-			 (face-foreground 'default)))
+	  (set-face-foreground 'show-paren-match-face
+						   (face-foreground 'font-lock-comment-face))
+	(set-face-foreground 'show-paren-match-face
+						 (face-foreground 'default)))
   (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
 
 (require 'paren)
@@ -828,12 +829,12 @@ Version 2017-07-08"
   "Read user input command and set 'projectile-project-run-cmd'."
   (interactive)
   (let (user-input)
-    (if (not (equal "" (setq user-input (read-string "Enter the command : "))))
-	(progn
-	  (setq projectile-project-run-cmd user-input)
-	  (message "Changed projectile-project-run-cmd as %s" user-input))
-      (message "The command was empty..."))
-    ))
+	(if (not (equal "" (setq user-input (read-string "Enter the command : "))))
+		(progn
+		  (setq projectile-project-run-cmd user-input)
+		  (message "Changed projectile-project-run-cmd as %s" user-input))
+	  (message "The command was empty..."))
+	))
 
 (global-set-key (kbd "C-c p p") 'projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'projectile-find-file)
@@ -875,8 +876,8 @@ Version 2017-07-08"
 ;;;; elisp develope environments ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'emacs-lisp-mode-hook
-	  (lambda()
-	    (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
+		  (lambda()
+			(local-set-key (kbd "C-c g g") 'xref-find-definitions)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  python develope environments  ;;;;
@@ -897,8 +898,8 @@ Version 2017-07-08"
 (use-package company-jedi
   :ensure t)
 (add-hook 'python-mode-hook
-	  (lambda()
-	    (add-to-list 'company-backend 'company-jedi)))
+		  (lambda()
+			(add-to-list 'company-backend 'company-jedi)))
 
 (global-set-key (kbd "C-c i") 'indent-region)
 
@@ -920,15 +921,15 @@ Version 2017-07-08"
   (interactive)
   (cond
    ((window-in-direction 'above)
-    (windmove-up)
-    (delete-window))
+	(windmove-up)
+	(delete-window))
    ((window-in-direction 'below)
-    (windmove-down)
-    (delete-window))
+	(windmove-down)
+	(delete-window))
    ((window-in-direction 'left)
-    nil)
+	nil)
    ((window-in-direction 'right)
-    nil))
+	nil))
   )
 
 
@@ -937,37 +938,37 @@ Version 2017-07-08"
   :type 'list)
 
 (setq jong-kill-buffer-patterns (list "*RTags*"
-				      "*compilation*"
-				      "*Occur*"
-				      "*Help*"
-				      "^\*godoc.*"
-				      "*Warnings*"
-				      "*xref*"
-				      "*Node Shell*"
-				      "*Google Translate*"
-				      "*jong-output*"))
+									  "*compilation*"
+									  "*Occur*"
+									  "*Help*"
+									  "^\*godoc.*"
+									  "*Warnings*"
+									  "*xref*"
+									  "*Node Shell*"
+									  "*Google Translate*"
+									  "*jong-output*"))
 
 (defun jong-kill-temporary-buffers ()
   "Kill current buffer unconditionally."
   (interactive)
   (dolist (pattern jong-kill-buffer-patterns)
-    (dolist (buffer (buffer-list))
-      (when (string-match pattern (buffer-name buffer))
-	(kill-buffer buffer))))
+	(dolist (buffer (buffer-list))
+	  (when (string-match pattern (buffer-name buffer))
+		(kill-buffer buffer))))
   (delete-above-below-window))
 
 
 (global-set-key (kbd "C-g") (lambda () (interactive)
-			      (jong-kill-temporary-buffers)
-			      (keyboard-quit)))
+							  (jong-kill-temporary-buffers)
+							  (keyboard-quit)))
 
 (add-hook 'python-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
-	    (local-set-key (kbd "C-c c c") 'jyc-run-python)
-	    (local-set-key (kbd "C-S-g") 'close-compilation-window)
-	    (linum-mode t)
-	    ))
+		  (lambda ()
+			(local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
+			(local-set-key (kbd "C-c c c") 'jyc-run-python)
+			(local-set-key (kbd "C-S-g") 'close-compilation-window)
+			(linum-mode t)
+			))
 
 
 (defun create-tags (dir-name)
@@ -984,21 +985,21 @@ Version 2017-07-08"
   "Rerun etags and reload tags if tag not found and redo find-tag.              
    If buffer is modified, ask about save before running etags."
   (let ((extension (file-name-extension (buffer-file-name))))
-    (condition-case err
-	ad-do-it
-      (error (and (buffer-modified-p)
-		  (not (ding))
-		  (y-or-n-p "Buffer is modified, save it? ")
-		  (save-buffer))
-	     (er-refresh-etags extension)
-	     ad-do-it))))
+	(condition-case err
+		ad-do-it
+	  (error (and (buffer-modified-p)
+				  (not (ding))
+				  (y-or-n-p "Buffer is modified, save it? ")
+				  (save-buffer))
+			 (er-refresh-etags extension)
+			 ad-do-it))))
 
 (defun er-refresh-etags (&optional extension)
   "Run etags on all peer files in current dir and reload them silently."
   (interactive)
   (shell-command (format "etags *.%s" (or extension "el")))
   (let ((tags-revert-without-query t))  ; don't query, revert silently          
-    (visit-tags-table default-directory nil)))
+	(visit-tags-table default-directory nil)))
 
 
 
@@ -1025,8 +1026,8 @@ Version 2017-07-08"
 (use-package markdown-mode
   :ensure t  :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
-	 ("\\.md\\'" . markdown-mode)
-	 ("\\.markdown\\'" . markdown-mode))
+		 ("\\.md\\'" . markdown-mode)
+		 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
 
