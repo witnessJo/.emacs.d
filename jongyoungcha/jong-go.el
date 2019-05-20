@@ -588,3 +588,4 @@ And the environment variable was existing, Download go binaries from the interne
 
 (provide 'jong-go)
 ;;;
+v
