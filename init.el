@@ -206,7 +206,6 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (use-package yasnippet
   :ensure t)
 (require 'yasnippet)
