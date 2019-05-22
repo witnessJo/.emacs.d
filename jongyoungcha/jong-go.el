@@ -76,13 +76,17 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-copy-envs '("PATH" "GOROOT" "GOPATH"))))
 
-(add-to-list 'exec-path (expand-file-name (format "%s/bin" (getenv "GOPATH"))))
-(add-to-list 'exec-path (expand-file-name (format "%s/bin/godef" (getenv "GOPATH"))))
+(if (getenv "GOPATH")
+	(add-to-list 'exec-path (expand-file-name (format "%s/bin" (getenv "GOPATH"))))
+  (error "$GOPATH was not exported"))
 
+(append #'jong-kill-temporary-buffers '("*jong-error*"
+										"*go-guru-output*"
+										"*Gofmt Errors*"))
 
-(add-to-list #'jong-kill-buffer-patterns "*jong-error*")
-(add-to-list #'jong-kill-buffer-patterns "*go-guru-output*")
-(add-to-list #'jong-kill-buffer-patterns "*Gofmt Errors*")
+;; (add-to-list #'jong-kill-buffer-patterns "*jong-error*")
+;; (add-to-list #'jong-kill-buffer-patterns "*go-guru-output*")
+;; (add-to-list #'jong-kill-buffer-patterns "*Gofmt Errors*")
 
 (defun jong-go-chan-gud-stepout ()
   "This is ..."
@@ -135,11 +139,13 @@
   (local-set-key (kbd "<f12>") 'jong-go-chan-gud-stepout))
 
 
-
 (defun jong-get-imported-packages ()
   "Get Imported package "
   (interactive)
   (let ((output-buffer "*jong-output-buffer*")
+		(extract-pattern-whole "^[[:space:]]*import[[:space:]]*(\\([[:ascii:]]+?\\))")
+		(extract-pattern-elem "^[[:space:]]*.*\\\"\\(.*\\)\\\\")
+		(imported-string "")
         (base-pos (point))
         (package-url-list nil)
         (import-start-pattern "^.*import.*[(]")
@@ -147,37 +153,43 @@
         (extension (file-name-extension (buffer-file-name)))
         (buffer-temp nil)
         (command nil))
-    (if (not (equal extension "go"))
-        (progn
-          (message "This file is not for golang...")
-          nil)
-      (progn
-        (goto-char (point-min))
-        (re-search-forward import-start-pattern)
-        (set-mark (point))
-        (re-search-forward import-end-pattern)
-        (if (region-active-p)
-            ;; (message-box "ext : %s sub %s" extension (buffer-substring (region-beginning) (1- (region-end))))
-            (progn
-              (setq buffer-temp (buffer-substring (region-beginning) (1- (region-end))))
-              (setq package-url-list (split-string buffer-temp "\n"))
-              (with-current-buffer (get-buffer-create output-buffer)
-                (ignore-errors (shell (current-buffer)))
-                (display-buffer (current-buffer))
-                (dolist (package-url package-url-list)
-                  ;; (setq package-url (string-trim package-url))
-                  ;; (setq command (format "go get %s" package-url))
-                  ;; (shell-command command (current-buffer))
-                  ;; (start-process "go get" (current-buffer) "go" "get" package-url)
-                  (start-process-shell-command "go-get" (current-buffer) (format "go get %s" package-url))
-                  ;; (goto-char (point-max))
-                  ;; (insert command)
-                  ;; (eshell-send-input)
-                  ;; (autopair-newline)
-                  ))))
-        (deactivate-mark)
-        (goto-char base-pos)))
-    )
+    (unless (equal extension "go")
+      (error "This file is not for golang"))
+
+	(string-match extract-pattern-whole (buffer-substring-no-properties (point-min) (point-max)))
+	(setq imported-string (match-string 1 (buffer-substring-no-properties (point-min) (point-max))))
+	(split-string imported-string "\n")
+
+	
+	
+	
+	;; (progn
+	;; (goto-char (point-min))
+	;; (re-search-forward import-start-pattern)
+	;; (set-mark (point))
+	;; (re-search-forward import-end-pattern)
+	;; (if (region-active-p)
+    ;; (message-box "ext : %s sub %s" extension (buffer-substring (region-beginning) (1- (region-end))))
+    ;; (progn
+    ;; (setq buffer-temp (buffer-substring (region-beginning) (1- (region-end))))
+    ;; (setq package-url-list (split-string buffer-temp "\n"))
+    ;; (with-current-buffer (get-buffer-create output-buffer)
+    ;; (ignore-errors (shell (current-buffer)))
+    ;; (display-buffer (current-buffer))
+    ;; (dolist (package-url package-url-list)
+    ;; (setq package-url (string-trim package-url))
+    ;; (setq command (format "go get %s" package-url))
+    ;; (shell-command command (current-buffer))
+    ;; (start-process "go get" (current-buffer) "go" "get" package-url)
+    ;; (start-process-shell-command "go-get" (current-buffer) (format "go get %s" package-url))
+    ;; (goto-char (point-max))
+    ;; (insert command)
+    ;; (eshell-send-input)
+    ;; (autopair-newline)
+    ;; ))))
+	;; (deactivate-mark)
+	;; (goto-char base-pos)))
+	)
   )
 
 
@@ -199,7 +211,7 @@ And the environment variable was existing, Download go binaries from the interne
 						"golang.org/x/tools/cmd/gopls")))
     (if (getenv "GOPATH")
         (progn
-          (dolist (elt list-url cmd)
+		  (dolist (elt list-url cmd)
             (setq cmd (format "go get %s" elt))
             (with-current-buffer (get-buffer-create buffer-name)
 			  (shell-command cmd (current-buffer) (current-buffer))))
@@ -228,7 +240,7 @@ And the environment variable was existing, Download go binaries from the interne
 		(with-temp-buffer
 		  (cd homedir)
 		  (call-interactively 'dlv))
-      (message "Couldn't found the projectile root directory."))
+	  (message "Couldn't found the projectile root directory."))
     ))
 
 (defcustom jong-go-run-command nil
@@ -258,13 +270,13 @@ And the environment variable was existing, Download go binaries from the interne
 		(program-args nil))
     (ignore-errors (kill-buffer output-buffer-name))
     (with-current-buffer (get-buffer-create output-buffer-name)
-      (if jong-go-run-command
+	  (if jong-go-run-command
 		  (progn
 			(display-buffer (current-buffer))
 			(setq default-directory jong-go-run-default-path)
 			(async-shell-command jong-go-run-command (current-buffer) (current-buffer)))
 		(start-process jong-go-run-command (current-buffer) program-name program-args))
-      (message "The command was not setted.")))
+	  (message "The command was not setted.")))
   )
 
 (defun jong-go-run-project-otherframe ()
@@ -288,14 +300,14 @@ And the environment variable was existing, Download go binaries from the interne
 		(progn
 		  (select-frame-set-input-focus output-frame)
 		  (switch-to-buffer output-buffer-name))
-      (progn
+	  (progn
 		(setq output-frame (make-frame
 							'((name . "log-frame"))
 							))
 		(select-frame-set-input-focus output-frame)
 		(switch-to-buffer output-buffer-name)))
     (with-current-buffer (get-buffer output-buffer)
-      (if jong-go-run-command
+	  (if jong-go-run-command
 		  (progn
 			(setq default-directory jong-go-run-default-path)
 			(async-shell-command jong-go-run-command (current-buffer) (current-buffer)))
@@ -343,8 +355,8 @@ And the environment variable was existing, Download go binaries from the interne
     ;; Get base-line from the gud buffer.
     (goto-char (point-max))
     (while (not (string-prefix-p "=>" (current-line-contents)))
-      (forward-line -1)
-      (if (equal (point) 0)
+	  (forward-line -1)
+	  (if (equal (point) 0)
 		  (progn
 			(message "Couldnt find the '=>' prefix...")
 			(return))))
@@ -359,7 +371,7 @@ And the environment variable was existing, Download go binaries from the interne
     (call-interactively target-func)
     (other-window 1)
     (with-no-warnings
-      (goto-line target-line))
+	  (goto-line target-line))
     )
   )
 
@@ -368,9 +380,9 @@ And the environment variable was existing, Download go binaries from the interne
   "This is delve wrapper based on 'gud-gdb mode."
   (interactive)
   (if (equal cmd nil)
-      (setq cmd "dlv debug"))
+	  (setq cmd "dlv debug"))
   (condition-case ex
-      (with-current-buffer (get-buffer "main.go")
+	  (with-current-buffer (get-buffer "main.go")
 		(dlv cmd)
 		(chan-gogud-mode))
     (message "There was not a main.go buffer."))
@@ -386,7 +398,7 @@ And the environment variable was existing, Download go binaries from the interne
 		(waiting-seconds 0))
     
     (when (get-buffer output-buffer)
-      (with-current-buffer (get-buffer output-buffer)
+	  (with-current-buffer (get-buffer output-buffer)
 		(while (get-buffer-process (current-buffer))
 		  (comint-send-eof)
 		  (message "waiting killing the gud-connect process. (%d seconds)" waiting-seconds)
@@ -397,7 +409,7 @@ And the environment variable was existing, Download go binaries from the interne
     
     (if (equal port nil)
         (setq target-port (read-string "input listen port : "))
-      (setq target-port port))
+	  (setq target-port port))
     (dlv (format "dlv connect :%s" target-port))
     (chan-gogud-mode))
   )
@@ -416,22 +428,22 @@ And the environment variable was existing, Download go binaries from the interne
 
     (if (equal (projectile-project-root) nil)
         (setq target-dir (projectile-project-root))
-      (setq target-dir default-directory))
+	  (setq target-dir default-directory))
 
     ;; start headless delve
     (with-current-buffer (get-buffer-create output-buffer)
-      (when (get-buffer-process (current-buffer))
+	  (when (get-buffer-process (current-buffer))
 		(interrupt-process process-name)
 		(while (get-buffer-process (current-buffer))
 		  (message "Killing process : %s " process-name)
 		  (sleep-for 1))
 		(comint-clear-buffer))
-      
-      (display-buffer output-buffer)
-      (setq default-directory target-dir)
-      (ignore-errors (term-mode))
-      (start-process "dlv-server-debug" (current-buffer) "dlv" "debug" "--headless")
-      (ignore-errors (term-mode)))
+	  
+	  (display-buffer output-buffer)
+	  (setq default-directory target-dir)
+	  (ignore-errors (term-mode))
+	  (start-process "dlv-server-debug" (current-buffer) "dlv" "debug" "--headless")
+	  (ignore-errors (term-mode)))
     )
   )
 
@@ -449,18 +461,18 @@ And the environment variable was existing, Download go binaries from the interne
         (target-frame)
         (current-frame (selected-frame)))
     (catch 'exit
-      (condition-case ex
-          (progn
+	  (condition-case ex
+		  (progn
             ;; Run server dlv process.
             (with-current-buffer (get-buffer main-file)
-              (chan-run-dlv-server))
+			  (chan-run-dlv-server))
             ;; Waiting a server process reveal.
             (setq port (with-current-buffer (get-buffer "*chan-dlv-server*")
 						 (while (< (length (buffer-string)) 1)
 						   (message "waiting the seconds : %d"
                                     (setq magic-seconds (1- magic-seconds)))
 						   (sleep-for 1)
-                           (when (equal magic-seconds 0)
+						   (when (equal magic-seconds 0)
                              (throw 'exit magic-seconds)))
                          (goto-char (point-max))
                          (forward-line -1)
@@ -471,19 +483,19 @@ And the environment variable was existing, Download go binaries from the interne
                          (buffer-substring start-pos end-pos)))
             ;; Run client dlv process.
             (with-current-buffer (get-buffer main-file)
-              (chan-run-dlv-client port)))
+			  (chan-run-dlv-client port)))
         (message "There was not a main.go buffer."))
-      (progn
+	  (progn
         (message "Waiting time was gone...")
         nil))
     
     (when otherframe
-      (if (setq target-frame
+	  (if (setq target-frame
                 (catch 'target
-                  (dolist (frame (frame-list))
+				  (dolist (frame (frame-list))
                     (if (equal log-frame (frame-parameter frame 'name))
                         (throw 'target frame)))))
-          (progn
+		  (progn
             (select-frame-set-input-focus target-frame)
             (switch-to-buffer "*chan-dlv-server*")
             (select-frame-set-input-focus current-frame)
@@ -491,15 +503,15 @@ And the environment variable was existing, Download go binaries from the interne
             (other-window 1)
             )
         (progn
-          (setq target-frame (make-frame
-                              '((name . "log-frame"))
-                              ))
-          (select-frame-set-input-focus target-frame)
-          (switch-to-buffer "*chan-dlv-server*")
-          (select-frame-set-input-focus current-frame)
-          (switch-to-buffer-other-window main-file)
-          (other-window 1)
-          )))
+		  (setq target-frame (make-frame
+							  '((name . "log-frame"))
+							  ))
+		  (select-frame-set-input-focus target-frame)
+		  (switch-to-buffer "*chan-dlv-server*")
+		  (select-frame-set-input-focus current-frame)
+		  (switch-to-buffer-other-window main-file)
+		  (other-window 1)
+		  )))
     )
   )
 
@@ -511,61 +523,61 @@ And the environment variable was existing, Download go binaries from the interne
 
 (add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'go-mode-hook (lambda ()
-                          (setq indent-tabs-mode t)
-                          (setq tab-width 4)
-                          
-                          ;; syntax highlight
-                          (go-guru-hl-identifier-mode)
-                          
-                          ;; (require 'auto-complete-config)
-                          ;; (ac-config-default)
-                          
-                          ;; setting company-go mode...
-                          (setq company-tooltip-limit 20)
-                          (setq company-idle-delay .3)
-                          (setq company-echo-delay 0)
-                          (setq company-begin-commands '(self-insert-command))
-                          (set (make-local-variable 'company-backends) '(company-go))
-                          (company-mode)
-                          
-                          
-                          ;;setting go-eldocp
-                          (set-face-attribute 'eldoc-highlight-function-argument nil
-                                              :underline t :foreground "green"
-                                              :weight 'bold)
+						  (setq indent-tabs-mode t)
+						  (setq tab-width 4)
+						  
+						  ;; syntax highlight
+						  (go-guru-hl-identifier-mode)
+						  
+						  ;; (require 'auto-complete-config)
+						  ;; (ac-config-default)
+						  
+						  ;; setting company-go mode...
+						  (setq company-tooltip-limit 20)
+						  (setq company-idle-delay .3)
+						  (setq company-echo-delay 0)
+						  (setq company-begin-commands '(self-insert-command))
+						  (set (make-local-variable 'company-backends) '(company-go))
+						  (company-mode)
+						  
+						  
+						  ;;setting go-eldocp
+						  (set-face-attribute 'eldoc-highlight-function-argument nil
+											  :underline t :foreground "green"
+											  :weight 'bold)
 
-                          (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-                          (local-set-key (kbd "C-c C-a") 'go-import-add)
-                          (local-set-key (kbd "C-c C-g") 'go-goto-imports)
-                          (local-set-key (kbd "C-c C-f") 'gofmt)
-                          (local-set-key (kbd "C-c r .")
+						  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
+						  (local-set-key (kbd "C-c C-a") 'go-import-add)
+						  (local-set-key (kbd "C-c C-g") 'go-goto-imports)
+						  (local-set-key (kbd "C-c C-f") 'gofmt)
+						  (local-set-key (kbd "C-c r .")
 										 (lambda () (interactive)
 										   (call-interactively 'godef-jump)
 										   (push-mark)))
-                          (local-set-key (kbd "C-c r ,") 'go-guru-referrers)
-                          (local-set-key (kbd "C-c r i") 'go-guru-implements)
-                          (local-set-key (kbd "C-c r j") 'go-guru-definition)
+						  (local-set-key (kbd "C-c r ,") 'go-guru-referrers)
+						  (local-set-key (kbd "C-c r i") 'go-guru-implements)
+						  (local-set-key (kbd "C-c r j") 'go-guru-definition)
 						  (local-set-key (kbd "C-c r d") 'go-guru-describe)
-                          (local-set-key (kbd "C-c d d") 'godoc-at-point)
-                          (local-set-key (kbd "C-c g g")
+						  (local-set-key (kbd "C-c d d") 'godoc-at-point)
+						  (local-set-key (kbd "C-c g g")
                                          (lambda () (interactive)
-                                           (chan-gogud-gdb "dlv debug")))
-                          (local-set-key (kbd "C-c s f") 'gofmt-before-save)
-                          (local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
-                          (local-set-key (kbd "C-c c c")
+										   (chan-gogud-gdb "dlv debug")))
+						  (local-set-key (kbd "C-c s f") 'gofmt-before-save)
+						  (local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
+						  (local-set-key (kbd "C-c c c")
                                          (lambda () (interactive)
-                                           (compile "go build")))
-                          ;; (compile "go build -v && go test -v && go vet")))
-                          ;; (local-set-key (kbd "C-c r r") 'jong-go-run-project)
+										   (compile "go build")))
+						  ;; (compile "go build -v && go test -v && go vet")))
+						  ;; (local-set-key (kbd "C-c r r") 'jong-go-run-project)
 						  (local-set-key (kbd "C-c r r") 'jong-go-run-project-otherframe)
-                          (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
-                          (local-set-key (kbd "C-c M->")
+						  (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
+						  (local-set-key (kbd "C-c M->")
                                          (lambda () (interactive)
-                                           (other-window 1)
-                                           (call-interactively 'end-of-buffer)
-                                           (other-window -1)))
-                          )
-          )
+										   (other-window 1)
+										   (call-interactively 'end-of-buffer)
+										   (other-window -1)))
+						  )
+		  )
 
 
 (add-hook 'chan-gogud-mode-hook 'jong-go-set-gud-shortcut)

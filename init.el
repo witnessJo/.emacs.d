@@ -206,6 +206,7 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (use-package yasnippet
   :ensure t)
 (require 'yasnippet)
@@ -378,7 +379,6 @@ Version 2017-07-08"
              (setq prev-candidate-char (buffer-substring (point) (1+ (point))))
              (if (equal prev-candidate-char " ")
                  (call-interactively #'jong-forward-word))
-             ;; (message "%s" prev-candidate-char)
              ))
     )
   )

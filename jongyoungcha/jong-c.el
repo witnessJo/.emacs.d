@@ -134,6 +134,7 @@
                              (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
                              file))))))
 
+
 (defun jo-compile-cmake ()
   (interactive)
   (if (file-exists-p "CMakeLists.txt")
@@ -153,26 +154,42 @@
             (lambda ()
 			     )))
 
-(use-package rtags
-  :ensure t
-  :config
-  (setq rtags-autostart-diagnostics t)
-  (rtags-diagnostics)
-  (setq rtags-completions-enabled t)
-  (global-company-mode)
-  (rtags-enable-standard-keybindings)
-  (add-hook 'rtags-jump-hook (lambda ()
-							          (push-mark (point))
-                               (xref-push-marker-stack)))
-  
-  (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-  (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
-  (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
-  
-  (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-  (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
-  )
+;; (use-package rtags
+;;   :ensure t
+;;   :config
+;;   (setq rtags-autostart-diagnostics t)
+;;   (rtags-diagnostics)
+;;   (setq rtags-completions-enabled t)
+;;   (global-company-mode)
+;;   (rtags-enable-standard-keybindings)
+;;   (add-hook 'rtags-jump-hook (lambda ()
+;; 							          (push-mark (point))
+;;                                (xref-push-marker-stack)))
 
+;;   (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+;;   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+;;   (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
+
+;;   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+;;   (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
+;;   )
+
+
+
+(use-package lsp-mode :commands lsp)
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package company-lsp :commands company-lsp)
+
+(use-package ccls
+  :hook ((c-mode c++-mode objc-mode) .
+         (lambda ()
+           (require 'ccls)
+           (require 'dap-lldb)
+           (lsp))))
+
+(setq ccls-executable "/usr/local/bin/ccls")
+
+(require 'dap-lldb)
 
 (use-package company-rtags
   :ensure t)
@@ -202,25 +219,25 @@
   (defvar c-basic-offset)
   (setq c-default-style "linux")
   (setq-default indent-tabs-mode nil)
-  (setq-default tab-width 3)
-  (setq c-basic-offset 3)
+  (setq-default tab-width 2)
+  (setq c-basic-offset 2)
   
   (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
-  ;; (local-set-key (kbd "C-c c c") 'jong-c-find-cmake-build)
-  ;; (local-set-key (kbd "C-c c m") 'jo-compile-cmake)
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
   (local-set-key (kbd "C-c f f") 'ff-find-other-file)
-  (local-set-key (kbd "C-c r .") 'rtags-find-symbol-at-point)
-  (local-set-key (kbd "C-c r ,") 'rtags-find-references-at-point)
+  (local-set-key (kbd "C-c r .") 'lsp-find-declaration)
+  (local-set-key (kbd "C-c r ,") 'lsp-find-references)
+  (local-set-key (kbd "C-c r r") 'lsp-rename)
   )
 
 ;; Add flycheck c++ modep
 (add-hook 'c-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook (lambda ()
-						         (setq flycheck-gcc-language-standard "c++14")
-                           (setq flycheck-clang-language-standard "c++14")
-                           (setq company-clang-arguments '("-std=c++14"))))
+						         (setq flycheck-gcc-language-standard "c++17")
+                           (setq flycheck-clang-language-standard "c++17")
+                           (with-no-warnings (setq company-clang-arguments '("-std=c++17")))))
+
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
 
 
