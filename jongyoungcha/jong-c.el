@@ -154,25 +154,25 @@
             (lambda ()
 			     )))
 
-;; (use-package rtags
-;;   :ensure t
-;;   :config
-;;   (setq rtags-autostart-diagnostics t)
-;;   (rtags-diagnostics)
-;;   (setq rtags-completions-enabled t)
-;;   (global-company-mode)
-;;   (rtags-enable-standard-keybindings)
-;;   (add-hook 'rtags-jump-hook (lambda ()
-;; 							          (push-mark (point))
-;;                                (xref-push-marker-stack)))
+(use-package rtags
+  :ensure t
+  :config
+  (setq rtags-autostart-diagnostics t)
+  (rtags-diagnostics)
+  (setq rtags-completions-enabled t)
+  (global-company-mode)
+  (rtags-enable-standard-keybindings)
+  (add-hook 'rtags-jump-hook (lambda ()
+							                 (push-mark (point))
+                               (xref-push-marker-stack)))
 
-;;   (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-;;   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
-;;   (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
+  (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+  (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+  (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
 
-;;   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-;;   (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
-;;   )
+  (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+  (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
+  )
 
 
 
@@ -196,7 +196,7 @@
 ;; (with-eval-after-load 'company-rtags
 ;;   (eval-after-load 'company
 ;;     '(add-to-list
-;; 	   'company-backends 'company-rtags)))
+;; 	    'company-backends 'company-rtags)))
 
 (use-package cmake-ide
   :ensure t)
@@ -225,9 +225,9 @@
   (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
   (local-set-key (kbd "C-c f f") 'ff-find-other-file)
-  (local-set-key (kbd "C-c r .") 'xref-find-definitions)
-  (local-set-key (kbd "C-c r ,") 'xref-find-references)
-  (local-set-key (kbd "C-c r r") 'lsp-rename)
+  (local-set-key (kbd "C-c r .") 'rtags-find-symbol-at-point)
+  (local-set-key (kbd "C-c r ,") 'rtags-find-references)
+  (local-set-key (kbd "C-c r r") 'rtags-rename-symbol)
   (local-set-key (kbd "C-c r l") 'helm-imenu)
   )
 
