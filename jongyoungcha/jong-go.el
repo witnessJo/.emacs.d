@@ -69,7 +69,6 @@
 (use-package lsp-mode
   :ensure t)
 
-
 (defun jong-set-go-envs()
   "Set environment variables relative with go."
   (interactive)
@@ -80,13 +79,9 @@
 	(add-to-list 'exec-path (expand-file-name (format "%s/bin" (getenv "GOPATH"))))
   (error "$GOPATH was not exported"))
 
-(append #'jong-kill-temporary-buffers '("*jong-error*"
-										"*go-guru-output*"
-										"*Gofmt Errors*"))
-
-;; (add-to-list #'jong-kill-buffer-patterns "*jong-error*")
-;; (add-to-list #'jong-kill-buffer-patterns "*go-guru-output*")
-;; (add-to-list #'jong-kill-buffer-patterns "*Gofmt Errors*")
+(add-to-list  #'jong-kill-buffer-patterns "*jong-error*")
+(add-to-list  #'jong-kill-buffer-patterns "*go-guru-output*")
+(add-to-list  #'jong-kill-buffer-patterns "*Gofmt Errors*")
 
 (defun jong-go-chan-gud-stepout ()
   "This is ..."
@@ -600,4 +595,3 @@ And the environment variable was existing, Download go binaries from the interne
 
 (provide 'jong-go)
 ;;;
-v

@@ -191,12 +191,12 @@
 
 (require 'dap-lldb)
 
-(use-package company-rtags
-  :ensure t)
-(with-eval-after-load 'company-rtags
-  (eval-after-load 'company
-    '(add-to-list
-	   'company-backends 'company-rtags)))
+;; (use-package company-rtags
+;;   :ensure t)
+;; (with-eval-after-load 'company-rtags
+;;   (eval-after-load 'company
+;;     '(add-to-list
+;; 	   'company-backends 'company-rtags)))
 
 (use-package cmake-ide
   :ensure t)
@@ -225,18 +225,19 @@
   (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
   (local-set-key (kbd "C-c f f") 'ff-find-other-file)
-  (local-set-key (kbd "C-c r .") 'lsp-find-declaration)
-  (local-set-key (kbd "C-c r ,") 'lsp-find-references)
+  (local-set-key (kbd "C-c r .") 'xref-find-definitions)
+  (local-set-key (kbd "C-c r ,") 'xref-find-references)
   (local-set-key (kbd "C-c r r") 'lsp-rename)
+  (local-set-key (kbd "C-c r l") 'helm-imenu)
   )
 
 ;; Add flycheck c++ modep
 (add-hook 'c-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook (lambda ()
-						         (setq flycheck-gcc-language-standard "c++17")
-                           (setq flycheck-clang-language-standard "c++17")
-                           (with-no-warnings (setq company-clang-arguments '("-std=c++17")))))
+						         (setq flycheck-gcc-language-standard "c++14")
+                           (setq flycheck-clang-language-standard "c++14")
+                           (with-no-warnings (setq company-clang-arguments '("-std=c++14")))))
 
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
 
