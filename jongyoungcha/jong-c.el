@@ -21,12 +21,12 @@
 (define-derived-mode jong-c-gud-mode  gud-mode "jong-gud-mode"
   (setq font-lock-defaults '(modern-c++-font-lock-keywords)))
 
+(with-no-warnings (add-to-list 'projectile-globally-ignored-directories  ".ccls-cache"))
 
 (defun jong-c-gud ()
   (interactive)
   (call-interactively 'gud-gdb)
   (jong-c-gud-mode))
-
 
 (defun jong-c-gud-set-args ()
   (interactive)
@@ -52,7 +52,6 @@
 	   )
 	 )
   )
-
 
 (defun jong-c-find-cmake-build (&optional target-dir)
   (interactive)
@@ -175,7 +174,6 @@
   )
 
 
-
 (use-package lsp-mode :commands lsp)
 (use-package lsp-ui :commands lsp-ui-mode)
 (use-package company-lsp :commands company-lsp)
@@ -221,6 +219,8 @@
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
   (setq c-basic-offset 2)
+
+
   
   (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
