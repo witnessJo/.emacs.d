@@ -935,7 +935,6 @@ Version 2017-07-08"
 (defcustom  jong-kill-buffer-patterns nil
   "this is patters to kill buffer"
   :type 'list)
-
 (setq jong-kill-buffer-patterns (list "*RTags*"
 									                    "*compilation*"
 									                    "*Occur*"

@@ -6,36 +6,36 @@
 (cond
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   (progn
-	
-	(define-key key-translation-map [C-kanji] (kbd "C-SPC"))
-	
+	  
+	  (define-key key-translation-map [C-kanji] (kbd "C-SPC"))
+	  
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;; Alias coding system for windows ;;
+	  ;; Alias coding system for windows ;;
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	(set-language-environment "Korean")
-	(define-coding-system-alias 'cp65001 'utf-8)
-	(setq jong-env-locale-value 'utf-8)
-	(set-default-coding-systems jong-env-locale-value)
-	(set-input-method 'korean-hangul)
-	
-	(load-theme 'sanityinc-tomorrow-blue t)
-	))
+	  (set-language-environment "Korean")
+	  (define-coding-system-alias 'cp65001 'utf-8)
+	  (setq jong-env-locale-value 'utf-8)
+	  (set-default-coding-systems jong-env-locale-value)
+	  (set-input-method 'korean-hangul)
+	  
+	  (load-theme 'sanityinc-tomorrow-blue t)
+	  ))
  
  ((string-equal system-type "darwin") ; Mac OS X
   (progn
-	(message "Mac OS X")))
+	  (message "Mac OS X")))
  
  ((string-equal system-type "gnu/linux") ; linux
   (progn
-	(set-language-environment "Korean")
-	(load-theme 'solarized-dark t)
-	(with-no-warnings (setq projectile-indexing-method 'hybrid))
-   ;; (load-theme 'sanityinc-tomorrow-night t)
-	;; (load-theme 'sanityinc-tomorrow-blue t)
-	(setq jong-env-locale-value
-		  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
+	  (set-language-environment "Korean")
+	  (load-theme 'solarized-dark t)
+	  (with-no-warnings (setq projectile-indexing-method 'hybrid))
+    ;; (load-theme 'sanityinc-tomorrow-night t)
+	  ;; (load-theme 'sanityinc-tomorrow-blue t)
+	  (setq jong-env-locale-value
+		      (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
 
-	(message "Linux"))))
+	  (message "Linux"))))
 
 (when (member "Consolas" (font-family-list))
   (set-face-attribute 'default nil :font "Consolas-12")
@@ -58,6 +58,12 @@
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
+
+
+;; For protecting my eyes...
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:background "#444444"))))
+ '(flymake-warnline ((((class color)) (:background "#4444aa")))))
 
 
 (provide 'jong-env-setting)

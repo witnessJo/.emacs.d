@@ -3,7 +3,6 @@
 ;;; Code:
 
 (defconst jong-project-output-buffer "*jong-project-output*")
-;; (defconst jong-project-output-buffer "*compilation*")
 (defconst jong-project-debug-buffer "*jong-project-debug*")
 
 (add-to-list 'jong-kill-buffer-patterns jong-project-output-buffer)
