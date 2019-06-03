@@ -162,7 +162,7 @@
   (global-company-mode)
   (rtags-enable-standard-keybindings)
   (add-hook 'rtags-jump-hook (lambda ()
-							                 (push-mark (point))
+							          (push-mark (point))
                                (xref-push-marker-stack)))
 
   (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
@@ -216,11 +216,11 @@
   (defvar c-default-style)
   (defvar c-basic-offset)
   (setq c-default-style "linux")
-  (setq-default indent-tabs-mode nil)
-  (setq-default tab-width 2)
-  (setq c-basic-offset 2)
-
-
+  (setq-default indent-tabs-mode t
+                tab-width 3
+                c-basic-offset 3)
+  
+  (flycheck-mode nil)
   
   (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
@@ -238,6 +238,8 @@
 						         (setq flycheck-gcc-language-standard "c++14")
                            (setq flycheck-clang-language-standard "c++14")
                            (with-no-warnings (setq company-clang-arguments '("-std=c++14")))))
+
+;; For protecting my eyes...
 
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
 
