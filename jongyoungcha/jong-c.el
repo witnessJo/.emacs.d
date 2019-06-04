@@ -156,8 +156,8 @@
 (use-package rtags
   :ensure t
   :config
-  (setq rtags-autostart-diagnostics t)
-  (rtags-diagnostics)
+  (setq rtags-autostart-diagnostics nil)
+  ;; (rtags-diagnostics)
   (setq rtags-completions-enabled t)
   (global-company-mode)
   (rtags-enable-standard-keybindings)
@@ -217,8 +217,8 @@
   (defvar c-basic-offset)
   (setq c-default-style "linux")
   (setq-default indent-tabs-mode t
-                tab-width 3
-                c-basic-offset 3)
+                tab-width 2
+                c-basic-offset 2)
   
   (flycheck-mode nil)
   

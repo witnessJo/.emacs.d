@@ -859,7 +859,7 @@ Version 2017-07-08"
 (use-package  flycheck
   :ensure t
   :init
-  (global-flycheck-mode t)
+  ;; (global-flycheck-mode t)
   (set-face-attribute 'flycheck-fringe-warning nil :foreground (face-attribute 'fringe :background )))
 
 (use-package auto-highlight-symbol
@@ -877,38 +877,6 @@ Version 2017-07-08"
 (add-hook 'emacs-lisp-mode-hook
 		      (lambda()
 			      (local-set-key (kbd "C-c g g") 'xref-find-definitions)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;  python develope environments  ;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package elpy
-  :ensure t)
-(with-eval-after-load 'elpy
-  (require 'elpy)
-  (elpy-enable)
-  ;; (elpy-use-ipython)
-  (setq elpy-rpc-backend "jedi")
-  (setq python-shell-interpreter "ipython")
-  (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
-  (add-to-list 'python-shell-completion-native-disabled-interpreters "ipython")
-  (setq jedi:complete-on-dot t)
-  (setq jedi:environment-root "jedi"))
-
-(use-package company-jedi
-  :ensure t)
-(add-hook 'python-mode-hook
-		      (lambda()
-			      (add-to-list 'company-backend 'company-jedi)))
-
-(global-set-key (kbd "C-c i") 'indent-region)
-
-
-
-(use-package anaconda-mode
-  :ensure t)
-(require 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
 
 (defun jyc-run-python ()
@@ -1000,24 +968,6 @@ Version 2017-07-08"
 	  (visit-tags-table default-directory nil)))
 
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; rust develope environments ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package rust-mode
-  :ensure t)
-
-(use-package racer
-  :ensure t)
-
-(use-package cargo
-  :ensure t)
-
-(require 'racer)
-(require 'cargo)
-
-(setq rust-format-on-save t)
-
 (use-package org
   :ensure t)
 
@@ -1049,6 +999,8 @@ Version 2017-07-08"
 (require 'jong-scheme)
 (require 'jong-cmake)
 (require 'jong-c)
+(require 'jong-python)
+(require 'jong-rust)
 ;; (require 'jong-java)
 (require 'jong-scala)
 (require 'jong-haskell)
@@ -1060,6 +1012,7 @@ Version 2017-07-08"
 (require 'jong-http)
 (require 'jong-html)
 
+;; for test
 (require 'jong-ether-test)
 (require 'jong-brth-test)
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
