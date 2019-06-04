@@ -1,7 +1,7 @@
 ;;; Avdded by Package.el.  This must come before configurations of
 ;;; installed packages.  Don't delete this line.  eIf you don't want it,
 ;;; just comment it out by adding a semicolon to the start of the line.
-n;;; You may delete these explanatory comments.
+;;; You may delete these explanatory comments.
 (gnutls-available-p)
 
 (require 'package)

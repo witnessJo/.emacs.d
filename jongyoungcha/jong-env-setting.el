@@ -63,8 +63,8 @@
 (custom-set-faces
  '(flymake-errline ((((class color)) (:background "#444444"))))
  '(flymake-warnline ((((class color)) (:background "#4444aa"))))
- 
  )
+
 
 
 
