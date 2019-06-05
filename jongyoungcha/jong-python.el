@@ -1,6 +1,5 @@
 ;;;Code
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  python develope environments  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -32,6 +31,15 @@
 (require 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+
+
+(add-hook 'python-mode-hook
+		      (lambda ()
+			      (local-set-key (kbd "C-c g g") 'anaconda-mode-find-definitions)
+			      (local-set-key (kbd "C-c c c") 'jyc-run-python)
+			      (local-set-key (kbd "C-S-g") 'close-compilation-window)
+			      (linum-mode t)
+			      ))
 
 
 (provide 'jong-python)
