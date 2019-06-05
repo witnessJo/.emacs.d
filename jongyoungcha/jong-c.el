@@ -162,9 +162,8 @@
   (global-company-mode)
   (rtags-enable-standard-keybindings)
   (add-hook 'rtags-jump-hook (lambda ()
-															 (push-mark (point))
-                               (xref-push-marker-stack)))
-
+															 (xref-push-marker-stack)))
+	
   (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
@@ -238,6 +237,7 @@
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
   (local-set-key (kbd "C-c f f") 'ff-find-other-file)
   (local-set-key (kbd "C-c r .") 'rtags-find-symbol-at-point)
+	;; (local-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
   (local-set-key (kbd "C-c r ,") 'rtags-find-references)
   (local-set-key (kbd "C-c r r") 'rtags-rename-symbol)
   (local-set-key (kbd "C-c r l") 'helm-imenu)

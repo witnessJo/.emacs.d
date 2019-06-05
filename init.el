@@ -859,10 +859,13 @@ Version 2017-07-08"
 
 (use-package  flycheck
   :ensure t
-  :init
+  :config
+  (global-flycheck-mode t)
+  )
+;; :init
   ;; (global-flycheck-mode t)
-  (set-face-attribute 'flycheck-fringe-warning nil :foreground (face-attribute 'fringe :background )))
-
+  ;; (set-face-attribute 'flycheck-fringe-warning nil :foreground (face-attribute 'fringe :background )))
+  
 (use-package auto-highlight-symbol
   :ensure t
   :init)
