@@ -442,61 +442,71 @@ Version 2017-07-08"
     (pop-global-mark)))
 
 
+(defun jong-set-mark ()
+  (interactive)
+  (setq this-command-keys-shift-translated t)
+  (if (not (use-region-p))
+      (call-interactively 'set-mark-command))
+  )
+
+
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-w") (lambda () (interactive) (forward-line -1)))
     (define-key map (kbd "C-M-w") (lambda () (interactive) (forward-line -1)))
-	(define-key map (kbd "C-<up>") (lambda () (interactive) (forward-line -1)))
+    (define-key map (kbd "C-<up>") (lambda () (interactive) (forward-line -1)))
     (define-key map (kbd "M-a") 'backward-char)
     (define-key map (kbd "M-s") (lambda () (interactive) (forward-line 1)))
     (define-key map (kbd "C-M-s") (lambda () (interactive) (forward-line 1)))
-	(define-key map (kbd "C-<down>") (lambda () (interactive) (forward-line 1)))
-	(define-key map (kbd "<S-up>") (lambda () (interactive)
-									 (setq this-command-keys-shift-translated t)
-									 (if (not (use-region-p))
-										 (call-interactively 'set-mark-command))
-									 (forward-line -1)))
-	(define-key map (kbd "<S-down>") (lambda () (interactive)
-									   (setq this-command-keys-shift-translated t)
-									   (if (not (use-region-p))
-										   (call-interactively 'set-mark-command))
-									   (forward-line 1)))
-	(define-key map (kbd "<S-left>") (lambda () (interactive)
-									   (setq this-command-keys-shift-translated t)
-									   (if (not (use-region-p))
-										   (call-interactively 'set-mark-command))
-									   (backward-char 1)))
-	(define-key map (kbd "<S-right>") (lambda () (interactive)
-										(setq this-command-keys-shift-translated t)
-										(if (not (use-region-p))
-											(call-interactively 'set-mark-command))
-										(forward-char 1)))
+    (define-key map (kbd "C-<down>") (lambda () (interactive) (forward-line 1)))
 	(define-key map (kbd "M-d") 'forward-char)
-	(define-key map (kbd "C-M-d") 'syntax-subword-forward)
-	(define-key map (kbd "C-M-a") 'syntax-subword-backward)
-	(define-key map (kbd "C-M-S-a") (lambda () (interactive)
-									  (setq this-command-keys-shift-translated t)
-									  (if (not (use-region-p))
-										  (call-interactively 'set-mark-command))
+    (define-key map (kbd "C-M-d") 'syntax-subword-forward)
+    (define-key map (kbd "C-M-a") 'syntax-subword-backward)
+	
+    (define-key map (kbd "<S-up>") (lambda () (interactive)
+									 (jong-set-mark)
+									 (forward-line -1)))
+    (define-key map (kbd "<S-down>") (lambda () (interactive)
+									   (jong-set-mark)
+									   (forward-line 1)))
+    (define-key map (kbd "<S-left>") (lambda () (interactive)
+									   (jong-set-mark)
+									   (backward-char 1)))
+    (define-key map (kbd "<S-right>") (lambda () (interactive)
+										(jong-set-mark)
+										(forward-char 1)))
+	(define-key map (kbd "<C-S-up>") (lambda () (interactive)
+									   (jong-set-mark)
+									   (forward-line -1)))
+    (define-key map (kbd "<C-S-down>") (lambda () (interactive)
+										 (jong-set-mark)
+										 (forward-line 1)))
+    (define-key map (kbd "<C-S-left>") (lambda () (interactive)
+										 (jong-set-mark)
+										 (syntax-subword-backward 1)))
+    (define-key map (kbd "<C-S-right>") (lambda () (interactive)
+										  (jong-set-mark)
+										  (syntax-subword-forward 1)))
+
+    (define-key map (kbd "C-M-S-a") (lambda () (interactive)
+									  (jong-set-mark)
 									  (backward-word)))
-	(define-key map (kbd "C-M-S-d") (lambda () (interactive)
-									  (setq this-command-keys-shift-translated t)
-									  (if (not (use-region-p))
-										  (call-interactively 'set-mark-command))
+    (define-key map (kbd "C-M-S-d") (lambda () (interactive)
+									  (jong-set-mark)
 									  (forward-word)))
-	(define-key map (kbd "M-e") 'forward-sentence)
-	(define-key map (kbd "M-q") 'backward-sentence)
-	(define-key map (kbd "M-<backspace>") (lambda () (interactive)
+    (define-key map (kbd "M-e") 'forward-sentence)
+    (define-key map (kbd "M-q") 'backward-sentence)
+    (define-key map (kbd "M-<backspace>") (lambda () (interactive)
 											(progn (call-interactively 'syntax-subword-backward-kill)
 												   (pop kill-ring))))
-	(define-key map (kbd "M-<delete>") (lambda () (interactive)
+    (define-key map (kbd "M-<delete>") (lambda () (interactive)
 										 (progn (call-interactively 'syntax-subword-kill)
 												(pop kill-ring))))
 
-	(global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
-	(global-set-key (kbd "C-x C-n") 'jong-next-buffer)
-	(global-set-key (kbd "C-S-w") 'copy-region-as-kill)
-	map)
+    (global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
+    (global-set-key (kbd "C-x C-n") 'jong-next-buffer)
+    (global-set-key (kbd "C-S-w") 'copy-region-as-kill)
+    map)
   "jong-keys-minor-mode keymap.")
 
 
@@ -516,58 +526,40 @@ Version 2017-07-08"
 
 ;; Back word with candidate characters.
 (global-set-key (kbd "M-F") (lambda () (interactive)
-							  (setq this-command-keys-shift-translated t)
-							  (if (not (use-region-p))
-								  (call-interactively 'set-mark-command))
+							  (jong-set-mark)
 							  (forward-word)))
 
 (global-set-key (kbd "M-B") (lambda () (interactive)
-							  (setq this-command-keys-shift-translated t)
-							  (if (not (use-region-p))
-								  (call-interactively 'set-mark-command))
+							  (jong-set-mark)
 							  (backward-word)))
 
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
-								(setq this-command-keys-shift-translated t)
-								(if (not (use-region-p))
-									(call-interactively 'set-mark-command))
+								(jong-set-mark)
 								(goto-char (1+ (point)))))
 
 (global-set-key (kbd "C-S-b") (lambda () (interactive)
-								(setq this-command-keys-shift-translated t)
-								(if (not (use-region-p))
-									(call-interactively 'set-mark-command))
+								(jong-set-mark)
 								(goto-char (1- (point)))))
 
 (global-set-key (kbd "C-S-a") (lambda () (interactive)
-								(setq this-command-keys-shift-translated t)
-								(if (not (use-region-p))
-									(call-interactively 'set-mark-command))
+								(jong-set-mark)
 								(beginning-of-line)))
 
 (global-set-key (kbd "C-S-e") (lambda () (interactive)
-								(setq this-command-keys-shift-translated t)
-								(if (not (use-region-p))
-									(call-interactively 'set-mark-command))
+								(jong-set-mark)
 								(end-of-line)))
 
 (global-set-key (kbd "C-S-a") (lambda () (interactive)
-								(setq this-command-keys-shift-translated t)
-								(if (not (use-region-p))
-									(call-interactively 'set-mark-command))
+								(jong-set-mark)
 								(beginning-of-line)))
 
 (global-set-key (kbd "C-S-p") (lambda () (interactive)
-								(setq this-command-keys-shift-translated t)
-								(if (not (use-region-p))
-									(call-interactively 'set-mark-command))
+								(jong-set-mark)
 								(forward-line -1)))
 
 (global-set-key (kbd "C-S-n") (lambda () (interactive)
-								(setq this-command-keys-shift-translated t)
-								(if (not (use-region-p))
-									(call-interactively 'set-mark-command))
+								(jong-set-mark)
 								(forward-line 1)))
 
 (global-set-key (kbd "C--") 'jong-switch-last-two-buffers)
@@ -604,14 +596,14 @@ Version 2017-07-08"
   "reload dir locals for the current buffer"
   (interactive)
   (let ((enable-local-variables :all))
-	(hack-dir-local-variables-non-file-buffer)))
+    (hack-dir-local-variables-non-file-buffer)))
 
 (defun jong-reload-dir-locals-for-all-buffer-in-this-directory ()
   "for every buffer iwth the same `default-directory` as the current buffer's, reload dir-locals."
   (interactive)
   (let ((dir default-directory))
-	(dolist (buffer (buffer-list))
-	  (with-current-buffer buffer
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
 		(when (equal default-directory dir))
 		(jong-reload-dir-locals-for-current-buffer)))))
 
@@ -621,9 +613,9 @@ Version 2017-07-08"
   "Transparency frame."
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
-	(set-frame-parameter
-	 nil 'alpha
-	 (if (eql (cond ((numberp alpha) alpha)
+    (set-frame-parameter
+     nil 'alpha
+     (if (eql (cond ((numberp alpha) alpha)
 					((numberp (cdr alpha)) (cdr alpha))
 					;; Also handle undocumented (<active> <inactive>) form.
 
@@ -653,9 +645,9 @@ Version 2017-07-08"
   (show-paren-mode 1)
   (set-face-background 'show-paren-match-face (face-background 'default))
   (if (boundp 'font-lock-comment-face)
-	  (set-face-foreground 'show-paren-match-face
+      (set-face-foreground 'show-paren-match-face
 						   (face-foreground 'font-lock-comment-face))
-	(set-face-foreground 'show-paren-match-face
+    (set-face-foreground 'show-paren-match-face
 						 (face-foreground 'default)))
   (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
 
@@ -734,12 +726,12 @@ Version 2017-07-08"
   "Read user input command and set 'projectile-project-run-cmd'."
   (interactive)
   (let (user-input)
-	(if (not (equal "" (setq user-input (read-string "Enter the command : "))))
+    (if (not (equal "" (setq user-input (read-string "Enter the command : "))))
 		(progn
 		  (setq projectile-project-run-cmd user-input)
 		  (message "Changed projectile-project-run-cmd as %s" user-input))
-	  (message "The command was empty..."))
-	))
+      (message "The command was empty..."))
+    ))
 
 (global-set-key (kbd "C-c p p") 'projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'projectile-find-file)
@@ -797,15 +789,15 @@ Version 2017-07-08"
   (interactive)
   (cond
    ((window-in-direction 'above)
-	(windmove-up)
-	(delete-window))
+    (windmove-up)
+    (delete-window))
    ((window-in-direction 'below)
-	(windmove-down)
-	(delete-window))
+    (windmove-down)
+    (delete-window))
    ((window-in-direction 'left)
-	nil)
+    nil)
    ((window-in-direction 'right)
-	nil))
+    nil))
   )
 
 
@@ -827,8 +819,8 @@ Version 2017-07-08"
   "Kill current buffer unconditionally."
   (interactive)
   (dolist (pattern jong-kill-buffer-patterns)
-	(dolist (buffer (buffer-list))
-	  (when (string-match pattern (buffer-name buffer))
+    (dolist (buffer (buffer-list))
+      (when (string-match pattern (buffer-name buffer))
 		(kill-buffer buffer))))
   (delete-above-below-window))
 
@@ -853,9 +845,9 @@ Version 2017-07-08"
   "Rerun etags and reload tags if tag not found and redo find-tag.              
    If buffer is modified, ask about save before running etags."
   (let ((extension (file-name-extension (buffer-file-name))))
-	(condition-case err
+    (condition-case err
 		ad-do-it
-	  (error (and (buffer-modified-p)
+      (error (and (buffer-modified-p)
 				  (not (ding))
 				  (y-or-n-p "Buffer is modified, save it? ")
 				  (save-buffer))
@@ -867,7 +859,7 @@ Version 2017-07-08"
   (interactive)
   (shell-command (format "etags *.%s" (or extension "el")))
   (let ((tags-revert-without-query t))  ; don't query, revert silently          
-	(visit-tags-table default-directory nil)))
+    (visit-tags-table default-directory nil)))
 
 
 (use-package org
@@ -940,7 +932,7 @@ Version 2017-07-08"
  '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
    (quote
-	("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
  '(eclim-eclipse-dirs (quote ((format "%s/eclipse" (getenv "HOME")))))
  '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
  '(fci-rule-color "#073642")
@@ -950,49 +942,49 @@ Version 2017-07-08"
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
-	(solarized-color-blend it "#002b36" 0.25)
-	(quote
-	 ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+    (solarized-color-blend it "#002b36" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
  '(highlight-symbol-foreground-color "#93a1a1")
  '(highlight-tail-colors
    (quote
-	(("#073642" . 0)
-	 ("#546E00" . 20)
-	 ("#00736F" . 30)
-	 ("#00629D" . 50)
-	 ("#7B6000" . 60)
-	 ("#8B2C02" . 70)
-	 ("#93115C" . 85)
-	 ("#073642" . 100))))
+    (("#073642" . 0)
+     ("#546E00" . 20)
+     ("#00736F" . 30)
+     ("#00629D" . 50)
+     ("#7B6000" . 60)
+     ("#8B2C02" . 70)
+     ("#93115C" . 85)
+     ("#073642" . 100))))
  '(hl-bg-colors
    (quote
-	("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
+    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
  '(hl-fg-colors
    (quote
-	("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(hl-paren-colors (quote ("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900")))
  '(lsp-ui-flycheck-enable t)
  '(magit-diff-use-overlays nil)
  '(nrepl-message-colors
    (quote
-	("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-	(realgud go-imports go-complete go-rename undo-tree undo-propose syntax-subword smartparens dummyparens which-key web-mode xterm-color xref-js2 use-package treemacs tide solarized-theme smart-compile restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit lsp-ui lsp-java log4e js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx go-autocomplete ggtags flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs eclim dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo bash-completion autopair autodisass-java-bytecode auto-package-update auto-highlight-symbol anaconda-mode)))
+    (realgud go-imports go-complete go-rename undo-tree undo-propose syntax-subword smartparens dummyparens which-key web-mode xterm-color xref-js2 use-package treemacs tide solarized-theme smart-compile restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit lsp-ui lsp-java log4e js-comint indium hungry-delete helm-projectile helm-gtags helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-guru go-errcheck go-eldoc go-dlv go-direx go-autocomplete ggtags flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs eclim dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide cargo bash-completion autopair autodisass-java-bytecode auto-package-update auto-highlight-symbol anaconda-mode)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
    (quote
-	((projectile-project-root . "/home/jongyoungcha/projects/ProgramersSolutions/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/ldb-chan/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/bitcoin/")
-	 (cmake-tab-width . 4)
-	 (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/Chanker/")
-	 (projectile-project-root . "/Users/joyeongchan/projects/jyc-cheat/jyc-cheat-client/")
-	 (projectile-project-name . "jyc_cheat_client")
-	 (cmake-ide--build-dir-var . "./")
-	 (projectile-project-root . "/home/jongyoungcha/projects/aleth/"))))
+    ((projectile-project-root . "/home/jongyoungcha/projects/ProgramersSolutions/")
+     (projectile-project-root . "/home/jongyoungcha/projects/ldb-chan/")
+     (projectile-project-root . "/home/jongyoungcha/projects/bitcoin/")
+     (cmake-tab-width . 4)
+     (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
+     (projectile-project-root . "/home/jongyoungcha/projects/Chanker/")
+     (projectile-project-root . "/Users/joyeongchan/projects/jyc-cheat/jyc-cheat-client/")
+     (projectile-project-name . "jyc_cheat_client")
+     (cmake-ide--build-dir-var . "./")
+     (projectile-project-root . "/home/jongyoungcha/projects/aleth/"))))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
@@ -1000,28 +992,28 @@ Version 2017-07-08"
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map
    (quote
-	((20 . "#dc322f")
-	 (40 . "#c8805d801780")
-	 (60 . "#bec073400bc0")
-	 (80 . "#b58900")
-	 (100 . "#a5008e550000")
-	 (120 . "#9d0091000000")
-	 (140 . "#950093aa0000")
-	 (160 . "#8d0096550000")
-	 (180 . "#859900")
-	 (200 . "#66aa9baa32aa")
-	 (220 . "#5780p9d004c00")
-	 (240 . "#48559e556555")
-	 (260 . "#392a9faa7eaa")
-	 (280 . "#2aa198")
-	 (300 . "#28669833af33")
-	 (320 . "#279993ccbacc")
-	 (340 . "#26cc8f66c666")
-	 (360 . "#268bd2"))))
+    ((20 . "#dc322f")
+     (40 . "#c8805d801780")
+     (60 . "#bec073400bc0")
+     (80 . "#b58900")
+     (100 . "#a5008e550000")
+     (120 . "#9d0091000000")
+     (140 . "#950093aa0000")
+     (160 . "#8d0096550000")
+     (180 . "#859900")
+     (200 . "#66aa9baa32aa")
+     (220 . "#5780p9d004c00")
+     (240 . "#48559e556555")
+     (260 . "#392a9faa7eaa")
+     (280 . "#2aa198")
+     (300 . "#28669833af33")
+     (320 . "#279993ccbacc")
+     (340 . "#26cc8f66c666")
+     (360 . "#268bd2"))))
  '(vc-annotate-very-old-color nil)
  '(weechat-color-list
    (quote
-	(unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
+    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
  '(xterm-color-names
    ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
  '(xterm-color-names-bright
