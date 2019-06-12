@@ -4,7 +4,7 @@
 (defvar jong-shell-highlights nil "jongyoungcha's shell mode highlights...")
 
 (add-hook 'term-load-hook
-	  (lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
+		  (lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
 
 ;; (use-package multi-term
 ;;   :ensure
@@ -28,8 +28,10 @@
 (defun eshell/clear ()
   "Clear the eshell buffer."
   (let ((inhibit-read-only t))
-    (erase-buffer)
-    (comint-send-input)))
+	(processp (get-buffer-process)
+			  (erase-buffer)
+			  ))
+  )
 
 (setq jong-shell-highlights
       '(("success\\|test\\|good" . font-lock-keyword-face)
