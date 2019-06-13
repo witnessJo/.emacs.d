@@ -909,15 +909,16 @@ Version 2017-07-08"
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
 
+
 (require 'jong-packages)
 (require 'jong-env-setting)
-(require 'jong-elisp)
 (require 'jong-common)
-(require 'jong-bash)
-(require 'jong-dap-debug)
 (require 'jong-project)
+
+;; Langauges
+(require 'jong-elisp)
+(require 'jong-bash)
 (require 'jong-tramp)
-(require 'jong-term)
 (require 'jong-scheme)
 (require 'jong-cmake)
 (require 'jong-c)
@@ -927,16 +928,20 @@ Version 2017-07-08"
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-nodejs)
-
-;; (require 'jong-minor-eos)
 (require 'jong-go)
+
+
+;; Utils
 (require 'jong-network)
 (require 'jong-http)
 (require 'jong-html)
+(require 'jong-dap-debug)
+(require 'jong-term)
 
 ;; for test
 (require 'jong-ether-test)
 (require 'jong-brth-test)
+
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
 
