@@ -233,6 +233,8 @@
   
   ;; Set linux indent style
   (lsp)
+	(rtags-eldoc)
+	(rtags-start-process-unless-running)
   (flymake-mode 0)
   
   (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
