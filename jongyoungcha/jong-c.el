@@ -31,39 +31,39 @@
 (defun jong-c-gud-set-args ()
   (interactive)
   (let ((target-buffer nil)
-		(cmd nil))
-	;; Set gud-gdb arguments.
-	(setq jong-c-gud-args (read-string "jong-gud-mode args : "))
+				(cmd nil))
+		;; Set gud-gdb arguments.
+		(setq jong-c-gud-args (read-string "jong-gud-mode args : "))
     (setq target-buffer (get-buffer jong-c-gud-buffer-name))
 
-	;; When buffer-name is existing, Get target buffer to send.
-	;; (when (string= "" jong-c-gud-buffer-name)
-	;; (setq target-buffer (catch 'found
-	;; (dolist (buffer (buffer-list))
-	;; (when (string= jong-c-gud-buffer-name (buffer-name buffer))
-	;; (throw 'found buffer))))))
-	(setq cmd (format "r %s" jong-c-gud-args))
-	(message "the messgae : %s" cmd)
-	(if (equal target-buffer nil)
-		(progn
-		  (setq target-buffer (current-buffer))
-		  (jong-common-send-command-to-buffer cmd))
-	  (jong-common-send-command-to-buffer cmd)
-	  )
-	)
+		;; When buffer-name is existing, Get target buffer to send.
+		;; (when (string= "" jong-c-gud-buffer-name)
+		;; (setq target-buffer (catch 'found
+		;; (dolist (buffer (buffer-list))
+		;; (when (string= jong-c-gud-buffer-name (buffer-name buffer))
+		;; (throw 'found buffer))))))
+		(setq cmd (format "r %s" jong-c-gud-args))
+		(message "the messgae : %s" cmd)
+		(if (equal target-buffer nil)
+				(progn
+					(setq target-buffer (current-buffer))
+					(jong-common-send-command-to-buffer cmd))
+			(jong-common-send-command-to-buffer cmd)
+			)
+		)
   )
 
 (defun jong-c-find-cmake-build (&optional target-dir)
   (interactive)
   (let ((parent-dir))
     (when (string= target-dir nil)
-	  (setq target-dir default-directory))
+			(setq target-dir default-directory))
     (if (file-exists-p (format "%s/CMakeLists.txt" target-dir ))
         (with-current-buffer (get-buffer-create jong-c-output-buffer)
-		  (shell-command (format "cd \"%s\"; cmake .; make" target-dir)
+					(shell-command (format "cd \"%s\"; cmake .; make" target-dir)
                          (current-buffer) (current-buffer))
-		  (display-buffer (current-buffer)))
-	  (unless (string= "/" target-dir)
+					(display-buffer (current-buffer)))
+			(unless (string= "/" target-dir)
         (setq parent-dir (file-name-directory (directory-file-name target-dir)))
         (jong-c-find-cmake-build parent-dir)
         ))
@@ -81,20 +81,20 @@
   (interactive)
   (let ((parent-dir))
     (when (string= jong-c-bin-name nil)
-	  (progn
+			(progn
         (message "Not setted jong-c-bin-name variable : %s" jong-c-bin-name)
         nil))
     (when (string= target-dir nil)
-	  (setq target-dir default-directory))
+			(setq target-dir default-directory))
     (if (file-exists-p (format "%s/%s" target-dir jong-c-bin-name))
         (with-current-buffer (get-buffer-create jong-c-output-buffer)
-		  (shell-command (format "cd \"%s\"; ./%s" target-dir jong-c-bin-name)
+					(shell-command (format "cd \"%s\"; ./%s" target-dir jong-c-bin-name)
                          (current-buffer) (current-buffer))
-		  (display-buffer (current-buffer)))
-	  (unless (string= "/" target-dir)
+					(display-buffer (current-buffer)))
+			(unless (string= "/" target-dir)
         (setq parent-dir (file-name-directory (directory-file-name target-dir)))
         (jong-c-run-project parent-dir))
-	  )
+			)
     )
   )
 
@@ -104,9 +104,9 @@
   (let ((filename buffer-file-name) predefined extension)
     (setq filename (file-name-nondirectory filename))
     (when (not (string-empty-p filename))
-	  (setq extension (file-name-extension filename))
-	  (if (or (string= extension "h") (string= extension "hpp"))
-		  (progn
+			(setq extension (file-name-extension filename))
+			(if (or (string= extension "h") (string= extension "hpp"))
+					(progn
             (setq predefined (upcase (format "_%s_" (replace-regexp-in-string "\\." "_" filename))))
             (setq predefined (upcase (format "%s" (replace-regexp-in-string "\\-" "_" predefined))))
             (insert (format "#ifndef %s\n" predefined))
@@ -118,14 +118,14 @@
 
 (require 'compile)
 (add-hook 'c-mode-common-hook
-		  (lambda ()
+					(lambda ()
             (unless (file-exists-p "Makefile")
-			  (set (make-local-variable 'compile-command)
-				   ;; emulate make's .c.o implicit pattern rule, but with
-				   ;; different defaults for the CC, CPPFLAGS, and CFLAGS
-				   ;; variables:
-				   ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
-				   (let ((file (file-name-nondirectory buffer-file-name)))
+							(set (make-local-variable 'compile-command)
+									 ;; emulate make's .c.o implicit pattern rule, but with
+									 ;; different defaults for the CC, CPPFLAGS, and CFLAGS
+									 ;; variables:
+									 ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+									 (let ((file (file-name-nondirectory buffer-file-name)))
                      (format "%s -c -o %s.o %s %s %s"
                              (or (getenv "CC") "gcc")
                              (file-name-sans-extension file)
@@ -137,21 +137,13 @@
 (defun jo-compile-cmake ()
   (interactive)
   (if (file-exists-p "CMakeLists.txt")
-	  (progn
+			(progn
         (if (get-buffer "*compilation*")
             (progn
-			  (delete-window-on (get-buffer "*compilation*"))
-			  (kill-buffer "*compilation*")))
+							(delete-window-on (get-buffer "*compilation*"))
+							(kill-buffer "*compilation*")))
         (compile "cmake . && ls ./Makefile && make -k"))
     (message "%s" "Couldnt find CMakeList.txt")))
-
-
-;; (use-package smart-compile
-;; :ensure t)
-;; (with-eval-after-load 'smart-compile
-;; (add-hook 'c-mode-common-hook
-;; (lambda ()
-;; )))
 
 (use-package rtags
   :ensure t
@@ -162,7 +154,7 @@
   (global-company-mode)
   (rtags-enable-standard-keybindings)
   (add-hook 'rtags-jump-hook (lambda ()
-							   (xref-push-marker-stack)))
+															 (xref-push-marker-stack)))
   
   (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
   (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
@@ -176,28 +168,43 @@
   )
 
 
-(use-package lsp-mode :commands lsp)
-(use-package lsp-ui :commands lsp-ui-mode)
-(use-package company-lsp :commands company-lsp)
+(use-package lsp-mode
+	:hook
+	(c-mode . lsp)
+	(c++-mode-hook . lsp)
+	(objc-mode-hook . lsp)
+	:commands lsp)
+
+;; optionally
+;; (use-package lsp-ui :commands lsp-ui-mode)
+(use-package company-lsp
+	:ensure t
+	:commands company-lsp
+	:config
+	(eval-after-load 'company
+		'(add-to-list
+			'company-backends 'company-lsp)))
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+;; optionally if you want to use debugger
+;; (use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 (use-package ccls
-  :ensure t
-  :config
-  (require 'ccls)
-  (require 'dap-lldb)
-  )
-
+	:hook ((c-mode c++-mode objc-mode) .
+				 (lambda () (require 'ccls) (lsp))))
 
 (setq ccls-executable "/usr/local/bin/ccls")
 
 (require 'dap-lldb)
 
 ;; (use-package company-rtags
-;;   :ensure t)
-;; (with-eval-after-load 'company-rtags
-;;   (eval-after-load 'company
-;;     '(add-to-list
-;; 	    'company-backends 'company-rtags)))
+;; :ensure t
+;; :config
+;; (eval-after-load 'company
+;; '(add-to-list
+;; 'company-backends 'company-rtags))
+;; )
 
 (use-package cmake-ide
   :ensure t)
@@ -220,19 +227,20 @@
 
 
 ;; Set linux indent style
-(defvar c-default-style)
-(defvar c-basic-offset)
-(setq c-default-style "linux")
-(setq-default indent-tabs-mode t
-			  tab-width 2
-			  c-basic-offset 2)
 
 
 (defun jong-c-setting-environment()
   "Setting environment and key bindings."
+
+	;; Set the indentation.
+	(defvar c-default-style)
+	(defvar c-basic-offset)
+	(setq c-default-style "linux")
+	(setq-default indent-tabs-mode t
+								tab-width 2
+								c-basic-offset 2)
   
   ;; Set linux indent style
-  (lsp)
 	(rtags-eldoc)
 	(rtags-start-process-unless-running)
   (flymake-mode 0)
@@ -241,7 +249,6 @@
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
   (local-set-key (kbd "C-c f f") 'ff-find-other-file)
   (local-set-key (kbd "C-c r .") 'rtags-find-symbol-at-point)
-  ;; (local-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
   (local-set-key (kbd "C-c r ,") 'rtags-find-references)
   (local-set-key (kbd "C-c r r") 'rtags-rename-symbol)
   (local-set-key (kbd "C-c r l") 'helm-imenu)
@@ -252,7 +259,7 @@
 (add-hook 'c++-mode-hook 'jong-c-setting-environment)
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook (lambda ()
-						   (setq flycheck-gcc-language-standard "c++14")
+													 (setq flycheck-gcc-language-standard "c++14")
                            (setq flycheck-clang-language-standard "c++14")
                            (with-no-warnings (setq company-clang-arguments '("-std=c++14")))))
 
