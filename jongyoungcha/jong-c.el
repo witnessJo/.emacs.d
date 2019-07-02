@@ -249,7 +249,7 @@
   (local-set-key (kbd "C-S-g") 'close-compilation-window)
   (local-set-key (kbd "C-c f f") 'ff-find-other-file)
   (local-set-key (kbd "C-c r .") 'rtags-find-symbol-at-point)
-  (local-set-key (kbd "C-c r ,") 'rtags-find-references)
+  (local-set-key (kbd "C-c r ,") 'rtags-find-references-at-point)
   (local-set-key (kbd "C-c r r") 'rtags-rename-symbol)
   (local-set-key (kbd "C-c r l") 'helm-imenu)
   )
