@@ -206,13 +206,158 @@
 		(call-interactively indent-func)
 	  (call-interactively 'indent-for-tab-command))
 	(goto-char prev-pos)
-	(deactivate-mark)
-	)
+	(deactivate-mark))
   )
 
+(use-package helm-xref
+  :ensure t
+  :config	
+  (setq xref-show-xrefs-function 'helm-xref-show-xrefs))
 
-(global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
-(global-set-key (kbd "C-c C-f") 'jong-common-find-file-other-window)
 
-;; (symbol-value (concat (symbol-name major-mode) "-map"))
+(defcustom jong-common-ring-location  0
+  "Test."
+  :type 'integer)
+
+(defcustom jong-common-ring (make-ring 20)
+  "Ring of markers to implement the marker stack."
+  :type 'ring)
+
+(defun jong-common-ring-insert ()
+  (interactive)
+  "."
+  (let ((ring jong-common-ring)
+		(marker (make-marker))
+		(ring-elems))
+	(set-marker marker (point) (current-buffer))
+	(setq ring-elems (cdr (cdr ring)))
+	;; (ring-insert ring marker)
+	;; (setq jong-common-ring-location (1- (ring-length ring)))
+	;; (goto-char (ring-ref ring jong-common-ring-location))
+	(jong-common-ring-remove-from ring jong-common-ring-location)
+	(aset ring-elems jong-common-ring-location marker)
+	(setq jong-common-ring-location (1+ jong-common-ring-location))
+	))
+
+
+(defun jong-common-ring-remove-from (ring index)
+  "Remove the marker instance located in the index. (RING : the target ring, INDEX : location)."
+  (let ((ring-elems (cdr (cdr ring))))
+	(unless (ring-p ring)
+	  (error "The argument ring was not ring"))
+	(unless (integerp index)
+	  (error "The argument index was not integer"))
+	(setq ring-elems (cdr (cdr ring)))
+	(catch 'found
+	  (dotimes (i (length ring-elems))
+		(when (< i index)
+		  (setq i index))
+		(if (elt ring-elems i)
+			(aset ring-elems i nil)
+		  (throw 'found nil)
+		  ))
+	  nil
+	  )
+	))
+
+
+(defun jong-common-ring-status ()
+  (interactive)
+  "."
+  (let ((ring jong-common-ring)
+		(ring-elems)
+		(elem))
+	(setq ring-elems (cdr (cdr ring)))
+	(dotimes (i (length ring-elems))
+	  (setq elem (elt ring-elems i))
+	  (when elem
+		(print i)
+		(print elem))
+	  )
+	))
+
+
+(defun jong-common-ring-goto-last-index ()
+  (interactive)
+  (let ((ring jong-common-ring)
+		(marker-target))
+	(setq marker-target (ring-ref ring 0))
+	(ignore-errors (switch-to-buffer (marker-buffer marker-target)))
+	(goto-char marker-target)
+	))
+
+
+(defun jong-common-ring-clear ()
+  "."
+  (interactive)
+  (let ((ring jong-common-ring))
+	(while (unless (ring-empty-p ring))
+	  (ring-remove ring)
+	  (setq jong-common-ring-location 0))
+	))
+
+
+(defun jong-common-ring-goto-prev()
+  "."
+  (interactive)
+  (let ((ring-elems (cdr (cdr jong-common-ring)))
+		(marker-target)
+		(target-buffer))
+	(if (> jong-common-ring-location 0)
+		(progn
+		  (setq jong-common-ring-location (1- jong-common-ring-location))
+		  (if (and (setq marker-target (elt ring-elems jong-common-ring-location))
+				   (setq target-buffer (marker-buffer marker-target)))
+			  (progn
+				(switch-to-buffer (marker-buffer marker-target))
+				(goto-char marker-target)
+				(message "Current position %d" jong-common-ring-location))
+			(message "The buffer \"%s\" was not existing. (Current position : %d)"
+					 (buffer-name target-buffer) jong-common-ring-location)))
+	  (message "(Jong Ring) Oldest position."))
+	))
+
+
+(defun jong-common-ring-goto-next ()
+  "."
+  (interactive)
+  (let ((ring-elems (cdr (cdr jong-common-ring)))
+		(marker-target)
+		(target-buffer))
+	(if (< jong-common-ring-location (jong-common-ring-item-count))
+		(progn
+		  (setq jong-common-ring-location (1+ jong-common-ring-location))
+		  (if (and (setq marker-target (elt ring-elems jong-common-ring-location))
+				   (setq target-buffer (marker-buffer marker-target)))
+			  (progn
+				(switch-to-buffer (marker-buffer marker-target))
+				(goto-char marker-target)
+				(message "Current position %d" jong-common-ring-location))
+			(message "The buffer \"%s\" was not existing. (Current position : %d)"
+					 (buffer-name target-buffer) jong-common-ring-location)))
+	  (message "(Jong Ring) Most recently position."))
+	))
+
+
+(defun jong-common-ring-item-count ()
+  "."
+  (let ((count 0)
+		(ring-elems (cdr (cdr jong-common-ring))))
+	(catch 'found
+	  (dotimes (i (length ring-elems))
+		(unless (elt ring-elems i)
+		  (throw 'found nil))
+		(setq count (1+ count))))
+	count
+	))
+
+
+(global-set-key (kbd "M-c M-p") 'jong-common-ring-goto-prev)
+(global-set-key (kbd "M-c p") 'jong-common-ring-goto-prev)
+(global-set-key (kbd "M-c M-n") 'jong-common-ring-goto-next)
+(global-set-key (kbd "M-c n") 'jong-common-ring-goto-next)
+(global-set-key (kbd "M-c M-c") 'jong-common-ring-clear)
+(global-set-key (kbd "M-c c") 'jong-common-ring-clear)
+
+
 (provide 'jong-common)
