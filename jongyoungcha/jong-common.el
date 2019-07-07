@@ -219,7 +219,8 @@
   "Test."
   :type 'integer)
 
-(defcustom jong-common-ring (make-ring 20)
+(defvar jong-common-ring-size 20)
+(defcustom jong-common-ring (make-ring jong-common-ring-size)
   "Ring of markers to implement the marker stack."
   :type 'ring)
 
@@ -290,53 +291,51 @@
 (defun jong-common-ring-clear ()
   "."
   (interactive)
-  (let ((ring jong-common-ring))
-	(while (unless (ring-empty-p ring))
-	  (ring-remove ring)
-	  (setq jong-common-ring-location 0))
-	))
+	(setq jong-common-ring (make-ring jong-common-ring-size))
+	(setq jong-common-ring-location 0)
+	)
 
 
 (defun jong-common-ring-goto-prev()
   "."
   (interactive)
   (let ((ring-elems (cdr (cdr jong-common-ring)))
-		(marker-target)
-		(target-buffer))
-	(if (> jong-common-ring-location 0)
-		(progn
-		  (setq jong-common-ring-location (1- jong-common-ring-location))
-		  (if (and (setq marker-target (elt ring-elems jong-common-ring-location))
-				   (setq target-buffer (marker-buffer marker-target)))
-			  (progn
-				(switch-to-buffer (marker-buffer marker-target))
-				(goto-char marker-target)
-				(message "Current position %d" jong-common-ring-location))
-			(message "The buffer \"%s\" was not existing. (Current position : %d)"
-					 (buffer-name target-buffer) jong-common-ring-location)))
-	  (message "(Jong Ring) Oldest position."))
-	))
+				(marker-target)
+				(target-buffer))
+		(if (> jong-common-ring-location 0)
+				(progn
+					(setq jong-common-ring-location (1- jong-common-ring-location))
+					(if (and (setq marker-target (elt ring-elems jong-common-ring-location))
+									 (setq target-buffer (marker-buffer marker-target)))
+							(progn
+								(switch-to-buffer (marker-buffer marker-target))
+								(goto-char marker-target)
+								(message "Current position %d" jong-common-ring-location))
+						(message "The buffer \"%s\" was not existing. (Current position : %d)"
+										 (buffer-name target-buffer) jong-common-ring-location)))
+			(message "(Jong Ring) Oldest position."))
+		))
 
 
 (defun jong-common-ring-goto-next ()
   "."
   (interactive)
   (let ((ring-elems (cdr (cdr jong-common-ring)))
-		(marker-target)
-		(target-buffer))
-	(if (< jong-common-ring-location (jong-common-ring-item-count))
-		(progn
-		  (setq jong-common-ring-location (1+ jong-common-ring-location))
-		  (if (and (setq marker-target (elt ring-elems jong-common-ring-location))
-				   (setq target-buffer (marker-buffer marker-target)))
-			  (progn
-				(switch-to-buffer (marker-buffer marker-target))
-				(goto-char marker-target)
-				(message "Current position %d" jong-common-ring-location))
-			(message "The buffer \"%s\" was not existing. (Current position : %d)"
-					 (buffer-name target-buffer) jong-common-ring-location)))
-	  (message "(Jong Ring) Most recently position."))
-	))
+				(marker-target)
+				(target-buffer))
+		(if (< jong-common-ring-location (jong-common-ring-item-count))
+				(progn
+					(setq jong-common-ring-location (1+ jong-common-ring-location))
+					(if (and (setq marker-target (elt ring-elems jong-common-ring-location))
+									 (setq target-buffer (marker-buffer marker-target)))
+							(progn
+								(switch-to-buffer (marker-buffer marker-target))
+								(goto-char marker-target)
+								(message "Current position %d" jong-common-ring-location))
+						(message "The buffer \"%s\" was not existing. (Current position : %d)"
+										 (buffer-name target-buffer) jong-common-ring-location)))
+			(message "(Jong Ring) Most recently position."))
+		))
 
 
 (defun jong-common-ring-item-count ()
@@ -352,12 +351,28 @@
 	))
 
 
+(defun jong-common-show-buffer-other-window()
+	"Display the buffer to the other window."
+	(interactive)
+	(let ((target-buffer))
+		(other-window 1)
+		(helm-buffers-list)
+		(other-window -1)
+		))
+
+
+(global-set-key (kbd "M-c b") 'jong-common-show-buffer-other-window)
+(global-set-key (kbd "M-c M-b") 'jong-common-show-buffer-other-window)
+
+
 (global-set-key (kbd "M-c M-p") 'jong-common-ring-goto-prev)
 (global-set-key (kbd "M-c p") 'jong-common-ring-goto-prev)
 (global-set-key (kbd "M-c M-n") 'jong-common-ring-goto-next)
 (global-set-key (kbd "M-c n") 'jong-common-ring-goto-next)
 (global-set-key (kbd "M-c M-c") 'jong-common-ring-clear)
 (global-set-key (kbd "M-c c") 'jong-common-ring-clear)
+(global-set-key (kbd "M-c r i") 'jong-common-ring-insert)
+
 
 
 (provide 'jong-common)
