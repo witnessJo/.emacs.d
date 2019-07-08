@@ -222,13 +222,10 @@
 (defun jong-c-gdb()
   (interactive)
   (call-interactively 'gdb)
-  (gdb-many-windows)
-  )
+  (gdb-many-windows))
 
 
 ;; Set linux indent style
-
-
 (defun jong-c-setting-environment()
   "Setting environment and key bindings."
 
