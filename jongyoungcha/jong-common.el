@@ -154,20 +154,20 @@
 
 
 
-(defun jong-common-find-file-other-window ()
-  (interactive)
-  (let ((buffer-source (current-buffer))
-		(buffer-target))
-	(call-interactively 'helm-find-files)
-	(setq buffer-target (current-buffer))
-	(unless (eq buffer-source buffer-target)
-	  (progn
-		(pop-to-buffer buffer-target 'other-window)
-		(other-window -1)
-		(pop-to-buffer-same-window buffer-source)
-		))
-	)
-  )
+;; (defun jong-common-find-file-other-window ()
+;; (interactive)
+;; (let ((buffer-source (current-buffer))
+;; (buffer-target))
+;; (call-interactively 'helm-find-files)
+;; (setq buffer-target (current-buffer))
+;; (unless (eq buffer-source buffer-target)
+;; (progn
+;; (pop-to-buffer buffer-target 'other-window)
+;; (other-window -1)
+;; (pop-to-buffer-same-window buffer-source)
+;; ))
+;; )
+;; )
 
 
 (defun jong-common-process-exit-code-and-output (program &rest args)
@@ -360,9 +360,25 @@
 		(other-window -1)
 		))
 
+(defun jong-common-find-file-other-window()
+	"Find the file other windows."
+	(interactive)
+	(let ((current-path default-directory)
+				(other-window-default-path))
+		(progn
+			(other-window 1)
+			(setq other-window-default-path default-directory)
+			(setq default-directory current-path)
+			(call-interactively 'helm-find-files)
+			(setq default-directory other-window-default-path)
+			(other-window -1))
+		))
+
 
 (global-set-key (kbd "M-c b") 'jong-common-show-buffer-other-window)
 (global-set-key (kbd "M-c M-b") 'jong-common-show-buffer-other-window)
+(global-set-key (kbd "M-c f") 'jong-common-find-file-other-window)
+(global-set-key (kbd "M-c M-f") 'jong-common-find-file-other-window)
 
 
 (global-set-key (kbd "M-c M-p") 'jong-common-ring-goto-prev)

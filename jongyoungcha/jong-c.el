@@ -232,6 +232,7 @@
   ;; Set the indentation.
   (defvar c-default-style)
   (defvar c-basic-offset)
+	
   (setq c-default-style "linux")
   (setq-default indent-tabs-mode t
 				tab-width 2

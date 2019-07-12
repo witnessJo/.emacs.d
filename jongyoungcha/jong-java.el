@@ -72,17 +72,15 @@
   (jong-common-set-window-1-2 (buffer-name (current-buffer)) "*out*" "*dap-ui-repl*"))
 
 
-
-
-(use-package eclim
-  :ensure t
-  :config
-  (setq eclimd-autostart t)
-  (custom-set-variables
-   '(eclim-eclipse-dirs '((format "%s/eclipse" (getenv "HOME"))))
-   '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME"))))
-  (global-eclim-mode)
-  )
+;; (use-package eclim
+;; :ensure t
+;; :config
+;; (setq eclimd-autostart t)
+;; (custom-set-variables
+;; '(eclim-eclipse-dirs '((format "%s/eclipse" (getenv "HOME"))))
+;; '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME"))))
+;; (global-eclim-mode)
+;; )
 
 
 (use-package projectile :ensure t)
@@ -102,17 +100,34 @@
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-flycheck-enable t))
 
-(use-package lsp-java :ensure t :after lsp
-  :config (add-hook 'java-mode-hook 'lsp))
+(use-package lsp-java
+  :ensure t
+  :after lsp
+  :config
+  (add-hook 'java-mode-hook 'lsp)
+  (setq lsp-java-vmargs
+      (list
+         "-noverify"
+         "-Xmx1G"
+         "-XX:+UseG1GC"
+         "-XX:+UseStringDeduplication"
+         (format "-javaagent:/%s/%s" (getenv "HOME") ".m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar")))
+  )
 
-;; (use-package dap-mode
-;; :ensure t :after lsp-mode
-;; :config
-;; (dap-mode t)
-;; (dap-ui-mode t))
+;; (require 'lsp-java-boot)
+
+;; (require 'lsp-java-boot)
+;; (add-hook 'lsp-mode-hook #'lsp-lens-mode)
+;; (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
+
+(use-package dap-mode
+  :ensure t :after lsp-mode
+  :config
+  (dap-mode t)
+  (dap-ui-mode t))
 
 (use-package dap-java :after (lsp-java))
-(use-package lsp-java-treemacs :after (treemacs))
+;; (use-package lsp-java-treemacs :after (treemacs))
 
 
 

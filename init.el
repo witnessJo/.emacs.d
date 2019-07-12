@@ -917,7 +917,7 @@ Version 2017-07-08"
 (require 'jong-c)
 (require 'jong-python)
 (require 'jong-rust)
-;; (require 'jong-java)
+(require 'jong-java)
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-nodejs)
@@ -940,3 +940,30 @@ Version 2017-07-08"
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(eclim-eclipse-dirs (quote ((format "%s/eclipse" (getenv "HOME")))))
+ '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
+ '(package-selected-packages
+   (quote
+	(lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+ '(safe-local-variable-values
+   (quote
+	((projectile-project-root . "/home/jongyoungcha/projects/ProgramersSolutions/")
+	 (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
+	 (projectile-project-root . "/home/jongyoungcha/projects/ldb-chan/")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flymake-errline ((((class color)) (:background "#444444"))) t)
+ '(flymake-error ((((class color)) (:background "#444444"))))
+ '(flymake-warning ((((class color)) (:background "#4444aa"))))
+ '(flymake-warnline ((((class color)) (:background "#4444aa"))) t)
+ '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
+ '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
+
