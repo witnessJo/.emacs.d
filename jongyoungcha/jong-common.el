@@ -375,6 +375,58 @@
 		))
 
 
+(defun jong-common-go-eshell ()
+  (interactive)
+  (let ((cmd (format "%s %s" "cd" default-directory)))
+    (message "eshell path : %s" cmd)
+    (call-interactively 'eshell)
+    (with-current-buffer "*eshell*"
+      (eshell-interrupt-process)
+      (insert cmd)
+      (eshell-send-input)
+      (pop-to-buffer-same-window "*eshell*"))
+    ))
+
+
+(defun jong-common-copy-current-dir ()
+  "Copy the current directory to the 'kill-ring."
+  (interactive)
+  (kill-new default-directory))
+
+
+(defun jong-common-copy-current-path ()
+  "Copy the current path to the 'kill-ring."
+  (interactive)
+  (kill-new buffer-file-name))
+
+
+(defcustom jong-common-skippable-buffer-patterns '("^.*\*helm.*" "*Buffer List*")
+  "Buffer name patterns for skip and kill."
+  :type 'list)
+
+(defun jong-common-next-buffer ()
+  "Next-buffer that skips certain buffers."
+  (interactive)
+  (next-buffer)
+  (dolist (skippable-buffer-pattern jong-common-skippable-buffer-patterns)
+    (when (string-match skippable-buffer-pattern (buffer-name))
+      (message "skip buffer: %s" (buffer-name))
+      (kill-buffer (current-buffer))
+      (jong-next-buffer))
+    ))
+
+(defun jong-common-prev-buffer ()
+  "Prev-buffer that skips certain buffers."
+  (interactive)
+  (previous-buffer)
+  (dolist (skippable-buffer-pattern jong-common-skippable-buffer-patterns)
+    (when (string-match skippable-buffer-pattern (buffer-name))
+      (message "skip buffer: %s" (buffer-name))
+      (kill-buffer (current-buffer))
+      (jong-prev-buffer))
+    ))
+
+
 (global-set-key (kbd "M-c b") 'jong-common-show-buffer-other-window)
 (global-set-key (kbd "M-c M-b") 'jong-common-show-buffer-other-window)
 (global-set-key (kbd "M-c f") 'jong-common-find-file-other-window)
@@ -385,10 +437,11 @@
 (global-set-key (kbd "M-c p") 'jong-common-ring-goto-prev)
 (global-set-key (kbd "M-c M-n") 'jong-common-ring-goto-next)
 (global-set-key (kbd "M-c n") 'jong-common-ring-goto-next)
-(global-set-key (kbd "M-c M-c") 'jong-common-ring-clear)
-(global-set-key (kbd "M-c c") 'jong-common-ring-clear)
+(global-set-key (kbd "M-c r c") 'jong-common-ring-clear)
 (global-set-key (kbd "M-c r i") 'jong-common-ring-insert)
 
+(global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
+(global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
 
 (provide 'jong-common)

@@ -14,7 +14,6 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
 (package-initialize)
-
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -40,39 +39,68 @@
   :config
   (async-bytecomp-package-mode 1))
 
-(use-package auth-source
-  :ensure t
-  :no-require t)
+(use-package hungry-delete
+  :ensure t)
 
-(use-package syntax-subword
-  :ensure t
-  :config
-  (global-syntax-subword-mode))
-
-(defun jong-go-eshell ()
+(defun jong-common-forward-word ()
   (interactive)
-  (let (cmd)
-    (setq cmd (format "%s %s" "cd" default-directory))
-    (message cmd)
-    (call-interactively 'eshell)
-    (with-current-buffer "*eshell*"
-      (eshell-return-to-prompt)
-      (insert cmd)
-      (eshell-send-input)
-      (pop-to-buffer-same-window "*eshell*"))
-    ))
+  (call-interactively 'forward-word)
+  ;; (call-interactively 'forward-to-word)
+  ;; (evil-forward-word)
+  )
 
-
-(defun jong-copy-current-dir ()
-  "Copy the current directory to the 'kill-ring."
+(defun jong-common-backward-word ()
   (interactive)
-  (kill-new (file-name-directory buffer-file-name)))
+  (call-interactively 'backward-word)
+  ;; (call-interactively 'backward-to-word)
+  ;; (evil-backward-word)
+  )
 
-
-(defun jong-copy-current-path ()
-  "Copy the current path to the 'kill-ring."
+(defun jong-common-kill-forward-word ()
   (interactive)
-  (kill-new buffer-file-name))
+  ;; (syntax-subword-kill)
+  )
+
+(defun jong-common-kill-backward-word ()
+  (interactive)
+  ;; (syntax-subword-backward-kill)
+  )
+
+(global-set-key (kbd "M-f") 'jong-common-forward-word)
+(global-set-key (kbd "M-b") 'jong-common-backward-word)
+
+;; (require 'viper)
+;; (modify-syntax-entry ?_ "w")
+;; (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)
+;; (modify-syntax-entry ?? "w")
+
+;; (defun my-forward-word ()
+;; "Forward to the end of the 'word at point' (vim-like)."
+;; (interactive)
+;; (skip-syntax-forward "-")
+;; (skip-syntax-forward "^-"))
+
+;; (defun my-backward-word ()
+;; "Backward to the start of the 'word at point' (vim-like)."
+;; (interactive)
+;; (skip-syntax-backward "-")
+;; (skip-syntax-backward "^-"))
+
+
+;; (use-package syntax-subword
+;; :ensure t)
+
+;; (defun jong-syntax-subword-forward () "Jong syntax subword
+;; forword."  (interactive) (call-interactively 'forward-word)
+;; (forward-char 1) (forward-char -1))
+
+
+;; (defun jong-syntax-subword-backward ()
+;; (interactive)
+;; (call-interactively 'backward-word)
+;; )
+;; (call-interactively 'backward-word)
+  ;; (call-interactively 'forward-char))
 
 
 (defun jong-open-line-above ()
@@ -243,8 +271,6 @@ Version 2017-07-08"
 (use-package prodigy
   :ensure t)
 
-(use-package hungry-delete
-  :ensure t)
 
 (use-package autopair
   :ensure t)
@@ -289,35 +315,6 @@ Version 2017-07-08"
       (progn
         (indent-buffer)
         (message "Indented buffer.")))))
-
-
-(defcustom skippable-buffer-patterns '("^.*\*helm.*" "*Buffer List*")
-  "Buffer name patterns for skip and kill."
-  :type 'list)
-
-
-(defun jong-next-buffer ()
-  "next-buffer that skips certain buffers"
-  (interactive)
-  (next-buffer)
-  (dolist (skippable-buffer-pattern skippable-buffer-patterns)
-    (when (string-match skippable-buffer-pattern (buffer-name))
-      (message "skip buffer: %s" (buffer-name))
-      (kill-buffer (current-buffer))
-      (jong-next-buffer))
-    ))
-
-
-(defun jong-prev-buffer ()
-  "next-buffer that skips certain buffers"
-  (interactive)
-  (previous-buffer)
-  (dolist (skippable-buffer-pattern skippable-buffer-patterns)
-    (when (string-match skippable-buffer-pattern (buffer-name))
-      (message "skip buffer: %s" (buffer-name))
-      (kill-buffer (current-buffer))
-      (jong-prev-buffer))
-    ))
 
 
 (defun jong-forward-delete-word ()
@@ -444,7 +441,7 @@ Version 2017-07-08"
         (target-column))
     (when (not (numberp number))
       (error "Number was not Integer"))
-    
+
     (forward-line number)
     (setq target-column (+ (point) curr-column))
     (setq max-column (progn (end-of-line)
@@ -478,6 +475,16 @@ Version 2017-07-08"
   )
 
 
+(use-package evil
+	:ensure t)
+(global-set-key (kbd "M-<backspace>") 'jong-common-kill-backward-word)
+
+(global-set-key (kbd "C-M-a") 'jong-syntax-subword-backward)
+(global-set-key (kbd "M-<DEL>") 'jong-common-kill-backward-word)
+(global-set-key (kbd "M-f") 'jong-common-forward-word)
+(global-set-key (kbd "M-b") 'jong-common-backward-word)
+
+
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
@@ -487,10 +494,14 @@ Version 2017-07-08"
     (define-key map (kbd "M-s") (lambda () (interactive) (jong-forward-line 1)))
     (define-key map (kbd "C-M-s") (lambda () (interactive) (jong-forward-line 1)))
     (define-key map (kbd "C-<down>") (lambda () (interactive) (jong-forward-line 1)))
+	(define-key map (kbd "C-<backspace>") 'hungry-delete-backward)
 	(define-key map (kbd "M-d") 'forward-char)
-    (define-key map (kbd "C-M-d") 'syntax-subword-forward)
-    (define-key map (kbd "C-M-a") 'syntax-subword-backward)
-	
+    (define-key map (kbd "C-M-d") 'jon)
+    (define-key map (kbd "C-M-a") 'jong-syntax-subword-backward)
+	(define-key map (kbd "M-<DEL>") 'jong-common-kill-backward-word)
+	(define-key map (kbd "M-f") 'jong-common-forward-word)
+    (define-key map (kbd "M-b") 'jong-common-backward-word)
+
     (define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)
 									 (jong-forward-line -1)))
@@ -524,18 +535,16 @@ Version 2017-07-08"
 									  (forward-word)))
     (define-key map (kbd "M-e") 'forward-sentence)
     (define-key map (kbd "M-q") 'backward-sentence)
-    (define-key map (kbd "M-<backspace>") (lambda () (interactive)
-											(progn (call-interactively 'syntax-subword-backward-kill)
-												   (pop kill-ring))))
-    (define-key map (kbd "M-<delete>") (lambda () (interactive)
-										 (progn (call-interactively 'syntax-subword-kill)
-												(pop kill-ring))))
+    ;; (define-key map (kbd "M-<backspace>") (lambda () (
+	;; (progn (call-interactively 'backward-kill-word)
+	;; (pop kill-ring))))
+	;; (define-key map (kbd "M-<delete>") (lambda () (interactive)
+	;; (progn (call-interactively 'forward-hf)
+	;; (pop kill-ring))))
 
-    (global-set-key (kbd "C-x C-p") 'jong-prev-buffer)
-    (global-set-key (kbd "C-x C-n") 'jong-next-buffer)
     (global-set-key (kbd "C-S-w") 'copy-region-as-kill)
     map)
-  "jong-keys-minor-mode keymap.")
+  "Jong-keys-minor-mode keymap.")
 
 
 (define-minor-mode jong-keys-minor-mode
@@ -560,7 +569,6 @@ Version 2017-07-08"
 (global-set-key (kbd "M-B") (lambda () (interactive)
 							  (jong-set-mark)
 							  (backward-word)))
-
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
 								(jong-set-mark)
@@ -839,7 +847,7 @@ Version 2017-07-08"
 
 (defun jong-kill-temporary-buffers ()
   "Kill current buffer unconditionally."
-  (interactive)
+  (interactive)p
   (dolist (pattern jong-kill-buffer-patterns)
     (dolist (buffer (buffer-list))
       (when (string-match pattern (buffer-name buffer))
@@ -948,13 +956,14 @@ Version 2017-07-08"
  '(eclim-eclipse-dirs (quote ((format "%s/eclipse" (getenv "HOME")))))
  '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
  '(package-selected-packages
-   (quote
-	(lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+	 (quote
+		(evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
-   (quote
-	((projectile-project-root . "/home/jongyoungcha/projects/ProgramersSolutions/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
-	 (projectile-project-root . "/home/jongyoungcha/projects/ldb-chan/")))))
+	 (quote
+		((projectile-project-root . "/home/jongyoungcha/projects/Calculator/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/ProgramersSolutions/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/ldb-chan/")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -192,7 +192,10 @@
 
 (use-package ccls
   :hook ((c-mode c++-mode objc-mode) .
-		 (lambda () (require 'ccls) (lsp))))
+				 (lambda ()
+					 (require 'ccls)
+					 ;; (setq lsp-eldoc-enable-hover nil)
+					 (lsp))))
 
 (setq ccls-executable "/usr/local/bin/ccls")
 
@@ -225,11 +228,9 @@
   (gdb-many-windows))
 
 
-;; Set linux indent style
-(defun jong-c-setting-environment()
-  "Setting environment and key bindings."
-
-  ;; Set the indentation.
+(defun jong-c-setting-coding-style()
+	"Setting environment and key bindings."
+	;; Set the indentation.
   (defvar c-default-style)
   (defvar c-basic-offset)
 	
@@ -237,9 +238,17 @@
   (setq-default indent-tabs-mode t
 				tab-width 2
 				c-basic-offset 2)
+																	 
+	)
+
+
+;; Set linux indent style
+(defun jong-c-setting-environment()
+  "Setting environment and key bindings."
   
   ;; Set linux indent style
-  (rtags-eldoc)
+  ;; (setq-local eldoc-documentation-function nil)
+  ;; (setq-local eldoc-documentation-function #'rtags-eldoc)
   (rtags-start-process-unless-running)
   (flymake-mode 0)
   
@@ -259,13 +268,15 @@
 
 
 ;; Add flycheck c++ modep
+(add-hook 'c-initialization-hook 'jong-c-setting-coding-style)
 (add-hook 'c-mode-hook 'jong-c-setting-environment)
 (add-hook 'c++-mode-hook 'jong-c-setting-environment)
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
+
 (add-hook 'c++-mode-hook (lambda ()
-						   (setq flycheck-gcc-language-standard "c++14")
-                           (setq flycheck-clang-language-standard "c++14")
-                           (with-no-warnings (setq company-clang-arguments '("-std=c++14")))))
+													 (setq flycheck-gcc-language-standard "c++14")
+													 (setq flycheck-clang-language-standard "c++14")
+													 (with-no-warnings (setq company-clang-arguments '("-std=c++14")))))
 
 ;; For protecting my eyes...
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
