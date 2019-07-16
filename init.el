@@ -28,6 +28,7 @@
 
 (global-font-lock-mode t)
 (transient-mark-mode 1)
+(setq eldoc-idle-delay 0.05)
 
 (use-package org
   :ensure t
@@ -42,32 +43,49 @@
 (use-package hungry-delete
   :ensure t)
 
-(defun jong-common-forward-word ()
-  (interactive)
-  (call-interactively 'forward-word)
-  ;; (call-interactively 'forward-to-word)
+;; (defun jong-common-forward-word ()
+;; "Test."
+;; (interactive)
+;; (call-interactively 'forward-word)
+;; (call-interactively 'forward-to-word)
   ;; (evil-forward-word)
-  )
+  ;; )
 
-(defun jong-common-backward-word ()
-  (interactive)
-  (call-interactively 'backward-word)
-  ;; (call-interactively 'backward-to-word)
+;; (defun jong-common-backward-word ()
+;; "Test."
+;; (interactive)
+;; (call-interactively 'backward-word)
+;; (call-interactively 'backward-to-word)
   ;; (evil-backward-word)
+  ;; )
+
+(use-package syntax-subword
+  :ensure t
+  :config
+  ;; (global-syntax-subword-mode t)
   )
 
 (defun jong-common-kill-forward-word ()
+  "It would be changed."
   (interactive)
-  ;; (syntax-subword-kill)
-  )
+  (let ((next-char (buffer-substring (point) (1+ (point)))))
+	(if (string-match (regexp-opt-charset '(? ?\t ?\n)) next-char)
+		(call-interactively 'hungry-delete-forward)
+	  (call-interactively 'syntax-subword-kill))
+	))
+
 
 (defun jong-common-kill-backward-word ()
+  "It would be changed."
   (interactive)
-  ;; (syntax-subword-backward-kill)
-  )
+  (let ((prev-char (buffer-substring (1- (point)) (point))))
+	(if (string-match (regexp-opt-charset '(? ?\t ?\n)) prev-char)
+		(call-interactively 'hungry-delete-backward)
+	  (call-interactively 'syntax-subword-backward-kill))
+	))
 
-(global-set-key (kbd "M-f") 'jong-common-forward-word)
-(global-set-key (kbd "M-b") 'jong-common-backward-word)
+;; (global-set-key (kbd "M-f") 'jong-common-forward-word)
+;; (global-set-key (kbd "M-b") 'jong-common-backward-word)
 
 ;; (require 'viper)
 ;; (modify-syntax-entry ?_ "w")
@@ -475,14 +493,14 @@ Version 2017-07-08"
   )
 
 
-(use-package evil
-	:ensure t)
-(global-set-key (kbd "M-<backspace>") 'jong-common-kill-backward-word)
+;; (use-package evil
+;; :ensure t)
+;; (global-set-key (kbd "M-<backspace>") 'jong-common-kill-backward-word)
 
-(global-set-key (kbd "C-M-a") 'jong-syntax-subword-backward)
-(global-set-key (kbd "M-<DEL>") 'jong-common-kill-backward-word)
-(global-set-key (kbd "M-f") 'jong-common-forward-word)
-(global-set-key (kbd "M-b") 'jong-common-backward-word)
+;; (global-set-key (kbd "C-M-a") 'jong-syntax-subword-backward)
+;; (global-set-key (kbd "M-<DEL>") 'jong-common-kill-backward-word)
+;; (global-set-key (kbd "M-f") 'jong-common-forward-word)
+;; (global-set-key (kbd "M-b") 'jong-common-backward-word)
 
 
 (defvar jong-keys-minor-mode-map
@@ -496,13 +514,12 @@ Version 2017-07-08"
     (define-key map (kbd "C-<down>") (lambda () (interactive) (jong-forward-line 1)))
 	(define-key map (kbd "C-<backspace>") 'hungry-delete-backward)
 	(define-key map (kbd "M-d") 'forward-char)
-    (define-key map (kbd "C-M-d") 'jon)
+    (define-key map (kbd "C-M-d") 'jong-syntax-subwordk-forward)
     (define-key map (kbd "C-M-a") 'jong-syntax-subword-backward)
-	(define-key map (kbd "M-<DEL>") 'jong-common-kill-backward-word)
-	(define-key map (kbd "M-f") 'jong-common-forward-word)
-    (define-key map (kbd "M-b") 'jong-common-backward-word)
-
-    (define-key map (kbd "<S-up>") (lambda () (interactive)
+		(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
+		(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
+		
+	(define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)
 									 (jong-forward-line -1)))
     (define-key map (kbd "<S-down>") (lambda () (interactive)
@@ -526,7 +543,6 @@ Version 2017-07-08"
     (define-key map (kbd "<C-S-right>") (lambda () (interactive)
 										  (jong-set-mark)
 										  (syntax-subword-forward 1)))
-
     (define-key map (kbd "C-M-S-a") (lambda () (interactive)
 									  (jong-set-mark)
 									  (backward-word)))
@@ -847,7 +863,7 @@ Version 2017-07-08"
 
 (defun jong-kill-temporary-buffers ()
   "Kill current buffer unconditionally."
-  (interactive)p
+  (interactive)
   (dolist (pattern jong-kill-buffer-patterns)
     (dolist (buffer (buffer-list))
       (when (string-match pattern (buffer-name buffer))
