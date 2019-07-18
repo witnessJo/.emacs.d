@@ -6,12 +6,11 @@
 (cond
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   (progn
-	  
 	  (define-key key-translation-map [C-kanji] (kbd "C-SPC"))
-	  
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	  ;; Alias coding system for windows ;;
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		;; Alias coding system for windows ;;
+		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 	  (set-language-environment "Korean")
 	  (define-coding-system-alias 'cp65001 'utf-8)
 	  (setq jong-env-locale-value 'utf-8)

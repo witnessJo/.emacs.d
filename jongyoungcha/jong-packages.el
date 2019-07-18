@@ -2,6 +2,8 @@
 
 (require 'misc)
 
+(message (regexp-opt-charset '(?a ?c ?e ? ?\t)))
+
 ;; add themes
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)

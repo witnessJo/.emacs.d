@@ -493,16 +493,6 @@ Version 2017-07-08"
   )
 
 
-;; (use-package evil
-;; :ensure t)
-;; (global-set-key (kbd "M-<backspace>") 'jong-common-kill-backward-word)
-
-;; (global-set-key (kbd "C-M-a") 'jong-syntax-subword-backward)
-;; (global-set-key (kbd "M-<DEL>") 'jong-common-kill-backward-word)
-;; (global-set-key (kbd "M-f") 'jong-common-forward-word)
-;; (global-set-key (kbd "M-b") 'jong-common-backward-word)
-
-
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
@@ -516,8 +506,8 @@ Version 2017-07-08"
 	(define-key map (kbd "M-d") 'forward-char)
     (define-key map (kbd "C-M-d") 'jong-syntax-subwordk-forward)
     (define-key map (kbd "C-M-a") 'jong-syntax-subword-backward)
-		(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
-		(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
+	(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
+	(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
 		
 	(define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)
@@ -730,7 +720,8 @@ Version 2017-07-08"
   :config
   (setq company-async-timeout 4)
   (setq company-idle-delay 0.01)
-  (setq company-minimum-prefix-length 2)
+  (setq company-minimum-prefix-length 3)
+	
   (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode)
   )
@@ -753,7 +744,7 @@ Version 2017-07-08"
   :ensure t
   :init
   :config
-  (projectile-global-mode)
+  (projectile-mode 1)
   (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
   (setq projectile-globally-ignored-directories (append '(".svn") projectile-globally-ignored-directories))
   (setq projectile-enable-caching t)
@@ -920,10 +911,11 @@ Version 2017-07-08"
 
 
 (use-package google-translate
-  :ensure t)
-(with-eval-after-load 'google-translate
+  :ensure t
+	:config
   (setq google-translate-default-source-language "en")
   (setq google-translate-default-target-language "ko")
+	(setq google-translate-show-phonetic 1)
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
 
