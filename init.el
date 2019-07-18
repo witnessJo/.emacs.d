@@ -43,46 +43,31 @@
 (use-package hungry-delete
   :ensure t)
 
-;; (defun jong-common-forward-word ()
-;; "Test."
-;; (interactive)
-;; (call-interactively 'forward-word)
-;; (call-interactively 'forward-to-word)
-  ;; (evil-forward-word)
-  ;; )
-
-;; (defun jong-common-backward-word ()
-;; "Test."
-;; (interactive)
-;; (call-interactively 'backward-word)
-;; (call-interactively 'backward-to-word)
-  ;; (evil-backward-word)
-  ;; )
-
 (use-package syntax-subword
   :ensure t
-  :config
-  ;; (global-syntax-subword-mode t)
-  )
+  :config)
+
 
 (defun jong-common-kill-forward-word ()
   "It would be changed."
   (interactive)
   (let ((next-char (buffer-substring (point) (1+ (point)))))
-	(if (string-match (regexp-opt-charset '(? ?\t ?\n)) next-char)
-		(call-interactively 'hungry-delete-forward)
-	  (call-interactively 'syntax-subword-kill))
-	))
+		(if (string-match (regexp-opt-charset '(? ?\t ?\n)) next-char)
+				(call-interactively 'hungry-delete-forward)
+			(call-interactively 'syntax-subword-kill))
+		(setq kill-ring (cdr kill-ring))
+		))
 
 
 (defun jong-common-kill-backward-word ()
   "It would be changed."
   (interactive)
   (let ((prev-char (buffer-substring (1- (point)) (point))))
-	(if (string-match (regexp-opt-charset '(? ?\t ?\n)) prev-char)
-		(call-interactively 'hungry-delete-backward)
-	  (call-interactively 'syntax-subword-backward-kill))
-	))
+		(if (string-match (regexp-opt-charset '(? ?\t ?\n)) prev-char)
+				(call-interactively 'hungry-delete-backward)
+			(call-interactively 'syntax-subword-backward-kill))
+		(setq kill-ring (cdr kill-ring))
+		))
 
 ;; (global-set-key (kbd "M-f") 'jong-common-forward-word)
 ;; (global-set-key (kbd "M-b") 'jong-common-backward-word)
@@ -412,7 +397,9 @@ Version 2017-07-08"
 (global-set-key (kbd "S-SPC") 'toggle-korean-input-method)
 (global-set-key (kbd "C-k") (lambda () (interactive)
 							  (call-interactively 'comint-kill-whole-line)
-							  (call-interactively 'indent-for-tab-command)))
+							  (call-interactively 'indent-for-tab-command)
+								(setq kill-ring (cdr kill-ring))
+								))
 
 (global-set-key (kbd "M-;") (lambda () (interactive)
 							  (let ((base-pos 0))
