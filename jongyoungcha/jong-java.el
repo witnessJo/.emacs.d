@@ -132,8 +132,10 @@
 
 
 (define-key java-mode-map (kbd "C-c c k") 'jong-java-kill-target-processes)
-(define-key java-mode-map (kbd "C-c c r") 'eclim-run-class)
+(define-key java-mode-map (kbd "C-c c c") 'lsp-java-build-project)
+(define-key java-mode-map (kbd "C-c c g") 'dap-debug)
 (define-key java-mode-map (kbd "C-c c p") 'eclim-project-create)
+(define-key java-mode-map (kbd "C-c r s") 'helm-imenu)
 (define-key java-mode-map (kbd "C-c r r") 'lsp-rename)
 (define-key java-mode-map (kbd "C-c r .") 'lsp-find-definition)
 (define-key java-mode-map (kbd "C-c r ,") 'lsp-find-references)
@@ -161,5 +163,27 @@
 (define-key java-mode-map (kbd "<f11>") 'dap-step-in)
 (define-key java-mode-map (kbd "<f12>") 'dap-step-in)
 (define-key java-mode-map (kbd "C-=") 'jong-dap-debug-goto-repl)
+
+
+;; (defun jong-java-setting-coding-style()
+;; "Setting environment and key bindings."
+;; Set the indentation.
+;; (defvar c-default-style)
+;; (defvar c-basic-offset)
+
+;; (setq c-default-style "linux")
+;; (setq-default indent-tabs-mode t
+;; tab-width 4
+;; c-basic-offset 4)
+;; )
+
+
+(add-hook 'java-mode-hook 'jong-java-setting-environment)
+
+
+(defun jong-java-setting-environment()
+	"Setting environment and keybindings."
+	(clang-format-buffer)
+	)
 
 (provide 'jong-java)

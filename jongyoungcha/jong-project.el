@@ -8,15 +8,17 @@
 (add-to-list 'jong-kill-buffer-patterns jong-project-output-buffer)
 (add-to-list 'jong-kill-buffer-patterns jong-project-debug-buffer)
 
-(defvar-local jong-project-build-command nil)
 (defvar-local jong-project-compile-default-dir nil)
 (defvar-local jong-project-compile-command nil)
 (defvar-local jong-project-run-default-dir nil)
 (defvar-local jong-project-run-command nil)
 (defvar-local jong-project-debug-default-dir nil)
 (defvar-local jong-project-debug-command nil)
+(defvar-local jong-project-sub-default-dir-2 nil)
+(defvar-local jong-project-sub-command-2 nil)
+(defvar-local jong-project-sub-default-dir-3 nil)
+(defvar-local jong-project-sub-command-3 nil)
 
-(put 'jong-project-build-command 'safe-local-variable #'stringp)
 (put 'jong-project-compile-default-dir 'safe-local-variable #'stringp)
 (put 'jong-project-compile-command 'safe-local-variable #'stringp)
 (put 'jong-project-run-default-dir 'safe-local-variable #'stringp)
@@ -104,23 +106,26 @@
     
     (setq target-path (format "%s%s" target-directory ".dir-locals.el"))
     (unless (file-exists-p target-path)
-	   (setq template
+	  (setq template
             (concat "(\n"
                     (concat
                      "(nil . (\n")
                     (format "(projectile-project-root . \"%s\")\n" target-directory)
-                    (format "(jong-project-build-command . \"none\")\n")
-					     (format "(jong-project-compile-default-dir . \"%s\")\n" target-directory)
+										(format "(jong-project-compile-default-dir . \"%s\")\n" target-directory)
                     (format "(jong-project-compile-command . \"none\")\n")
-					     (format "(jong-project-run-default-dir . \"%s\")\n" target-directory)
+										(format "(jong-project-run-default-dir . \"%s\")\n" target-directory)
                     (format "(jong-project-run-command . \"none\")\n")
-					     (format "(jong-project-debug-default-dir . \"%s\")\n" target-directory)
+										(format "(jong-project-debug-default-dir . \"%s\")\n" target-directory)
                     (format "(jong-project-debug-command . \"none\")\n")
+										(format "(jong-project-sub-default-dir-2 . \"%s\")\n" target-directory)
+										(format "(jong-project-sub-command-2 . \"none\")\n")
+										(format "(jong-project-sub-default-dir-3 . \"%s\")\n" target-directory)
+										(format "(jong-project-sub-command-3 . \"none\")\n")
                     "))\n"
-					     ")\n"
-					     ))
-	   (write-region template nil target-path))
-	 (find-file target-path))
+										")\n"
+										))
+	  (write-region template nil target-path))
+	(find-file target-path))
   )
 
 
@@ -160,34 +165,32 @@
     (display-buffer (get-buffer-create jong-project-output-buffer)))
   )
 
-(defun jong-project-build-project ()
-  (interactive)
-  (jong-reload-dir-locals-for-current-buffer)
-  (if (and (boundp 'projectile-project-root) (boundp 'jong-project-build-command))
-	   (jong-project-exec-command projectile-project-root jong-project-build-command)
-	 (message "\"projectile-project-root\" and \"jong-project-build-command were not binded."))
-  )
-
 
 (defun jong-project-compile-project ()
   (interactive)
   (jong-reload-dir-locals-for-current-buffer)
   (if (and (boundp 'jong-project-compile-default-dir) (boundp 'jong-project-compile-command))
-	   (jong-project-exec-command jong-project-compile-default-dir jong-project-compile-command)
-    ;; jong-project-compile-command
-    ;; (lambda ()
-    ;; (compilation-mode)))
-    (message "\"projectile-project-root\" and \"jong-project-build-command were not binded."))
+			(jong-project-exec-command jong-project-compile-default-dir jong-project-compile-command)
+    (message "\"projectile-project-root\" and \"jong-project-compile-command were not binded."))
   )
 
 
-(defun jong-project-run-project ()
-  (interactive)
+(defun jong-project-run-project (&optional num)
+  (interactive "p")
+	;; (print num)
   (jong-reload-dir-locals-for-current-buffer)
-  (if (and (boundp 'jong-project-run-default-dir) (boundp 'jong-project-run-command))
-	   (jong-project-exec-command jong-project-run-default-dir jong-project-run-command)
-	 (message "\"projectile-project-root\" and \"jong-project-build-command were not binded."))
-  )
+	(cond ((equal num 1) (if (and (boundp 'jong-project-run-default-dir) (boundp 'jong-project-run-command))
+											 (jong-project-exec-command jong-project-run-default-dir jong-project-run-command)
+										 (message "\"projectile-project-root\" and \"jong-project-run-command were not binded.")))
+				
+				((equal num 2) (if (and (boundp 'jong-project-sub-default-dir-2 (boundp 'jong-project-sub-command-2)))
+													 (jong-project-exec-command jong-project-sub-default-dir-2 jong-project-sub-command-2)
+												 (message "\"jong-project-sub-default-dir-2\" and \"jong-project-sub-command-2\".")))
+				
+				((equal num 3) (if (and (boundp 'jong-project-sub-default-dir-3 (boundp 'jong-project-sub-command-3)))
+													 (jong-project-exec-command jong-project-sub-default-dir-3 jong-project-sub-command-3)
+												 (message "\"jong-project-sub-default-dir-3\" and \"jong-project-sub-command-3\".")))
+				))
 
 
 (defun jong-project-debug-project ()
@@ -195,16 +198,16 @@
   (jong-reload-dir-locals-for-current-buffer)
   (if (and (boundp 'jong-project-debug-default-dir) (boundp 'jong-project-debug-command))
 	   (jong-project-exec-command jong-project-debug-default-dir jong-project-debug-command)
-	 (message "\"projectile-project-root\" and \"jong-project-build-command were not binded."))
+	 (message "\"projectile-project-root\" and \"jong-project-debug-command were not binded."))
   )
 
 
 (global-set-key (kbd "C-c c m") 'jong-project-make-dot-dir-locals-el)
 (global-set-key (kbd "C-c c v") 'jong-project-visit-dot-dir-locals-el)
-(global-set-key (kbd "C-c c b") 'jong-project-build-project)
 (global-set-key (kbd "C-c c c") 'jong-project-compile-project)
 (global-set-key (kbd "C-c c r") 'jong-project-run-project)
 (global-set-key (kbd "C-c c d") 'jong-project-debug-project)
+
 
 
 (provide 'jong-project)

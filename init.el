@@ -672,7 +672,8 @@ Version 2017-07-08"
   (setq company-async-timeout 4)
   (setq company-idle-delay 0.01)
   (setq company-minimum-prefix-length 3)
-	
+  (setq company-auto-complete t)
+  
   (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode)
   )
@@ -916,10 +917,11 @@ Version 2017-07-08"
  '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
  '(package-selected-packages
 	 (quote
-		(evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+		(yaml-mode clang-format evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
 	 (quote
-		((projectile-project-root . "/home/jongyoungcha/projects/Calculator/")
+		((projectile-project-root . "/home/jongyoungcha/projects/commandParserSample/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/Calculator/")
 		 (projectile-project-root . "/home/jongyoungcha/projects/ProgramersSolutions/")
 		 (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
 		 (projectile-project-root . "/home/jongyoungcha/projects/ldb-chan/")))))
