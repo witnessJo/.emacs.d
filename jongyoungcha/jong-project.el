@@ -1,4 +1,4 @@
-(require 'comint)
+3(require 'comint)
 
 ;;; Code:
 
@@ -35,12 +35,12 @@
 (defun jong-project-send-command-to-buffer (cmd &optional buffer)
   "Send string to the sub process"
   (let ((target-buffer nil))
-	 (if (equal buffer nil)
-		  (setq target-buffer buffer)
-	   (setq target-buffer (current-buffer)))
-	 (with-current-buffer target-buffer
-	   (comint-send-input cmd))
-	 )
+		(if (equal buffer nil)
+				(setq target-buffer buffer)
+			(setq target-buffer (current-buffer)))
+		(with-current-buffer target-buffer
+			(comint-send-input cmd))
+		)
   )
 
 
@@ -51,8 +51,8 @@
   (let ((path-to-find)
         (parent-dir))
     
-	 (when (equal DIRECTORY "/")
-	   (error (format "Coudlnt find the target file (\"%s\") (Last directory was \"/\")" FILENAME)))
+		(when (equal DIRECTORY "/")
+			(error (format "Coudlnt find the target file (\"%s\") (Last directory was \"/\")" FILENAME)))
     
     (if (equal DIRECTORY nil)
         (setq DIRECTORY default-directory))
@@ -71,12 +71,12 @@
 (defun jong-project-walkup-and-find-dot-dir-locals-el()
   (interactive)
   (let ((file-name ".dir-locals.el")
-		  (file-path))
-	 (setq file-path (jong-project-walkup-and-find-file file-name))
-	 (if file-path
-		  (find-file file-path)
-	   (message "Couldnt find the \".dir-locals.el\""))
-	 )
+				(file-path))
+		(setq file-path (jong-project-walkup-and-find-file file-name))
+		(if file-path
+				(find-file file-path)
+			(message "Couldnt find the \".dir-locals.el\""))
+		)
   )
 
 
@@ -106,7 +106,7 @@
     
     (setq target-path (format "%s%s" target-directory ".dir-locals.el"))
     (unless (file-exists-p target-path)
-	  (setq template
+			(setq template
             (concat "(\n"
                     (concat
                      "(nil . (\n")
@@ -124,8 +124,8 @@
                     "))\n"
 										")\n"
 										))
-	  (write-region template nil target-path))
-	(find-file target-path))
+			(write-region template nil target-path))
+		(find-file target-path))
   )
 
 
@@ -136,7 +136,7 @@
     
     (setq target-directory (jong-project-walkup-and-find-projectile-project-root))
     (unless (file-exists-p target-directory)
-	   (error "Couldnt find \".projectile\" file"))
+			(error "Couldnt find \".projectile\" file"))
     (setq target-path (format "%s%s" target-directory ".dir-locals.el"))
     (find-file target-path)
     )
@@ -149,10 +149,10 @@
                              directory))
         (proc))
     (unless (file-directory-p directory)
-	   (error (format "Couldnt find the directory %s\"" directory)))
+			(error (format "Couldnt find the directory %s\"" directory)))
     
     (when (or (equal cmd nil) (string= cmd ""))
-	   (error (format "Couldnt find  %s\"" cmd)))
+			(error (format "Couldnt find  %s\"" cmd)))
     (when (get-buffer jong-project-output-buffer) (kill-buffer jong-project-output-buffer))
     (set-process-sentinel
      (start-file-process-shell-command "*jong-command*" jong-project-output-buffer cmd)
@@ -179,17 +179,20 @@
   (interactive "p")
 	;; (print num)
   (jong-reload-dir-locals-for-current-buffer)
-	(cond ((equal num 1) (if (and (boundp 'jong-project-run-default-dir) (boundp 'jong-project-run-command))
-											 (jong-project-exec-command jong-project-run-default-dir jong-project-run-command)
-										 (message "\"projectile-project-root\" and \"jong-project-run-command were not binded.")))
+	(cond ((equal num 1)
+				 (if (and (boundp 'jong-project-run-default-dir) (boundp 'jong-project-run-command))
+						 (jong-project-exec-command jong-project-run-default-dir jong-project-run-command)
+					 (message "\"projectile-project-root\" and \"jong-project-run-command were not binded.")))
 				
-				((equal num 2) (if (and (boundp 'jong-project-sub-default-dir-2 (boundp 'jong-project-sub-command-2)))
-													 (jong-project-exec-command jong-project-sub-default-dir-2 jong-project-sub-command-2)
-												 (message "\"jong-project-sub-default-dir-2\" and \"jong-project-sub-command-2\".")))
+				((equal num 2)
+				 (if (and (boundp 'jong-project-sub-default-dir-2) (boundp 'jong-project-sub-command-2))
+						 (jong-project-exec-command jong-project-sub-default-dir-2 jong-project-sub-command-2)
+					 (message "\"jong-project-sub-default-dir-2\" and \"jong-project-sub-command-2\".")))
 				
-				((equal num 3) (if (and (boundp 'jong-project-sub-default-dir-3 (boundp 'jong-project-sub-command-3)))
-													 (jong-project-exec-command jong-project-sub-default-dir-3 jong-project-sub-command-3)
-												 (message "\"jong-project-sub-default-dir-3\" and \"jong-project-sub-command-3\".")))
+				((equal num 3)
+				 (if (and (boundp 'jong-project-sub-default-dir-3) (boundp 'jong-project-sub-command-3))
+						 (jong-project-exec-command jong-project-sub-default-dir-3 jong-project-sub-command-3)
+					 (message "\"jong-project-sub-default-dir-3\" and \"jong-project-sub-command-3\".")))
 				))
 
 
@@ -197,8 +200,8 @@
   (interactive)
   (jong-reload-dir-locals-for-current-buffer)
   (if (and (boundp 'jong-project-debug-default-dir) (boundp 'jong-project-debug-command))
-	   (jong-project-exec-command jong-project-debug-default-dir jong-project-debug-command)
-	 (message "\"projectile-project-root\" and \"jong-project-debug-command were not binded."))
+			(jong-project-exec-command jong-project-debug-default-dir jong-project-debug-command)
+		(message "\"projectile-project-root\" and \"jong-project-debug-command were not binded."))
   )
 
 
