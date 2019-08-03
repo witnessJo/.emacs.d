@@ -429,6 +429,7 @@
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
 (global-set-key (kbd "C-S-k") 'jong-common-delete-line)
+(global-set-key (kbd "C-k") 'kill-whole-line)
 
 
 
