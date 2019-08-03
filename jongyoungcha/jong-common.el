@@ -404,6 +404,13 @@
     ))
 
 
+(defun jong-common-delete-line (&optional arg)
+	(interactive "P")
+	(flet ((kill-region (begin end)
+											(delete-region begin end)))
+		(kill-line arg)))
+
+
 (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
 (global-set-key (kbd "M-c b") 'jong-common-show-buffer-other-window)
 (global-set-key (kbd "M-c M-b") 'jong-common-show-buffer-other-window)
@@ -420,6 +427,11 @@
 
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
+
+(global-set-key (kbd "C-S-k") 'jong-common-delete-line)
+
+
+
 
 
 (provide 'jong-common)

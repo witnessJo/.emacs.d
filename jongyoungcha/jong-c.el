@@ -238,8 +238,9 @@
   (setq-default indent-tabs-mode t
 				tab-width 2
 				c-basic-offset 2)
-																	 
 	)
+
+(jong-c-setting-coding-style)
 
 
 ;; Set linux indent style
