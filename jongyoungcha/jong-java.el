@@ -71,18 +71,6 @@
   (interactive)
   (jong-common-set-window-1-2 (buffer-name (current-buffer)) "*out*" "*dap-ui-repl*"))
 
-
-;; (use-package eclim
-;; :ensure t
-;; :config
-;; (setq eclimd-autostart t)
-;; (custom-set-variables
-;; '(eclim-eclipse-dirs '((format "%s/eclipse" (getenv "HOME"))))
-;; '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME"))))
-;; (global-eclim-mode)
-;; )
-
-
 (use-package projectile :ensure t)
 (use-package treemacs :ensure t)
 (use-package yasnippet :ensure t)

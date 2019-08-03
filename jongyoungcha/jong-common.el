@@ -411,6 +411,37 @@
 		(kill-line arg)))
 
 
+(defun jong-common-kill-forward-word (arg)
+  "It would be changed."
+  (interactive "p")
+  (let ((next-char (buffer-substring (point) (1+ (point)))))
+		(if (string-match (regexp-opt-charset '(? ?\t ?\n)) next-char)
+				(call-interactively 'hungry-delete-forward)
+			(delete-region
+			 (point)
+			 (progn
+				 (syntax-subword-forward arg)
+				 (point)))
+			 )
+		))
+
+
+(defun jong-common-kill-backward-word (arg)
+  "It would be changed."
+  (interactive "p")
+  (let ((prev-char (buffer-substring (1- (point)) (point))))
+		(if (string-match (regexp-opt-charset '(? ?\t ?\n)) prev-char)
+				(call-interactively 'hungry-delete-backward)
+			(delete-region
+			 (point)
+			 (progn
+				 (syntax-subword-backward arg)
+				 (point))))
+		))
+
+
+
+
 (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
 (global-set-key (kbd "M-c b") 'jong-common-show-buffer-other-window)
 (global-set-key (kbd "M-c M-b") 'jong-common-show-buffer-other-window)
@@ -428,9 +459,11 @@
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
+(global-set-key (kbd "C-M-d") 'jong-syntax-subwordk-forward)
+(global-set-key (kbd "C-M-a") 'jong-syntax-subword-backward)
+
 (global-set-key (kbd "C-S-k") 'jong-common-delete-line)
 (global-set-key (kbd "C-k") 'kill-whole-line)
-
 
 
 

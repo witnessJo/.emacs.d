@@ -47,32 +47,6 @@
   :ensure t
   :config)
 
-
-(defun jong-common-kill-forward-word ()
-  "It would be changed."
-  (interactive)
-  (let ((next-char (buffer-substring (point) (1+ (point)))))
-		(if (string-match (regexp-opt-charset '(? ?\t ?\n)) next-char)
-				(call-interactively 'hungry-delete-forward)
-			(progn
-				(call-interactively 'syntax-subword-kill)
-				(setq kill-ring (cdr kill-ring))
-				))
-		))
-
-
-(defun jong-common-kill-backward-word ()
-  "It would be changed."
-  (interactive)
-  (let ((prev-char (buffer-substring (1- (point)) (point))))
-		(if (string-match (regexp-opt-charset '(? ?\t ?\n)) prev-char)
-				(call-interactively 'hungry-delete-backward)
-			(progn
-				(call-interactively 'syntax-subword-backward-kill)
-				(setq kill-ring (cdr kill-ring))))
-		))
-
-
 (defun jong-open-line-above ()
 	"Insert a newline above the current line and put point at beginning."
 	(interactive)
@@ -453,8 +427,6 @@ Version 2017-07-08"
 		(define-key map (kbd "C-<down>") (lambda () (interactive) (jong-forward-line 1)))
 		(define-key map (kbd "C-<backspace>") 'hungry-delete-backward)
 		(define-key map (kbd "M-d") 'forward-char)
-		(define-key map (kbd "C-M-d") 'jong-syntax-subwordk-forward)
-		(define-key map (kbd "C-M-a") 'jong-syntax-subword-backward)
 		(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
 		(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
 		
