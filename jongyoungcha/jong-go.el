@@ -154,9 +154,6 @@
 	(string-match extract-pattern-whole (buffer-substring-no-properties (point-min) (point-max)))
 	(setq imported-string (match-string 1 (buffer-substring-no-properties (point-min) (point-max))))
 	(split-string imported-string "\n")
-
-	
-	
 	
 	;; (progn
 	;; (goto-char (point-min))
@@ -589,8 +586,9 @@ And the environment variable was existing, Download go binaries from the interne
 						   (lambda () (interactive)
 							 (call-interactively 'gud-refresh)
 							 (chan-gogud-exec-function #'go-guru-implements)))
-			)
-		  )
+			))
+
+(add-hook 'go-mode-hook #'lsp)
 
 
 (provide 'jong-go)

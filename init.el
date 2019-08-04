@@ -215,7 +215,6 @@ Version 2017-07-08"
 (use-package prodigy
 	:ensure t)
 
-
 (use-package autopair
 	:ensure t)
 (autopair-global-mode 1)
@@ -855,7 +854,7 @@ Version 2017-07-08"
 (require 'jong-c)
 (require 'jong-python)
 (require 'jong-rust)
-(require 'jong-java)
+;; (require 'jong-java)
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-nodejs)
@@ -926,7 +925,7 @@ Version 2017-07-08"
 		("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
 	 (quote
-		(yaml-mode clang-format evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+		(flycheck-rust yaml-mode clang-format evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
