@@ -177,7 +177,10 @@
   :hook ((c-mode c++-mode objc-mode) .
 				 (lambda ()
 					 (require 'ccls)
-					 (lsp))))
+					 (setq lsp-ui-sideline-enable nil)
+					 (setq lsp-ui-doc-enable nil)
+					 (lsp)
+					 )))
 
 (setq ccls-executable "/usr/local/bin/ccls")
 
@@ -219,11 +222,9 @@
   (setq c-default-style "linux")
   (setq-default indent-tabs-mode t
 				tab-width 2
-				c-basic-offset 2)
-	)
+				c-basic-offset 2))
 
 (jong-c-setting-coding-style)
-
 
 ;; Set linux indent style
 (defun jong-c-setting-environment()
@@ -232,7 +233,12 @@
   ;; Set linux indent style
   ;; (setq-local eldoc-documentation-function nil)
   ;; (setq-local eldoc-documentation-function #'rtags-eldoc)
+
+	;; (lsp-ui-sideline-mode)
+	;; (lsp-ui-doc-mode)
+	
   (rtags-start-process-unless-running)
+
   (flymake-mode 0)
   
   (local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)

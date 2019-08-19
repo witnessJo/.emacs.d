@@ -8,10 +8,12 @@
 	"Output output jong-rust.")
 
 (use-package rust-mode
-  :ensure t)
+	:ensure t
+	:config
+	(setq rust-format-on-save t))
 
 (use-package racer
-  :ensure t
+	:ensure t
 	:config
 	(add-hook 'rust-mode-hook #'racer-mode)
 	(add-hook 'racer-mode-hook #'eldoc-mode)
@@ -21,8 +23,8 @@
 	(interactive)
 	(progn
 		(display-buffer jong-rust-output)
-		 (shell-command "rustup toolchain add nightly" jong-rust-output jong-rust-output)
-		 (shell-command "rustup component add rust-src" jong-rust-output jong-rust-output)))
+		(shell-command "rustup toolchain add nightly" jong-rust-output jong-rust-output)
+		(shell-command "rustup component add rust-src" jong-rust-output jong-rust-output)))
 
 (use-package flycheck-rust
 	:ensure t
@@ -33,7 +35,10 @@
 (use-package cargo
   :ensure t)
 
-(add-hook 'rust-mode-hook #'lsp)
+(add-hook 'rust-mode-hook (lambda()
+														(setq lsp-ui-sideline-enable nil)
+														(setq lsp-ui-doc-enable nil)
+														(lsp)))
 
 
 (setq rust-format-on-save t)
@@ -41,6 +46,11 @@
 
 (define-key rust-mode-map (kbd "C-c c c") #'rust-compile)
 (define-key rust-mode-map (kbd "C-c c r") #'rust-run)
+(define-key rust-mode-map (kbd "C-c r ,") #'lsp-find-references)
+(define-key rust-mode-map (kbd "C-c r .") #'lsp-find-definition)
+(define-key rust-mode-map (kbd "C-c r i") #'lsp-find-implementation)
+(define-key rust-mode-map (kbd "C-c r r") #'lsp-rename)
+(define-key rust-mode-map (kbd "C-c r l") #'helm-imenu)
 
 
 (provide 'jong-rust)

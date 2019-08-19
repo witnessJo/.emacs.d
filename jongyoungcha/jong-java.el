@@ -77,16 +77,16 @@
 (use-package lsp-mode :ensure t)
 (use-package hydra :ensure t)
 (use-package company-lsp :ensure t)
-(use-package lsp-ui
-  :ensure t
-  :after lsp-mode
-  :diminish lsp-ui
-  :init (lsp-ui-mode)
-  :config
-  (setq lsp-ui-peek-enable nil)
-  (setq lsp-ui-sideline-enable nil)
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-flycheck-enable t))
+;; (use-package lsp-ui
+;; :ensure t
+;; :after lsp-mode
+;; :diminish lsp-ui
+;; :init (lsp-ui-mode)
+;; :config
+;; (setq lsp-ui-peek-enable nil)
+;; (setq lsp-ui-sideline-enable nil)
+;; (setq lsp-ui-doc-enable nil)
+;; (setq lsp-ui-flycheck-enable t))
 
 (use-package lsp-java
   :ensure t
@@ -134,7 +134,6 @@
 					(ignore-errors (with-current-buffer (get-buffer "*out*")
 							 ((set (make-local-variable 'window-point-insertion-type) t)))
 						       (jong-kill-temporary-buffers)
-						       (lsp-ui-doc-hide)
 						       (keyboard-quit))))
 
 (define-key java-mode-map (kbd "<f5>") (lambda()

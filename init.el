@@ -411,8 +411,9 @@ Version 2017-07-08"
 	(interactive)
 	(setq this-command-keys-shift-translated t)
 	(if (not (use-region-p))
-			(call-interactively 'set-mark-command))
-	)
+			(call-interactively 'set-mark-command)))
+
+
 
 
 (defvar jong-keys-minor-mode-map
@@ -428,7 +429,6 @@ Version 2017-07-08"
 		(define-key map (kbd "M-d") 'forward-char)
 		(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
 		(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
-		
 		(define-key map (kbd "<S-up>") (lambda () (interactive)
 																		 (jong-set-mark)
 																		 (jong-forward-line -1)))
@@ -485,6 +485,9 @@ Version 2017-07-08"
 (defun disable-jong-keys-minor-mode()
 	(interactive)
 	(jong-keys-minor-mode 0))
+
+
+
 
 
 ;; Back word with candidate characters.
@@ -546,6 +549,18 @@ Version 2017-07-08"
 																	(call-interactively 'eyebrowse-switch-to-window-config-1)
 																	(call-interactively 'eyebrowse-switch-to-window-config-2)
 																	(call-interactively 'eyebrowse-switch-to-window-config-3)))
+
+
+;; remapping about the keybinding.
+(define-key key-translation-map (kbd "<left>") (kbd "C-b"))
+(define-key key-translation-map (kbd "<right>") (kbd "C-f"))
+(define-key key-translation-map (kbd "<up>") (kbd "C-p"))
+(define-key key-translation-map (kbd "<down>") (kbd "C-n"))
+(define-key key-translation-map (kbd "C-<left>") (kbd "M-b"))
+(define-key key-translation-map (kbd "C-<right>") (kbd "M-f"))
+(define-key key-translation-map (kbd "C-S-<left>") (kbd "M-B"))
+(define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
+(define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
 
 
 (defun jong-reload-dir-locals-for-current-buffer ()
@@ -867,7 +882,7 @@ Version 2017-07-08"
 (require 'jong-dap-debug)
 (require 'jong-term)
 
-;; for test
+;; For Testing
 (require 'jong-ether-test)
 (require 'jong-brth-test)
 
@@ -925,7 +940,7 @@ Version 2017-07-08"
 		("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
 	 (quote
-		(flycheck-rust yaml-mode clang-format evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+		(realgud-lldb flycheck-rust yaml-mode clang-format evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values

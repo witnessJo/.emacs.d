@@ -36,15 +36,22 @@
   (objc-mode-hook . lsp)
 	(rust-mode-hook . lsp)
 	(go-mode-hook . lsp)
+	:config
+	(setq lsp-prefer-flymake nil)
+	(setq lsp-eldoc-render-all nil)
+	(setq lsp-signature-render-all nil)
   :commands lsp)
 
-(use-package lsp-ui :commands lsp-ui-mode)
+;; (use-package lsp-ui
+;; :config
+;; (setq lsp-ui-doc-mode nil)
+;; (setq lsp-ui-sideline-mode nil)
+;; :commands lsp-ui-mode)
+
 (use-package company-lsp :commands company-lsp)
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
-;; optionally
-;; (use-package lsp-ui :commands lsp-ui-mode)
 (use-package company-lsp
   :ensure t
   :commands company-lsp
@@ -55,5 +62,8 @@
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
+
+(use-package realgud
+	:ensure t)
 
 (provide 'jong-packages)
