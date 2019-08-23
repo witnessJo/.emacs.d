@@ -425,9 +425,9 @@ Version 2017-07-08"
 		(define-key map (kbd "M-s") (lambda () (interactive) (jong-forward-line 1)))
 		(define-key map (kbd "C-M-s") (lambda () (interactive) (jong-forward-line 1)))
 		(define-key map (kbd "C-<down>") (lambda () (interactive) (jong-forward-line 1)))
-		(define-key map (kbd "C-<backspace>") 'hungry-delete-backward)
+		;; (define-key map (kbd "C-<backspace>") 'hungry-delete-backward)
 		(define-key map (kbd "M-d") 'forward-char)
-		(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
+		(define-key map (kbd "C-<backspace>") 'jong-common-kill-backward-word)
 		(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
 		(define-key map (kbd "<S-up>") (lambda () (interactive)
 																		 (jong-set-mark)
@@ -595,7 +595,6 @@ Version 2017-07-08"
 				 '(85 . 50) '(100 . 100)))))
 
 (global-set-key (kbd "C-c t") 'toggle-transparency)
-
 (global-set-key (kbd "C-x C-0") 'delete-other-windows-vertically)
 
 ;; hide tool bar
@@ -628,7 +627,6 @@ Version 2017-07-08"
 (set-face-attribute 'show-paren-match  nil :weight 'extra-bold)
 
 (show-paren-mode 1)
-
 (setq show-paren-delay 0)
 
 ;; reload ~/.emacs.d/init.el file

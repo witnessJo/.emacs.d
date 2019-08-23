@@ -459,8 +459,6 @@
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
-(global-set-key (kbd "C-M-d") 'jong-syntax-subwordk-forward)
-(global-set-key (kbd "C-M-a") 'jong-syntax-subword-backward)
 
 (global-set-key (kbd "C-S-k") 'jong-common-delete-line)
 (global-set-key (kbd "C-k") 'kill-whole-line)
