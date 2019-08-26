@@ -19,12 +19,27 @@
 	(add-hook 'racer-mode-hook #'eldoc-mode)
 	(add-hook 'racer-mode-hook #'company-mode))
 
+
+(defun jong-rust-install ()
+	(interactive)
+	(with-current-buffer (get-buffer-create jong-rust-output)
+		(display-buffer jong-rust-output)
+		(shell-command "curl https://sh.rustup.rs -sSf | sh" jong-rust-output jong-rust-output)))
+
+
 (defun jong-rust-install-racer-bins ()
 	(interactive)
-	(progn
+	(with-current-buffer (get-buffer-create jong-rust-output)
 		(display-buffer jong-rust-output)
 		(shell-command "rustup toolchain add nightly" jong-rust-output jong-rust-output)
 		(shell-command "rustup component add rust-src" jong-rust-output jong-rust-output)))
+
+
+(defun jong-rust-install-rls-bins ()
+	(interactive)
+	(with-current-buffer (get-buffer-create jong-rust-output)
+		(display-buffer jong-rust-output)
+		(shell-command "rustup component add rls rust-analysis rust-src" jong-rust-output jong-rust-output)))
 
 (use-package flycheck-rust
 	:ensure t
