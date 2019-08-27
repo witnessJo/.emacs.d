@@ -655,10 +655,12 @@ Version 2017-07-08"
 	(setq company-idle-delay 0.01)
 	(setq company-minimum-prefix-length 3)
 	(setq company-auto-complete t)
-	
 	(global-set-key (kbd "C-<tab>") 'company-complete)
 	(add-hook 'after-init-hook 'global-company-mode)
-	)
+	(define-key company-active-map (kbd "M-p") nil)
+	(define-key company-active-map (kbd "M-p") nil)
+	(define-key company-active-map (kbd "C-p") 'company-select-previous)
+	(define-key company-active-map (kbd "C-n") 'company-select-next))
 
 
 (use-package company-quickhelp
