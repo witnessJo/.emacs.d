@@ -440,8 +440,6 @@
 		))
 
 
-
-
 (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
 (global-set-key (kbd "M-c b") 'jong-common-show-buffer-other-window)
 (global-set-key (kbd "M-c M-b") 'jong-common-show-buffer-other-window)

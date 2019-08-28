@@ -195,7 +195,9 @@ Version 2017-07-08"
 	(global-set-key (kbd "M-x") 'helm-M-x)
 	(global-set-key (kbd "C-x C-f") 'helm-find-files)
 	(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-	(global-set-key (kbd "C-x r l") 'helm-bookmarks))
+	(global-set-key (kbd "C-x r l") 'helm-bookmarks)
+	(define-key helm-find-files-map (kbd "M-<right>") 'helm-execute-persistent-action)
+	(define-key helm-find-files-map (kbd "M-<left>") 'helm-find-files-up-one-level))
 
 ;; (use-package helm-bookmarks
 ;;   :ensure t
@@ -945,7 +947,10 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-command-3 . "none")
+		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
+		 (jong-project-sub-command-3 . "none")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/Ants/")
 		 (jong-project-sub-command-2 . "none")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/Ants/")
