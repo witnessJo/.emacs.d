@@ -489,9 +489,6 @@ Version 2017-07-08"
 	(jong-keys-minor-mode 0))
 
 
-
-
-
 ;; Back word with candidate characters.
 (global-set-key (kbd "M-F") (lambda () (interactive)
 															(jong-set-mark)
@@ -947,7 +944,17 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
+		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori_ainmon/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori_mon/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/sori_mon/target/debug")
+		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/sori_mon/")
+		 (cargo-process--command-run . "run-test")
+		 (jong-project-sub-command-2 . "./sori_mon --dest 13.124.125.2 --port 5021 --user hjkl --password asdfjehksjd")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori-mon/")
+		 (jong-project-sub-command-2 . "./sori-mon --dest 13.124.125.2 --port 5021 --user hjkl --password asdfjehksjd")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/sori-mon/target/debug")
+		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/sori-mon/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
 		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
 		 (jong-project-sub-command-3 . "none")

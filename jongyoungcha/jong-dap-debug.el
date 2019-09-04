@@ -4,7 +4,8 @@
   :ensure t
   :config
   (dap-mode t)
-  (dap-ui-mode t))
+  (dap-ui-mode t)
+	(require 'dap-lldb))
 
 (defconst jong-dap-repl-buffer-name "*dap-ui-repl*")
 
@@ -12,6 +13,8 @@
 (defun jong-dap-debug-goto-repl()
   (interactive)
   (jong-common-find-buffer-and-move jong-dap-repl-buffer-name))
+
+
 
 
 ;; (define-key dap-mode-map (kbd "<f8>") (lambda()

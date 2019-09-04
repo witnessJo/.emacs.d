@@ -12,12 +12,12 @@
 	:config
 	(setq rust-format-on-save t))
 
-(use-package racer
-	:ensure t
-	:config
-	(add-hook 'rust-mode-hook #'racer-mode)
-	(add-hook 'racer-mode-hook #'eldoc-mode)
-	(add-hook 'racer-mode-hook #'company-mode))
+;; (use-package racer
+;; :ensure t
+;; :config
+;; (add-hook 'rust-mode-hook #'racer-mode)
+;; (add-hook 'racer-mode-hook #'eldoc-mode)
+;; (add-hook 'racer-mode-hook #'company-mode))
 
 
 (defun jong-rust-install ()
@@ -60,7 +60,7 @@
 
 
 (define-key rust-mode-map (kbd "C-c c c") #'rust-compile)
-(define-key rust-mode-map (kbd "C-c c r") #'rust-run)
+;; (define-key rust-mode-map (kbd "C-c c r") #'rust-run)
 (define-key rust-mode-map (kbd "C-c r ,") #'lsp-find-references)
 (define-key rust-mode-map (kbd "C-c r .") #'lsp-find-definition)
 (define-key rust-mode-map (kbd "C-c r i") #'lsp-find-implementation)
