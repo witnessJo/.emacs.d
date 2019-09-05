@@ -197,7 +197,9 @@ Version 2017-07-08"
 	(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 	(global-set-key (kbd "C-x r l") 'helm-bookmarks)
 	(define-key helm-find-files-map (kbd "M-<right>") 'helm-execute-persistent-action)
-	(define-key helm-find-files-map (kbd "M-<left>") 'helm-find-files-up-one-level))
+	(define-key helm-find-files-map (kbd "M-<left>") 'helm-find-files-up-one-level)
+	(define-key helm-read-file-map (kbd "M-<right>") 'helm-execute-persistent-action)
+	(define-key helm-read-file-map (kbd "M-<left>") 'helm-find-files-up-one-level))
 
 ;; (use-package helm-bookmarks
 ;;   :ensure t
@@ -944,7 +946,13 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori_ainmon/")
+		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/meari/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/meari/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/meari/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/rust_test/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/rust_test/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/rust_test/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori_ainmon/")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori_mon/")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/sori_mon/target/debug")
 		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/sori_mon/")
