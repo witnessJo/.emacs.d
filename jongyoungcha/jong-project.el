@@ -110,7 +110,6 @@
             (concat "(\n"
                     (concat
                      "(nil . (\n")
-                    (format "(projectile-project-root . \"%s\")\n" target-directory)
 										(format "(jong-project-compile-default-dir . \"%s\")\n" target-directory)
                     (format "(jong-project-compile-command . \"none\")\n")
 										(format "(jong-project-run-default-dir . \"%s\")\n" target-directory)
