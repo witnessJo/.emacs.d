@@ -53,7 +53,8 @@
 (add-hook 'rust-mode-hook (lambda()
 														(setq lsp-ui-sideline-enable nil)
 														(setq lsp-ui-doc-enable nil)
-														(lsp)))
+														(lsp)
+														(setq gud-gud-gdb-command-name "rust-gdb --fullname")))
 
 
 (setq rust-format-on-save t)
