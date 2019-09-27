@@ -2,7 +2,9 @@
 
 (require 'json)
 (use-package restclient
-  :ensure t)
+  :ensure t
+	:config
+	(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 
 (defcustom jong-http-restclient-response-json-elems nil
   "Name for response buffer."
