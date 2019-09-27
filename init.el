@@ -857,6 +857,8 @@ Version 2017-07-08"
 	(global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
 
+
+
 (require 'jong-packages)
 (require 'jong-env-setting)
 (require 'jong-common)
@@ -871,7 +873,7 @@ Version 2017-07-08"
 (require 'jong-c)
 (require 'jong-python)
 (require 'jong-rust)
-;; (require 'jong-java)
+
 (require 'jong-scala)
 (require 'jong-haskell)
 (require 'jong-nodejs)
@@ -942,12 +944,23 @@ Version 2017-07-08"
 		("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
 	 (quote
-		(realgud-lldb flycheck-rust yaml-mode clang-format evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+		(whitespace-cleanup-mode realgud-lldb flycheck-rust yaml-mode clang-format evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/meari/")
+		((jong-project-sub-command-2 . "./meari-auth-mock")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/meari-server/bin/")
+		 (jong-project-sub-command-2 . "./bin/meari-server")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/meari-server/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/meari-server/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/meari-server-go/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/meari-server-go/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/web_callback/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/web_callback/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/filesync-rs/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/filesync-rs/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/meari/")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/meari/")
 		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/meari/")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/rust_test/")

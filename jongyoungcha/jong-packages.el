@@ -9,10 +9,10 @@
 (use-package solarized-theme :ensure t)
 
 (use-package which-key
-  :ensure t
-  :config
-  (which-key-mode)
-  (setq which-key-popup-type 'minibuffer))
+	:ensure t
+	:config
+	(which-key-mode)
+	(setq which-key-popup-type 'minibuffer))
 
 
 (use-package clang-format
@@ -23,24 +23,23 @@
 (use-package yaml-mode
 	:ensure t
 	:config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+	(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 	(add-hook 'yaml-mode-hook
-			      '(lambda ()
+						'(lambda ()
 							 (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
-
 (use-package lsp-mode
-  :hook
-  (c-mode . lsp)
-  (c++-mode-hook . lsp)
-  (objc-mode-hook . lsp)
+	:hook
+	(c-mode . lsp)
+	(c++-mode-hook . lsp)
+	(objc-mode-hook . lsp)
 	(rust-mode-hook . lsp)
 	(go-mode-hook . lsp)
 	:config
 	(setq lsp-prefer-flymake nil)
 	(setq lsp-eldoc-render-all nil)
 	(setq lsp-signature-render-all nil)
-  :commands lsp)
+	:commands lsp)
 
 ;; (use-package lsp-ui
 ;; :config
@@ -53,17 +52,21 @@
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 (use-package company-lsp
-  :ensure t
-  :commands company-lsp
-  :config
-  (eval-after-load 'company
+	:ensure t
+	:commands company-lsp
+	:config
+	(eval-after-load 'company
 	'(add-to-list
-	  'company-backends 'company-lsp)))
+		'company-backends 'company-lsp)))
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
-
 (use-package realgud
 	:ensure t)
+
+(use-package whitespace-cleanup-mode
+	:ensure t
+	:diminish whitespace-cleanup-mode
+	:init (global-whitespace-cleanup-mode))
 
 (provide 'jong-packages)
