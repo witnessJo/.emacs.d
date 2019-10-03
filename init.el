@@ -47,24 +47,6 @@
   :ensure t
   :config)
 
-(defun jong-open-line-above ()
-	"Insert a newline above the current line and put point at beginning."
-	(interactive)
-	(unless (bolp)
-		(beginning-of-line))
-	(newline)
-	(forward-line -1)
-	(indent-according-to-mode))
-
-
-(defun jong-open-line-below ()
-	"Insert a newline below the current line and put point at beginning."
-	(interactive)
-	(unless (eolp)
-		(end-of-line))
-	(newline-and-indent))
-
-
 (defun jong-get-selection-length ()
 	"Get length of selection."
 	(interactive)
@@ -321,14 +303,7 @@ Version 2017-07-08"
 	)
 
 
-(defun jong-copy-current-line ()
-	"Chan 'copy current line."
-	(interactive)
-	(let ((prev-pos (point))
-				(start-line-pos (progn (beginning-of-line) (point)))
-				(end-line-pos (progn (end-of-line) (point))))
-		(kill-new (buffer-substring start-line-pos end-line-pos))
-		(goto-char prev-pos)))
+
 
 (global-set-key (kbd "M-c") nil)
 (global-set-key (kbd "C-c C-x") nil)
@@ -351,9 +326,6 @@ Version 2017-07-08"
 																)))
 
 
-(global-set-key (kbd "C-S-o") 'jong-open-line-above)
-(global-set-key (kbd "C-o") 'jong-open-line-below)
-
 
 (global-set-key (kbd "C-c k") (lambda() (interactive)
 																(kill-buffer (buffer-name))))
@@ -362,12 +334,6 @@ Version 2017-07-08"
 																(kill-buffer (buffer-name))
 																(call-interactively 'other-window)))
 
-
-(global-set-key (kbd "C-M-y") 'jong-copy-current-line)
-(global-set-key (kbd "M-y") (lambda ()
-															(interactive)
-															(jong-open-line-below)
-															(call-interactively 'yank)))
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
@@ -423,15 +389,13 @@ Version 2017-07-08"
 
 (defvar jong-keys-minor-mode-map
 	(let ((map (make-sparse-keymap)))
-		(define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
-		(define-key map (kbd "C-M-w") (lambda () (interactive) (jong-forward-line -1)))
-		;; (define-key map (kbd "C-<up>") (lambda () (interactive) (jong-forward-line -1)))
-		(define-key map (kbd "M-a") 'backward-char)
-		(define-key map (kbd "M-s") (lambda () (interactive) (jong-forward-line 1)))
-		(define-key map (kbd "C-M-s") (lambda () (interactive) (jong-forward-line 1)))
-		;; (define-key map (kbd "C-<down>") (lambda () (interactive) (jong-forward-line 1)))
-		;; (define-key map (kbd "C-<backspace>") 'hungry-delete-backward)
-		(define-key map (kbd "M-d") 'forward-char)
+		;; (define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
+		;; (define-key map (kbd "C-M-w") (lambda () (interactive) (jong-forward-line -1)))
+		;; (define-key map (kbd "M-a") 'backward-char)
+		;; (define-key map (kbd "M-s") (lambda () (interactive) (jong-forward-line 1)))
+		;; (define-key map (kbd "C-M-s") (lambda () (interactive) (jong-forward-line 1)))
+		;; (define-key map (kbd "M-d") 'forward-char)
+		(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
 		(define-key map (kbd "C-<backspace>") 'jong-common-kill-backward-word)
 		(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
 		(define-key map (kbd "<S-up>") (lambda () (interactive)
@@ -472,8 +436,6 @@ Version 2017-07-08"
 		;; (define-key map (kbd "M-<delete>") (lambda () (interactive)
 		;; (progn (call-interactively 'forward-hf)
 		;; (pop kill-ring))))
-
-		(global-set-key (kbd "C-S-w") 'copy-region-as-kill)
 		map)
 	"Jong-keys-minor-mode keymap.")
 
@@ -896,149 +858,3 @@ Version 2017-07-08"
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-	 ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#657b83"])
- '(compilation-message-face (quote default))
- '(cua-global-mark-cursor-color "#2aa198")
- '(cua-normal-cursor-color "#839496")
- '(cua-overwrite-cursor-color "#b58900")
- '(cua-read-only-cursor-color "#859900")
- '(custom-safe-themes
-	 (quote
-		("82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
- '(eclim-eclipse-dirs (quote ((format "%s/eclipse" (getenv "HOME")))))
- '(eclim-executable (format "%s/eclipse/eclim" (getenv "HOME")))
- '(fci-rule-color "#073642")
- '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
- '(highlight-symbol-colors
-	 (--map
-		(solarized-color-blend it "#002b36" 0.25)
-		(quote
-		 ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
- '(highlight-symbol-foreground-color "#93a1a1")
- '(highlight-tail-colors
-	 (quote
-		(("#073642" . 0)
-		 ("#546E00" . 20)
-		 ("#00736F" . 30)
-		 ("#00629D" . 50)
-		 ("#7B6000" . 60)
-		 ("#8B2C02" . 70)
-		 ("#93115C" . 85)
-		 ("#073642" . 100))))
- '(hl-bg-colors
-	 (quote
-		("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
- '(hl-fg-colors
-	 (quote
-		("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
- '(hl-paren-colors (quote ("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900")))
- '(magit-diff-use-overlays nil)
- '(nrepl-message-colors
-	 (quote
-		("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
- '(package-selected-packages
-	 (quote
-		(whitespace-cleanup-mode realgud-lldb flycheck-rust yaml-mode clang-format evil lsp-java lsp-ui treemacs eclim xterm-color xref-js2 which-key web-mode use-package undo-tree tide syntax-subword solarized-theme restclient racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hydra hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-rtags company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
- '(pos-tip-background-color "#073642")
- '(pos-tip-foreground-color "#93a1a1")
- '(safe-local-variable-values
-	 (quote
-		((jong-project-sub-command-2 . "./meari-auth-mock")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/meari-server/bin/")
-		 (jong-project-sub-command-2 . "./bin/meari-server")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/meari-server/")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/meari-server/")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/meari-server-go/")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/meari-server-go/")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/web_callback/")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/web_callback/")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/filesync-rs/")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/filesync-rs/")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/meari/")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/meari/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/meari/")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/rust_test/")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/rust_test/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/rust_test/")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori_ainmon/")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori_mon/")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/sori_mon/target/debug")
-		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/sori_mon/")
-		 (cargo-process--command-run . "run-test")
-		 (jong-project-sub-command-2 . "./sori_mon --dest 13.124.125.2 --port 5021 --user hjkl --password asdfjehksjd")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/sori-mon/")
-		 (jong-project-sub-command-2 . "./sori-mon --dest 13.124.125.2 --port 5021 --user hjkl --password asdfjehksjd")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/sori-mon/target/debug")
-		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/sori-mon/")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/spoon-mon/")
-		 (jong-project-sub-command-3 . "none")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/Ants/")
-		 (jong-project-sub-command-2 . "none")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/Ants/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/Ants/")
-		 (projectile-project-compilation-cmd . "cmake -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .; make")
-		 (projectile-project-name . "ants")
-		 (cmake-ide--build-dir-var . "./")
-		 (jong-project-sub-command-3 . "ls -al")
-		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/ysh/")
-		 (jong-project-sub-command-2 . "ls")
-		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/ysh/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/ysh/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/commandParserSample/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/Calculator/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/ProgramersSolutions/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
-		 (projectile-project-root . "/home/jongyoungcha/projects/ldb-chan/"))))
- '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
- '(term-default-bg-color "#002b36")
- '(term-default-fg-color "#839496")
- '(vc-annotate-background nil)
- '(vc-annotate-background-mode nil)
- '(vc-annotate-color-map
-	 (quote
-		((20 . "#dc322f")
-		 (40 . "#c8805d801780")
-		 (60 . "#bec073400bc0")
-		 (80 . "#b58900")
-		 (100 . "#a5008e550000")
-		 (120 . "#9d0091000000")
-		 (140 . "#950093aa0000")
-		 (160 . "#8d0096550000")
-		 (180 . "#859900")
-		 (200 . "#66aa9baa32aa")
-		 (220 . "#57809d004c00")
-		 (240 . "#48559e556555")
-		 (260 . "#392a9faa7eaa")
-		 (280 . "#2aa198")
-		 (300 . "#28669833af33")
-		 (320 . "#279993ccbacc")
-		 (340 . "#26cc8f66c666")
-		 (360 . "#268bd2"))))
- '(vc-annotate-very-old-color nil)
- '(weechat-color-list
-	 (quote
-		(unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
- '(xterm-color-names
-	 ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
- '(xterm-color-names-bright
-	 ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color)) (:background "#444444"))) t)
- '(flymake-error ((((class color)) (:background "#444444"))))
- '(flymake-warning ((((class color)) (:background "#4444aa"))))
- '(flymake-warnline ((((class color)) (:background "#4444aa"))) t)
- '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
- '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
-

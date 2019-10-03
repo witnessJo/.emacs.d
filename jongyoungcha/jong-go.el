@@ -65,6 +65,9 @@
 
 (use-package dap-mode
   :ensure t)
+	;; :config
+	;; (require 'dap-go))
+	
 
 (use-package lsp-mode
   :ensure t)
@@ -192,7 +195,7 @@ And the environment variable was existing, Download go binaries from the interne
                         "golang.org/x/tools/cmd/godoc"
                         "golang.org/x/tools/cmd/guru"
                         "golang.org/x/tools/cmd/goimports"
-												"golang.org/x/tools/cmd/gopls")))
+												"golang.org/x/tools/gopls@latest")))
     (if (getenv "GOPATH")
         (progn
 					(dolist (elt list-url cmd)
@@ -578,7 +581,8 @@ And the environment variable was existing, Download go binaries from the interne
 														 (chan-gogud-exec-function #'go-guru-implements)))
 						))
 
-(add-hook 'go-mode-hook #'lsp)
+;; (add-hook 'go-mode-hook #'lsp)
+;; (add-hook 'go-mode-hook 'lsp-deferred)
 
 
 (provide 'jong-go)

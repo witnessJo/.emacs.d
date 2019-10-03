@@ -422,7 +422,7 @@
 			 (progn
 				 (syntax-subword-forward arg)
 				 (point)))
-			 )
+			)
 		))
 
 
@@ -438,6 +438,51 @@
 				 (syntax-subword-backward arg)
 				 (point))))
 		))
+
+(defun jong-common-open-line-above ()
+	"Insert a newline above the current line and put point at beginning."
+	(interactive)
+	(unless (bolp)
+		(beginning-of-line))
+	(newline)
+	(forward-line -1))
+
+
+(defun jong-common-open-line-below ()
+	"Insert a newline below the current line and put point at beginning."
+	(interactive)
+	(unless (eolp)
+		(end-of-line))
+	(newline))
+
+
+(defun jong-common-copy-region-or-line (arg)
+	"Chan 'copy current line."
+	(interactive "p")
+	(let ((prev-pos (point))
+				(start-pos)
+				(end-pos))
+		(if (region-active-p)
+				(progn
+					(setq start-pos (region-beginning))
+					(setq end-pos (region-end))
+					(copy-region-as-kill start-pos end-pos))
+			(progn
+				(setq start-pos (progn (beginning-of-line) (point)))
+				(setq end-pos (progn (end-of-line) (point)))
+				(kill-ring-save start-pos end-pos)))
+		(goto-char prev-pos)
+		)
+	)
+
+(global-set-key (kbd "C-S-o") 'jong-common-open-line-above)
+(global-set-key (kbd "C-o") 'jong-common-open-line-below)
+
+(global-set-key (kbd "C-M-y") 'jong-common-copy-region-or-line)
+(global-set-key (kbd "M-y") (lambda ()
+															(interactive)
+															(jong-common-open-line-below)
+															(call-interactively 'yank)))
 
 
 (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
