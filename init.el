@@ -858,3 +858,23 @@ Version 2017-07-08"
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+	 (quote
+		((jong-project-sub-command-3 . "none")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/meari-server-go/")
+		 (jong-project-sub-command-2 . "none")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/meari-server-go/")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flymake-errline ((((class color)) (:background "#444444"))) t)
+ '(flymake-warnline ((((class color)) (:background "#4444aa"))) t)
+ '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
+ '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))

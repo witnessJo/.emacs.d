@@ -445,7 +445,8 @@
 	(unless (bolp)
 		(beginning-of-line))
 	(newline)
-	(forward-line -1))
+	(forward-line -1)
+	(call-interactively 'intent-for-tab-command))
 
 
 (defun jong-common-open-line-below ()
@@ -453,7 +454,8 @@
 	(interactive)
 	(unless (eolp)
 		(end-of-line))
-	(newline))
+	(newline)
+	(call-interactively 'intent-for-tab-command))
 
 
 (defun jong-common-copy-region-or-line (arg)

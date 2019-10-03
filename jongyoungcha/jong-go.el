@@ -65,9 +65,9 @@
 
 (use-package dap-mode
   :ensure t)
-	;; :config
-	;; (require 'dap-go))
-	
+;; :config
+;; (require 'dap-go))
+
 
 (use-package lsp-mode
   :ensure t)
@@ -158,17 +158,20 @@
 		(string-match extract-pattern-whole (buffer-substring-no-properties (point-min) (point-max)))
 		(setq imported-string (match-string 1 (buffer-substring-no-properties (point-min) (point-max))))
 		(setq imported-packages (split-string imported-string "\n"))
-		(dolist (package imported-packages)
-			(message "%s" package)
+		(with-current-buffer (get-buffer-create output-buffer)
+			(progn
+				(dolist (package-uri imported-packages)
+					;; (start-process "go get" (current-buffer) "go" "get" package-uri)
+					(start-process-shell-command "go get" (current-buffer) (format "go get %s" package-uri))
+					))
 			)
 		
 		
     ;; (dolist (package-url package-url-list)
     ;; (setq package-url (string-trim package-url))
-    ;; (setq command (format "go get %s" package-url))
-    ;; (shell-command command (current-buffer))
-    ;; (start-process "go get" (current-buffer) "go" "get" package-url)
-    ;; (start-process-shell-command "go-get" (current-buffer) (format "go get %s" package-url))
+
+
+
     ;; (goto-char (point-max))
     ;; (insert command)
     ;; (eshell-send-input)
