@@ -3,22 +3,22 @@
 (require 'cl)
 
 (use-package dash
-  :ensure t
-  :config)
+	:ensure t
+	:config)
 
 (defgroup jong-common nil
-  "Setting for `jong-common."
-  :link nil)
+	"Setting for `jong-common."
+	:link nil)
 
 
 (defun jong-common-set-window-1-2 (&optional left-buffer right-top-buffer right-bot-buffer)
-  (interactive)
-  (let ((wind-base)
+	(interactive)
+	(let ((wind-base)
 				(wind-left)
 				(wind-right-top)
 				(wind-right-bot))
 		(delete-other-windows)
-		
+
 		;; Make windows
 		(setq wind-base (selected-window))
 		(split-window-right)
@@ -28,38 +28,38 @@
 		(split-window-below)
 		(other-window 1)
 		(setq wind-right-bot (selected-window))
-		
+
 		;; Alloc buffers to windows
 		(ignore-errors
 			(when (and (stringp left-buffer) (get-buffer left-buffer))
 				(select-window wind-left)
 				(switch-to-buffer (get-buffer left-buffer))))
-		
+
 		(ignore-errors
 			(when (and (stringp right-top-buffer) (get-buffer right-top-buffer))
 				(select-window wind-right-top)
 				(switch-to-buffer (get-buffer right-top-buffer))))
-		
+
 		(ignore-errors
 			(when (and (stringp right-bot-buffer) (get-buffer right-bot-buffer))
 				(select-window wind-right-bot)
 				(switch-to-buffer (get-buffer right-bot-buffer))))
-		
+
 		(select-window wind-base)
 		))
 
 
 (defun jong-common-set-window-2-1 (&optional left-top-buffer left-bot-buffer right-buffer)
-  (interactive)
-  (let ((wind-base)
+	(interactive)
+	(let ((wind-base)
 				(wind-left-top)
 				(wind-left-bot)
 				(wind-right))
 		(delete-other-windows)
-		
+
 		;; Make windows
 		(setq wind-base (selected-window))
-		
+
 		(split-window-right)
 		(split-window-below)
 		(setq wind-left-top (selected-window))
@@ -67,30 +67,30 @@
 		(setq wind-left-bot (selected-window))
 		(other-window 1)
 		(setq wind-right (selected-window))
-		
+
 		;; Alloc buffers to windows
 		(ignore-errors
 			(when (and (stringp left-top-buffer) (get-buffer left-top-buffer))
 				(select-window wind-left-top)
 				(switch-to-buffer (get-buffer left-top-buffer))))
-		
+
 		(ignore-errors
 			(when (and (stringp left-bot-buffer) (get-buffer left-bot-buffer))
 				(select-window wind-left-bot)
 				(switch-to-buffer (get-buffer left-bot-buffer))))
-		
+
 		(ignore-errors
 			(when (and (stringp right-buffer) (get-buffer right-buffer))
 				(select-window wind-right)
 				(switch-to-buffer (get-buffer right-buffer))))
-		
+
 		(select-window wind-base)
 		))
 
 
 (defun jong-common-set-window-4 (&optional buffer-left-top buffer-right-top buffer-left-bot buffer-right-bot)
-  (interactive)
-  (let ((wind-base)
+	(interactive)
+	(let ((wind-base)
 				(wind-left-top)
 				(wind-right-top)
 				(wind-left-bot)
@@ -99,7 +99,7 @@
 
 		;;Make Windows
 		(setq wind-base (selected-window))
-		
+
 		(setq wind-left-top (selected-window))
 		(split-window-below)
 		(split-window-right)
@@ -131,33 +131,33 @@
 			(when (and (stringp buffer-right-bot) (get-buffer buffer-right-bot))
 				(select-window wind-right-bot)
 				(switch-to-buffer (get-buffer buffer-right-bot))))
-		
+
 		(select-window wind-base)
 		)
-  )
+	)
 
 (defun jong-common-find-buffer-and-move (target-buffer-name)
-  "Move to the window having the TARGET-BUFFER-NAME of the buffer."
-  (let ((buffer-name))
+	"Move to the window having the TARGET-BUFFER-NAME of the buffer."
+	(let ((buffer-name))
 		(if (stringp target-buffer-name)
 				(dolist (target-window (window-list))
 					(when (equal target-buffer-name (buffer-name (window-buffer target-window)))
 						(select-window target-window)))
 			)
 		)
-  )
+	)
 
 (defun jong-common-process-exit-code-and-output (program &rest args)
-  "Run PROGRAM with ARGS and return the exit code and output in a list."
-  (interactive)
-  (with-temp-buffer
+	"Run PROGRAM with ARGS and return the exit code and output in a list."
+	(interactive)
+	(with-temp-buffer
 		(list (apply 'call-process program nil (current-buffer) nil args)
 					(buffer-string)))
-  )
+	)
 
 (defun jong-common-find-file-other-window-string (string)
-  "Run PROGRAM with ARGS and return the exit code and output in a list."
-  (let ((file-path)
+	"Run PROGRAM with ARGS and return the exit code and output in a list."
+	(let ((file-path)
 				(target-line)
 				(regex-pattern "^\\(.+\\):\\(.+\\)$"))
 		(if (and (stringp string) (string-match regex-pattern string))
@@ -170,12 +170,12 @@
 			(message "regex buildind failed...")
 			)
 		)
-  )
+	)
 
 (defun jong-common-auto-indent-buffer()
-  "Indent the buffer automatic."
-  (interactive)
-  (let ((prev-pos (point))
+	"Indent the buffer automatic."
+	(interactive)
+	(let ((prev-pos (point))
 				(indent-func nil))
 		(set-mark (point-min))
 		(goto-char (point-max))
@@ -184,27 +184,27 @@
 			(call-interactively 'indent-for-tab-command))
 		(goto-char prev-pos)
 		(deactivate-mark))
-  )
+	)
 
 (use-package helm-xref
-  :ensure t
-  :config	
-  (setq xref-show-xrefs-function 'helm-xref-show-xrefs))
+	:ensure t
+	:config
+	(setq xref-show-xrefs-function 'helm-xref-show-xrefs))
 
 
 (defcustom jong-common-ring-location  0
-  "Test."
-  :type 'integer)
+	"Test."
+	:type 'integer)
 
 (defvar jong-common-ring-size 20)
 (defcustom jong-common-ring (make-ring jong-common-ring-size)
-  "Ring of markers to implement the marker stack."
-  :type 'ring)
+	"Ring of markers to implement the marker stack."
+	:type 'ring)
 
 (defun jong-common-ring-insert ()
-  (interactive)
-  "."
-  (let ((ring jong-common-ring)
+	(interactive)
+	"."
+	(let ((ring jong-common-ring)
 				(marker (make-marker))
 				(ring-elems))
 		(set-marker marker (point) (current-buffer))
@@ -219,8 +219,8 @@
 
 
 (defun jong-common-ring-remove-from (ring index)
-  "Remove the marker instance located in the index. (RING : the target ring, INDEX : location)."
-  (let ((ring-elems (cdr (cdr ring))))
+	"Remove the marker instance located in the index. (RING : the target ring, INDEX : location)."
+	(let ((ring-elems (cdr (cdr ring))))
 		(unless (ring-p ring)
 			(error "The argument ring was not ring"))
 		(unless (integerp index)
@@ -240,9 +240,9 @@
 
 
 (defun jong-common-ring-status ()
-  (interactive)
-  "."
-  (let ((ring jong-common-ring)
+	(interactive)
+	"."
+	(let ((ring jong-common-ring)
 				(ring-elems)
 				(elem))
 		(setq ring-elems (cdr (cdr ring)))
@@ -256,8 +256,8 @@
 
 
 (defun jong-common-ring-goto-last-index ()
-  (interactive)
-  (let ((ring jong-common-ring)
+	(interactive)
+	(let ((ring jong-common-ring)
 				(marker-target))
 		(setq marker-target (ring-ref ring 0))
 		(ignore-errors (switch-to-buffer (marker-buffer marker-target)))
@@ -266,17 +266,17 @@
 
 
 (defun jong-common-ring-clear ()
-  "."
-  (interactive)
+	"."
+	(interactive)
 	(setq jong-common-ring (make-ring jong-common-ring-size))
 	(setq jong-common-ring-location 0)
 	)
 
 
 (defun jong-common-ring-goto-prev()
-  "."
-  (interactive)
-  (let ((ring-elems (cdr (cdr jong-common-ring)))
+	"."
+	(interactive)
+	(let ((ring-elems (cdr (cdr jong-common-ring)))
 				(marker-target)
 				(target-buffer))
 		(if (> jong-common-ring-location 0)
@@ -295,9 +295,9 @@
 
 
 (defun jong-common-ring-goto-next ()
-  "."
-  (interactive)
-  (let ((ring-elems (cdr (cdr jong-common-ring)))
+	"."
+	(interactive)
+	(let ((ring-elems (cdr (cdr jong-common-ring)))
 				(marker-target)
 				(target-buffer))
 		(if (< jong-common-ring-location (jong-common-ring-item-count))
@@ -316,8 +316,8 @@
 
 
 (defun jong-common-ring-item-count ()
-  "."
-  (let ((count 0)
+	"."
+	(let ((count 0)
 				(ring-elems (cdr (cdr jong-common-ring))))
 		(catch 'found
 			(dotimes (i (length ring-elems))
@@ -353,55 +353,55 @@
 
 
 (defun jong-common-go-eshell ()
-  (interactive)
-  (let ((cmd (format "%s %s" "cd" default-directory)))
-    (message "eshell path : %s" cmd)
-    (call-interactively 'eshell)
-    (with-current-buffer "*eshell*"
-      (eshell-interrupt-process)
-      (insert cmd)
-      (eshell-send-input)
-      (pop-to-buffer-same-window "*eshell*"))
-    ))
+	(interactive)
+	(let ((cmd (format "%s %s" "cd" default-directory)))
+		(message "eshell path : %s" cmd)
+		(call-interactively 'eshell)
+		(with-current-buffer "*eshell*"
+			(eshell-interrupt-process)
+			(insert cmd)
+			(eshell-send-input)
+			(pop-to-buffer-same-window "*eshell*"))
+		))
 
 
 (defun jong-common-copy-current-dir ()
-  "Copy the current directory to the 'kill-ring."
-  (interactive)
-  (kill-new default-directory))
+	"Copy the current directory to the 'kill-ring."
+	(interactive)
+	(kill-new default-directory))
 
 
 (defun jong-common-copy-current-path ()
-  "Copy the current path to the 'kill-ring."
-  (interactive)
-  (kill-new buffer-file-name))
+	"Copy the current path to the 'kill-ring."
+	(interactive)
+	(kill-new buffer-file-name))
 
 
 (defcustom jong-common-skippable-buffer-patterns '("^.*\*helm.*" "*Buffer List*")
-  "Buffer name patterns for skip and kill."
-  :type 'list)
+	"Buffer name patterns for skip and kill."
+	:type 'list)
 
 (defun jong-common-next-buffer ()
-  "Next-buffer that skips certain buffers."
-  (interactive)
-  (next-buffer)
-  (dolist (skippable-buffer-pattern jong-common-skippable-buffer-patterns)
-    (when (string-match skippable-buffer-pattern (buffer-name))
-      (message "skip buffer: %s" (buffer-name))
-      (kill-buffer (current-buffer))
-      (jong-next-buffer))
-    ))
+	"Next-buffer that skips certain buffers."
+	(interactive)
+	(next-buffer)
+	(dolist (skippable-buffer-pattern jong-common-skippable-buffer-patterns)
+		(when (string-match skippable-buffer-pattern (buffer-name))
+			(message "skip buffer: %s" (buffer-name))
+			(kill-buffer (current-buffer))
+			(jong-next-buffer))
+		))
 
 (defun jong-common-prev-buffer ()
-  "Prev-buffer that skips certain buffers."
-  (interactive)
-  (previous-buffer)
-  (dolist (skippable-buffer-pattern jong-common-skippable-buffer-patterns)
-    (when (string-match skippable-buffer-pattern (buffer-name))
-      (message "skip buffer: %s" (buffer-name))
-      (kill-buffer (current-buffer))
-      (jong-prev-buffer))
-    ))
+	"Prev-buffer that skips certain buffers."
+	(interactive)
+	(previous-buffer)
+	(dolist (skippable-buffer-pattern jong-common-skippable-buffer-patterns)
+		(when (string-match skippable-buffer-pattern (buffer-name))
+			(message "skip buffer: %s" (buffer-name))
+			(kill-buffer (current-buffer))
+			(jong-prev-buffer))
+		))
 
 
 (defun jong-common-delete-line (&optional arg)
@@ -412,9 +412,9 @@
 
 
 (defun jong-common-kill-forward-word (arg)
-  "It would be changed."
-  (interactive "p")
-  (let ((next-char (buffer-substring (point) (1+ (point)))))
+	"It would be changed."
+	(interactive "p")
+	(let ((next-char (buffer-substring (point) (1+ (point)))))
 		(if (string-match (regexp-opt-charset '(? ?\t ?\n)) next-char)
 				(call-interactively 'hungry-delete-forward)
 			(delete-region
@@ -427,9 +427,9 @@
 
 
 (defun jong-common-kill-backward-word (arg)
-  "It would be changed."
-  (interactive "p")
-  (let ((prev-char (buffer-substring (1- (point)) (point))))
+	"It would be changed."
+	(interactive "p")
+	(let ((prev-char (buffer-substring (1- (point)) (point))))
 		(if (string-match (regexp-opt-charset '(? ?\t ?\n)) prev-char)
 				(call-interactively 'hungry-delete-backward)
 			(delete-region
@@ -446,7 +446,7 @@
 		(beginning-of-line))
 	(newline)
 	(forward-line -1)
-	(call-interactively 'intent-for-tab-command))
+	(call-interactively 'indent-for-tab-command))
 
 
 (defun jong-common-open-line-below ()
@@ -455,10 +455,12 @@
 	(unless (eolp)
 		(end-of-line))
 	(newline)
-	(call-interactively 'intent-for-tab-command))
+	(call-interactively 'indent-for-tab-command))
+
 
 
 (defun jong-common-copy-region-or-line (arg)
+
 	"Chan 'copy current line."
 	(interactive "p")
 	(let ((prev-pos (point))

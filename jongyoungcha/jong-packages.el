@@ -41,11 +41,6 @@
 	(setq lsp-signature-render-all nil)
 	:commands lsp)
 
-;; (use-package lsp-ui
-;; :config
-;; (setq lsp-ui-doc-mode nil)
-;; (setq lsp-ui-sideline-mode nil)
-;; :commands lsp-ui-mode)
 
 (use-package company-lsp :commands company-lsp)
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
@@ -67,6 +62,8 @@
 (use-package whitespace-cleanup-mode
 	:ensure t
 	:diminish whitespace-cleanup-mode
-	:init (global-whitespace-cleanup-mode))
+	:init
+	(global-whitespace-cleanup-mode)
+	(add-hook 'after-save-hook 'whitespace-cleanup))
 
 (provide 'jong-packages)
