@@ -29,16 +29,6 @@
 	:config
 	(add-hook 'completion-at-point 'go-complete-at-point))
 
-;; (use-package go-imports
-;; :ensure t
-;; :config
-;; (add-hook 'go-mode-hook
-;; #'(lambda()
-;; (require 'go-imports)
-;; (define-key go-mode-map (kbd "C-c ") 'go-imports-insert-import)
-;; (define-key go-mode-map (kdb "C-c g l") 'go-imports-reload-packages-list)))
-;; )
-
 (use-package go-direx
 	:ensure t)
 
@@ -198,7 +188,7 @@ And the environment variable was existing, Download go binaries from the interne
 												"golang.org/x/tools/cmd/godoc"
 												"golang.org/x/tools/cmd/guru"
 												"golang.org/x/tools/cmd/goimports"
-												"golang.org/x/tools/gopls@latest")))
+												"golang.org/x/tools/gopls")))
 		(if (getenv "GOPATH")
 				(progn
 					(dolist (elt list-url cmd)
@@ -519,9 +509,6 @@ And the environment variable was existing, Download go binaries from the interne
 													;; syntax highlight
 													(go-guru-hl-identifier-mode)
 
-													;; (require 'auto-complete-config)
-													;; (ac-config-default)
-
 													;; setting company-go mode...
 													(setq company-tooltip-limit 20)
 													(setq company-idle-delay .3)
@@ -529,7 +516,6 @@ And the environment variable was existing, Download go binaries from the interne
 													(setq company-begin-commands '(self-insert-command))
 													(set (make-local-variable 'company-backends) '(company-go))
 													(company-mode)
-
 
 													;;setting go-eldocp
 													(set-face-attribute 'eldoc-highlight-function-argument nil
@@ -552,6 +538,7 @@ And the environment variable was existing, Download go binaries from the interne
 													(local-set-key (kbd "C-c g g")
 																				 (lambda () (interactive)
 																					 (chan-gogud-gdb "dlv debug")))
+													(local-set-key (kbd "C-c g i") 'jong-get-imported-packages)
 													(local-set-key (kbd "C-c s f") 'gofmt-before-save)
 													(local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
 													(local-set-key (kbd "C-c c c") 'jong-project-compile-project)
@@ -584,7 +571,8 @@ And the environment variable was existing, Download go binaries from the interne
 														 (chan-gogud-exec-function #'go-guru-implements)))
 						))
 
-;; (add-hook 'go-mode-hook #'lsp)
+
+(add-hook 'go-mode-hook #'lsp)
 ;; (add-hook 'go-mode-hook 'lsp-deferred)
 
 
