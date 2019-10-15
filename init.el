@@ -6,46 +6,46 @@
 
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/")
-             '("marmalade" . "https://marmalade-repo.org/packages/"))
+						 '("melpa" . "https://melpa.org/packages/")
+						 '("marmalade" . "https://marmalade-repo.org/packages/"))
 
 (when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+	;; For important compatibility libraries like cl-lib
+	(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
 (package-initialize)
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+	(package-refresh-contents)
+	(package-install 'use-package))
 
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 (use-package avy
-  :ensure t
-  :config
-  :bind
-  ("C-'" . avy-goto-word-0)
-  ("C-;" . avy-goto-line))
+	:ensure t
+	:config
+	:bind
+	("C-'" . avy-goto-word-0)
+	("C-;" . avy-goto-line))
 
 (global-font-lock-mode t)
 (transient-mark-mode 1)
 (setq eldoc-idle-delay 0.05)
 
 (use-package org
-  :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+	:ensure t
+	:config
+	(add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (use-package async
-  :ensure t
-  :config
-  (async-bytecomp-package-mode 1))
+	:ensure t
+	:config
+	(async-bytecomp-package-mode 1))
 
 (use-package hungry-delete
-  :ensure t)
+	:ensure t)
 
 (use-package syntax-subword
-  :ensure t
-  :config)
+	:ensure t
+	:config)
 
 (defun jong-get-selection-length ()
 	"Get length of selection."
@@ -183,12 +183,6 @@ Version 2017-07-08"
 	(define-key helm-read-file-map (kbd "M-<right>") 'helm-execute-persistent-action)
 	(define-key helm-read-file-map (kbd "M-<left>") 'helm-find-files-up-one-level))
 
-;; (use-package helm-bookmarks
-;;   :ensure t
-;;   :config
-
-;; (require 'helm-config)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; you need to install ag binary      ;;
 ;; $ brew install the_silver_searcher ;;
@@ -301,8 +295,6 @@ Version 2017-07-08"
 				))
 		)
 	)
-
-
 
 
 (global-set-key (kbd "M-c") nil)
@@ -771,16 +763,16 @@ Version 2017-07-08"
 (defun create-tags (dir-name)
 	"Create tags file."
 	(interactive "Directory: ")
-	(eshell-command 
+	(eshell-command
 	 (format "find %s -type f -name \"*.[ch]\" | etags -" dir-name)))
 
-  ;;;  Jonas.Jarnestrom<at>ki.ericsson.se A smarter               
-  ;;;  find-tag that automagically reruns etags when it cant find a               
-  ;;;  requested item and then makes a new try to locate it.                      
-  ;;;  Fri Mar 15 09:52:14 2002    
+	;;;  Jonas.Jarnestrom<at>ki.ericsson.se A smarter
+	;;;  find-tag that automagically reruns etags when it cant find a
+	;;;  requested item and then makes a new try to locate it.
+	;;;  Fri Mar 15 09:52:14 2002
 (defadvice find-tag (around refresh-etags activate)
-	"Rerun etags and reload tags if tag not found and redo find-tag.              
-   If buffer is modified, ask about save before running etags."
+	"Rerun etags and reload tags if tag not found and redo find-tag.
+	 If buffer is modified, ask about save before running etags."
 	(let ((extension (file-name-extension (buffer-file-name))))
 		(condition-case err
 				ad-do-it
@@ -795,7 +787,7 @@ Version 2017-07-08"
 	"Run etags on all peer files in current dir and reload them silently."
 	(interactive)
 	(shell-command (format "etags *.%s" (or extension "el")))
-	(let ((tags-revert-without-query t))  ; don't query, revert silently          
+	(let ((tags-revert-without-query t))  ; don't query, revert silently
 		(visit-tags-table default-directory nil)))
 
 
@@ -865,7 +857,18 @@ Version 2017-07-08"
  ;; If there is more than one, they won't work right.
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-command-3 . "none")
+		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/__meari-server/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/__meari-server/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/meari-server/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/meari-server/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/gotest/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/gotest/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/bitbucket.org/meari-server/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/bitbucket.org/meari-server/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/rust-projects/rust_test/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/rust-projects/rust_test/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/rust-projects/rust_test/")
+		 (jong-project-sub-command-3 . "none")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/meari-server-go/")
 		 (jong-project-sub-command-2 . "none")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/meari-server-go/")))))
@@ -875,6 +878,8 @@ Version 2017-07-08"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(flymake-errline ((((class color)) (:background "#444444"))) t)
+ '(flymake-error ((((class color)) (:background "#444444"))))
+ '(flymake-warning ((((class color)) (:background "#4444aa"))))
  '(flymake-warnline ((((class color)) (:background "#4444aa"))) t)
  '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
  '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
