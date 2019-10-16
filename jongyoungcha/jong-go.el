@@ -55,9 +55,6 @@
 
 (use-package dap-mode
 	:ensure t)
-;; :config
-;; (require 'dap-go))
-
 
 (use-package lsp-mode
 	:ensure t)
@@ -66,7 +63,8 @@
 	"Set environment variables relative with go."
 	(interactive)
 	(when (memq window-system '(mac ns x))
-		(exec-path-from-shell-copy-envs '("PATH" "GOROOT" "GOPATH"))))
+		(exec-path-from-shell-copy-envs '("PATH" "GOROOT" "GOPATH")))
+	)
 
 (if (getenv "GOPATH")
 		(add-to-list 'exec-path (expand-file-name (format "%s/bin" (getenv "GOPATH"))))
@@ -194,8 +192,8 @@ And the environment variable was existing, Download go binaries from the interne
 					(dolist (elt list-url cmd)
 						(setq cmd (format "go get %s" elt))
 						(with-current-buffer (get-buffer-create buffer-name)
-							(shell-command cmd (current-buffer) (current-buffer))))
-					(message "There was not the GOPATH environment variable.")))
+							(shell-command cmd (current-buffer) (current-buffer)))))
+			(message "There was not the GOPATH environment variable."))
 		)
 	)
 

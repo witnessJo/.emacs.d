@@ -673,8 +673,7 @@ Version 2017-07-08"
 	:ensure t)
 (require 'exec-path-from-shell)
 (when (memq window-system '(mac ns x))
-	(exec-path-from-shell-initialize)
-	(exec-path-from-shell-copy-envs '("PATH" "GOPATH")))
+	(exec-path-from-shell-initialize))
 
 (use-package ido
 	:ensure t
@@ -758,8 +757,6 @@ Version 2017-07-08"
 															(jong-kill-temporary-buffers)
 															(keyboard-quit)))
 
-
-
 (defun create-tags (dir-name)
 	"Create tags file."
 	(interactive "Directory: ")
@@ -811,8 +808,6 @@ Version 2017-07-08"
 	(global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
 
-
-
 (require 'jong-packages)
 (require 'jong-env-setting)
 (require 'jong-common)
@@ -855,6 +850,9 @@ Version 2017-07-08"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+	 (quote
+		(lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
 	 (quote
 		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/__meari-server/")
