@@ -3,15 +3,25 @@
 ;;; just comment it out by adding a semicolon to the start of the line.
 ;;; You may delete these explanatory comments.
 (gnutls-available-p)
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (setq package--check-signature nil)
+
+(setq package-check-signature nil)
 
 (require 'package)
-(add-to-list 'package-archives
-						 '("melpa" . "https://melpa.org/packages/")
-						 '("marmalade" . "https://marmalade-repo.org/packages/"))
+;; (add-to-list 'package-archives
+;; '("melpa" . "https://melpa.org/packages/")
+;; '("marmalade" . "https://marmalade-repo.org/packages/"))
+
+
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+												 ("marmalade" . "https://marmalade-repo.org/packages/")
+												 ("melpa" . "https://melpa.org/packages/")))
+
 
 (when (< emacs-major-version 24)
 	;; For important compatibility libraries like cl-lib
-	(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+	(add-to-list 'package-archives '("gnu" . "http://mirrors.163.com/elpa/gnu")))
 
 (package-initialize)
 (unless (package-installed-p 'use-package)
@@ -852,7 +862,7 @@ Version 2017-07-08"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
 	 (quote
-		(lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+		(cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(safe-local-variable-values
 	 (quote
 		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/bitbucket.org/spooncast/__meari-server/")
@@ -875,9 +885,7 @@ Version 2017-07-08"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color)) (:background "#444444"))) t)
  '(flymake-error ((((class color)) (:background "#444444"))))
  '(flymake-warning ((((class color)) (:background "#4444aa"))))
- '(flymake-warnline ((((class color)) (:background "#4444aa"))) t)
  '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
  '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
