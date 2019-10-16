@@ -26,7 +26,7 @@
 
 
 ;; Add company-lsp backend for metals
-(use-package company-lsp
-	:ensure t)
+;; (use-package company-lsp
+;; :ensure t)
 
 (provide 'jong-scala)
