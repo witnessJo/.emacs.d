@@ -533,6 +533,7 @@ And the environment variable was existing, Download go binaries from the interne
 													(local-set-key (kbd "C-c r j") 'go-guru-definition)
 													(local-set-key (kbd "C-c r d") 'go-guru-describe)
 													(local-set-key (kbd "C-c d d") 'godoc-at-point)
+													(local-set-key (kbd "C-c r l") 'helm-imenu)
 													(local-set-key (kbd "C-c g g")
 																				 (lambda () (interactive)
 																					 (chan-gogud-gdb "dlv debug")))
