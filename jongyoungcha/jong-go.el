@@ -1,3 +1,7 @@
+;;; Code:
+
+(defvar jong-go-debug-buffer "*jong-go-debug*" "Jong go language debug buffer.")
+
 (use-package go-mode
 	:ensure t)
 
@@ -54,7 +58,11 @@
 	:ensure t)
 
 (use-package dap-mode
-	:ensure t)
+	:ensure t
+	:config
+	(require 'dap-go)
+	(dap-go-setup)
+	)
 
 (use-package lsp-mode
 	:ensure t)
@@ -208,7 +216,7 @@ And the environment variable was existing, Download go binaries from the interne
 															(set (make-local-variable 'compile-command)
 																	 "go build -v && go test -v && go vet"))))
 
-(defun jong-debug-go-project ()
+(defun jong-go-debug-project ()
 	"Debug the go project with delve."
 	(interactive)
 	(let ((cmd nil)
@@ -501,6 +509,10 @@ And the environment variable was existing, Download go binaries from the interne
 
 (add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'go-mode-hook (lambda ()
+													(setq lsp-ui-sideline-enable nil)
+													(setq lsp-ui-doc-enable nil)
+													(lsp)
+													
 													(setq indent-tabs-mode t)
 													(setq tab-width 4)
 
@@ -569,10 +581,6 @@ And the environment variable was existing, Download go binaries from the interne
 														 (call-interactively 'gud-refresh)
 														 (chan-gogud-exec-function #'go-guru-implements)))
 						))
-
-
-(add-hook 'go-mode-hook #'lsp)
-;; (add-hook 'go-mode-hook 'lsp-deferred)
 
 
 (provide 'jong-go)

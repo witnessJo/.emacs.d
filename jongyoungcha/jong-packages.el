@@ -62,8 +62,8 @@
 (use-package whitespace-cleanup-mode
 	:ensure t
 	:diminish whitespace-cleanup-mode
-	:init
-	(global-whitespace-cleanup-mode)
-	(add-hook 'after-save-hook 'whitespace-cleanup))
+	:init)
+	;; (global-whitespace-cleanup-mode)
+	;; (add-hook 'after-save-hook 'whitespace-cleanup))
 
 (provide 'jong-packages)
