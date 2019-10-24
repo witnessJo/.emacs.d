@@ -902,7 +902,13 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/test/")
+		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/test/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/test/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/Ants/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/Ants/")
+		 (projectile-project-root . "/home/jongyoungcha/projects/Ants/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/test/")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/test/")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/Chanker/")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/goworks/src/github.com/jongyoungcha/Chanker/")
