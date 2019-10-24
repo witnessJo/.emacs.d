@@ -194,11 +194,12 @@ And the environment variable was existing, Download go binaries from the interne
 												"golang.org/x/tools/cmd/godoc"
 												"golang.org/x/tools/cmd/guru"
 												"golang.org/x/tools/cmd/goimports"
-												"golang.org/x/tools/gopls")))
+												"golang.org/x/tools/gopls"
+												"github.com/go-delve/delve/cmd/dlv")))
 		(if (getenv "GOPATH")
 				(progn
 					(dolist (elt list-url cmd)
-						(setq cmd (format "go get %s" elt))
+						(setq cmd (format "go get -u %s" elt))
 						(with-current-buffer (get-buffer-create buffer-name)
 							(shell-command cmd (current-buffer) (current-buffer)))))
 			(message "There was not the GOPATH environment variable."))
