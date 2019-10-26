@@ -180,17 +180,6 @@ MAIN-CPP-PATH is the cmake file path."
 														 file))))))
 
 
-(defun jo-compile-cmake ()
-	(interactive)
-	(if (file-exists-p "CMakeLists.txt")
-			(progn
-				(if (get-buffer "*compilation*")
-						(progn
-							(delete-window-on (get-buffer "*compilation*"))
-							(kill-buffer "*compilation*")))
-				(compile "cmake . && ls ./Makefile && make -k"))
-		(message "%s" "Couldnt find CMakeList.txt")))
-
 (use-package rtags
 	:ensure t
 	:config
@@ -213,6 +202,11 @@ MAIN-CPP-PATH is the cmake file path."
 	 '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
 	)
 
+
+;; (use-package company-rtags
+;; :ensure t
+;; :config
+;; (add-to-list 'company-backends 'company-rtags))
 
 
 ;; optionally if you want to use debugger

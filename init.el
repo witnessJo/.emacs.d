@@ -825,7 +825,7 @@ Version 2017-07-08"
 (require 'jong-tramp)
 (require 'jong-scheme)
 (require 'jong-cmake)
-(require 'jong-c)
+(require 'jong-cc)
 (require 'jong-python)
 (require 'jong-rust)
 
