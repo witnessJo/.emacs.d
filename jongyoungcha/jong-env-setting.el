@@ -30,6 +30,7 @@
 		(with-no-warnings (setq projectile-indexing-method 'hybrid))
 
 		(load-theme 'sanityinc-tomorrow-blue t)
+		;; (load-theme 'solarized-dark t)
 		(setq jong-env-locale-value
 					(if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
 
@@ -62,8 +63,5 @@
  '(flymake-errline ((((class color)) (:background "#444444"))))
  '(flymake-warnline ((((class color)) (:background "#4444aa"))))
  )
-
-
-
 
 (provide 'jong-env-setting)

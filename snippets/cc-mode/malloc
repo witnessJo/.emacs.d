@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: malloc(...);
-# key: ma
-# --
-malloc(${exp1});

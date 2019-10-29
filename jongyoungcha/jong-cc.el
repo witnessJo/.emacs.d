@@ -221,6 +221,7 @@ MAIN-CPP-PATH is the cmake file path."
 					 (setq lsp-ui-sideline-enable nil)
 					 (setq lsp-ui-doc-enable nil)
 					 (lsp)
+					 (setq company-auto-complete nil)
 					 )))
 
 (setq ccls-executable "/usr/local/bin/ccls")
@@ -294,6 +295,7 @@ MAIN-CPP-PATH is the cmake file path."
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
 
 (add-hook 'c++-mode-hook (lambda ()
+													 (setq company-auto-complete nil)
 													 (setq flycheck-gcc-language-standard "c++14")
 													 (setq flycheck-clang-language-standard "c++14")
 													 (with-no-warnings (setq company-clang-arguments '("-std=c++14")))))
@@ -301,4 +303,4 @@ MAIN-CPP-PATH is the cmake file path."
 ;; For protecting my eyes...
 (add-hook 'objc-mode-hook 'jong-c-setting-environment)
 
-(provide 'jong-c)
+(provide 'jong-cc)

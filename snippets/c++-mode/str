@@ -2,4 +2,5 @@
 # name: str
 # key: str
 # --
-#include <string>
+
+string ${s1};

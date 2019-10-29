@@ -8,6 +8,12 @@
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)
 
+(use-package yasnippet
+	:ensure t
+	:config
+	(setq yas-global-mode 1))
+
+
 (use-package which-key
 	:ensure t
 	:config
@@ -51,8 +57,9 @@
 	:commands company-lsp
 	:config
 	(eval-after-load 'company
-	'(add-to-list
-		'company-backends 'company-lsp)))
+		'(add-to-list
+			'company-backends 'company-lsp)))
+
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
@@ -63,7 +70,7 @@
 	:ensure t
 	:diminish whitespace-cleanup-mode
 	:init)
-	;; (global-whitespace-cleanup-mode)
-	;; (add-hook 'after-save-hook 'whitespace-cleanup))
+;; (global-whitespace-cleanup-mode)
+;; (add-hook 'after-save-hook 'whitespace-cleanup))
 
 (provide 'jong-packages)

@@ -426,8 +426,6 @@ Version 2017-07-08"
 		(define-key map (kbd "C-M-S-d") (lambda () (interactive)
 																			(jong-set-mark)
 																			(forward-word)))
-		(define-key map (kbd "M-e") 'forward-sentence)
-		(define-key map (kbd "M-q") 'backward-sentence)
 		;; (define-key map (kbd "M-<backspace>") (lambda () (
 		;; (progn (call-interactively 'backward-kill-word)
 		;; (pop kill-ring))))
@@ -615,7 +613,7 @@ Version 2017-07-08"
 	:config
 	(setq company-async-timeout 4)
 	(setq company-idle-delay 0.01)
-	(setq company-minimum-prefix-length 3)
+	(setq company-minimum-prefix-length 4)
 	(setq company-auto-complete t)
 	(global-set-key (kbd "C-<tab>") 'company-complete)
 	(add-hook 'after-init-hook 'global-company-mode)
@@ -856,8 +854,11 @@ Version 2017-07-08"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+	 [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
 	 ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#657b83"])
+ '(beacon-color "#ff9da4")
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")
  '(cua-normal-cursor-color "#839496")
@@ -865,8 +866,10 @@ Version 2017-07-08"
  '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
 	 (quote
-		("82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
+		("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
  '(fci-rule-color "#073642")
+ '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
+ '(frame-background-mode (quote dark))
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
 	 (--map
@@ -962,6 +965,7 @@ Version 2017-07-08"
  '(weechat-color-list
 	 (quote
 		(unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
+ '(window-divider-mode nil)
  '(xterm-color-names
 	 ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
  '(xterm-color-names-bright

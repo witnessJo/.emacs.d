@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: vec
+# key: vec
+# --
+
+vector<${s1}> ${s2};

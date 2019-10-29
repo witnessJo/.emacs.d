@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: printf(\"...\", ...);
-# key: print
-# --
-
-printf("${format}", ${args});
