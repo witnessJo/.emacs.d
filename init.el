@@ -510,6 +510,10 @@ Version 2017-07-08"
 																	(call-interactively 'eyebrowse-switch-to-window-config-2)
 																	(call-interactively 'eyebrowse-switch-to-window-config-3)))
 
+(global-set-key (kbd "C-k") (lambda() (interactive)
+															(call-interactively 'kill-whole-line)
+															(call-interactively 'indent-for-tab-command)))
+
 
 ;; remapping about the keybinding.
 (define-key key-translation-map (kbd "<left>") (kbd "C-b"))
