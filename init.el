@@ -510,10 +510,6 @@ Version 2017-07-08"
 																	(call-interactively 'eyebrowse-switch-to-window-config-2)
 																	(call-interactively 'eyebrowse-switch-to-window-config-3)))
 
-(global-set-key (kbd "C-k") (lambda() (interactive)
-															(call-interactively 'kill-whole-line)
-															(call-interactively 'indent-for-tab-command)))
-
 
 ;; remapping about the keybinding.
 (define-key key-translation-map (kbd "<left>") (kbd "C-b"))
@@ -617,7 +613,7 @@ Version 2017-07-08"
 	:config
 	(setq company-async-timeout 4)
 	(setq company-idle-delay 0.01)
-	(setq company-minimum-prefix-length 4)
+	(setq company-minimum-prefix-length 5)
 	(setq company-auto-complete t)
 	(global-set-key (kbd "C-<tab>") 'company-complete)
 	(add-hook 'after-init-hook 'global-company-mode)

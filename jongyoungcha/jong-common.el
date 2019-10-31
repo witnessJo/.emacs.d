@@ -508,7 +508,10 @@
 
 
 (global-set-key (kbd "C-S-k") 'jong-common-delete-line)
-(global-set-key (kbd "C-k") 'kill-whole-line)
+
+(global-set-key (kbd "C-k") (lambda() (interactive)
+															(call-interactively 'kill-whole-line)
+															(call-interactively 'indent-for-tab-command)))
 
 
 
