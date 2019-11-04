@@ -205,7 +205,8 @@
 				(progn
 					(setq default-directory debug-default-dir)
 					(cond
-					 ((equal major-mode 'c++-mode) (gud-gdb debug-cmd))
+					 ((equal major-mode 'c++-mode)
+						(call-interactively 'gud-gdb))
 					 ((equal major-mode 'go-mode) (dlv debug-cmd))))
 			(message "\"projectile-project-root\" and \"jong-project-debug-command were not binded."))
 		)
