@@ -411,11 +411,18 @@
 		(kill-line arg))
 	(beginning-of-line-text))
 
+
 (defun jong-common-kill-line (&optional arg)
 	(interactive "P")
-	(call-interactively 'beginning-of-line)
-	(call-interactively 'kill-line)
-	(beginning-of-line-text)
+	(let ((begin-pos))
+		(if (string-match-p "^[[:space:]]+$" (thing-at-point 'line t))
+				(progn (beginning-of-line)
+							 (print ""))
+			(progn (beginning-of-line-text)
+						 (print "text")))
+		(call-interactively 'kill-line)
+		(beginning-of-line-text)
+		)
 	)
 
 (defun jong-common-kill-forward-word (arg)
