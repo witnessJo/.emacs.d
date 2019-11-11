@@ -975,9 +975,7 @@ Version 2017-07-08"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color)) (:background "#444444"))) t)
  '(flymake-error ((((class color)) (:background "#444444"))))
  '(flymake-warning ((((class color)) (:background "#4444aa"))))
- '(flymake-warnline ((((class color)) (:background "#4444aa"))) t)
  '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
  '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))

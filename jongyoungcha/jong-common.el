@@ -408,8 +408,15 @@
 	(interactive "P")
 	(flet ((kill-region (begin end)
 											(delete-region begin end)))
-		(kill-line arg)))
+		(kill-line arg))
+	(beginning-of-line-text))
 
+(defun jong-common-kill-line (&optional arg)
+	(interactive "P")
+	(call-interactively 'beginning-of-line)
+	(call-interactively 'kill-line)
+	(beginning-of-line-text)
+	)
 
 (defun jong-common-kill-forward-word (arg)
 	"It would be changed."
@@ -509,11 +516,8 @@
 
 (global-set-key (kbd "C-S-k") 'jong-common-delete-line)
 
-(global-set-key (kbd "C-k") (lambda() (interactive)
-															(call-interactively 'kill-whole-line)
-															(call-interactively 'indent-for-tab-command)))
-
-
+(global-set-key (kbd "C-k") 'jong-common-kill-line)
 
 
 (provide 'jong-common)
+;;;jong-common.el
