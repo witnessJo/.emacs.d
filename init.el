@@ -979,3 +979,4 @@ Version 2017-07-08"
  '(flymake-warning ((((class color)) (:background "#4444aa"))))
  '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
  '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
+(put 'dired-find-alternate-file 'disabled nil)
