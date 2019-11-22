@@ -194,7 +194,7 @@ And the environment variable was existing, Download go binaries from the interne
 												"golang.org/x/tools/cmd/godoc"
 												"golang.org/x/tools/cmd/guru"
 												"golang.org/x/tools/cmd/goimports"
-												"golang.org/x/tools/gopls"
+												"golang.org/x/tools/cmd/gopls"
 												"github.com/go-delve/delve/cmd/dlv")))
 		(if (getenv "GOPATH")
 				(progn
