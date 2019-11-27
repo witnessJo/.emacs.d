@@ -1,6 +1,5 @@
 ;;; Code:
 
-
 (defvar jong-go-debug-buffer "*jong-go-debug*" "Jong go language debug buffer.")
 
 (use-package go-mode
@@ -92,13 +91,13 @@
 				(temp-buffer-list (buffer-list)))
 		;; Current buffer is gud.
 		(if (and (string-match gud-buffer-pattern current-buffer-name)
-						 (equal major-mode 'chan-gogud-mode))
+						 (equal major-mode 'jong-gogud-mode))
 				(setq target-buffer (current-buffer))
 			(catch 'loop
 				(dolist (buffer temp-buffer-list)
 					(with-current-buffer buffer
 						(when (and (string-match gud-buffer-pattern (buffer-name buffer))
-											 (equal major-mode 'chan-gogud-mode))
+											 (equal major-mode 'jong-gogud-mode))
 							(setq target-buffer buffer)
 							(message "im here!!!")
 							(throw 'loop buffer))))))
@@ -192,6 +191,7 @@ And the environment variable was existing, Download go binaries from the interne
 												"github.com/golang/lint/golint"
 												"github.com/rogpeppe/godef"
 												"github.com/dougm/goflymake"
+												"golang.org/x/tools/cmd/vet"
 												"golang.org/x/tools/cmd/godoc"
 												"golang.org/x/tools/cmd/guru"
 												"golang.org/x/tools/cmd/goimports"
@@ -305,7 +305,7 @@ And the environment variable was existing, Download go binaries from the interne
 	)
 
 
-(define-derived-mode chan-gogud-mode gud-mode "chan-gogud"
+(define-derived-mode jong-gogud-mode gud-mode "jong-gogud"
 	(setq font-lock-defaults '(go--build-font-lock-keywords)))
 
 
@@ -364,17 +364,17 @@ And the environment variable was existing, Download go binaries from the interne
 	)
 
 
-(defun chan-gogud-gdb (&optional cmd)
+(defun jong-gogud-gdb (&optional cmd)
 	"This is delve wrapper based on 'gud-gdb mode."
 	(interactive)
 	(let ((cmd))
 		(with-current-buffer (current-buffer)
 			(setq cmd (read-string "dlv command :"))
 			(when (equal cmd nil)
-					(setq cmd "dlv debug"))
+				(setq cmd "dlv debug"))
 			(dlv cmd)
-			(chan-gogud-mode))
-		)
+			(jong-gogud-mode)
+			))
 	)
 
 
@@ -400,7 +400,7 @@ And the environment variable was existing, Download go binaries from the interne
 				(setq target-port (read-string "input listen port : "))
 			(setq target-port port))
 		(dlv (format "dlv connect :%s" target-port))
-		(chan-gogud-mode))
+		(jong-gogud-mode))
 	)
 
 
@@ -548,7 +548,7 @@ And the environment variable was existing, Download go binaries from the interne
 													(local-set-key (kbd "C-c r l") 'helm-imenu)
 													(local-set-key (kbd "C-c g g")
 																				 (lambda () (interactive)
-																					 (chan-gogud-gdb "dlv debug")))
+																					 (jong-gogud-gdb "dlv debug")))
 													(local-set-key (kbd "C-c g i") 'jong-get-imported-packages)
 													(local-set-key (kbd "C-c s f") 'gofmt-before-save)
 													(local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
