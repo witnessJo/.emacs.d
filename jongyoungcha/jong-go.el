@@ -1,5 +1,6 @@
 ;;; Code:
 
+
 (defvar jong-go-debug-buffer "*jong-go-debug*" "Jong go language debug buffer.")
 
 (use-package go-mode
@@ -39,8 +40,8 @@
 (use-package flycheck
 	:ensure t)
 
-(use-package flymake-go
-	:ensure t)
+;; (use-package flymake-go
+;; :ensure t)
 
 (use-package go-stacktracer
 	:ensure t)
@@ -366,13 +367,14 @@ And the environment variable was existing, Download go binaries from the interne
 (defun chan-gogud-gdb (&optional cmd)
 	"This is delve wrapper based on 'gud-gdb mode."
 	(interactive)
-	(if (equal cmd nil)
-			(setq cmd "dlv debug"))
-	(condition-case ex
-			(with-current-buffer (get-buffer "main.go")
-				(dlv cmd)
-				(chan-gogud-mode))
-		(message "There was not a main.go buffer."))
+	(let ((cmd))
+		(with-current-buffer (current-buffer)
+			(setq cmd (read-string "dlv command :"))
+			(when (equal cmd nil)
+					(setq cmd "dlv debug"))
+			(dlv cmd)
+			(chan-gogud-mode))
+		)
 	)
 
 
