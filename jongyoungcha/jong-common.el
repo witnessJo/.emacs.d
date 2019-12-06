@@ -364,6 +364,18 @@
 			(pop-to-buffer-same-window "*eshell*"))
 		))
 
+(defun jong-common-go-shell ()
+	(interactive)
+	(let ((cmd (format "%s %s" "cd" default-directory)))
+		(message "shell path : %s" cmd)
+		(call-interactively 'shell)
+		(with-current-buffer "*shell*"
+			;; (process-send-string (get-buffer-process (current-buffer)) "\n")
+			(process-send-string (get-buffer-process (current-buffer)) cmd)
+			)
+		)
+	)
+
 
 (defun jong-common-copy-current-dir ()
 	"Copy the current directory to the 'kill-ring."
@@ -521,6 +533,9 @@
 (global-set-key (kbd "M-c n") 'jong-common-ring-goto-next)
 (global-set-key (kbd "M-c r c") 'jong-common-ring-clear)
 (global-set-key (kbd "M-c r i") 'jong-common-ring-insert)
+
+(global-set-key (kbd "M-c g e") 'jong-common-go-eshell)
+(global-set-key (kbd "M-c g s") 'jong-common-go-shell)
 
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)

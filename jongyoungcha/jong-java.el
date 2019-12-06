@@ -107,11 +107,11 @@
 ;; (add-hook 'lsp-mode-hook #'lsp-lens-mode)
 ;; (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
 
-(use-package dap-mode
-	:ensure t :after lsp-mode
-	:config
-	(dap-mode t)
-	(dap-ui-mode t))
+;; (use-package dap-mode
+;; :ensure t :after lsp-mode
+;; :config
+;; (dap-mode t)
+;; (dap-ui-mode t))
 
 (use-package dap-java :after (lsp-java))
 ;; (use-package lsp-java-treemacs :after (treemacs))

@@ -369,7 +369,7 @@ And the environment variable was existing, Download go binaries from the interne
 	(interactive)
 	(let ((cmd))
 		(with-current-buffer (current-buffer)
-			(setq cmd (read-string "dlv command :"))
+			(setq cmd (read-string "dlv command :" "dlv exec"))
 			(when (equal cmd nil)
 				(setq cmd "dlv debug"))
 			(dlv cmd)

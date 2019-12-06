@@ -7,49 +7,23 @@
   (dap-ui-mode t)
 	(require 'dap-lldb))
 
-(defconst jong-dap-repl-buffer-name "*dap-ui-repl*")
+(use-package dap-mode
+	:ensure t)
 
+(defconst jong-dap-repl-buffer-name "*dap-ui-repl*")
 
 (defun jong-dap-debug-goto-repl()
   (interactive)
-  (jong-common-find-buffer-and-move jong-dap-repl-buffer-name))
+  (switch-to-buffer "*dap-ui-repl*"))
 
+(global-set-key (kbd "<f12>") 'dap-step-out)
+(global-set-key (kbd "<f11>") 'dap-step-in)
+(global-set-key (kbd "<f10>") 'dap-next)
+(global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
+(global-set-key (kbd "<f8>") 'dap-continue)
+(global-set-key (kbd "<f7>") 'jong-dap-debug-goto-repl)
+(global-set-key (kbd "<f5>") 'dap-debug)
+(global-set-key (kbd "<f1>") 'dap-eval-region)
 
-
-
-;; (define-key dap-mode-map (kbd "<f8>") (lambda()
-;; (interactive)
-;; (other-window 1)
-;; (call-interactively 'dap-continue)
-;; (jong-common-find-buffer-and-move jong-dap-repl-buffer-name)))
-
-;; (define-key dap-mode-map (kbd "<f9>") (lambda()
-;; (interactive)
-;; (other-window 1)
-;; (call-interactively 'dap-breakpoint-toggle)
-;; (jong-common-find-buffer-and-move jong-dap-repl-buffer-name)))
-
-;; (define-key dap-mode-map (kbd "<f10>") (lambda()
-;; (interactive)
-;; (other-window 1)
-;; (call-interactively 'dap-next)
-;; (jong-common-find-buffer-and-move jong-dap-repl-buffer-name)))
-
-;; (define-key dap-mode-map (kbd "<f11>") (lambda()
-;; (interactive)
-;; (other-window 1)
-;; (call-interactively 'dap-step-in)
-;; (jong-common-find-buffer-and-move jong-dap-repl-buffer-name)))
-
-;; (define-key dap-mode-map (kbd "<f12>") (lambda()
-;; (interactive)
-;; (other-window 1)
-;; (call-interactively 'dap-step-out)
-;; (jong-common-find-buffer-and-move jong-dap-repl-buffer-name)))
-
-(defun jong-dap-debug-set-screen()
-  (interactive)
-  
-  )
 
 (provide 'jong-dap-debug)
