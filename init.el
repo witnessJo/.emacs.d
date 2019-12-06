@@ -838,6 +838,7 @@ Version 2017-07-08"
 (require 'jong-html)
 (require 'jong-dap-debug)
 (require 'jong-term)
+(require 'jong-grpc)
 
 ;; For Testing
 (require 'jong-ether-test)
@@ -864,9 +865,10 @@ Version 2017-07-08"
  '(cua-normal-cursor-color "#839496")
  '(cua-overwrite-cursor-color "#b58900")
  '(cua-read-only-cursor-color "#859900")
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-blue)))
  '(custom-safe-themes
 	 (quote
-		("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
+		("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
  '(fci-rule-color "#073642")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(frame-background-mode (quote dark))
@@ -900,12 +902,24 @@ Version 2017-07-08"
 		("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
 	 (quote
-		(cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+		(protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/test/")
+		((jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-grpc-workspace-golang/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-grpc-workspace-golang/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-api-golang/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-api-golang/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/goworks/src/swit/swit-grpc-asset-golang/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/goworks/src/swit/swit-grpc-asset-golang/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/goworks/src/swit/swit-api-golang/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/goworks/src/swit/swit-api-golang/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/goworks/src/awesomeProject/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/goworks/src/awesomeProject/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/goworks/src/github.com/jongyoungcha/Chanker/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/goworks/src/github.com/jongyoungcha/Chanker/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/test/")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/projects/test/")
 		 (projectile-project-root . "/home/jongyoungcha/projects/cmake-project-template/")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/projects/Ants/")
@@ -975,8 +989,10 @@ Version 2017-07-08"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(flymake-errline ((((class color)) (:background "#444444"))) t)
  '(flymake-error ((((class color)) (:background "#444444"))))
  '(flymake-warning ((((class color)) (:background "#4444aa"))))
+ '(flymake-warnline ((((class color)) (:background "#4444aa"))) t)
  '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
  '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
 (put 'dired-find-alternate-file 'disabled nil)
