@@ -13,22 +13,31 @@
 	(require 'dap-gdb-lldb))
 
 
-(defun jong-dap-debug-show-ui ()
+(defun jong-dap-debug-toggle-show-ui ()
 	(interactive)
-	(dap-ui-sessions)
-	(dap-ui-locals))
+	(let ((prev-buffer-name (buffer-name)))
+		(if (get 'jong-dap-debug-toggle-show-ui 'state)
+				(progn
+					(dap-ui-sessions)
+					(dap-ui-locals)
+					(switch-to-buffer prev-buffer-name)
+					(put 'jong-dap-debug-toggle-show-ui 'state nil))
+			(progn
+				(when (get-buffer-window "*dap-ui-sessions*")
+					(delete-window (get-buffer-window "*dap-ui-sessions*")))
+				(when (get-buffer-window "*dap-ui-locals*")
+					(delete-window (get-buffer-window "*dap-ui-locals*")))
+				(put 'jong-dap-debug-toggle-show-ui 'state t))
+			))
+	)
 
-(defun jong-dap-debug-hide-ui ()
-	(interactive))
-	;; TODO)
-	
 
 (defun jong-dap-debug-setups ()
 	(interactive)
 	(dap-gdb-lldb-setup)
 	(dap-go-setup)
 	(dap-node-setup))
-	
+
 
 (defun jong-dap-debug-goto-repl()
   (interactive)
@@ -46,7 +55,7 @@
 (global-set-key (kbd "<f5>") 'dap-debug)
 (global-set-key (kbd "<f1>") 'dap-eval-region)
 
-(global-set-key (kbd "C-c d d") 'jong-dap-debug-show-ui)
+(global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
 (global-set-key (kbd "C-c d b") 'dap-ui-breakpoints)
 (global-set-key (kbd "C-c d s") 'dap-ui-sessions)
 (global-set-key (kbd "C-c d l") 'dap-ui-locals)
