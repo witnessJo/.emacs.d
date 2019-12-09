@@ -59,7 +59,20 @@
 (global-set-key (kbd "C-c d b") 'dap-ui-breakpoints)
 (global-set-key (kbd "C-c d s") 'dap-ui-sessions)
 (global-set-key (kbd "C-c d l") 'dap-ui-locals)
+(global-set-key (kbd "C-c d <backspace>") 'dap-delete-session)
+(global-set-key (kbd "C-c d k") 'dap-ui-sessions-delete-session)
+(global-set-key (kbd "C-c d <return>") 'dap-ui-sessions-select)
 
+
+
+;; (dap-register-debug-template "SwitNodeV1"
+;; (list :type "node"
+;; :args "-i"
+;; :cwd nil
+;; :env '(("DEBUG" . "1"))
+;; :target-module (expand-file-name "~/go/src/swit/swit-apiv1/")
+;; :request "launch"
+;; :name "SwitNodev1"))
 
 
 

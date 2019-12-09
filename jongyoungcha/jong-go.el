@@ -510,7 +510,7 @@ And the environment variable was existing, Download go binaries from the interne
 	(chan-run-dlv-cs t))
 
 
-(add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
+;; (add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'go-mode-hook (lambda ()
 													(setq lsp-ui-sideline-enable nil)
 													(setq lsp-ui-doc-enable nil)
@@ -544,7 +544,7 @@ And the environment variable was existing, Download go binaries from the interne
 													(local-set-key (kbd "C-c r i") 'lsp-find-implementation)
 													(local-set-key (kbd "C-c r j") 'go-guru-definition)
 													(local-set-key (kbd "C-c r d") 'go-guru-describe)
-													(local-set-key (kbd "C-c d d") 'godoc-at-point)
+													;; (local-set-key (kbd "C-c d d") 'godoc-at-point)
 													(local-set-key (kbd "C-c r l") 'helm-imenu)
 													(local-set-key (kbd "C-c g g")
 																				 (lambda () (interactive)
@@ -566,7 +566,7 @@ And the environment variable was existing, Download go binaries from the interne
 					)
 
 
-(add-hook 'chan-gogud-mode-hook 'jong-go-set-gud-shortcut)
+;; (add-hook 'chan-gogud-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'chan-gogud-mode-hook
 					(lambda () (local-set-key (kbd "C-c r .")
 																		(lambda () (interactive)

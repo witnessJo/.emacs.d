@@ -79,7 +79,7 @@
 													(define-key js2-mode-map (kbd "C-c r ,") 'lsp-find-references)
 													(define-key js2-mode-map (kbd "C-c r i") 'lsp-find-implementation)
 													(define-key js2-mode-map (kbd "C-c c c") 'jong-project-compile-project)
-													(define-key js2-mode-map (kbd "C-c c r") 'jong-project-run-command)
+													(define-key js2-mode-map (kbd "C-c c r") 'jong-project-run-project)
 													))
 
 (provide 'jong-nodejs)
