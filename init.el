@@ -753,9 +753,10 @@ Version 2017-07-08"
 	(dolist (pattern jong-kill-buffer-patterns)
 		(dolist (buffer (buffer-list))
 			(when (string-match pattern (buffer-name buffer))
-				(kill-buffer buffer)))))
-	;; (delete-above-below-window))
-
+				(kill-buffer buffer))))
+	)
+;; (delete-above-below-window))
+	
 
 (global-set-key (kbd "C-g") (lambda () (interactive)
 															(jong-kill-temporary-buffers)
