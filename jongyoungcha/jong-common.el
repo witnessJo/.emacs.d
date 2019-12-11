@@ -546,5 +546,6 @@
 (global-set-key (kbd "C-k") 'jong-common-kill-line)
 
 
+
 (provide 'jong-common)
 ;;;jong-common.el

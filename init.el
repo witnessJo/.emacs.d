@@ -845,6 +845,9 @@ Version 2017-07-08"
 (require 'jong-ether-test)
 (require 'jong-brth-test)
 
+
+(require 'jong-key-bindings)
+
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
 
