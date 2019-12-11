@@ -45,8 +45,8 @@
     (set-keyboard-coding-system jong-env-locale-value)
     (set-selection-coding-system jong-env-locale-value)
     (dynamic-completion-mode)
-    (load-theme 'solarized-dark t)
-
+    ;; (load-theme 'solarized-dark t)
+		
     (message "Linux"))))
 
 (when (member "Consolas" (font-family-list))

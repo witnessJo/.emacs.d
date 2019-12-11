@@ -1,6 +1,9 @@
 ;;; Code:
 
 (require 'misc)
+(require 'winner)
+(winner-mode)
+
 
 (message (regexp-opt-charset '(?a ?c ?e ? ?\t)))
 
@@ -12,6 +15,9 @@
 	:ensure t
 	:config
 	(setq yas-global-mode 1))
+
+(use-package smartparens
+	:ensure t)
 
 
 (use-package which-key

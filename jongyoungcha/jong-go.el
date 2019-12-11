@@ -67,6 +67,11 @@
 (use-package lsp-mode
 	:ensure t)
 
+
+(exec-path-from-shell-getenv "GOPATH")
+(exec-path-from-shell-getenv "GOROOT")
+(exec-path-from-shell-getenv "PATH")
+
 (defun jong-set-go-envs()
 	"Set environment variables relative with go."
 	(interactive)
