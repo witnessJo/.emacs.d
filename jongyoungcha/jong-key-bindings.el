@@ -1,11 +1,25 @@
 ;;; Code
 
+(cond
+ ((string-equal system-type "gnu/linux")
+	(progn
+		(global-set-key (kbd "C-x <C-up>") 'windmove-up)
+		(global-set-key (kbd "C-x <C-down>") 'windmove-down)
+		(global-set-key (kbd "C-x M-b") 'windmove-left)
+		(global-set-key (kbd "C-x M-f") 'windmove-right)))
+ ((string-equal system-type "darwin")
+	(progn
+		(global-set-key (kbd "<C-M-up>") 'windmove-up)
+		(global-set-key (kbd "<C-M-down>") 'windmove-down)
+		(global-set-key (kbd "<C-M-left>") 'windmove-left)
+		(global-set-key (kbd "<C-M-right>") 'windmove-right))))
+
+
+
 (global-set-key (kbd "C-x <C-up>") 'windmove-up)
-(global-set-key (kbd "C-x <C-down>") 'windmove-down)
-(global-set-key (kbd "C-x M-b") 'windmove-left)
-(global-set-key (kbd "C-x M-f") 'windmove-right)
+
 (global-set-key (kbd "C-.") 'winner-undo)
-(global-set-key (kbd "C-,") 'winner-redo)
+(global-set-key (kbd "C->") 'winner-redo)
 (global-set-key (kbd "C--") 'jong-common-delete-above-below-window)
 
 (global-set-key (kbd "C-S-o") 'jong-common-open-line-above)
