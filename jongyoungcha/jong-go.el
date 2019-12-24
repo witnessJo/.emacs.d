@@ -5,19 +5,7 @@
 (use-package go-mode
 	:ensure t)
 
-(use-package go-autocomplete
-	:ensure t)
-
 (use-package go-guru
-	:ensure t)
-
-(use-package godoctor
-	:ensure t)
-
-(use-package direx
-	:ensure t)
-
-(use-package popwin
 	:ensure t)
 
 (use-package company-go
@@ -33,40 +21,11 @@
 	:config
 	(add-hook 'completion-at-point 'go-complete-at-point))
 
-(use-package go-direx
-	:ensure t)
-
 (use-package flycheck
-	:ensure t)
-
-;; (use-package flymake-go
-;; :ensure t)
-
-(use-package go-stacktracer
-	:ensure t)
-
-(use-package helm-go-package
-	:ensure t)
-
-(use-package go-errcheck
 	:ensure t)
 
 (use-package go-dlv
 	:ensure t)
-
-(use-package go-rename
-	:ensure t)
-
-(use-package dap-mode
-	:ensure t
-	:config
-	(require 'dap-go)
-	(dap-go-setup)
-	)
-
-(use-package lsp-mode
-	:ensure t)
-
 
 (exec-path-from-shell-getenv "GOPATH")
 (exec-path-from-shell-getenv "GOROOT")
@@ -200,7 +159,7 @@ And the environment variable was existing, Download go binaries from the interne
 												"golang.org/x/tools/cmd/godoc"
 												"golang.org/x/tools/cmd/guru"
 												"golang.org/x/tools/cmd/goimports"
-												"golang.org/x/tools/cmd/gopls"
+												"golang.org/x/tools/cmd/gopls@lastest"
 												"github.com/go-delve/delve/cmd/dlv")))
 		(if (getenv "GOPATH")
 				(progn
@@ -539,7 +498,7 @@ And the environment variable was existing, Download go binaries from the interne
 													(set-face-attribute 'eldoc-highlight-function-argument nil
 																							:underline t :foreground "green"
 																							:weight 'bold)
-													(local-set-key (kbd "C-c c l") 'lsp)
+													(local-set-key (kbd "C-c c l") 'lsp-workspace-restart)
 													(local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
 													(local-set-key (kbd "C-c C-a") 'go-import-add)
 													(local-set-key (kbd "C-c C-g") 'go-goto-imports)
@@ -549,7 +508,7 @@ And the environment variable was existing, Download go binaries from the interne
 													(local-set-key (kbd "C-c r i") 'lsp-find-implementation)
 													(local-set-key (kbd "C-c r j") 'go-guru-definition)
 													(local-set-key (kbd "C-c r d") 'go-guru-describe)
-													;; (local-set-key (kbd "C-c d d") 'godoc-at-point)
+													(local-set-key (kbd "C-c o i") 'lsp-organize-imports)
 													(local-set-key (kbd "C-c r l") 'helm-imenu)
 													(local-set-key (kbd "C-c g g")
 																				 (lambda () (interactive)
