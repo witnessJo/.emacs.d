@@ -65,14 +65,24 @@
 
 
 
-;; (dap-register-debug-template "SwitNodeV1"
-;; (list :type "node"
-;; :args "-i"
-;; :cwd nil
-;; :env '(("DEBUG" . "1"))
-;; :target-module (expand-file-name "~/go/src/swit/swit-apiv1/")
-;; :request "launch"
-;; :name "SwitNodev1"))
+(dap-register-debug-template "SwitNodeV1"
+														 (list :type "node"
+																	 :args "-i"
+																	 :cwd nil
+																	 :env '(("DEBUG" . "1"))
+																	 :target-module (expand-file-name "~/go/src/swit/swit-apiv1/")
+																	 :request "launch"
+																	 :name "SwitNodev1"))
+
+
+(dap-register-debug-template "SwitFileGo"
+														 (list :type "go"
+																	 :args "-i"
+																	 :cwd nil
+																	 :env '(("DEBUG" . "1"))
+																	 :target-module (expand-file-name "~/go/src/swit/swit-gcs-file-golang/swit-gcs-file-golang")
+																	 :request "launch"
+																	 :name  "SwitFileGo"))
 
 
 

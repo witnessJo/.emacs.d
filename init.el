@@ -896,7 +896,11 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-apiV1/")
+		((jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-gcs-file-golang/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-gcs-file-golang/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-grpc-activity-golang/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-grpc-activity-golang/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-apiV1/")
 		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-apiV1/")
 		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-grpc-workspace-golang/")
 		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-grpc-workspace-golang/")
