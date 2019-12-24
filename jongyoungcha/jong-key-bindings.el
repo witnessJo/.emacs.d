@@ -25,8 +25,9 @@
 (global-set-key (kbd "C-S-o") 'jong-common-open-line-above)
 (global-set-key (kbd "C-o") 'jong-common-open-line-below)
 
-(global-set-key (kbd "C-M-y") 'jong-common-copy-region-or-line)
-(global-set-key (kbd "M-y") (lambda ()
+(global-set-key (kbd "M-w") 'jong-common-copy-region-or-line)
+(global-set-key (kbd "C-M-w") 'kill-region)
+(global-set-key (kbd "C-w") (lambda ()
 															(interactive)
 															(jong-common-open-line-below)
 															(call-interactively 'yank)))
