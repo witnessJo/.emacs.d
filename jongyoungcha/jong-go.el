@@ -478,6 +478,9 @@ And the environment variable was existing, Download go binaries from the interne
 (add-hook 'go-mode-hook (lambda ()
 													(setq lsp-ui-sideline-enable nil)
 													(setq lsp-ui-doc-enable nil)
+													(setq lsp-gopls-staticcheck t)
+													(setq lsp-eldoc-render-all t)
+													(setq lsp-gopls-complete-unimported t)
 													(lsp)
 													
 													(setq indent-tabs-mode t)
