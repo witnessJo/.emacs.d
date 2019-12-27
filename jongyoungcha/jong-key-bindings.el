@@ -27,11 +27,11 @@
 
 (global-set-key (kbd "C-M-w") 'jong-common-copy-region-or-line)
 (global-set-key (kbd "M-w") 'kill-region)
-(global-set-key (kbd "C-w") (lambda ()
+(global-set-key (kbd "C-w") 'yank)
+(global-set-key (kbd "C-y") (lambda ()
 															(interactive)
 															(jong-common-open-line-below)
 															(call-interactively 'yank)))
-
 
 (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
 (global-set-key (kbd "M-c b") 'jong-common-show-buffer-other-window)
