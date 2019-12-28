@@ -1,4 +1,4 @@
-3(require 'comint)
+(require 'comint)
 
 ;;; Code:
 
@@ -18,6 +18,7 @@
 (defvar-local jong-project-sub-command-2 nil)
 (defvar-local jong-project-sub-default-dir-3 nil)
 (defvar-local jong-project-sub-command-3 nil)
+(defvar-local jong-project-subcmds nil)
 
 (put 'jong-project-compile-default-dir 'safe-local-variable #'stringp)
 (put 'jong-project-compile-command 'safe-local-variable #'stringp)
@@ -62,7 +63,7 @@
 				path-to-find
 			(progn
 				(setq parent-dir (file-name-directory (directory-file-name DIRECTORY)))
-				(jong-project-walkup-and-find-file FILENAME parent-dir))
+				(jong-project-walkup-and-find-file FILENAMEf parent-dir))
 			)
 		)
 	)
@@ -119,13 +120,19 @@
 										(format "(jong-project-sub-default-dir-2 . \"%s\")\n" target-directory)
 										(format "(jong-project-sub-command-2 . \"none\")\n")
 										(format "(jong-project-sub-default-dir-3 . \"%s\")\n" target-directory)
-										(format "(jong-project-sub-command-3 . \"none\")\n")
-										"))\n"
+										"(eval . (progn\n"
+										"(setq jong-project-subcmds\n"
+										"(list\n"
+										(format "(list \"testcmd1\" \"ls\" \"%s\")))))\n" target-directory)
+										")\n"
+										")\n"
 										")\n"
 										))
 			(write-region template nil target-path))
-		(find-file target-path))
+		(find-file target-path)
+		)
 	)
+
 
 
 (defun jong-project-visit-dot-dir-locals-el ()
@@ -212,7 +219,60 @@
 		)
 	)
 
-(defun jong-project-debug-print ())
+(defun jong-project-subcmd-list ()
+	(interactive)
+	(let ((subcmds-temp)
+				(cmd)
+				(cmd-cons))
+		(when (not (boundp 'jong-project-subcmds))
+			nil)
+		(when (not (listp 'jong-project-subcmds))
+			nil)
+		
+		(setq subcmds-temp (mapcar
+												(lambda (cmd)
+													(cons (format "%s: \"%s\", %s" (nth 0 cmd) (nth 1 cmd) (nth 2 cmd)) cmd))
+												jong-project-subcmds))
+		
+		(helm :sources (helm-build-sync-source "Jong project Commands"
+										 :candidates subcmds-temp
+										 :fuzzy-match t
+										 :action (lambda (cmd)
+															 (jong-project-subcmd-exec (nth 0 cmd) (nth 1 cmd) (nth 2 cmd))))
+					:buffer "*jong project commands*")
+		)
+	)
+
+(defun jong-project-subcmd-exec (title cmd directory)
+	(let ((default-directory (if (not (file-directory-p directory))
+															 (error "The directory was not existing")
+														 directory))
+				(proc)
+				(output-buffer (format "*jong-project-subcmd <%s-%s>*" title directory))
+				(target-window)
+				(base-window (selected-window)))
+		(unless (file-directory-p directory)
+			(error (format "Couldnt find the directory %s\"" directory)))
+
+		(when (or (equal cmd nil) (string= cmd ""))
+			(error (format "Couldnt find  %s\"" cmd)))
+		(when (get-buffer output-buffer) (kill-buffer output-buffer))
+
+		(set-process-sentinel
+		 (start-file-process-shell-command output-buffer output-buffer cmd)
+		 (lambda (p e)
+
+			 (ignore-errors (with-current-buffer (get-buffer output-buffer)
+												(compilation-mode)
+												(compilation-shell-minor-mode))
+											)))
+		(setq target-window (split-window-below))
+		(select-window target-window)
+		(switch-to-buffer output-buffer)
+		(select-window base-window)
+		)
+	)
+
 
 
 (global-set-key (kbd "C-c c m") 'jong-project-make-dot-dir-locals-el)
@@ -220,6 +280,7 @@
 (global-set-key (kbd "C-c c c") 'jong-project-compile-project)
 (global-set-key (kbd "C-c c r") 'jong-project-run-project)
 (global-set-key (kbd "C-c c d") 'jong-project-debug-project)
+(global-set-key (kbd "C-c c l") 'jong-project-subcmd-list)
 
 
 
