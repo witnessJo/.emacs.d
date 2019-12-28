@@ -54,7 +54,6 @@
 	(setq-default line-spacing 2))
 
 
-
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 

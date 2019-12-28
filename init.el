@@ -832,6 +832,7 @@ Version 2017-07-08"
 
 
 (require 'jong-key-bindings)
+(require 'jong-debug-settings)
 
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
@@ -896,7 +897,12 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-gcs-file-golang/")
+		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/swit/swit-image-cloud-function-golang/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/go/src/swit/swit-image-cloud-function-golang/")
+		 (jong-project-cmd-test "none" "message")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/swit/swit-gcs-file-golang/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/go/src/swit/swit-gcs-file-golang/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-gcs-file-golang/")
 		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-gcs-file-golang/")
 		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-grpc-activity-golang/")
 		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-grpc-activity-golang/")

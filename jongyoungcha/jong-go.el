@@ -501,7 +501,7 @@ And the environment variable was existing, Download go binaries from the interne
 													(set-face-attribute 'eldoc-highlight-function-argument nil
 																							:underline t :foreground "green"
 																							:weight 'bold)
-													(local-set-key (kbd "C-c c l") 'lsp-workspace-restart)
+													(local-set-key (kbd "C-c r w") 'lsp-workspace-restart)
 													(local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
 													(local-set-key (kbd "C-c C-a") 'go-import-add)
 													(local-set-key (kbd "C-c C-g") 'go-goto-imports)
