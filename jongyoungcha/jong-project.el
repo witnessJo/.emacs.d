@@ -174,7 +174,7 @@
 
 (defun jong-project-compile-project ()
 	(interactive)
-	(jong-reload-dir-locals-for-current-buffer)
+	(jong-common-reload-dir-locals)
 	(if (and (boundp 'jong-project-compile-default-dir) (boundp 'jong-project-compile-command))
 			(jong-project-exec-command jong-project-compile-default-dir jong-project-compile-command)
 		(message "\"projectile-project-root\" and \"jong-project-compile-command were not binded."))
@@ -184,7 +184,7 @@
 (defun jong-project-run-project (&optional num)
 	(interactive "p")
 	;; (print num)
-	(jong-reload-dir-locals-for-current-buffer)
+	(jong-common-reload-dir-locals)
 	(cond ((equal num 1)
 				 (if (and (boundp 'jong-project-run-default-dir) (boundp 'jong-project-run-command))
 						 (jong-project-exec-command jong-project-run-default-dir jong-project-run-command)
@@ -207,7 +207,7 @@
 	(interactive "p")
 	(let ((debug-default-dir jong-project-debug-default-dir)
 				(debug-cmd jong-project-debug-command))
-		(jong-reload-dir-locals-for-current-buffer)
+		(jong-common-reload-dir-locals)
 		(if (and (> (length debug-default-dir) 0) (> (length debug-cmd) 0))
 				(progn
 					(setq default-directory debug-default-dir)

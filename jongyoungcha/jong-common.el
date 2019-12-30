@@ -521,8 +521,25 @@
 	 )
 	)
 
-	
 
+(defun jong-common-reload-dir-locals ()
+	"reload dir locals for the current buffer"
+	(interactive)
+	(let ((enable-local-variables :all))
+		(hack-dir-local-variables-non-file-buffer)))
+
+
+(defun jong-common-reload-dir-locals-all ()
+	"for every buffer with the same `default-directory` as the current buffer's, reload dir-locals.el"
+	(interactive)
+	(let ((dir default-directory))
+		(dolist (buffer (buffer-list))
+			(with-current-buffer buffer
+				(when (equal default-directory dir))
+				(jong-common-reload-dir-locals)))))
+
+
+(add-hook 'after-save-hook 'jong-common-reload-dir-locals)
 
 
 

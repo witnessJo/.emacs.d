@@ -492,7 +492,7 @@ Version 2017-07-08"
 (global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
 (global-set-key (kbd "C-c C-o") 'other-window)
 (global-set-key (kbd "C-c b") 'helm-buffers-list)
-(global-set-key (kbd "C-c C-b") 'helm-buffers-list)
+v(global-set-key (kbd "C-c C-b") 'helm-buffers-list)
 
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window -15)))
 (global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window 15)))
@@ -523,20 +523,7 @@ Version 2017-07-08"
 (define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
 
 
-(defun jong-reload-dir-locals-for-current-buffer ()
-	"reload dir locals for the current buffer"
-	(interactive)
-	(let ((enable-local-variables :all))
-		(hack-dir-local-variables-non-file-buffer)))
 
-(defun jong-reload-dir-locals-for-all-buffer-in-this-directory ()
-	"for every buffer iwth the same `default-directory` as the current buffer's, reload dir-locals."
-	(interactive)
-	(let ((dir default-directory))
-		(dolist (buffer (buffer-list))
-			(with-current-buffer buffer
-				(when (equal default-directory dir))
-				(jong-reload-dir-locals-for-current-buffer)))))
 
 
 ;; default setting.
@@ -897,7 +884,10 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/swit/swit-image-cloud-function-golang/")
+		((jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-image-cloud-function-golang/")
+		 (jong-project-sub-command-2 . "./mockclient")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-image-cloud-function-golang/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/swit/swit-image-cloud-function-golang/")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/go/src/swit/swit-image-cloud-function-golang/")
 		 (jong-project-cmd-test "none" "message")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/swit/swit-gcs-file-golang/")
