@@ -9,7 +9,7 @@
 
 
 (add-hook 'term-load-hook
-		  (lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
+					(lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
 
 ;; (use-package multi-term
 ;;   :ensure
@@ -33,8 +33,8 @@
 (defun eshell/clear ()
   "Clear the eshell buffer."
   (let ((inhibit-read-only t))
-	(erase-buffer)
-	(eshell-send-input))
+		(erase-buffer)
+		(eshell-send-input))
   )
 
 (setq jong-shell-highlights
@@ -42,9 +42,28 @@
         ("failed\\|fail\\|error" . font-lock-warning-face)))
 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-(add-hook 'shell-mode-hook 'ansi-color-apply)
-(add-hook 'shell-mode-hook (lambda ()
-                             (setq font-lock-defaults '(jong-shell-highlights))))
+
+;; (defun jong-term-clear ()
+;; (interactive)
+;; (erase-buffer)
+;; (comint-send-input))
+
+(defun jong-term-clear-hook ()
+	(local-set-key "C-c c l" 'comint-clear-buffer))
+(add-hook 'shell-mode-hook 'jong-term-clear-hook)
+
+(setq comint-prompt-read-only t)
+(defun jong-term-comint-preoutput-turn-buffer-read-only (text)
+  (propertize text 'read-only t))
+
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+(add-to-list 'comint-output-filter-functions 'jong-term-comint-preoutput-turn-buffer-read-only)
+
+
+
+;; (add-hook 'shell-mode-hook 'ansi-color-apply)
+;; (add-hook 'shell-mode-hook (lambda ()
+;; (setq font-lock-defaults '(jong-shell-highlights))))
 
 ;; (define-derived-mode jong-shell-mode shell-mode "jong-shell-mode"
 ;;   "Derived major mode of shell that customized by jongyoungcha"

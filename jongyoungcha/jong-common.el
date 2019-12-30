@@ -370,8 +370,8 @@
 		(message "shell path : %s" cmd)
 		(call-interactively 'shell)
 		(with-current-buffer "*shell*"
-			;; (process-send-string (get-buffer-process (current-buffer)) "\n")
-			(process-send-string (get-buffer-process (current-buffer)) cmd)
+			(comint-send-string (get-buffer-process (current-buffer)) cmd)
+			(comint-send-input)
 			)
 		)
 	)
