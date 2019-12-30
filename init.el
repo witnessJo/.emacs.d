@@ -492,7 +492,7 @@ Version 2017-07-08"
 (global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
 (global-set-key (kbd "C-c C-o") 'other-window)
 (global-set-key (kbd "C-c b") 'helm-buffers-list)
-v(global-set-key (kbd "C-c C-b") 'helm-buffers-list)
+(global-set-key (kbd "C-c C-b") 'helm-buffers-list)
 
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window -15)))
 (global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window 15)))
