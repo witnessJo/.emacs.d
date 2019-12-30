@@ -63,7 +63,7 @@
 				path-to-find
 			(progn
 				(setq parent-dir (file-name-directory (directory-file-name DIRECTORY)))
-				(jong-project-walkup-and-find-file FILENAMEf parent-dir))
+				(jong-project-walkup-and-find-file FILENAME parent-dir))
 			)
 		)
 	)
