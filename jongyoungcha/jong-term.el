@@ -48,9 +48,9 @@
 ;; (erase-buffer)
 ;; (comint-send-input))
 
-(defun jong-term-clear-hook ()
-	(local-set-key "C-c c l" 'comint-clear-buffer))
-(add-hook 'shell-mode-hook 'jong-term-clear-hook)
+;; (defun jong-term-clear-hook ()
+;; (local-set-key "C-c c l" 'comint-clear-buffer))
+;; (add-hook 'shell-mode-hook 'jong-term-clear-hook)
 
 (setq comint-prompt-read-only t)
 (defun jong-term-comint-preoutput-turn-buffer-read-only (text)
