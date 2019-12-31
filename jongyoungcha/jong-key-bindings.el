@@ -54,8 +54,22 @@
 
 
 (global-set-key (kbd "C-S-k") 'jong-common-delete-line)
-
 (global-set-key (kbd "C-k") 'jong-common-kill-line)
+
+
+(global-set-key (kbd "C-c s C-b") 'jong-common-split-window-left)
+(global-set-key (kbd "C-c s C-f") 'jong-common-split-window-right)
+(global-set-key (kbd "C-c s C-p") 'jong-common-split-window-up)
+(global-set-key (kbd "C-c s C-n") 'jong-common-split-window-down)
+
+
+(global-set-key (kbd "C-c m C-b") 'jong-common-merge-window-left)
+(global-set-key (kbd "C-c m C-f") 'jong-common-merge-window-right)
+(global-set-key (kbd "C-c m C-p") 'jong-common-merge-window-up)
+(global-set-key (kbd "C-c m C-n") 'jong-common-merge-window-down)
+
+
+
 
 
 (provide 'jong-key-bindings)

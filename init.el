@@ -541,7 +541,7 @@ Version 2017-07-08"
 							100)
 				 '(85 . 50) '(100 . 100)))))
 
-(global-set-key (kbd "C-c t") 'toggle-transparency)
+;; (global-set-key (kbd "C-c t") 'toggle-transparency)
 (global-set-key (kbd "C-x C-0") 'delete-other-windows-vertically)
 
 ;; hide tool bar
@@ -816,7 +816,6 @@ Version 2017-07-08"
 ;; For Testing
 ;; (require 'jong-ether-test)
 ;; (require 'jong-brth-test)
-
 
 (require 'jong-key-bindings)
 (require 'jong-debug-settings)

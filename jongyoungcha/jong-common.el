@@ -523,14 +523,14 @@
 
 
 (defun jong-common-reload-dir-locals ()
-	"reload dir locals for the current buffer"
+	"Reload dir locals for the current buffer."
 	(interactive)
 	(let ((enable-local-variables :all))
 		(hack-dir-local-variables-non-file-buffer)))
 
 
 (defun jong-common-reload-dir-locals-all ()
-	"for every buffer with the same `default-directory` as the current buffer's, reload dir-locals.el"
+	"For every buffer with the same `default-directory` as the current buffer's reload dir-locals.el."
 	(interactive)
 	(let ((dir default-directory))
 		(dolist (buffer (buffer-list))
@@ -538,9 +538,64 @@
 				(when (equal default-directory dir))
 				(jong-common-reload-dir-locals)))))
 
+(defun jong-common-split-window-left ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(split-window-horizontally)
+	(helm-buffers-list))
+
+
+(defun jong-common-split-window-right ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(split-window-horizontally)
+	(windmove-right)
+	(helm-buffers-list))
+
+
+(defun jong-common-split-window-up ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(split-window-vertically)
+	(helm-buffers-list))
+
+
+(defun jong-common-split-window-down ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(split-window-vertically)
+	(windmove-down)
+	(helm-buffers-list))
+
+
+(defun jong-common-merge-window-left ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(windmove-left)
+	(delete-window))
+
+
+(defun jong-common-merge-window-right ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(windmove-right)
+	(delete-window))
+
+
+(defun jong-common-merge-window-up ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(windmove-up)
+	(delete-window))
+
+
+(defun jong-common-merge-window-down ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(windmove-down)
+	(delete-window))
 
 (add-hook 'after-save-hook 'jong-common-reload-dir-locals)
-
 
 
 (provide 'jong-common)
