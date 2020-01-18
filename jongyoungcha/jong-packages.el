@@ -17,8 +17,9 @@
 	(setq yas-global-mode 1))
 
 (use-package smartparens
-	:ensure t)
-
+	:ensure t
+	:config
+	(smartparens-global-mode))
 
 (use-package which-key
 	:ensure t

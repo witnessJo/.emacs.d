@@ -205,9 +205,8 @@ Version 2017-07-08"
 
 ;; (use-package autopair
 ;; :ensure t)
-
-(autopair-global-mode 1)
-(setq autopair-autowrap t)
+;; (autopair-global-mode 1)
+;; (setq autopair-autowrap t)
 
 (use-package undo-tree
 	:ensure t
@@ -487,7 +486,6 @@ Version 2017-07-08"
 																(jong-set-mark)
 																(forward-line 1)))
 
-(global-set-key (kbd "C--") 'jong-switch-last-two-buffers)
 (global-set-key (kbd "C-x C-o") 'other-window)
 (global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
 (global-set-key (kbd "C-c C-o") 'other-window)
@@ -643,10 +641,10 @@ Version 2017-07-08"
 (helm-projectile-on)
 
 (defun jo-set-projectile-run-command ()
-	"Read user input command and set 'projectile-project-run-cmd'."
+	"Read user input commajksldfnd and set ectile-project-run-cmd'."
 	(interactive)
 	(let (user-input)
-		(if (not (equal "" (setq user-input (read-string "Enter the command : "))))
+		(if (nt (equal "" (setq user-input (read-string "Enter the command : "))))
 				(progn
 					(setq projectile-project-run-cmd user-input)
 					(message "Changed projectile-project-run-cmd as %s" user-input))
@@ -884,7 +882,10 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-image-cloud-function-golang/")
+		((list "testcmd1" "ls" "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")
+		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")
+		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")
+		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-image-cloud-function-golang/")
 		 (jong-project-sub-command-2 . "./mockclient")
 		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-image-cloud-function-golang/")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/swit/swit-image-cloud-function-golang/")

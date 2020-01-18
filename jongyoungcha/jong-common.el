@@ -595,6 +595,34 @@
 	(windmove-down)
 	(delete-window))
 
+
+(defun jong-common-buffer-window-left ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(windmove-left)
+	(helm-buffers-list))
+
+
+(defun jong-common-buffer-window-right ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(windmove-right)
+	(helm-buffers-list))
+
+
+(defun jong-common-buffer-window-up ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(windmove-up)
+	(helm-buffers-list))
+
+
+(defun jong-common-buffer-window-down ()
+	"Split window with direction and switch buffer."
+	(interactive)
+	(windmove-down)
+	(helm-buffers-list))
+
 (add-hook 'after-save-hook 'jong-common-reload-dir-locals)
 
 
