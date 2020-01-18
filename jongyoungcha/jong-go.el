@@ -162,7 +162,7 @@ And the environment variable was existing, Download go binaries from the interne
 												"golang.org/x/tools/cmd/godoc"
 												"golang.org/x/tools/cmd/guru"
 												"golang.org/x/tools/cmd/goimports"
-												"golang.org/x/tools/cmd/gopls@lastest"
+												"golang.org/x/tools/gopls@latest"
 												"github.com/go-delve/delve/cmd/dlv")))
 		(if (getenv "GOPATH")
 				(progn
@@ -173,7 +173,6 @@ And the environment variable was existing, Download go binaries from the interne
 			(message "There was not the GOPATH environment variable."))
 		)
 	)
-
 
 
 (setq gofmt-command "goimports")
