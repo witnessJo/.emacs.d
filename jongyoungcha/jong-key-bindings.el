@@ -15,7 +15,6 @@
 		(global-set-key (kbd "<C-M-right>") 'windmove-right))))
 
 
-
 (global-set-key (kbd "C-x <C-up>") 'windmove-up)
 
 (global-set-key (kbd "C-.") 'winner-undo)
@@ -25,9 +24,7 @@
 (global-set-key (kbd "C-S-o") 'jong-common-open-line-above)
 (global-set-key (kbd "C-o") 'jong-common-open-line-below)
 
-(global-set-key (kbd "C-M-w") 'jong-common-copy-region-or-line)
-(global-set-key (kbd "M-w") 'kill-region)
-(global-set-key (kbd "C-w") 'yank)
+(global-set-key (kbd "C-S-c") 'jong-common-copy-region-or-line)
 (global-set-key (kbd "C-y") (lambda ()
 															(interactive)
 															(jong-common-open-line-below)
@@ -59,7 +56,7 @@
 
 (global-set-key (kbd "C-c s C-b") 'jong-common-split-window-left)
 (global-set-key (kbd "C-c s C-f") 'jong-common-split-window-right)
-(global-set-key (kbd "C-c s C-p") 'jong-common-split-window-up)
+(global-set-key (kbd "C-c s C-p") 'jong-common-split-wppindow-up)
 (global-set-key (kbd "C-c s C-n") 'jong-common-split-window-down)
 
 
@@ -68,8 +65,14 @@
 (global-set-key (kbd "C-c m C-p") 'jong-common-merge-window-up)
 (global-set-key (kbd "C-c m C-n") 'jong-common-merge-window-down)
 
+;;; for cua mode
+(global-set-key (kbd "C-S-z") 'undo-tree-redo)
+(global-set-key (kbd "M-<up>") (lambda ()
+															(interactive)
+															(jong-forward-line -20)))
 
-
-
+(global-set-key (kbd "M-<down>") (lambda ()
+															(interactive)
+															(jong-forward-line 20)))
 
 (provide 'jong-key-bindings)

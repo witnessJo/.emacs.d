@@ -183,6 +183,9 @@ Version 2017-07-08"
 	(global-set-key (kbd "C-x C-f") 'helm-find-files)
 	(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 	(global-set-key (kbd "C-x r l") 'helm-bookmarks)
+	
+	(define-key helm-find-files-map (kbd "M-<up>") 'helm-previous-page)
+	(define-key helm-find-files-map (kbd "M-<down>") 'helm-next-page)
 	(define-key helm-find-files-map (kbd "M-<right>") 'helm-execute-persistent-action)
 	(define-key helm-find-files-map (kbd "M-<left>") 'helm-find-files-up-one-level)
 	(define-key helm-read-file-map (kbd "M-<right>") 'helm-execute-persistent-action)
@@ -360,13 +363,10 @@ Version 2017-07-08"
 			(goto-char target-column))
 		(recenter-top-bottom (line-number-at-pos))))
 
-(global-set-key (kbd "M-v") (lambda ()
-															(interactive)
-															(jong-forward-line -20)))
 
-(global-set-key (kbd "C-v") (lambda ()
-															(interactive)
-															(jong-forward-line 20)))
+(cua-mode t)
+(setq cua-prefix-override-inhibit-delay 0.1)
+
 
 (defun pop-local-or-global-mark ()
 	"Pop to local mark if it exists or to the global mark if it does not."
@@ -879,7 +879,7 @@ Version 2017-07-08"
 		("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
 	 (quote
-		(smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
+		(gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values

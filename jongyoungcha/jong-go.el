@@ -27,6 +27,9 @@
 (use-package go-dlv
 	:ensure t)
 
+(use-package gotest
+	:ensure t)
+
 (exec-path-from-shell-getenv "GOPATH")
 (exec-path-from-shell-getenv "GOROOT")
 (exec-path-from-shell-getenv "PATH")
@@ -522,6 +525,9 @@ And the environment variable was existing, Download go binaries from the interne
 													(local-set-key (kbd "C-c c c") 'jong-project-compile-project)
 													;; (compile "go build -v && go test -v && go vet")))
 													(local-set-key (kbd "C-c r r") 'lsp-rename)
+													(local-set-key (kbd "C-c t f") 'go-test-current-test)
+													(local-set-key (kbd "C-c t a") 'go-test-current-file)
+													
 													;; (local-set-key (kbd "C-c r r") 'jong-go-run-project-otherframe)
 													(local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
 													(local-set-key (kbd "C-c M->")
