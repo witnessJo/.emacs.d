@@ -1,18 +1,19 @@
 ;;; Code
 
-(cond
- ((string-equal system-type "gnu/linux")
-	(progn
-		(global-set-key (kbd "C-x <C-up>") 'windmove-up)
-		(global-set-key (kbd "C-x <C-down>") 'windmove-down)
-		(global-set-key (kbd "C-x M-b") 'windmove-left)
-		(global-set-key (kbd "C-x M-f") 'windmove-right)))
- ((string-equal system-type "darwin")
-	(progn
-		(global-set-key (kbd "<C-M-up>") 'windmove-up)
-		(global-set-key (kbd "<C-M-down>") 'windmove-down)
-		(global-set-key (kbd "<C-M-left>") 'windmove-left)
-		(global-set-key (kbd "<C-M-right>") 'windmove-right))))
+;; (cond
+;; ((string-equal system-type "gnu/linux")
+;; (progn
+(global-set-key (kbd "C-x <C-up>") 'windmove-up)
+(global-set-key (kbd "C-x <C-down>") 'windmove-down)
+(global-set-key (kbd "C-x M-b") 'windmove-left)
+(global-set-key (kbd "C-x M-f") 'windmove-right)
+;; ))
+;; ((string-equal system-type "darwin")
+;; (progn
+;; (global-set-key (kbd "<C-M-up>") 'windmove-up)
+;; (global-set-key (kbd "<C-M-down>") 'windmove-down)
+;; (global-set-key (kbd "<C-M-left>") 'windmove-left)
+;; (global-set-key (kbd "<C-M-right>") 'windmove-right))))
 
 
 (global-set-key (kbd "C-x <C-up>") 'windmove-up)
@@ -68,11 +69,11 @@
 ;;; for cua mode
 (global-set-key (kbd "C-S-z") 'undo-tree-redo)
 (global-set-key (kbd "M-<up>") (lambda ()
-															(interactive)
-															(jong-forward-line -20)))
+																 (interactive)
+																 (jong-forward-line -20)))
 
 (global-set-key (kbd "M-<down>") (lambda ()
-															(interactive)
-															(jong-forward-line 20)))
+																	 (interactive)
+																	 (jong-forward-line 20)))
 
 (provide 'jong-key-bindings)

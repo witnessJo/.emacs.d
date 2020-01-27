@@ -16,9 +16,10 @@
 																	 :env '(
 																					("BUCKET_NAME" . "test-swit")
 																					("FILE_SERVICE_PORT" . "10040")
+																					("SWIT_FILE_LOG_LEVEL" ."debug")
 																					("GOOGLE_STORAGE_CREDENTIALS" . "/Users/swit-mac/swit-gke-resource-access.json")
 																					)
-																	 :program "/home/jongyoungcha/go/src/swit/swit-gcs-file-golang/server"
+																	 :program "/Users/swit-mac/go/src/swit/swit-gcs-file-golang/server"
 																	 :request "launch"
 																	 :mode "exec"
 																	 :name  "SwitFileGo"))
