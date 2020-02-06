@@ -871,6 +871,7 @@ Version 2017-07-08"
 	 (quote
 		("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(hl-paren-colors (quote ("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900")))
+ '(kubernetes-exec-arguments (quote ("-i" "-t" "--container=server")))
  '(kubernetes-logs-arguments (quote ("--tail=1000" "--container=server")))
  '(magit-diff-use-overlays nil)
  '(nrepl-message-colors
@@ -883,7 +884,9 @@ Version 2017-07-08"
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
 	 (quote
-		((list "testcmd1" "ls" "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")
+		((jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-grpc-asset-golang/")
+		 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-grpc-asset-golang/")
+		 (list "testcmd1" "ls" "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")
 		 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")
 		 (jong-project-sub-default-dir-2 . "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")
 		 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-image-cloud-function-golang/")

@@ -46,12 +46,11 @@
 		(sleep-for 0.5))
   (switch-to-buffer "*dap-ui-repl*"))
 
-(global-set-key (kbd "<f12>") 'dap-step-out)
-(global-set-key (kbd "<f11>") 'dap-step-in)
-(global-set-key (kbd "<f10>") 'dap-next)
-(global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
-(global-set-key (kbd "<f8>") 'dap-continue)
-(global-set-key (kbd "<f7>") 'jong-dap-debug-goto-repl)
+
+(global-set-key (kbd "S-<f8>") 'dap-step-out)
+(global-set-key (kbd "<f7>") 'dap-step-in)
+(global-set-key (kbd "<f8>") 'dap-next)
+(global-set-key (kbd "<f6>") 'dap-continue)
 (global-set-key (kbd "<f5>") 'dap-debug)
 (global-set-key (kbd "<f1>") 'dap-eval-region)
 
@@ -59,13 +58,11 @@
 (global-set-key (kbd "C-c d b") 'dap-ui-breakpoints)
 (global-set-key (kbd "C-c d s") 'dap-ui-sessions)
 (global-set-key (kbd "C-c d l") 'dap-ui-locals)
+(global-set-key (kbd "C-c d p") 'dap-debug-last)
+
 (global-set-key (kbd "C-c d <backspace>") 'dap-delete-session)
 (global-set-key (kbd "C-c d k") 'dap-ui-sessions-delete-session)
 (global-set-key (kbd "C-c d <return>") 'dap-ui-sessions-select)
-
-
-
-
 
 
 (provide 'jong-dap-debug)
