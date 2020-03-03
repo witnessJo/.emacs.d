@@ -269,8 +269,8 @@ MAIN-CPP-PATH is the cmake file path."
 	;; (lsp-ui-sideline-mode)
 	;; (lsp-ui-doc-mode)
 	
-	(rtags-start-process-unless-running)
-
+	;; (rtags-start-process-unless-running)
+	
 	(flymake-mode 0)
 	
 	(local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
