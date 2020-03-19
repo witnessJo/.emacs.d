@@ -165,6 +165,8 @@ MAIN-CPP-PATH is the cmake file path."
 (require 'compile)
 (add-hook 'c-mode-common-hook
 					(lambda ()
+						;; add additional flycheck path
+						(setq flycheck-clang-include-path (list (expand-file-name "/usr/local/Cellar/ffmpeg/4.2.2_2/include")))
 						(unless (file-exists-p "Makefile")
 							(set (make-local-variable 'compile-command)
 									 ;; emulate make's .c.o implicit pattern rule, but with
@@ -180,27 +182,27 @@ MAIN-CPP-PATH is the cmake file path."
 														 file))))))
 
 
-(use-package rtags
-	:ensure t
-	:config
-	;; (setq rtags-autostart-diagnostics t)
-	;; (rtags-diagnostics)
-	(setq rtags-completions-enabled t)
-	(global-company-mode)
-	(rtags-enable-standard-keybindings)
-	(add-hook 'rtags-jump-hook (lambda ()
-															 (xref-push-marker-stack)))
-	
-	(add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-	(add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
-	(add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
+;; (use-package rtags
+;; :ensure t
+;; :config
+;; (setq rtags-autostart-diagnostics t)
+;; (rtags-diagnostics)
+;; (setq rtags-completions-enabled t)
+;; (global-company-mode)
+;; (rtags-enable-standard-keybindings)
+;; (add-hook 'rtags-jump-hook (lambda ()
+;; (xref-push-marker-stack)))
 
-	(define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-	(define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
-	(custom-set-faces
-	 '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
-	 '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
-	)
+;; (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+;; (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+;; (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
+
+;; (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+;; (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
+;; (custom-set-faces
+;; '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
+;; '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
+;; )
 
 
 ;; (use-package company-rtags
@@ -269,8 +271,8 @@ MAIN-CPP-PATH is the cmake file path."
 	;; (lsp-ui-sideline-mode)
 	;; (lsp-ui-doc-mode)
 	
-	(rtags-start-process-unless-running)
-
+	;; (rtags-start-process-unless-running)
+	
 	(flymake-mode 0)
 	
 	(local-set-key (kbd "C-c j p") 'jong-c-insert-predfine)
