@@ -1,0 +1,5 @@
+alias nil  $*
+alias sl $*
+alias l $*
+alias s $*
+alias (nil) $*
