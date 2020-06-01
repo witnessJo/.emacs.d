@@ -47,6 +47,7 @@
   (switch-to-buffer "*dap-ui-repl*"))
 
 
+(global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
 (global-set-key (kbd "S-<f8>") 'dap-step-out)
 (global-set-key (kbd "<f7>") 'dap-step-in)
 (global-set-key (kbd "<f8>") 'dap-next)

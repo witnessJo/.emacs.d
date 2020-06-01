@@ -80,4 +80,10 @@
 ;; (global-whitespace-cleanup-mode)
 ;; (add-hook 'after-save-hook 'whitespace-cleanup))
 
+(use-package dotenv-mode
+	:ensure t
+	:config
+	(add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode)))
+
+
 (provide 'jong-packages)
