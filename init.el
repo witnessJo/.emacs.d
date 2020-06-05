@@ -9,7 +9,6 @@
 (setq package-check-signature nil)
 
 (require 'package)
-
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 												 ("marmalade" . "https://marmalade-repo.org/packages/")
 												 ("melpa" . "https://melpa.org/packages/")))
@@ -18,7 +17,7 @@
 	;; For important compatibility libraries like cl-lib
 	(add-to-list 'package-archives '("gnu" . "http://mirrors.163.com/elpa/gnu")))
 
-;; (package-initialize)
+(package-initialize)
 (unless (package-installed-p 'use-package)
 	(package-refresh-contents)
 	(package-install 'use-package))
