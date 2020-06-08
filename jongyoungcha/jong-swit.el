@@ -38,8 +38,9 @@
   )
 
 (defun jong-swit-clone-base-project()
-  (interactive))
-
+  (interactive)
+  
+  )
 
 
 (defun jong-swit-checkout-base-projects()
@@ -49,6 +50,8 @@
 		branch
 		target-buffer-name)
 	(setq target-buffer-name "*jong-swit-checkout-base-projects*")
+	(when (get-buffer target-buffer-name)
+	  (kill-buffer target-buffer-name))
 
 	(dolist (project jong-swit-projects nil)
 	  (setq project-name (nth 0 project))
@@ -56,15 +59,18 @@
 	  (with-current-buffer (get-buffer-create target-buffer-name)
 		(display-buffer (current-buffer))
 		(setq default-directory (format "%s/%s" jong-swit-base project-name))
-		(insert (format "*** %s\n" (car project)) target-buffer-name)
-		(shell-command (format "git checkout %s" branch) (current-buffer))
-		(shell-command "git pull" (current-buffer))
+		(goto-char (point))
+		(insert ">>>" project-name "\n")
+		(ignore-errors
+		  (set-process-sentinel
+		   (start-process (format "git-checkout/%s" project-name) (current-buffer) "git" "checkout" branch)
+		   (lambda (p e)
+			 (start-process (process-name p) (get-buffer target-buffer-name) "git" "pull"))
+		   ))
 		)
 	  )
 	)
   )
-
-
 
 
 (defun jong-swit-run-base-projects ()
@@ -100,3 +106,96 @@
 
 
 (provide 'jong-swit)
+Already up to date.
+Already up to date.
+
+Process git-pull finished
+
+Process git-pull<1> finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process git-pull<1> finished
+
+Process git-pull<2> finished
+
+Process git-pull finished
+Already up to date.
+
+Process git-pull finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process git-pull finished
+
+Process git-pull<1> finished
+
+Process git-pull<2> finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process git-pull<1> finished
+
+Process git-pull<2> finished
+
+Process git-pull finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process git-pull finished
+
+Process git-pull<2> finished
+
+Process git-pull<1> finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process git-pull<2> finished
+
+Process git-pull finished
+
+Process git-pull<1> finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process git-pull<1> finished
+
+Process git-pull<2> finished
+
+Process git-pull finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process finished
+<1> finished
+
+Process finished
+<2> finished
+
+Process finished
+finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process git-checkout/swit-grpc-project-golang finished
+
+Process git-checkout/swit-grpc-message-golang finished
+
+Process git-checkout/swit-grpc-task-golang finished
+Already up to date.
+Already up to date.
+Already up to date.
+
+Process git-checkout/swit-grpc-task-golang finished
+
+Process git-checkout/swit-grpc-project-golang finished
+
+Process git-checkout/swit-grpc-message-golang finished
