@@ -627,8 +627,7 @@ Version 2017-07-08"
   (projectile-mode 1)
   (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
   (setq projectile-globally-ignored-directories (append '(".svn") projectile-globally-ignored-directories))
-  (setq projectile-enable-caching t)
-  )
+  (setq projectile-enable-caching t))
 
 (use-package helm-projectile
   :ensure t)

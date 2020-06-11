@@ -39,17 +39,13 @@
 
 (defun jong-swit-clone-base-project()
   (interactive)
-  
+  ()
   )
 
-
+(defvar target-buffer-name "*jong-swit-checkout-base-projects*")
 (defun jong-swit-checkout-base-projects()
   (interactive)
-  (let (value
-		project-name
-		branch
-		target-buffer-name)
-	(setq target-buffer-name "*jong-swit-checkout-base-projects*")
+  (let (value project-name branch)
 	(when (get-buffer target-buffer-name)
 	  (kill-buffer target-buffer-name))
 
@@ -65,7 +61,10 @@
 		  (set-process-sentinel
 		   (start-process (format "git-checkout/%s" project-name) (current-buffer) "git" "checkout" branch)
 		   (lambda (p e)
-			 (start-process (process-name p) (get-buffer target-buffer-name) "git" "pull"))
+			 (ignore-errors (start-process
+							 (format "%s/pull" (process-name p))
+							 (get-buffer target-buffer-name)
+							 "git" "pull")))
 		   ))
 		)
 	  )
