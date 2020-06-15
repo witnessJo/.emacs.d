@@ -11,7 +11,7 @@
 							 ("swit-grpc-task-golang" "dev.v4" "./server")
 							 ("swit-grpc-project-golang" "dev.v4" "./server")
 							 ("swit-grpc-asset-golang" "dev" "./server")
-							 ("swit-grpc-auth-golang" "dev.4" "./server")
+							 ("swit-grpc-auth-golang" "dev.v4" "./server")
 							 ("swit-grpc-message-golang" "dev.v4" "./server")
 							 ))
 
@@ -56,20 +56,14 @@
 		(display-buffer (current-buffer))
 		(setq default-directory (format "%s/%s" jong-swit-base project-name))
 		(goto-char (point))
-		(insert ">>>" project-name "\n")
-		(ignore-errors
-		  (set-process-sentinel
-		   (start-process (format "git-checkout/%s" project-name) (current-buffer) "git" "checkout" branch)
-		   (lambda (p e)
-			 (ignore-errors (start-process
-							 (format "%s/pull" (process-name p))
-							 (get-buffer target-buffer-name)
-							 "git" "pull")))
-		   ))
+		(insert ">>> " project-name "\n")
+		(ignore-errors (call-process "git" nil t nil "checkout" branch))
+		(ignore-errors (call-process "git" nil t nil "pull"))
 		)
 	  )
 	)
   )
+
 
 
 (defun jong-swit-run-base-projects ()
