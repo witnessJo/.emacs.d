@@ -32,14 +32,19 @@
   (setenv  "PUB_SUB_CLIENT" "swit-dev")
   )
 
-(defun jong-swit-set-dev-envs ()
+
+(defun jong-swit-open-dot-env()
   (interactive)
-  ()
+  (let (file-path)
+	(setq file-path (format "%s/%s" (getenv "HOME") ".env"))
+	(find-file file-path))
   )
 
-(defun jong-swit-clone-base-project()
+(defun jong-swit-oepn-dot-env-v1()
   (interactive)
-  ()
+  (let (file-path)
+	(setq file-path (format "%s/%s" (getenv "HOME") ".env_v1"))
+	(find-file file-path))
   )
 
 (defvar target-buffer-name "*jong-swit-checkout-base-projects*")
@@ -64,7 +69,26 @@
 	)
   )
 
-
+(defvar target-buffer-name "*jong-swit-build-base-projects*")
+(defun jong-swit-build-base-projects()
+  (interactive)
+  (let (value project-name branch)
+	(when (get-buffer target-buffer-name)
+	  (kill-buffer target-buffer-name))
+	
+	(dolist (project jong-swit-projects nil)
+	  (setq project-name (nth 0 project))
+	  ;; (setq branch (nth 1 project))
+	  (with-current-buffer (get-buffer-create target-buffer-name)
+		(display-buffer (current-buffer))
+		(setq default-directory (format "%s/%s" jong-swit-base project-name))
+		(goto-char (point))
+		(insert ">>> " project-name "\n")
+		(ignore-errors (call-process "make" nil t 0 "build"))
+		)
+	  )
+	)
+  )
 
 (defun jong-swit-run-base-projects ()
   (interactive)
