@@ -155,7 +155,6 @@ And the environment variable was existing, Download go binaries from the interne
 		(list-url (list "github.com/golang/lint/golint"
 						"github.com/mdempsky/gocode"
 						"github.com/k0kubun/pp"
-						"github.com/golang/lint/golint"
 						"github.com/rogpeppe/godef"
 						"github.com/dougm/goflymake"
 						"golang.org/x/tools/cmd/vet"
@@ -167,12 +166,15 @@ And the environment variable was existing, Download go binaries from the interne
 	(if (getenv "GOPATH")
 		(progn
 		  (dolist (elt list-url cmd)
-			(setq cmd (format "go get -u %s" elt))
+			;; (setq cmd (format "go get -u %s" elt))
 			(with-current-buffer (get-buffer-create buffer-name)
-			  (shell-command cmd (current-buffer) (current-buffer)))))
+			  (display-buffer (current-buffer))
+			  (ignore-errors (call-process "go" nil t 0 "get" "-u" elt))))
+		  )
 	  (message "There was not the GOPATH environment variable."))
 	)
   )
+
 
 
 (setq gofmt-command "goimports")

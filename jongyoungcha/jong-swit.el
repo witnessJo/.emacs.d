@@ -8,6 +8,7 @@
 
 (defvar jong-swit-base (format "%s/go/src/swit" (getenv "HOME")))
 (defvar jong-swit-projects '(
+							 ("swit-grpc-workspace-golang" "express" "./server")
 							 ("swit-grpc-task-golang" "dev.v4" "./server")
 							 ("swit-grpc-project-golang" "dev.v4" "./server")
 							 ("swit-grpc-asset-golang" "dev" "./server")
