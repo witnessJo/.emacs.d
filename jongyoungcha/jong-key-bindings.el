@@ -27,9 +27,9 @@
 
 (global-set-key (kbd "C-S-c") 'jong-common-copy-region-or-line)
 (global-set-key (kbd "C-y") (lambda ()
-															(interactive)
-															(jong-common-open-line-below)
-															(call-interactively 'yank)))
+							  (interactive)
+							  (jong-common-open-line-below)
+							  (call-interactively 'yank)))
 
 (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
 (global-set-key (kbd "M-c b") 'jong-common-show-buffer-other-window)
@@ -69,11 +69,12 @@
 ;;; for cua mode
 (global-set-key (kbd "C-S-z") 'undo-tree-redo)
 (global-set-key (kbd "M-<up>") (lambda ()
-																 (interactive)
-																 (jong-forward-line -20)))
+								 (interactive)
+								 (jong-forward-line -20)))
 
 (global-set-key (kbd "M-<down>") (lambda ()
-																	 (interactive)
-																	 (jong-forward-line 20)))
+								   (interactive)
+								   (jong-forward-line 20)))
+
 
 (provide 'jong-key-bindings)

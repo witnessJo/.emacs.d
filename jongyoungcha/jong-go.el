@@ -478,6 +478,15 @@ And the environment variable was existing, Download go binaries from the interne
   (chan-run-dlv-cs t))
 
 
+(add-hook 'go-mode-hook
+          (lambda ()
+            (dolist (pattern (list (format "%s/pkg/.*" (getenv "GOPATH"))
+								   (format "%s/.*" (getenv "GOROOT"))))
+              (if (string-match (expand-file-name pattern) buffer-file-name)
+                  (read-only-mode)
+                )))
+		  )
+
 ;; (add-hook 'go-mode-hook 'jong-go-set-gud-shortcut)
 (add-hook 'go-mode-hook (lambda ()
 						  (setq lsp-ui-sideline-enable nil)
@@ -555,7 +564,6 @@ And the environment variable was existing, Download go binaries from the interne
 							 (call-interactively 'gud-refresh)
 							 (chan-gogud-exec-function #'go-guru-implements)))
 			))
-
 
 (provide 'jong-go)
 ;;;
