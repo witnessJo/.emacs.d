@@ -1,5 +1,3 @@
-
-
 (defgroup jong-swit nil
   "Quickly switch current window."
   :group 'convenience
@@ -9,12 +7,15 @@
 (defvar jong-swit-base (format "%s/go/src/swit" (getenv "HOME")))
 (defvar jong-swit-projects '(
 							 ("swit-grpc-workspace-golang" "express" "./server")
-							 ("swit-grpc-task-golang" "dev.v4" "./server")
-							 ("swit-grpc-project-golang" "dev.v4" "./server")
-							 ("swit-grpc-asset-golang" "dev" "./server")
-							 ("swit-grpc-auth-golang" "dev.v4" "./server")
-							 ("swit-grpc-message-golang" "dev.v4" "./server")
+							 ("swit-grpc-task-golang" "express.v4" "./server")
+							 ("swit-grpc-project-golang" "express.v4" "./server")
+							 ("swit-grpc-channel-golang" "express.v4" "./server")
+							 ("swit-grpc-asset-golang" "express" "./server")
+							 ("swit-grpc-auth-golang" "express.v4" "./server")
+							 ("swit-grpc-message-golang" "express.v4" "./server")
 							 ))
+
+
 
 (defun jong-swit-set-local-envs ()
   (interactive)
@@ -33,7 +34,6 @@
   (setenv  "PUB_SUB_CLIENT" "swit-dev")
   )
 
-
 (defun jong-swit-open-dot-env()
   (interactive)
   (let (file-path)
@@ -41,7 +41,7 @@
 	(find-file file-path))
   )
 
-(defun jong-swit-oepn-dot-env-v1()
+(defun jong-swit-open-dot-env-v1()
   (interactive)
   (let (file-path)
 	(setq file-path (format "%s/%s" (getenv "HOME") ".env_v1"))
@@ -116,6 +116,13 @@
 	  )
 	)
   )
+
+
+(defun jong-swit-kill-base-projects()
+  (interactive)
+  (let ())
+  )
+
 
 (require 'ansi-color)
 (defun display-ansi-colors ()
