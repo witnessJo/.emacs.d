@@ -49,6 +49,16 @@
 	(sleep-for 0.5))
   (switch-to-buffer "*dap-ui-repl*"))
 
+(defun jong-dap-go-to-output-buffer ()
+  (interactive)
+  (let ((prev-window (selected-window)))
+	(progn
+	  (dap-go-to-output-buffer)
+	  (enlarge-window 10)
+	  (select-window prev-window))
+	)
+  )
+
 
 (global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
 (global-set-key (kbd "S-<f7>") 'dap-step-out)
@@ -63,6 +73,7 @@
 (global-set-key (kbd "C-c d s") 'dap-ui-sessions)
 (global-set-key (kbd "C-c d l") 'dap-ui-locals)
 (global-set-key (kbd "C-c d p") 'dap-debug-last)
+(global-set-key (kbd "C-c d o") 'jong-dap-go-to-output-buffer)
 
 (global-set-key (kbd "C-c d <backspace>") 'dap-delete-session)
 (global-set-key (kbd "C-c d k") 'dap-ui-sessions-delete-session)
