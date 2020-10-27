@@ -160,7 +160,6 @@ Version 2017-07-08"
 	(pop-to-buffer temp-buffer-name)
 	))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -809,6 +808,7 @@ Version 2017-07-08"
 (require 'jong-term)
 (require 'jong-grpc)
 (require 'jong-swit)
+(require 'jong-swit-dotenv1)
 
 ;; For Testing
 ;; (require 'jong-ether-test)
