@@ -11,16 +11,6 @@
 (use-package company-go
   :ensure t)
 
-(use-package go-eldoc
-  :ensure t
-  :config
-  (add-hook 'go-mode-hook 'go-eldoc-setup))
-
-(use-package go-complete
-  :ensure t
-  :config
-  (add-hook 'completion-at-point 'go-complete-at-point))
-
 (use-package flycheck
   :ensure t)
 
