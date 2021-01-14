@@ -54,6 +54,7 @@
 	(setq-default line-spacing 2))
 
 
+(toggle-scroll-bar -1)
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 

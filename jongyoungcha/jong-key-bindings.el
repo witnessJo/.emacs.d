@@ -3,10 +3,10 @@
 ;; (cond
 ;; ((string-equal system-type "gnu/linux")
 ;; (progn
-(global-set-key (kbd "C-x <C-up>") 'windmove-up)
-(global-set-key (kbd "C-x <C-down>") 'windmove-down)
-(global-set-key (kbd "C-x M-b") 'windmove-left)
-(global-set-key (kbd "C-x M-f") 'windmove-right)
+(global-set-key (kbd "C-c <C-up>") 'windmove-up)
+(global-set-key (kbd "C-c <C-down>") 'windmove-down)
+(global-set-key (kbd "C-c C-,") 'windmove-left)
+(global-set-key (kbd "C-c C-.") 'windmove-right)
 ;; ))
 ;; ((string-equal system-type "darwin")
 ;; (progn
