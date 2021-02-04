@@ -437,22 +437,6 @@ Version 2017-07-08"
 								  (call-interactively 'eyebrowse-switch-to-window-config-2)
 								  (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
-
-;; remapping about the keybinding.
-(define-key key-translation-map (kbd "<left>") (kbd "C-b"))
-(define-key key-translation-map (kbd "<right>") (kbd "C-f"))
-(define-key key-translation-map (kbd "<up>") (kbd "C-p"))
-(define-key key-translation-map (kbd "<down>") (kbd "C-n"))
-(define-key key-translation-map (kbd "C-<left>") (kbd "M-b"))
-(define-key key-translation-map (kbd "C-<right>") (kbd "M-f"))
-(define-key key-translation-map (kbd "C-S-<left>") (kbd "M-B"))
-(define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
-(define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
-
-
-
-
-
 ;; default setting.
 (defun toggle-transparency ()
   "Transparency frame."

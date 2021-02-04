@@ -12,8 +12,6 @@
 ;; (global-set-key (kbd "<C-M-right>") 'windmove-right))))
 
 
-(global-set-key (kbd "C-x <C-up>") 'windmove-up)
-
 (global-set-key (kbd "C-.") 'winner-undo)
 (global-set-key (kbd "C->") 'winner-redo)
 (global-set-key (kbd "C--") 'jong-common-delete-above-below-window)
@@ -60,6 +58,19 @@
 (global-set-key (kbd "C-c C-l") 'windmove-right)
 
 
+
+;; remapping about the keybinding.
+;; (define-key key-translation-map (kbd "<left>") (kbd "C-b"))
+;; (define-key key-translation-map (kbd "<right>") (kbd "C-f"))
+;; (define-key key-translation-map (kbd "<up>") (kbd "C-p"))
+;; (define-key key-translation-map (kbd "<down>") (kbd "C-n"))
+;; (define-key key-translation-map (kbd "C-<left>") (kbd "M-b"))
+;; (define-key key-translation-map (kbd "C-<right>") (kbd "M-f"))
+;; (define-key key-translation-map (kbd "C-S-<left>") (kbd "M-B"))
+;; (define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
+;; (define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
+
+
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
 	;; (define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
@@ -93,7 +104,7 @@
 									   (jong-forward-line -1)))
 	(define-key map (kbd "<M-S-down>") (lambda () (interactive)
 										 (jong-set-mark)
-										 (jong-forward-line 1)))
+										 (jong-hkforward-line 1)))
 	(define-key map (kbd "<M-S-left>") (lambda () (interactive)
 										 (jong-set-mark)
 										 (syntax-subword-backward 1)))
@@ -106,12 +117,6 @@
 	(define-key map (kbd "C-M-S-d") (lambda () (interactive)
 									  (jong-set-mark)
 									  (forward-word)))
-	;; (define-key map (kbd "M-<backspace>") (lambda () (
-	;; (progn (call-interactively 'backward-kill-word)
-	;; (pop kill-ring))))
-	;; (define-key map (kbd "M-<delete>") (lambda () (interactive)
-	;; (progn (call-interactively 'forward-hf)
-	;; (pop kill-ring))))
 	map)
   "Jong-keys-minor-mode keymap.")
 
