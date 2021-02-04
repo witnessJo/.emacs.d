@@ -2,15 +2,15 @@
 
 (define-coding-system-alias 'UTF-8 'utf-8)
 (defcustom jong-env-locale-value "utf-8"
-	"A variable for locale language setting.")
+  "A variable for locale language setting.")
 
 (cond
  ((string-equal system-type "windows-nt") ; Micro©gsoft Windows
   (progn
     (define-key key-translation-map [C-kanji] (kbd "C-SPC"))
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    	;; Alias coding system for windows ;;
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Alias coding system for windows ;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (set-language-environment "Korean")
     (define-coding-system-alias 'cp65001 'utf-8)
     (setq jong-env-locale-value 'utf-8)
@@ -22,11 +22,14 @@
 
  ((string-equal system-type "darwin") ; Mac OS X
   (progn
-		(setq shell-file-name "zsh")
-		(setq shell-command-switch "-ic")
-		
-		(load-theme 'sanityinc-tomorrow-blue t)
-    (message "Mac OS X")))
+    (setq shell-file-name "zsh")
+    (setq shell-command-switch "-ic")
+    
+    (setq mac-command-modifier 'meta)
+    (setq mac-option-modifier 'alt))
+  
+  (load-theme 'sanityinc-tomorrow-blue t)
+  (message "Mac OS X"))
  ((string-equal system-type "gnu/linux") ; linux
   (progn
     
@@ -34,7 +37,7 @@
     (with-no-warnings (setq projectile-indexing-method 'hybrid))
     
     (setq jong-env-locale-value
-	  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
+		  (if (string= (getenv "LANG") "ko_KR.utf8") 'utf-8 'euc-kr))
     (prefer-coding-system jong-env-locale-value)
     (set-default-coding-systems jong-env-locale-value)
     (set-language-environment 'utf-8)
@@ -46,12 +49,12 @@
     (set-selection-coding-system jong-env-locale-value)
     (dynamic-completion-mode)
     ;; (load-theme 'solarized-dark t)
-		
+    
     (message "Linux"))))
 
 (when (member "Consolas" (font-family-list))
-	(set-face-attribute 'default nil :font "Consolas-10.5")
-	(setq-default line-spacing 2))
+  (set-face-attribute 'default nil :font "Consolas-10.5")
+  (setq-default line-spacing 2))
 
 
 (toggle-scroll-bar -1)

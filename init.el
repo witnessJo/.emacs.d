@@ -144,10 +144,6 @@ Version 2017-07-08"
   (lambda()
 	(auto-package-update-now)))
 
-(when (eq system-type 'darwin)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier nil))
-
 
 (setenv "LANG" "en_US.UTF-8")
 (setenv "LC_ALL" "en_US.UTF-8")
