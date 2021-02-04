@@ -22,7 +22,7 @@
 
  ((string-equal system-type "darwin") ; Mac OS X
   (progn
-		(setq shell-file-name "bash")
+		(setq shell-file-name "zsh")
 		(setq shell-command-switch "-ic")
 		
 		(load-theme 'sanityinc-tomorrow-blue t)

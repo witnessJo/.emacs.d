@@ -6,6 +6,7 @@
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 ;; (setq package--check-signature nil)
 
+
 (setq package-check-signature nil)
 
 (require 'package)
@@ -361,10 +362,6 @@ Version 2017-07-08"
 	(recenter-top-bottom (line-number-at-pos))))
 
 
-(cua-mode t)
-(setq cua-prefix-override-inhibit-delay 0.1)
-
-
 (defun pop-local-or-global-mark ()
   "Pop to local mark if it exists or to the global mark if it does not."
   (interactive)
@@ -379,72 +376,6 @@ Version 2017-07-08"
   (if (not (use-region-p))
 	  (call-interactively 'set-mark-command)))
 
-
-
-
-(defvar jong-keys-minor-mode-map
-  (let ((map (make-sparse-keymap)))
-	;; (define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
-	;; (define-key map (kbd "C-M-w") (lambda () (interactive) (jong-forward-line -1)))
-	;; (define-key map (kbd "M-a") 'backward-char)
-	;; (define-key map (kbd "M-s") (lambda () (interactive) (jong-forward-line 1)))
-	;; (define-key map (kbd "C-M-s") (lambda () (interactive) (jong-forward-line 1)))
-	;; (define-key map (kbd "M-d") 'forward-char)
-	(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
-	(define-key map (kbd "C-<backspace>") 'jong-common-kill-backward-word)
-	(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
-	(define-key map (kbd "<S-up>") (lambda () (interactive)
-									 (jong-set-mark)
-									 (jong-forward-line -1)))
-	(define-key map (kbd "<S-down>") (lambda () (interactive)
-									   (jong-set-mark)
-									   (jong-forward-line 1)))
-	(define-key map (kbd "<S-left>") (lambda () (interactive)
-									   (jong-set-mark)
-									   (backward-char 1)))
-	(define-key map (kbd "<S-right>") (lambda () (interactive)
-										(jong-set-mark)
-										(forward-char 1)))
-	(define-key map (kbd "<C-S-up>") (lambda () (interactive)
-									   (jong-set-mark)
-									   (jong-forward-line -1)))
-	(define-key map (kbd "<C-S-down>") (lambda () (interactive)
-										 (jong-set-mark)
-										 (jong-forward-line 1)))
-	(define-key map (kbd "<C-S-left>") (lambda () (interactive)
-										 (jong-set-mark)
-										 (syntax-subword-backward 1)))
-	(define-key map (kbd "<C-S-right>") (lambda () (interactive)
-										  (jong-set-mark)
-										  (syntax-subword-forward 1)))
-	(define-key map (kbd "C-M-S-a") (lambda () (interactive)
-									  (jong-set-mark)
-									  (backward-word)))
-	(define-key map (kbd "C-M-S-d") (lambda () (interactive)
-									  (jong-set-mark)
-									  (forward-word)))
-	;; (define-key map (kbd "M-<backspace>") (lambda () (
-	;; (progn (call-interactively 'backward-kill-word)
-	;; (pop kill-ring))))
-	;; (define-key map (kbd "M-<delete>") (lambda () (interactive)
-	;; (progn (call-interactively 'forward-hf)
-	;; (pop kill-ring))))
-	map)
-  "Jong-keys-minor-mode keymap.")
-
-
-(define-minor-mode jong-keys-minor-mode
-  "A minor mode so that my key settings override annoying major modes."
-  :init-value t
-  :lighter " jong-keys")
-
-(defun enable-jong-keys-minor-mode()
-  (interactive)
-  (jong-keys-minor-mode 1))
-
-(defun disable-jong-keys-minor-mode()
-  (interactive)
-  (jong-keys-minor-mode 0))
 
 
 ;; Back word with candidate characters.
@@ -674,15 +605,6 @@ Version 2017-07-08"
   :config
   (global-flycheck-mode t)
   )
-;; :init
-;; (global-flycheck-mode t)
-;; (set-face-attribute 'flycheck-fringe-warning nil :foreground (face-attribute 'fringe :background )))
-
-(use-package auto-highlight-symbol
-  :ensure t
-  :init)
-(require 'auto-highlight-symbol)
-(global-auto-highlight-symbol-mode t)
 
 
 (require 'files)
@@ -872,7 +794,7 @@ Version 2017-07-08"
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
+   '(vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values

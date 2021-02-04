@@ -9,7 +9,7 @@
 
 
 (add-hook 'term-load-hook
-					(lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
+		  (lambda ()(define-key term-raw-map (kbd "M-x") 'nil)))
 
 ;; (use-package multi-term
 ;;   :ensure
@@ -33,8 +33,8 @@
 (defun eshell/clear ()
   "Clear the eshell buffer."
   (let ((inhibit-read-only t))
-		(erase-buffer)
-		(eshell-send-input))
+	(erase-buffer)
+	(eshell-send-input))
   )
 
 (setq jong-shell-highlights
@@ -60,20 +60,21 @@
 (add-to-list 'comint-output-filter-functions 'jong-term-comint-preoutput-turn-buffer-read-only)
 
 
+(use-package vterm
+  :ensure t
+  :config
+  )
 
-;; (add-hook 'shell-mode-hook 'ansi-color-apply)
-;; (add-hook 'shell-mode-hook (lambda ()
-;; (setq font-lock-defaults '(jong-shell-highlights))))
+(add-hook 'vterm-mode-hook
+		  (lambda ()
+			(cua-mode -1)
+			(local-set-key (kbd "C-v") #'term-paste)
+			))
 
-;; (define-derived-mode jong-shell-mode shell-mode "jong-shell-mode"
-;;   "Derived major mode of shell that customized by jongyoungcha"
-;;   (setq font-lock-defaults '(jong-shell-highlights)))
 
-;; (defun jong-shell ()
-;;   "jongyoungcha's shell"
-;;   (interactive)
-;;   (shell)
-;;   (jong-shell-mode t))
+;; (define-key vterm-mode-map (kbd "C-v") 'term-paste)
+
+
 
 
 (provide 'jong-term)
