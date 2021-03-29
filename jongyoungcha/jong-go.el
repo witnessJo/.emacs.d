@@ -20,6 +20,9 @@
 (use-package gotest
   :ensure t)
 
+(use-package go-fill-struct
+  :ensure t)
+
 (exec-path-from-shell-getenv "GOPATH")
 (exec-path-from-shell-getenv "GOROOT")
 (exec-path-from-shell-getenv "PATH")

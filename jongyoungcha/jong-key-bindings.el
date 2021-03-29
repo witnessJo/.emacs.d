@@ -71,6 +71,7 @@
 ;; (define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
 
 
+
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
 	;; (define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
@@ -82,9 +83,8 @@
 
 
 	
-	(define-key map (kbd "M-<backspace>") 'jong-common-kill-backward-word)
-	(define-key map (kbd "C-<backspace>") 'jong-common-kill-backward-word)
-	(define-key map (kbd "C-<delete>") 'jong-common-kill-forward-word)
+	(define-key map (kbd "<A-backspace>") 'jong-common-kill-backward-word)
+	(define-key map (kbd "<A-kp-delete>") 'jong-common-kill-forward-word)
 	(define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)
 									 (jong-forward-line -1)))

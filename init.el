@@ -167,34 +167,6 @@ Version 2017-07-08"
 (yas-global-mode 1)
 
 
-(use-package helm
-  :ensure t
-  :init
-  :config
-  (setq helm-split-window-in-side-p t)
-  (helm-mode 1)
-  (setq helm-candidate-number-limit 500)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-  (global-set-key (kbd "C-x r l") 'helm-bookmarks)
-  
-  (define-key helm-find-files-map (kbd "M-<up>") 'helm-previous-page)
-  (define-key helm-find-files-map (kbd "M-<down>") 'helm-next-page)
-  (define-key helm-find-files-map (kbd "M-<right>") 'helm-execute-persistent-action)
-  (define-key helm-find-files-map (kbd "M-<left>") 'helm-find-files-up-one-level)
-  (define-key helm-read-file-map (kbd "M-<right>") 'helm-execute-persistent-action)
-  (define-key helm-read-file-map (kbd "M-<left>") 'helm-find-files-up-one-level))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; you need to install ag binary      ;;
-;; $ brew install the_silver_searcher ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package helm-ag
-  :ensure t)
-(with-eval-after-load 'helm-ag
-  (global-set-key (kbd "C-c a g") 'helm-do-ag))
-
 (use-package prodigy
   :ensure t)
 
@@ -320,8 +292,6 @@ Version 2017-07-08"
 								(indent-for-tab-command)
 								)))
 
-
-
 (global-set-key (kbd "C-c k") (lambda() (interactive)
 								(kill-buffer (buffer-name))))
 (global-set-key (kbd "M-c k") (lambda() (interactive)
@@ -332,11 +302,8 @@ Version 2017-07-08"
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
-(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-(global-set-key (kbd "C-h C-SPC") 'helm-all-mark-rings)
 
 (global-set-key (kbd "C-d") 'delete-forward-char)
-
 
 (defun jong-forward-line (number)
   (interactive)
@@ -414,8 +381,6 @@ Version 2017-07-08"
 (global-set-key (kbd "C-x C-o") 'other-window)
 (global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
 (global-set-key (kbd "C-c C-o") 'other-window)
-(global-set-key (kbd "C-c b") 'helm-buffers-list)
-(global-set-key (kbd "C-c C-b") 'helm-buffers-list)
 
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window -15)))
 (global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window 15)))
@@ -540,14 +505,6 @@ Version 2017-07-08"
   (setq projectile-enable-caching t)
   (setq projectile-git-submodule-command nil))
 
-(use-package helm-projectile
-  :ensure t)
-
-(with-eval-after-load 'helm-projectile
-  (setq helm-projectile-fuzzy-match nil))
-
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
 
 (defun jo-set-projectile-run-command ()
   "Read user input commajksldfnd and set ectile-project-run-cmd'."
@@ -683,6 +640,47 @@ Version 2017-07-08"
   (global-set-key (kbd "C-c g d") 'google-translate-at-point))
 
 
+
+(use-package counsel
+  :ensure t
+  :after ivy
+  :config (counsel-mode))
+
+(use-package ivy
+  :ensure t
+  :defer 0.1)
+
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+
+(global-set-key (kbd "C-s") 'swiper-isearch)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "<f2> j") 'counsel-set-variable)
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c v") 'ivy-push-view)
+(global-set-key (kbd "C-c V") 'ivy-pop-view)
+
+;; (global-set-key (kbd "C-c c") 'counsel-compile)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c L") 'counsel-git-log)
+(global-set-key (kbd "C-c k") 'counsel-rg)
+;; (global-set-key (kbd "C-c m") 'counsel-linux-app)
+(global-set-key (kbd "C-c n") 'counsel-fzf)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-c J") 'counsel-file-jump)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+;; (global-set-key (kbd "C-c w") 'counsel-wmctrl)
+
+
 (require 'jong-packages)
 (require 'jong-env-setting)
 (require 'jong-common)
@@ -774,7 +772,7 @@ Version 2017-07-08"
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
+   '(counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
