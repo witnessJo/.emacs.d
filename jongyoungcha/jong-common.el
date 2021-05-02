@@ -376,6 +376,17 @@
 	)
   )
 
+(defun jong-common-go-vterm ()
+  (interactive)
+  (let ((cmd (format "%s %s" "cd" default-directory)))
+	(message "shell path : %s" cmd)
+	(call-interactively 'vterm)
+	(with-current-buffer "*vterm*"
+	  (comint-send-string (get-buffer-process (current-buffer)) cmd)
+	  (comint-send-input)
+	  )
+	)
+  )
 
 (defun jong-common-copy-current-dir ()
   "Copy the current directory to the 'kill-ring."
