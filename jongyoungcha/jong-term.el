@@ -62,6 +62,7 @@
 (use-package vterm
   :ensure t
   :config
+  (define-key vterm-mode-map (kbd "C-c C-l") nil)
   )
 
 (add-hook 'vterm-mode-hook
@@ -69,6 +70,7 @@
 			(cua-mode -1)
 			(local-set-key (kbd "C-v") #'term-paste)
 			))
+
 
 (add-to-list 'vterm-eval-cmds '("update-pwd" (lambda (path) (setq default-directory path))))
 

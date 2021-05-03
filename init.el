@@ -664,7 +664,12 @@ Version 2017-07-08"
   :custom
   (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
   :config
+
+  (setq ivy-posframe-parameters
+      '((left-fringe . 12)
+        (right-fringe . 12)))
   (ivy-posframe-mode))
+
 
 ;; (setq ivy-use-virtual-buffers t)
 ;; (setq ivy-count-format "(%d/%d) ")
