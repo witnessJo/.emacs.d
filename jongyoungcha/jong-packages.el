@@ -54,18 +54,12 @@
   (setq lsp-signature-render-all nil)
   :commands lsp)
 
-
-(use-package company-lsp :commands company-lsp)
-(use-package helm-lsp :commands helm-lsp-workspace-symbol)
-(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-
-(use-package company-lsp
+(use-package lsp-ui
   :ensure t
-  :commands company-lsp
   :config
-  (eval-after-load 'company
-	'(add-to-list
-	  'company-backends 'company-lsp)))
+  (setq lsp-ui-doc-enable t)
+  )
+
 
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)

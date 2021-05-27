@@ -57,6 +57,12 @@
 (global-set-key (kbd "C-c C-h") 'windmove-left)
 (global-set-key (kbd "C-c C-l") 'windmove-right)
 
+(global-set-key (kbd "M-*") 'rectangle-mark-mode)
+
+(global-set-key (kbd "C-c <up>") 'jong-project-run-command)
+(global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)
+(global-set-key (kbd "C-c <down>") 'jong-project-run-command)
+(global-set-key (kbd "C-c <right>") 'jong-project-run-command)
 
 
 ;; remapping about the keybinding.
@@ -69,6 +75,21 @@
 ;; (define-key key-translation-map (kbd "C-S-<left>") (kbd "M-B"))
 ;; (define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
 ;; (define-key key-translation-map (kbd "C-S-<right>") (kbd "M-F"))
+
+;; (defun my-backward-kill-word ()
+;; (interactive "*")
+;; (let ((orig (point)))
+;; (skip-syntax-backward "\sw")
+;; (delete-region (point) orig)))
+
+(defun my-backward-kill-word ()
+  "Kill words backward my way."
+  (interactive)
+  (if (bolp)
+      (backward-delete-char 1)
+    (if (string-match "^\\s-+$" (buffer-substring (point-at-bol) (point)))
+        (kill-region (point-at-bol) (point))
+      (backward-kill-word 1))))
 
 
 
@@ -83,8 +104,13 @@
 
 
 	
-	(define-key map (kbd "<A-backspace>") 'jong-common-kill-backward-word)
-	(define-key map (kbd "<A-kp-delete>") 'jong-common-kill-forward-word)
+	;; (define-key map (kbd "<A-backspace>") 'jong-common-kill-backward-word)
+	;; (define-key map (kbd "<A-kp-delete>") 'jong-common-kill-forward-word)
+
+	(define-key map (kbd "<A-backspace>") 'evil-delete-backward-word)
+	(define-key map (kbd "<A-kp-delete>") 'kill-word)
+	
+	
 	(define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)
 									 (jong-forward-line -1)))

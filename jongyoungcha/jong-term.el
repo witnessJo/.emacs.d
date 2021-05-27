@@ -63,6 +63,7 @@
   :ensure t
   :config
   (define-key vterm-mode-map (kbd "C-c C-l") nil)
+  (define-key vterm-mode-map (kbd "C-s") nil)
   )
 
 (add-hook 'vterm-mode-hook

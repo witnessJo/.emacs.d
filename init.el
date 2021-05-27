@@ -33,7 +33,11 @@
 
 (global-font-lock-mode t)
 (transient-mark-mode 1)
+(setq make-backup-files nil)
 (setq eldoc-idle-delay 0.05)
+
+(use-package evil
+  :ensure t)
 
 (use-package org
   :ensure t
@@ -472,14 +476,13 @@ Version 2017-07-08"
   :config
   (setq company-async-timeout 4)
   (setq company-idle-delay 0.01)
-  (setq company-minimum-prefix-length 5)
-  (setq company-auto-complete t)
+  ;; (setq company-minimum-prefix-length 5)
   (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode)
-  (define-key company-active-map (kbd "M-p") nil)
-  (define-key company-active-map (kbd "M-p") nil)
+  ;; (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (define-key company-active-map (kbd "C-n") 'company-select-next))
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  )
 
 
 (use-package company-quickhelp
@@ -649,7 +652,12 @@ Version 2017-07-08"
   :defer 0.1
   :config
   (setq ivy-use-virtual-buffers t
-        ivy-count-format "%d/%d "))
+        ivy-count-format "%d/%d ")
+  (setq ivy-initial-inputs-alist nil)
+  (add-to-list 'ivy-re-builders-alist
+			   '(counsel-M-x . ivy--regex-ignore-order)))
+
+  
 
 (use-package ag
   :ensure t)
@@ -690,9 +698,9 @@ Version 2017-07-08"
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 
 ;; (global-set-key (kbd "C-c c") 'counsel-compile)
-(global-set-key (kbd "C-c g") 'counsel-git)
-(global-set-key (kbd "C-c j") 'counsel-git-grep)
-(global-set-key (kbd "C-c L") 'counsel-git-log)
+(global-set-key (kbd "C-c g g") 'counsel-git)
+(global-set-key (kbd "C-c g j") 'counsel-git-grep)
+(global-set-key (kbd "C-c g l") 'counsel-git-log)
 (global-set-key (kbd "C-c a g") 'counsel-rg)
 ;; (global-set-key (kbd "C-c m") 'counsel-linux-app)
 (global-set-key (kbd "C-c n") 'counsel-fzf)
@@ -703,7 +711,6 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'counsel-projectile-find-file)
-
 
 
 (require 'jong-packages)
@@ -729,7 +736,7 @@ Version 2017-07-08"
 (require 'jong-network)
 (require 'jong-http)
 (require 'jong-html)
-(require 'jong-dap-debug)
+;; (require 'jong-dap-debug)
 (require 'jong-term)
 (require 'jong-grpc)
 (require 'jong-swit)
@@ -797,11 +804,13 @@ Version 2017-07-08"
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-lsp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
+   '(evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-grpc-asset-golang/")
+   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/mitra/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/mitra/")
+	 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-grpc-asset-golang/")
 	 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-grpc-asset-golang/")
 	 (list "testcmd1" "ls" "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")
 	 (jong-project-sub-default-dir-3 . "/home/jongyoungcha/go/src/github.com/jongyoungcha/go-parallel-sample/")

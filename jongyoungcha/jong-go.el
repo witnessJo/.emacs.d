@@ -145,7 +145,8 @@ And the environment variable was existing, Download go binaries from the interne
   (interactive)
   (let ((cmd nil)
 		(buffer-name "*jong-set-go-bins*")
-		(list-url (list "github.com/golang/lint/golint"
+		(list-url (list "golang.org/x/tools/gopls@latest"
+						"github.com/golang/lint/golint"
 						"github.com/mdempsky/gocode"
 						"github.com/k0kubun/pp"
 						"github.com/rogpeppe/godef"
@@ -154,7 +155,6 @@ And the environment variable was existing, Download go binaries from the interne
 						"golang.org/x/tools/cmd/godoc"
 						"golang.org/x/tools/cmd/guru"
 						"golang.org/x/tools/cmd/goimports"
-						"golang.org/x/tools/gopls@latest"
 						"github.com/go-delve/delve/cmd/dlv")))
 	(if (getenv "GOPATH")
 		(progn
@@ -162,8 +162,7 @@ And the environment variable was existing, Download go binaries from the interne
 			;; (setq cmd (format "go get -u %s" elt))
 			(with-current-buffer (get-buffer-create buffer-name)
 			  (display-buffer (current-buffer))
-			  (ignore-errors (call-process "go" nil t 0 "get" "-u" elt))))
-		  )
+			  (ignore-errors (call-process "go" nil t 0 "get" "-u" elt)))))
 	  (message "There was not the GOPATH environment variable."))
 	)
   )
@@ -530,7 +529,7 @@ And the environment variable was existing, Download go binaries from the interne
 						  (local-set-key (kbd "C-c r r") 'lsp-rename)
 						  (local-set-key (kbd "C-c t f") 'go-test-current-test)
 						  (local-set-key (kbd "C-c t a") 'go-test-current-file)
-						  
+  						  (local-set-key (kbd "C-c C-j") nil)
 						  ;; (local-set-key (kbd "C-c r r") 'jong-go-run-project-otherframe)
 						  (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
 						  (local-set-key (kbd "C-c M->")
