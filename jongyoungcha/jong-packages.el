@@ -66,6 +66,7 @@
   (setq lsp-ui-imenu-enable t)
   (setq lsp-ui-peek-enable t)
   (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-diagnostic-max-lines 4)
   )
 
 
