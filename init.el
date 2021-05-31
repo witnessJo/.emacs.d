@@ -10,8 +10,7 @@
 (setq package-check-signature nil)
 
 (require 'package)
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-						 ("melpa" . "https://melpa.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")))
 
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
@@ -50,7 +49,11 @@
   (async-bytecomp-package-mode 1))
 
 (use-package hungry-delete
-  :ensure t)
+  :ensure t
+  :config
+  (global-hungry-delete-mode)
+  )
+
 
 (use-package syntax-subword
   :ensure t
@@ -475,7 +478,8 @@ Version 2017-07-08"
   :ensure t
   :config
   (setq company-async-timeout 4)
-  (setq company-idle-delay 0.01)
+  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.0)
   ;; (setq company-minimum-prefix-length 5)
   (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode)
@@ -543,7 +547,7 @@ Version 2017-07-08"
 (use-package  flycheck
   :ensure t
   :config
-  (global-flycheck-mode t)
+  ;; (global-flycheck-mode)
   )
 
 
@@ -656,7 +660,6 @@ Version 2017-07-08"
   (setq ivy-initial-inputs-alist nil)
   (add-to-list 'ivy-re-builders-alist
 			   '(counsel-M-x . ivy--regex-ignore-order)))
-
   
 
 (use-package ag
@@ -667,12 +670,12 @@ Version 2017-07-08"
 
   
 (use-package ivy-posframe
+  :ensure t
   :demand t
   :after ivy
   :custom
   (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
   :config
-
   (setq ivy-posframe-parameters
       '((left-fringe . 12)
         (right-fringe . 12)))
@@ -736,7 +739,7 @@ Version 2017-07-08"
 (require 'jong-network)
 (require 'jong-http)
 (require 'jong-html)
-;; (require 'jong-dap-debug)
+(require 'jong-dap-debug)
 (require 'jong-term)
 (require 'jong-grpc)
 (require 'jong-swit)
@@ -804,7 +807,7 @@ Version 2017-07-08"
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
+   '(multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values

@@ -24,6 +24,18 @@
 ;; :mode "exec"
 ;; :name  "SwitFileGo"))
 
+(dap-register-debug-template "chandra"
+							 (list :type "go"
+								   :args ""
+								   :env '(
+										  ("GOLANG_PROTOBUF_REGISTRATION_CONFLICT" . "warn")
+										  )
+								   :program "/Users/richard/go/src/chandra/chandra"
+								   :request "launch"
+								   :mode "exec"
+								   :name  "chandra"))
+
+
 
 
 

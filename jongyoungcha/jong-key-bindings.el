@@ -57,13 +57,31 @@
 (global-set-key (kbd "C-c C-h") 'windmove-left)
 (global-set-key (kbd "C-c C-l") 'windmove-right)
 
-(global-set-key (kbd "M-*") 'rectangle-mark-mode)
 
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)
 (global-set-key (kbd "C-c <down>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <right>") 'jong-project-run-command)
 
+
+;; dap
+(global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
+(global-set-key (kbd "<f7>") 'dap-step-out)
+(global-set-key (kbd "<f7>") 'dap-step-in)
+(global-set-key (kbd "<f8>") 'dap-next)
+(global-set-key (kbd "<f6>") 'dap-continue)
+(global-set-key (kbd "<f5>") 'dap-debug)
+
+(global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
+(global-set-key (kbd "C-c d b") 'dap-ui-breakpoints)
+(global-set-key (kbd "C-c d s") 'dap-ui-sessions)
+(global-set-key (kbd "C-c d l") 'dap-ui-locals)
+(global-set-key (kbd "C-c d p") 'dap-debug-last)
+(global-set-key (kbd "C-c d o") 'jong-dap-go-to-output-buffer)
+
+(global-set-key (kbd "C-c d <backspace>") 'dap-delete-session)
+(global-set-key (kbd "C-c d k") 'dap-ui-sessions-delete-session)
+(global-set-key (kbd "C-c d <return>") 'dap-ui-sessions-select)
 
 ;; remapping about the keybinding.
 ;; (define-key key-translation-map (kbd "<left>") (kbd "C-b"))
@@ -92,24 +110,15 @@
       (backward-kill-word 1))))
 
 
-
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
-	;; (define-key map (kbd "M-w") (lambda () (interactive) (jong-forward-line -1)))
-	;; (define-key map (kbd "C-M-w") (lambda () (interactive) (jong-forward-line -1)))
-	;; (define-key map (kbd "M-a") 'backward-char)
-	;; (define-key map (kbd "M-s") (lambda () (interactive) (jong-forward-line 1)))
-	;; (define-key map (kbd "C-M-s") (lambda () (interactive) (jong-forward-line 1)))
-	;; (define-key map (kbd "M-d") 'forward-char)
-
-
-	
-	;; (define-key map (kbd "<A-backspace>") 'jong-common-kill-backward-word)
-	;; (define-key map (kbd "<A-kp-delete>") 'jong-common-kill-forward-word)
-
 	(define-key map (kbd "<A-backspace>") 'evil-delete-backward-word)
 	(define-key map (kbd "<A-kp-delete>") 'kill-word)
+	(define-key map (kbd "C-a") 'beginning-of-line-text)
 	
+	(define-key map (kbd "M-*") 'rectangle-mark-mode)
+	(define-key map (kbd "M-&") 'mc/edit-lines)
+
 	
 	(define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)

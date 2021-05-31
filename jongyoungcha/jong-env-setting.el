@@ -53,7 +53,7 @@
     (message "Linux"))))
 
 (when (member "Consolas" (font-family-list))
-  (set-face-attribute 'default nil :font "Consolas-10.5")
+  (set-face-attribute 'default nil :font "Consolas-14")
   (setq-default line-spacing 2))
 
 

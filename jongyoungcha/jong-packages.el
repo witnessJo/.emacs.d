@@ -49,23 +49,29 @@
   (rust-mode-hook . lsp)
   (go-mode-hook . lsp)
   :config
-  (setq lsp-prefer-flymake nil)
+  ;; (setq lsp-prefer-flymake nil)
   (setq lsp-eldoc-render-all nil)
-  (setq lsp-signature-render-all nil)
+  ;; (setq lsp-signature-render-all nil)
+  ;; (setq lsp-modeline-diagnostics-scope :workspace)
+  (setq lsp-modeline-diagnostics-scope :workspace)
+  (setq gc-cons-threshold 100000000)
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  (setq lsp-idle-delay 0.500)
   :commands lsp)
 
 (use-package lsp-ui
   :ensure t
   :config
   (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-imenu-enable t)
+  (setq lsp-ui-peek-enable t)
+  (setq lsp-ui-sideline-enable t)
   )
 
 
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
-(use-package realgud
-  :ensure t)
 
 (use-package whitespace-cleanup-mode
   :ensure t
@@ -80,6 +86,13 @@
   (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode)))
 
 (use-package json-mode
+  :ensure t)
+
+(use-package flyspell
+  :ensure t)
+
+
+(use-package multiple-cursors
   :ensure t)
 
 (provide 'jong-packages)
