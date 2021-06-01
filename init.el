@@ -22,6 +22,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(server-start)
+
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 (use-package avy
   :ensure t
@@ -727,6 +729,7 @@ Version 2017-07-08"
 (require 'jong-tramp)
 (require 'jong-scheme)
 (require 'jong-cmake)
+(require 'jong-makefile)
 (require 'jong-cc)
 (require 'jong-python)
 (require 'jong-rust)
@@ -811,7 +814,9 @@ Version 2017-07-08"
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/mitra/")
+   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/chandra/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/chandra/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/mitra/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/mitra/")
 	 (jong-project-sub-default-dir-3 . "/Users/swit-mac/go/src/swit/swit-grpc-asset-golang/")
 	 (jong-project-sub-default-dir-2 . "/Users/swit-mac/go/src/swit/swit-grpc-asset-golang/")

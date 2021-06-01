@@ -56,6 +56,7 @@
 (defun jong-term-comint-preoutput-turn-buffer-read-only (text)
   (propertize text 'read-only t))
 
+
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-to-list 'comint-output-filter-functions 'jong-term-comint-preoutput-turn-buffer-read-only)
 

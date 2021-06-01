@@ -51,7 +51,7 @@
     ;; (load-theme 'solarized-dark t)
     
     (message "Linux"))))
-
+(message-box "called")
 (when (member "Consolas" (font-family-list))
   (set-face-attribute 'default nil :font "Consolas-14")
   (setq-default line-spacing 2))

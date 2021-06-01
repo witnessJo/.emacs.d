@@ -258,22 +258,55 @@
 	  (error (format "Couldnt find  %s\"" cmd)))
 	(when (get-buffer output-buffer) (kill-buffer output-buffer))
 
-	(set-process-sentinel
-	 (start-file-process-shell-command output-buffer output-buffer cmd)
-	 (lambda (p e)
-
-	   (ignore-errors (with-current-buffer (get-buffer output-buffer)
-						(compilation-mode)
-						(compilation-shell-minor-mode))
-					  )))
-	(setq target-window (split-window-below))
-	(select-window target-window)
-	(switch-to-buffer output-buffer)
-	(select-window base-window)
+	(with-current-buffer (get-buffer-create output-buffer)
+	  (ansi-color-for-comint-mode-on)
+	  (comint-mode)
+	  (setq default-directory directory)
+	  (display-buffer (current-buffer))
+	  (setq proc (start-process-shell-command (format "*jong-project-subcmd <%s-%s>*" title directory) (current-buffer) cmd))
+	  (set-process-filter proc 'comint-output-filter))
 	)
   )
 
 
+(setq jong-project-window-buffer-pair (make-hash-table :test 'equal))
+
+
+(defun jong-project-register-buffer-to-show()
+  (interactive)
+
+  (let ((buffer-name)
+		(candidates))
+	
+	(message-box "selected window:%s" (selected-window))
+	(setq candidates (mapcar
+					  (lambda (buffer)
+						(buffer-name buffer))
+					  (buffer-list)))
+	(helm :sources (helm-build-sync-source "Jong project Commands2"
+					 :candidates candidates
+					 :fuzzy-match t
+					 :action (lambda (buffer-name)
+							   (message "buffer:%s" buffer-name)
+							   (puthash (selected-window) buffer-name jong-project-window-buffer-pair)
+							   )
+					 )
+		  :buffer "*jong project commands2*")
+	)
+  )
+
+
+(defun jong-project-show-buffer-fixed-window()
+  (interactive)
+  (let ((target-window))
+	(maphash (lambda (key val)
+			   (if (window-live-p key)
+				   (set-window-buffer key val)
+				 (remhash key jong-project-window-buffer-pair))
+			   )
+			 jong-project-window-buffer-pair)
+	)
+  )
 
 (global-set-key (kbd "C-c c m") 'jong-project-make-dot-dir-locals-el)
 (global-set-key (kbd "C-c c v") 'jong-project-visit-dot-dir-locals-el)
@@ -281,6 +314,8 @@
 (global-set-key (kbd "C-c c r") 'jong-project-run-project)
 (global-set-key (kbd "C-c c d") 'jong-project-debug-project)
 (global-set-key (kbd "C-c c l") 'jong-project-subcmd-list)
+(global-set-key (kbd "C-c c .") 'jong-project-show-buffer-fixed-window)
+(global-set-key (kbd "C-c c ,") 'jong-project-register-buffer-to-show)
 
 
 
