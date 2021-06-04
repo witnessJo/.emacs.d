@@ -1,16 +1,5 @@
 ;;; Code
 
-;; (cond
-;; ((string-equal system-type "gnu/linux")
-;; (progn
-;; ))
-;; ((string-equal system-type "darwin")
-;; (progn
-;; (global-set-key (kbd "<C-M-up>") 'windmove-up)
-;; (global-set-key (kbd "<C-M-down>") 'windmove-down)
-;; (global-set-key (kbd "<C-M-left>") 'windmove-left)
-;; (global-set-key (kbd "<C-M-right>") 'windmove-right))))
-
 
 (global-set-key (kbd "C-.") 'winner-undo)
 (global-set-key (kbd "C->") 'winner-redo)
@@ -30,10 +19,6 @@
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
 
-(global-set-key (kbd "M-c") 'jong-common-copy-region-or-line)
-(global-set-key (kbd "M-v") (lambda()
-							  (interactive)
-							  (call-interactively 'yank)))
 
 
 (global-set-key (kbd "C-S-k") 'jong-common-delete-line)
@@ -100,6 +85,8 @@
 ;; (skip-syntax-backward "\sw")
 ;; (delete-region (point) orig)))
 
+
+
 (defun my-backward-kill-word ()
   "Kill words backward my way."
   (interactive)
@@ -114,11 +101,16 @@
   (let ((map (make-sparse-keymap)))
 	(define-key map (kbd "<A-backspace>") 'evil-delete-backward-word)
 	(define-key map (kbd "<A-kp-delete>") 'kill-word)
-	(define-key map (kbd "C-a") 'beginning-of-line-text)
+	(define-key map (kbd "C-a") 'jong-beginning-of-line-text)
+	;; (define-key map (kbd "C-<backspace>") 'hungry-delete-backward)
+	;; (define-key map (kbd "C-<delete>") 'jong-forward-delete-word)
 	
-	(define-key map (kbd "M-*") 'rectangle-mark-mode)
-	(define-key map (kbd "M-&") 'mc/edit-lines)
-
+	;; (define-key map (kbd "M-") 'rectangle-mark-mode)
+	(define-key map (kbd "M-*") 'mc/edit-lines)
+	(define-key map (kbd "M-c") 'jong-common-copy-region-or-line)
+	(define-key map (kbd "M-v") (lambda()
+								  (interactive)
+								  (call-interactively 'yank)))
 	
 	(define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)
@@ -167,6 +159,8 @@
 (defun disable-jong-keys-minor-mode()
   (interactive)
   (jong-keys-minor-mode 0))
+
+
 
 
 

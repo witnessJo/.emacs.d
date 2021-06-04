@@ -52,10 +52,9 @@
 
 (use-package hungry-delete
   :ensure t
-  :config
-  (global-hungry-delete-mode)
+  (setq global-hungry-delete-mode 0)
+  
   )
-
 
 (use-package syntax-subword
   :ensure t
@@ -281,8 +280,8 @@ Version 2017-07-08"
   )
 
 
-(global-set-key (kbd "M-c") nil)
-(global-set-key (kbd "C-c C-x") nil)
+;; (global-set-key (kbd "M-c") nil)
+;; (global-set-key (kbd "C-c C-x") nil)
 
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq mark-ring-max 8)
@@ -301,17 +300,15 @@ Version 2017-07-08"
 								(indent-for-tab-command)
 								)))
 
-(global-set-key (kbd "C-c k") (lambda() (interactive)
-								(kill-buffer (buffer-name))))
-(global-set-key (kbd "M-c k") (lambda() (interactive)
-								(call-interactively 'other-window)
-								(kill-buffer (buffer-name))
-								(call-interactively 'other-window)))
-
+;; (global-set-key (kbd "C-c k") (lambda() (interactive)
+;; (kill-buffer (buffer-name))))
+;; (global-set-key (kbd "M-c k") (lambda() (interactive)
+;;								(call-interactively 'other-window)
+;;								(kill-buffer (buffer-name))
+;;								(call-interactively 'other-window)))
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
-
 (global-set-key (kbd "C-d") 'delete-forward-char)
 
 (defun jong-forward-line (number)
@@ -351,13 +348,13 @@ Version 2017-07-08"
 
 
 ;; Back word with candidate characters.
-(global-set-key (kbd "M-F") (lambda () (interactive)
-							  (jong-set-mark)
-							  (forward-word)))
+;; (global-set-key (kbd "M-F") (lambda () (interactive)
+;; (jong-set-mark)
+;; (forward-word)))
 
-(global-set-key (kbd "M-B") (lambda () (interactive)
-							  (jong-set-mark)
-							  (backward-word)))
+;; (global-set-key (kbd "M-B") (lambda () (interactive)
+;; (jong-set-mark)
+;; (backward-word)))
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
 								(jong-set-mark)
@@ -526,6 +523,7 @@ Version 2017-07-08"
 	  (message "The command was empty..."))
 	))
 
+
 (global-set-key (kbd "C-c p p") 'projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'projectile-find-file)
 (global-set-key (kbd "C-c p c") 'projectile-compile-project)
@@ -662,7 +660,7 @@ Version 2017-07-08"
   (setq ivy-initial-inputs-alist nil)
   (add-to-list 'ivy-re-builders-alist
 			   '(counsel-M-x . ivy--regex-ignore-order)))
-  
+
 
 (use-package ag
   :ensure t)
@@ -670,7 +668,7 @@ Version 2017-07-08"
 (use-package counsel-projectile
   :ensure t)
 
-  
+
 (use-package ivy-posframe
   :ensure t
   :demand t
@@ -679,8 +677,8 @@ Version 2017-07-08"
   (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
   :config
   (setq ivy-posframe-parameters
-      '((left-fringe . 12)
-        (right-fringe . 12)))
+		'((left-fringe . 12)
+          (right-fringe . 12)))
   (ivy-posframe-mode))
 
 
@@ -752,9 +750,10 @@ Version 2017-07-08"
 ;; (require 'jong-ether-test)
 ;; (require 'jong-brth-test)
 
-(require 'jong-key-bindings)
+(require 'jong-cursor)
 (require 'jong-debug-settings)
 
+(require 'jong-key-bindings)
 
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")

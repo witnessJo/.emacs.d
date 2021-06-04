@@ -51,11 +51,16 @@
     ;; (load-theme 'solarized-dark t)
     
     (message "Linux"))))
-(message-box "called")
-(when (member "Consolas" (font-family-list))
-  (set-face-attribute 'default nil :font "Consolas-14")
-  (setq-default line-spacing 2))
-
+;; (message-box "called")
+;; (if (member "Consolas" (font-family-list))
+;; (progn
+;; (setq default-frame-alist '((font . "Consolas-15")))
+;; (message-box "called1"))
+  ;; (set-face-attribute 'default nil :font "Consolas-14")
+  ;; (add-to-list 'default-frame-alist '(font . "Consolas-14"))
+  ;; (setq-default line-spacing 2))
+  
+(setq default-frame-alist '((font . "Consolas-14")))
 
 (toggle-scroll-bar -1)
 (setq-default indent-tabs-mode t)

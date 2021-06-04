@@ -482,7 +482,8 @@ And the environment variable was existing, Download go binaries from the interne
 (add-hook 'go-mode-hook #'lsp-deferred)
 (defun lsp-go-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  ;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
+  )
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
 
@@ -518,7 +519,7 @@ And the environment variable was existing, Download go binaries from the interne
 						  (local-set-key (kbd "C-c C-g") 'go-goto-imports)
 						  (local-set-key (kbd "C-c C-f") 'gofmt)
 						  (local-set-key (kbd "C-c C-c") 'lsp-execute-code-action)
-						  (local-set-key (kbd "M .") 'lsp-ui-peek-find-definitions)
+						  (local-set-key (kbd "M-.") 'lsp-ui-peek-find-definitions)
 						  (local-set-key (kbd "C-c r ,") 'lsp-ui-peek-find-references)
 						  (local-set-key (kbd "C-c r i") 'lsp-ui-peek-find-implementation)
 						  (local-set-key (kbd "C-c o i") 'lsp-ui-organize-imports)
