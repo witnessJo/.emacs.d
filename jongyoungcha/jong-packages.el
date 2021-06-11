@@ -27,11 +27,9 @@
   (which-key-mode)
   (setq which-key-popup-type 'minibuffer))
 
-
 (use-package clang-format
   :ensure t
   :config )
-
 
 (use-package yaml-mode
   :ensure t
@@ -69,10 +67,8 @@
   (setq lsp-ui-sideline-diagnostic-max-lines 8)
   )
 
-
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-
 
 (use-package whitespace-cleanup-mode
   :ensure t
@@ -92,8 +88,13 @@
 (use-package flyspell
   :ensure t)
 
-
 (use-package multiple-cursors
   :ensure t)
+
+(use-package org
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+
 
 (provide 'jong-packages)

@@ -56,11 +56,13 @@
 ;; (progn
 ;; (setq default-frame-alist '((font . "Consolas-15")))
 ;; (message-box "called1"))
-  ;; (set-face-attribute 'default nil :font "Consolas-14")
-  ;; (add-to-list 'default-frame-alist '(font . "Consolas-14"))
-  ;; (setq-default line-spacing 2))
-  
-(setq default-frame-alist '((font . "Consolas-14")))
+;; (set-face-attribute 'default nil :font "Consolas-14")
+;; (add-to-list 'default-frame-alist '(font . "Consolas-14"))
+;; (setq-default line-spacing 2))
+
+(setq default-frame-alist '((font . "Consolas-14")
+							)
+	  )
 
 (toggle-scroll-bar -1)
 (setq-default indent-tabs-mode t)
@@ -69,6 +71,7 @@
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
+(show-paren-mode t)
 
 ;; For protecting my eyes...
 (custom-set-faces

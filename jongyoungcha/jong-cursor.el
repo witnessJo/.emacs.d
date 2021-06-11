@@ -1,7 +1,8 @@
-;;; Code
+;;; Code:
 
 
-(set (make-local-variable 'jong-edit-beginning-of-line-text-pos) (point))
+(defvar-local jong-edit-beginning-of-line-text-pos (point))
+
 
 (defun jong-edit-beginning-of-line-text()
   "Beginning of line."

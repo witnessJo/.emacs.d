@@ -85,8 +85,6 @@
 ;; (skip-syntax-backward "\sw")
 ;; (delete-region (point) orig)))
 
-
-
 (defun my-backward-kill-word ()
   "Kill words backward my way."
   (interactive)
@@ -99,13 +97,10 @@
 
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
+	(define-key map (kbd "C-M-'") 'toggle-input-method)
 	(define-key map (kbd "<A-backspace>") 'evil-delete-backward-word)
 	(define-key map (kbd "<A-kp-delete>") 'kill-word)
 	(define-key map (kbd "C-a") 'jong-edit-beginning-of-line-text)
-	;; (define-key map (kbd "C-<backspace>") 'hungry-delete-backward)
-	;; (define-key map (kbd "C-<delete>") 'jong-forward-delete-word)
-	
-	;; (define-key map (kbd "M-") 'rectangle-mark-mode)
 	(define-key map (kbd "M-*") 'mc/edit-lines)
 	(define-key map (kbd "M-c") 'jong-common-copy-region-or-line)
 	(define-key map (kbd "M-v") 'jong-edit-paste-text)

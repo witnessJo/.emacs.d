@@ -2,10 +2,10 @@
 ;;; installed packages.  Don't delete this line.  eIf you don't want it,
 ;;; just comment it out by adding a semicolon to the start of the line.
 ;;; You may delete these explanatory comments.
+
 (gnutls-available-p)
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 ;; (setq package--check-signature nil)
-
 
 (setq package-check-signature nil)
 
@@ -40,10 +40,6 @@
 (use-package evil
   :ensure t)
 
-(use-package org
-  :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (use-package async
   :ensure t
@@ -52,7 +48,7 @@
 
 (use-package hungry-delete
   :ensure t
-  (setq global-hungry-delete-mode nil)
+  (global-hungry-delete-mode nil)
   )
 
 (use-package syntax-subword
@@ -286,7 +282,6 @@ Version 2017-07-08"
 (setq mark-ring-max 8)
 (setq global-mark-ring-max 8)
 (setq set-mark-command-repeat-pop t)
-(global-set-key (kbd "S-SPC") 'toggle-korean-input-method)
 
 
 (global-set-key (kbd "M-;") (lambda () (interactive)
@@ -343,8 +338,6 @@ Version 2017-07-08"
   (setq this-command-keys-shift-translated t)
   (if (not (use-region-p))
 	  (call-interactively 'set-mark-command)))
-
-
 
 ;; Back word with candidate characters.
 ;; (global-set-key (kbd "M-F") (lambda () (interactive)
@@ -429,29 +422,29 @@ Version 2017-07-08"
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
 
-(defun lispy-parens ()
-  "Setup parens display for lisp modes."
-  (setq show-paren-delay 0)
-  (setq show-paren-style 'parenthesis)
+;; (defun lispy-parens ()
+;;   "Setup parens display for lisp modes."
+;;   (setq show-paren-delay 0)
+;;   (setq show-paren-style 'parenthesis)
 
-  (show-paren-mode 1)
-  (set-face-backgrount 'show-paren-math)
-  (show-paren-mode 1)
-  (set-face-background 'show-paren-match-face (face-background 'default))
-  (if (boundp 'font-lock-comment-face)
-	  (set-face-foreground 'show-paren-match-face
-						   (face-foreground 'font-lock-comment-face))
-	(set-face-foreground 'show-paren-match-face
-						 (face-foreground 'default)))
-  (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
+;;   (show-paren-mode 1)
+;;   (set-face-backgrount 'show-paren-math)
+;;   (show-paren-mode 1)
+;;   (set-face-background 'show-paren-match-face (face-background 'default))
+;;   (if (boundp 'font-lock-comment-face)
+;; 	  (set-face-foreground 'show-paren-match-face
+;; 						   (face-foreground 'font-lock-comment-face))
+;; 	(set-face-foreground 'show-paren-match-face
+;; 						 (face-foreground 'default)))
+;;   (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
 
-(require 'paren)
-(set-face-background 'show-paren-match (face-background 'default))
-(set-face-foreground 'show-paren-match "#def")
-(set-face-attribute 'show-paren-match  nil :weight 'extra-bold)
+;; (require 'paren)
+;; (set-face-background 'show-paren-match (face-background 'default))
+;; (set-face-foreground 'show-paren-match "#def")
+;; (set-face-attribute 'show-paren-match  nil :weight 'extra-bold)
 
-(show-paren-mode 1)
-(setq show-paren-delay 0)
+;; (show-paren-mode 1)
+;; (setq show-paren-delay 0)
 
 ;; reload ~/.emacs.d/init.el file
 (defun reload-user-init-file()
@@ -550,7 +543,6 @@ Version 2017-07-08"
 (use-package  flycheck
   :ensure t
   :config
-  ;; (global-flycheck-mode)
   )
 
 
@@ -592,8 +584,6 @@ Version 2017-07-08"
 	  (when (string-match pattern (buffer-name buffer))
 		(kill-buffer buffer))))
   )
-;; (delete-above-below-window))
-
 
 (global-set-key (kbd "C-g") (lambda () (interactive)
 							  (jong-kill-temporary-buffers)
@@ -718,11 +708,12 @@ Version 2017-07-08"
 (global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'counsel-projectile-find-file)
 
-
 (require 'jong-packages)
 (require 'jong-env-setting)
 (require 'jong-common)
 (require 'jong-project)
+(require 'jong-cursor)
+(require 'jong-windows)
 
 ;; Langauges
 (require 'jong-elisp)
@@ -754,7 +745,6 @@ Version 2017-07-08"
 ;; (require 'jong-ether-test)
 ;; (require 'jong-brth-test)
 
-(require 'jong-cursor)
 (require 'jong-debug-settings)
 
 (require 'jong-key-bindings)
