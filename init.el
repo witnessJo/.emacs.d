@@ -4,17 +4,22 @@
 ;;; You may delete these explanatory comments.
 
 (gnutls-available-p)
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-;; (setq package--check-signature nil)
-
-(setq package-check-signature nil)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq package--check-signature nil)
 
 (require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("elpa" . "https://mirrors.163.com/elpa/gnu/")))
 
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://mirrors.163.com/elpa/gnu")))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+;;(when (< emacs-major-version 24)
+;;  ;; For important compatibility libraries like cl-lib
+;;  (add-to-list 'package-archives '("gnu" . "http://mirrors.163.com/elpa/gnu")))
 
 (package-initialize)
 
@@ -47,9 +52,7 @@
   (async-bytecomp-package-mode 1))
 
 (use-package hungry-delete
-  :ensure t
-  (global-hungry-delete-mode nil)
-  )
+  :ensure t)
 
 (use-package syntax-subword
   :ensure t
@@ -178,10 +181,10 @@ Version 2017-07-08"
 ;; (autopair-global-mode 1)
 ;; (setq autopair-autowrap t)
 
-(use-package undo-tree
-  :ensure t
-  :config
-  (global-undo-tree-mode t))
+;;(use-package undo-tree
+;;  :ensure t
+;;  :config
+;;  (global-undo-tree-mode t))
 
 ;; reuse a dired list buffer.
 (require 'dired)
@@ -713,7 +716,7 @@ Version 2017-07-08"
 (require 'jong-common)
 (require 'jong-project)
 (require 'jong-cursor)
-(require 'jong-windows)
+(require 'jong-window)
 
 ;; Langauges
 (require 'jong-elisp)
@@ -742,16 +745,11 @@ Version 2017-07-08"
 
 
 ; For Testing
-;; (require 'jong-ether-test)
-;; (require 'jong-brth-test)
-
 (require 'jong-debug-settings)
-
 (require 'jong-key-bindings)
 
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
-
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
@@ -803,7 +801,7 @@ Version 2017-07-08"
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(magit-delta multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
+   '(aggressive-indent aggresive-indent aggresive-indent-mode magit-delta multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values

@@ -96,5 +96,10 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
+(use-package aggressive-indent
+  :ensure t
+  :config
+  (global-aggressive-indent-mode 1))
+
 
 (provide 'jong-packages)

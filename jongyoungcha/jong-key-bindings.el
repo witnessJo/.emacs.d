@@ -97,8 +97,14 @@
 
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
+	(define-key map (kbd "C-<up>") 'evil-window-up)
+	(define-key map (kbd "C-<left>") 'evil-window-left)
+	(define-key map (kbd "C-<down>") 'evil-window-down)
+	(define-key map (kbd "C-<right>") 'evil-window-right)
+	(define-key map (kbd "A-<up>") 'backward-paragraph)
+	(define-key map (kbd "A-<down>") 'forward-paragraph)
 	(define-key map (kbd "C-M-'") 'toggle-input-method)
-	(define-key map (kbd "<A-backspace>") 'evil-delete-backward-word)
+	(define-key map (kbd "A-<backspace>") 'evil-delete-backward-word)
 	(define-key map (kbd "<A-kp-delete>") 'kill-word)
 	(define-key map (kbd "C-a") 'jong-edit-beginning-of-line-text)
 	(define-key map (kbd "M-*") 'mc/edit-lines)
