@@ -61,9 +61,10 @@
   :config
   (setq lsp-ui-doc-enable t)
   (setq lsp-ui-imenu-enable t)
-  (setq lsp-ui-peek-enable t)
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-diagnostic-max-lines 8)
+  (setq lsp-ui-peek-enable t)
+  (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
   )
 
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)

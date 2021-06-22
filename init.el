@@ -36,7 +36,9 @@
 
 (global-font-lock-mode t)
 (transient-mark-mode 1)
+
 (setq make-backup-files nil)
+(setq create-lockfiles nil)
 (setq eldoc-idle-delay 0.05)
 
 (use-package evil
@@ -468,7 +470,6 @@ Version 2017-07-08"
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   )
 
-
 (use-package company-quickhelp
   :ensure t
   :config
@@ -687,6 +688,7 @@ Version 2017-07-08"
 (require 'jong-go)
 
 ;; Utils
+(require 'jong-helm)
 (require 'jong-network)
 (require 'jong-http)
 (require 'jong-html)

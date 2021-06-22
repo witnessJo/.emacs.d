@@ -1,7 +1,14 @@
+;;; Code
+;;;
+;;;
+
 (use-package helm
   :ensure t
   :init
   :config
+  (helm-autoresize-mode t)
+  (setq helm-autoresize-max-height 40)
+  (setq helm-autoresize-min-height 40)
   (setq helm-split-window-in-side-p t)
   (helm-mode 1)
   (setq helm-candidate-number-limit 500)
@@ -24,20 +31,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package helm-ag
   :ensure t)
-(with-eval-after-load 'helm-ag
-  (global-set-key (kbd "C-c a g") 'helm-do-ag))
+;; (with-eval-after-load 'helm-ag
+;; (global-set-key (kbd "C-c a g") 'helm-do-ag))
 
-(global-set-key (kbd "C-c b") 'helm-buffers-list)
-(global-set-key (kbd "C-c C-b") 'helm-buffers-list)
+;; (global-set-key (kbd "C-c b") 'helm-buffers-list)
+;; (global-set-key (kbd "C-c C-b") 'helm-buffers-list)
 
 
 (use-package helm-projectile
   :ensure t)
 
-(with-eval-after-load 'helm-projectile
-  (setq helm-projectile-fuzzy-match nil))
+;; (with-eval-after-load 'helm-projectile
+;; (setq helm-projectile-fuzzy-match nil))
 
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
+;; (setq projectile-completion-system 'helm)
+;; (helm-projectile-on)
 
-(provide 'yc-helm.el)
+(provide 'jong-helm)
