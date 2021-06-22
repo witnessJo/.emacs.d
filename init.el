@@ -4,6 +4,7 @@
 ;;; You may delete these explanatory comments.
 
 (gnutls-available-p)
+
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (setq package--check-signature nil)
 
@@ -16,10 +17,6 @@
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-;;(when (< emacs-major-version 24)
-;;  ;; For important compatibility libraries like cl-lib
-;;  (add-to-list 'package-archives '("gnu" . "http://mirrors.163.com/elpa/gnu")))
 
 (package-initialize)
 
@@ -176,16 +173,6 @@ Version 2017-07-08"
 (use-package prodigy
   :ensure t)
 
-;; (use-package autopair
-;; :ensure t)
-;; (autopair-global-mode 1)
-;; (setq autopair-autowrap t)
-
-;;(use-package undo-tree
-;;  :ensure t
-;;  :config
-;;  (global-undo-tree-mode t))
-
 ;; reuse a dired list buffer.
 (require 'dired)
 (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
@@ -270,7 +257,6 @@ Version 2017-07-08"
 			(progn
 			  (ignore-errors (delete-region candidate-pos base-pos))
 			  (goto-char candidate-pos)
-			  ;; (message "%s candpos : %d bword-pos %d" prev-candidate-char candidate-pos bword-pos)
 			  )
 		  (ignore-errors (delete-region (1- bword-pos) base-pos)))
 		))
@@ -657,7 +643,6 @@ Version 2017-07-08"
   (add-to-list 'ivy-re-builders-alist
 			   '(counsel-M-x . ivy--regex-ignore-order)))
 
-
 (use-package ag
   :ensure t)
 
@@ -678,38 +663,6 @@ Version 2017-07-08"
   (ivy-posframe-mode))
 
 
-;; (setq ivy-use-virtual-buffers t)
-;; (setq ivy-count-format "(%d/%d) ")
-
-(global-set-key (kbd "C-s") 'swiper-isearch)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "M-y") 'counsel-yank-pop)
-(global-set-key (kbd "<f1> f") 'counsel-describe-function)
-(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f1> l") 'counsel-find-library)
-(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-(global-set-key (kbd "<f2> j") 'counsel-set-variable)
-(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-(global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
-(global-set-key (kbd "C-c v") 'ivy-push-view)
-(global-set-key (kbd "C-c V") 'ivy-pop-view)
-
-;; (global-set-key (kbd "C-c c") 'counsel-compile)
-(global-set-key (kbd "C-c g g") 'counsel-git)
-(global-set-key (kbd "C-c g j") 'counsel-git-grep)
-(global-set-key (kbd "C-c g l") 'counsel-git-log)
-(global-set-key (kbd "C-c a g") 'counsel-rg)
-;; (global-set-key (kbd "C-c m") 'counsel-linux-app)
-(global-set-key (kbd "C-c n") 'counsel-fzf)
-(global-set-key (kbd "C-x l") 'counsel-locate)
-(global-set-key (kbd "C-c J") 'counsel-file-jump)
-(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-;; (global-set-key (kbd "C-c w") 'counsel-wmctrl)
-
-(global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
-(global-set-key (kbd "C-c p f") 'counsel-projectile-find-file)
 
 (require 'jong-packages)
 (require 'jong-env-setting)
@@ -743,8 +696,7 @@ Version 2017-07-08"
 (require 'jong-swit)
 (require 'jong-swit-dotenv1)
 
-
-; For Testing
+;; For Testing
 (require 'jong-debug-settings)
 (require 'jong-key-bindings)
 
@@ -805,7 +757,9 @@ Version 2017-07-08"
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/chandra/")
+   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/maat/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/maat/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/chandra/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/chandra/")
 	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/mitra/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/mitra/")

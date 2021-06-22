@@ -28,8 +28,7 @@
   (setq which-key-popup-type 'minibuffer))
 
 (use-package clang-format
-  :ensure t
-  :config )
+  :ensure t)
 
 (use-package yaml-mode
   :ensure t
@@ -96,10 +95,13 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
-(use-package aggressive-indent
+(use-package auto-highlight-symbol
   :ensure t
   :config
-  (global-aggressive-indent-mode 1))
+  (global-auto-highlight-symbol-mode t))
 
+(use-package helm-ag
+  :ensure t)
+  
 
 (provide 'jong-packages)

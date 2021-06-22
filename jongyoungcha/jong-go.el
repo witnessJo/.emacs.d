@@ -479,6 +479,8 @@ And the environment variable was existing, Download go binaries from the interne
 ;; )))
 ;; )
 
+
+
 (add-hook 'go-mode-hook #'lsp-deferred)
 (defun lsp-go-install-save-hooks ()
   ;; (add-hook 'before-save-hook #'lsp-format-buffer t t)
