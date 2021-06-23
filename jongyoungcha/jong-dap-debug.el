@@ -3,10 +3,11 @@
 (use-package dap-mode
   :ensure t
   :config
-  (dap-mode t)
-  (dap-ui-mode t)
-  (tooltip-mode t)
-  (dap-tooltip-mode t)
+  (dap-mode 1)
+  (dap-ui-mode 1)
+  (tooltip-mode 1)
+  (dap-tooltip-mode 1)
+  (dap-ui-controls-mode 1)
   (require 'dap-lldb)
   (require 'dap-node)
   (require 'dap-go)
@@ -14,6 +15,8 @@
   (add-hook 'dap-stopped-hook
           (lambda (arg) (call-interactively #'dap-hydra)))
   )
+
+(require 'dap-go)
 
 
 

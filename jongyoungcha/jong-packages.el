@@ -7,6 +7,51 @@
 
 (message (regexp-opt-charset '(?a ?c ?e ? ?\t)))
 
+
+(use-package auto-complete
+  :ensure t)
+
+(use-package company
+  :ensure t
+  :config
+  (setq company-async-timeout 4)
+  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.0)
+  ;; (setq company-minimum-prefix-length 5)
+  (global-set-key (kbd "C-<tab>") 'company-complete)
+  (add-hook 'after-init-hook 'global-company-mode)
+  ;; (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  )
+
+(use-package company-quickhelp
+  :ensure t
+  :config
+  (company-quickhelp-mode)
+  (setq company-quickhelp-delay nil)
+  (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)
+  )
+
+(use-package magit-delta
+  :ensure t)
+
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-delta-mode t)
+  (setq git-commit-summary-max-length 1000))
+
+(use-package projectile
+  :ensure t
+  :init
+  :config
+  (projectile-mode 1)
+  (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
+  (setq projectile-globally-ignored-directories (append '(".svn") projectile-globally-ignored-directories))
+  (setq projectile-enable-caching t)
+  (setq projectile-git-submodule-command nil))
+
 ;; add themes
 (use-package color-theme-sanityinc-tomorrow :ensure t)
 (use-package solarized-theme :ensure t)
@@ -103,6 +148,95 @@
 
 (use-package helm-ag
   :ensure t)
-  
+
+(use-package avy
+  :ensure t
+  :config
+  :bind
+  ("C-'" . avy-goto-word-0)
+  ("C-;" . avy-goto-line))
+
+
+(use-package counsel
+  :ensure t
+  :after ivy
+  :config (counsel-mode))
+
+(use-package ivy
+  :ensure t
+  :defer 0.1
+  :config
+  (setq ivy-use-virtual-buffers t
+        ivy-count-format "%d/%d ")
+  (setq ivy-initial-inputs-alist nil)
+  (add-to-list 'ivy-re-builders-alist
+			   '(counsel-M-x . ivy--regex-ignore-order)))
+
+(use-package ag
+  :ensure t)
+
+(use-package counsel-projectile
+  :ensure t)
+
+(use-package ivy-posframe
+  :ensure t
+  :demand t
+  :after ivy
+  :custom
+  (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+  :config
+  (setq ivy-posframe-parameters
+		'((left-fringe . 12)
+          (right-fringe . 12)))
+  (ivy-posframe-mode))
+
+
+(use-package google-translate
+  :ensure t
+  :config
+  (setq google-translate-default-source-language "en")
+  (setq google-translate-default-target-language "ko")
+  (setq google-translate-show-phonetic 1)
+  (global-set-key (kbd "C-c g d") 'google-translate-at-point))
+
+(use-package org
+  :ensure t)
+
+(use-package markdown-mode
+  :ensure t  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+		 ("\\.md\\'" . markdown-mode)
+		 ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+(use-package evil
+  :ensure t)
+
+(use-package async
+  :ensure t
+  :config
+  (async-bytecomp-package-mode 1))
+
+(use-package hungry-delete
+  :ensure t)
+
+(use-package syntax-subword
+  :ensure t
+  :config)
+
+;; When the loading time, the packages will be updated.
+(use-package auto-package-update
+  :ensure t
+  :config
+  (auto-package-update-now))
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
+(use-package prodigy
+  :ensure t)
+
 
 (provide 'jong-packages)

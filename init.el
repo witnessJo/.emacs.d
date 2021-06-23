@@ -27,12 +27,6 @@
 (server-start)
 
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
-(use-package avy
-  :ensure t
-  :config
-  :bind
-  ("C-'" . avy-goto-word-0)
-  ("C-;" . avy-goto-line))
 
 (global-font-lock-mode t)
 (transient-mark-mode 1)
@@ -40,115 +34,6 @@
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
 (setq eldoc-idle-delay 0.05)
-
-(use-package evil
-  :ensure t)
-
-
-(use-package async
-  :ensure t
-  :config
-  (async-bytecomp-package-mode 1))
-
-(use-package hungry-delete
-  :ensure t)
-
-(use-package syntax-subword
-  :ensure t
-  :config)
-
-(defun jong-get-selection-length ()
-  "Get length of selection."
-  (interactive)
-  (if (use-region-p)
-	  (let (pos1 pos2)
-		(setq pos1 (region-beginning) pos2 (region-end))
-		(- pos2 pos1))
-	-1))
-
-
-(defun jong-show-selection-length ()
-  "Show length of selection."
-  (interactive)
-  (let (length)
-	(setq length (jong-get-selection-length))
-	(if (equal length -1)
-		(message "regions is not activated...")
-	  (message "length : %d" length))
-	))
-
-
-(defun jong-switch-last-two-buffers ()
-  "Switch to previously open buffer.
-Repeated invocations toggle between the two most recently open buffers."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
-
-
-(defun jong-cut-line-or-region ()
-  "Cut current line, or text selection
-When `universal-argument' is called first, cut whole buffer (respects `narrow-to-region').
-URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
-Version 2015-06-10"
-  (interactive)
-  (if current-prefix-arg
-	  (progn ; not using kill-region because we don't want to include previous kill
-		(kill-new (buffer-string))
-		(delete-region (point-min) (point-max)))
-	(progn (if (use-region-p)
-			   (kill-region (region-beginning) (region-end) t)
-			 (kill-region (line-beginning-position) (line-beginning-position 2))))))
-
-
-(defun jong-copy-line-or-region ()
-  "Copy current line, or text selection.
-When called repeatedly, append copy subsequent lines.
-When `universal-argument' is called first, copy whole buffer (respects `narrow-to-region').
-
-URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
-Version 2017-07-08"
-  (interactive)
-  (if current-prefix-arg
-	  (progn
-		(kill-ring-save (point-min) (point-max))
-		(message "All visible buffer text copied"))
-	(if (use-region-p)
-		(progn
-		  (kill-ring-save (region-beginning) (region-end))
-		  (message "Active region copied"))
-	  (if (eq last-command this-command)
-		  (if (eobp)
-			  (progn (message "empty line at end of buffer." ))
-			(progn
-			  (kill-append "\n" nil)
-			  (kill-append
-			   (buffer-substring-no-properties (line-beginning-position) (line-end-position))
-			   nil)
-			  (message "Line copy appended")
-			  (progn
-				(end-of-line)
-				(forward-char))))
-		(if (eobp)
-			(if (eq (char-before) 10 )
-				(progn (message "empty line at end of buffer." ))
-			  (progn
-				(kill-ring-save (line-beginning-position) (line-end-position))
-				(end-of-line)
-				(message "line copied")))
-		  (progn
-			(kill-ring-save (line-beginning-position) (line-end-position))
-			(end-of-line)
-			(forward-char)
-			(message "line copied")))))))
-
-
-;; When the loading time, the packages will be updated.
-(use-package auto-package-update
-  :ensure t)
-(with-eval-after-load 'auto-package-update
-  (lambda()
-	(auto-package-update-now)))
-
 
 (setenv "LANG" "en_US.UTF-8")
 (setenv "LC_ALL" "en_US.UTF-8")
@@ -165,15 +50,6 @@ Version 2017-07-08"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package yasnippet
-  :ensure t)
-
-(require 'yasnippet)
-(yas-global-mode 1)
-
-
-(use-package prodigy
-  :ensure t)
 
 ;; reuse a dired list buffer.
 (require 'dired)
@@ -266,9 +142,6 @@ Version 2017-07-08"
   )
 
 
-;; (global-set-key (kbd "M-c") nil)
-;; (global-set-key (kbd "C-c C-x") nil)
-
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq mark-ring-max 8)
 (setq global-mark-ring-max 8)
@@ -284,13 +157,6 @@ Version 2017-07-08"
 								(forward-line)
 								(indent-for-tab-command)
 								)))
-
-;; (global-set-key (kbd "C-c k") (lambda() (interactive)
-;; (kill-buffer (buffer-name))))
-;; (global-set-key (kbd "M-c k") (lambda() (interactive)
-;;								(call-interactively 'other-window)
-;;								(kill-buffer (buffer-name))
-;;								(call-interactively 'other-window)))
 
 
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
@@ -330,14 +196,6 @@ Version 2017-07-08"
   (if (not (use-region-p))
 	  (call-interactively 'set-mark-command)))
 
-;; Back word with candidate characters.
-;; (global-set-key (kbd "M-F") (lambda () (interactive)
-;; (jong-set-mark)
-;; (forward-word)))
-
-;; (global-set-key (kbd "M-B") (lambda () (interactive)
-;; (jong-set-mark)
-;; (backward-word)))
 
 (global-set-key (kbd "C-S-f") (lambda () (interactive)
 								(jong-set-mark)
@@ -413,31 +271,6 @@ Version 2017-07-08"
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
 
-;; (defun lispy-parens ()
-;;   "Setup parens display for lisp modes."
-;;   (setq show-paren-delay 0)
-;;   (setq show-paren-style 'parenthesis)
-
-;;   (show-paren-mode 1)
-;;   (set-face-backgrount 'show-paren-math)
-;;   (show-paren-mode 1)
-;;   (set-face-background 'show-paren-match-face (face-background 'default))
-;;   (if (boundp 'font-lock-comment-face)
-;; 	  (set-face-foreground 'show-paren-match-face
-;; 						   (face-foreground 'font-lock-comment-face))
-;; 	(set-face-foreground 'show-paren-match-face
-;; 						 (face-foreground 'default)))
-;;   (set-face-attribute 'show-paren-match-face nil :weight 'extra-bold))
-
-;; (require 'paren)
-;; (set-face-background 'show-paren-match (face-background 'default))
-;; (set-face-foreground 'show-paren-match "#def")
-;; (set-face-attribute 'show-paren-match  nil :weight 'extra-bold)
-
-;; (show-paren-mode 1)
-;; (setq show-paren-delay 0)
-
-;; reload ~/.emacs.d/init.el file
 (defun reload-user-init-file()
   "Load user init.el file"
   (interactive)
@@ -451,51 +284,6 @@ Version 2017-07-08"
 
 (global-set-key (kbd "C-c f e d") 'open-init-el)
 (global-set-key (kbd "C-c l e d") 'reload-user-init-file)
-
-
-(use-package auto-complete
-  :ensure t)
-
-(use-package company
-  :ensure t
-  :config
-  (setq company-async-timeout 4)
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0.0)
-  ;; (setq company-minimum-prefix-length 5)
-  (global-set-key (kbd "C-<tab>") 'company-complete)
-  (add-hook 'after-init-hook 'global-company-mode)
-  ;; (define-key company-active-map (kbd "M-p") nil)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  )
-
-(use-package company-quickhelp
-  :ensure t
-  :config
-  (company-quickhelp-mode)
-  (setq company-quickhelp-delay nil)
-  (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)
-  )
-
-(use-package magit-delta
-  :ensure t)
-
-(use-package magit
-  :ensure t
-  :config
-  (setq magit-delta-mode t)
-  (setq git-commit-summary-max-length 1000))
-
-(use-package projectile
-  :ensure t
-  :init
-  :config
-  (projectile-mode 1)
-  (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
-  (setq projectile-globally-ignored-directories (append '(".svn") projectile-globally-ignored-directories))
-  (setq projectile-enable-caching t)
-  (setq projectile-git-submodule-command nil))
 
 
 (defun jo-set-projectile-run-command ()
@@ -518,10 +306,10 @@ Version 2017-07-08"
 (global-set-key (kbd "C-c w f") 'other-frame)
 
 (use-package exec-path-from-shell
-  :ensure t)
-(require 'exec-path-from-shell)
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize)))
 
 (use-package ido
   :ensure t
@@ -608,61 +396,6 @@ Version 2017-07-08"
   (shell-command (format "etags *.%s" (or extension "el")))
   (let ((tags-revert-without-query t))  ; don't query, revert silently
 	(visit-tags-table default-directory nil)))
-
-
-(use-package org
-  :ensure t)
-
-(use-package markdown-mode
-  :ensure t  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-		 ("\\.md\\'" . markdown-mode)
-		 ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-
-
-(use-package google-translate
-  :ensure t
-  :config
-  (setq google-translate-default-source-language "en")
-  (setq google-translate-default-target-language "ko")
-  (setq google-translate-show-phonetic 1)
-  (global-set-key (kbd "C-c g d") 'google-translate-at-point))
-
-(use-package counsel
-  :ensure t
-  :after ivy
-  :config (counsel-mode))
-
-(use-package ivy
-  :ensure t
-  :defer 0.1
-  :config
-  (setq ivy-use-virtual-buffers t
-        ivy-count-format "%d/%d ")
-  (setq ivy-initial-inputs-alist nil)
-  (add-to-list 'ivy-re-builders-alist
-			   '(counsel-M-x . ivy--regex-ignore-order)))
-
-(use-package ag
-  :ensure t)
-
-(use-package counsel-projectile
-  :ensure t)
-
-
-(use-package ivy-posframe
-  :ensure t
-  :demand t
-  :after ivy
-  :custom
-  (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-  :config
-  (setq ivy-posframe-parameters
-		'((left-fringe . 12)
-          (right-fringe . 12)))
-  (ivy-posframe-mode))
-
 
 
 (require 'jong-packages)
@@ -759,7 +492,9 @@ Version 2017-07-08"
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/maat/")
+   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/demeter/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/demeter/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/maat/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/maat/")
 	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/chandra/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/chandra/")
