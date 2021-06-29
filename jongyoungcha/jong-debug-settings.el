@@ -1,4 +1,4 @@
-
+;;; Code:
 
 ;; (dap-register-debug-template "SwitNodeV1"
 ;; (list :type "node"
@@ -23,14 +23,21 @@
 ;; :request "launch"
 ;; :mode "exec"
 ;; :name  "SwitFileGo"))
+(defvar jong-debug-setting-path (format "%s/.emacs.d/jongyoungcha/jong-debug-settings.el" (getenv "HOME")))
 
-(dap-register-debug-template "chandra"
+(defun jong-debug-setting-open-file()
+  "Open the dap-debug setting file."
+  (interactive)
+  (find-file-at-point jong-debug-setting-path)
+  )
+
+(dap-register-debug-template "koscomtls"
 							 (list :type "go"
-								   :args ""
+								   :args "test"
 								   :env '(
 										  ("GOLANG_PROTOBUF_REGISTRATION_CONFLICT" . "warn")
 										  )
-								   :program "/Users/richard/go/src/chandra/chandra"
+								   :program "/Users/richard/go/src/demeter/cmd/koscommtls/main"
 								   :request "launch"
 								   :mode "exec"
 								   :name  "chandra"))

@@ -259,6 +259,7 @@
 	(when (get-buffer output-buffer) (kill-buffer output-buffer))
 
 	(with-current-buffer (get-buffer-create output-buffer)
+	  (compilation-mode t)
 	  (ansi-color-for-comint-mode-on)
 	  (comint-mode)
 	  (setq default-directory directory)

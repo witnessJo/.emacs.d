@@ -399,7 +399,6 @@
 
 
 (require 'jong-packages)
-(require 'jong-env-setting)
 (require 'jong-common)
 (require 'jong-project)
 (require 'jong-cursor)
@@ -429,10 +428,11 @@
 (require 'jong-term)
 (require 'jong-grpc)
 (require 'jong-swit)
+
 (require 'jong-swit-dotenv1)
 
-;; For Testing
 (require 'jong-debug-settings)
+(require 'jong-env-setting)
 (require 'jong-key-bindings)
 
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
@@ -492,7 +492,9 @@
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/demeter/")
+   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/mtls/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/mtls/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/demeter/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/demeter/")
 	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/maat/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/maat/")
@@ -599,10 +601,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color)) (:background "#444444"))) t)
  '(flymake-error ((((class color)) (:background "#444444"))))
  '(flymake-warning ((((class color)) (:background "#4444aa"))))
- '(flymake-warnline ((((class color)) (:background "#4444aa"))) t)
  '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
  '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
 (put 'dired-find-alternate-file 'disabled nil)

@@ -160,7 +160,9 @@
 (use-package counsel
   :ensure t
   :after ivy
-  :config (counsel-mode))
+  :config
+  (counsel-mode)
+  (setq counsel-find-file-at-point t))
 
 (use-package ivy
   :ensure t
@@ -187,9 +189,8 @@
   :config
   (setq ivy-posframe-parameters
 		'((left-fringe . 12)
-          (right-fringe . 12)))
+		  (right-fringe . 12)))
   (ivy-posframe-mode))
-
 
 (use-package google-translate
   :ensure t

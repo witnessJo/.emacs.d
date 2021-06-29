@@ -60,11 +60,13 @@
 ;; (add-to-list 'default-frame-alist '(font . "Consolas-14"))
 ;; (setq-default line-spacing 2))
 
-(setq default-frame-alist '((font . "Consolas-14")
-							)
-	  )
 
-(toggle-scroll-bar -1)
+(setq default-frame-alist '((font . "Consolas-14")
+							(vertical-scroll-bars . 0)
+							))
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 

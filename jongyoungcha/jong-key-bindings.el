@@ -43,6 +43,8 @@
 (global-set-key (kbd "<f8>") 'dap-next)
 (global-set-key (kbd "<f6>") 'dap-continue)
 (global-set-key (kbd "<f5>") 'dap-debug)
+(global-set-key (kbd "<f12>") 'jong-debug-setting-open-file)
+
 
 (global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
 (global-set-key (kbd "C-c d b") 'dap-ui-breakpoints)
