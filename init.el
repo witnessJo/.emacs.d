@@ -189,41 +189,33 @@
 	  (pop-to-mark-command)
 	(pop-global-mark)))
 
+;; (global-set-key (kbd "C-S-f") (lambda () (interactive)
+;; 								(jong-set-mark)
+;; 								(goto-char (1+ (point)))))
 
-(defun jong-set-mark ()
-  (interactive)
-  (setq this-command-keys-shift-translated t)
-  (if (not (use-region-p))
-	  (call-interactively 'set-mark-command)))
+;; (global-set-key (kbd "C-S-b") (lambda () (interactive)
+;; 								(jong-set-mark)
+;; 								(goto-char (1- (point)))))
 
+;; (global-set-key (kbd "C-S-a") (lambda () (interactive)
+;; 								(jong-set-mark)
+;; 								(beginning-of-line)))
 
-(global-set-key (kbd "C-S-f") (lambda () (interactive)
-								(jong-set-mark)
-								(goto-char (1+ (point)))))
+;; (global-set-key (kbd "C-S-e") (lambda () (interactive)
+;; 								(jong-set-mark)
+;; 								(end-of-line)))
 
-(global-set-key (kbd "C-S-b") (lambda () (interactive)
-								(jong-set-mark)
-								(goto-char (1- (point)))))
+;; (global-set-key (kbd "C-S-a") (lambda () (interactive)
+;; 								(jong-set-mark)
+;; 								(beginning-of-line)))
 
-(global-set-key (kbd "C-S-a") (lambda () (interactive)
-								(jong-set-mark)
-								(beginning-of-line)))
+;; (global-set-key (kbd "C-S-p") (lambda () (interactive)
+;; 								(jong-set-mark)
+;; 								(forward-line -1)))
 
-(global-set-key (kbd "C-S-e") (lambda () (interactive)
-								(jong-set-mark)
-								(end-of-line)))
-
-(global-set-key (kbd "C-S-a") (lambda () (interactive)
-								(jong-set-mark)
-								(beginning-of-line)))
-
-(global-set-key (kbd "C-S-p") (lambda () (interactive)
-								(jong-set-mark)
-								(forward-line -1)))
-
-(global-set-key (kbd "C-S-n") (lambda () (interactive)
-								(jong-set-mark)
-								(forward-line 1)))
+;; (global-set-key (kbd "C-S-n") (lambda () (interactive)
+;; 								(jong-set-mark)
+;; 								(forward-line 1)))
 
 (global-set-key (kbd "C-x C-o") 'other-window)
 (global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
@@ -285,7 +277,6 @@
 (global-set-key (kbd "C-c f e d") 'open-init-el)
 (global-set-key (kbd "C-c l e d") 'reload-user-init-file)
 
-
 (defun jo-set-projectile-run-command ()
   "Read user input commajksldfnd and set ectile-project-run-cmd'."
   (interactive)
@@ -296,7 +287,6 @@
 		  (message "Changed projectile-project-run-cmd as %s" user-input))
 	  (message "The command was empty..."))
 	))
-
 
 (global-set-key (kbd "C-c p p") 'projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'projectile-find-file)
@@ -397,7 +387,6 @@
   (let ((tags-revert-without-query t))  ; don't query, revert silently
 	(visit-tags-table default-directory nil)))
 
-
 (require 'jong-packages)
 (require 'jong-common)
 (require 'jong-project)
@@ -418,6 +407,7 @@
 (require 'jong-haskell)
 (require 'jong-nodejs)
 (require 'jong-go)
+(require 'jong-sql)
 
 ;; Utils
 (require 'jong-helm)
@@ -430,7 +420,6 @@
 (require 'jong-swit)
 
 (require 'jong-swit-dotenv1)
-
 (require 'jong-debug-settings)
 (require 'jong-env-setting)
 (require 'jong-key-bindings)
@@ -492,7 +481,11 @@
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/mtls/")
+   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/kafka-grpc-tutorial/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/kafka-grpc-tutorial/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/projects/kafka-grpc-tutorial/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/projects/kafka-grpc-tutorial/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/mtls/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/mtls/")
 	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/demeter/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/demeter/")

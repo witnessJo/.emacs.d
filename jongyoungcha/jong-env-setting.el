@@ -24,9 +24,9 @@
   (progn
     (setq shell-file-name "zsh")
     (setq shell-command-switch "-ic")
-    
     (setq mac-command-modifier 'meta)
-    (setq mac-option-modifier 'alt))
+    (setq mac-option-modifier 'alt)
+	)
   
   (load-theme 'sanityinc-tomorrow-blue t)
   (message "Mac OS X"))
@@ -49,7 +49,6 @@
     (set-selection-coding-system jong-env-locale-value)
     (dynamic-completion-mode)
     ;; (load-theme 'solarized-dark t)
-    
     (message "Linux"))))
 ;; (message-box "called")
 ;; (if (member "Consolas" (font-family-list))
@@ -59,7 +58,6 @@
 ;; (set-face-attribute 'default nil :font "Consolas-14")
 ;; (add-to-list 'default-frame-alist '(font . "Consolas-14"))
 ;; (setq-default line-spacing 2))
-
 
 (setq default-frame-alist '((font . "Consolas-14")
 							(vertical-scroll-bars . 0)

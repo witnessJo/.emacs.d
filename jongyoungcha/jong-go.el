@@ -162,20 +162,22 @@ And the environment variable was existing, Download go binaries from the interne
   )
 
 (add-hook 'go-mode-hook #'lsp-deferred)
+
 (defun lsp-go-install-save-hooks ()
+  "Save configuration before save."
   ;; (add-hook 'before-save-hook #'lsp-format-buffer t t)
   ;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
   )
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-
+;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+(add-hook 'go-mode-hook (lambda() (add-hook 'before-save-lsp (lambda()
+															   (call-interactively 'lsp)))))
 (add-hook 'go-mode-hook (lambda ()
 						  (setq lsp-ui-sideline-enable t)
 						  (setq lsp-ui-doc-enable nil)
 						  (setq lsp-gopls-staticcheck t)
 						  (setq lsp-eldoc-render-all t)
 						  (setq lsp-gopls-complete-unimported t)
-						  
 						  
 						  (setq indent-tabs-mode t)
 						  (setq tab-width 4)

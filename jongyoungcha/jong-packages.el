@@ -4,9 +4,7 @@
 (require 'winner)
 (winner-mode)
 
-
 (message (regexp-opt-charset '(?a ?c ?e ? ?\t)))
-
 
 (use-package auto-complete
   :ensure t)
@@ -40,7 +38,9 @@
   :ensure t
   :config
   (setq magit-delta-mode t)
-  (setq git-commit-summary-max-length 1000))
+  (setq git-commit-summary-max-length 1000)
+  (add-hook 'after-save-hook 'magit-after-save-refresh-status t)
+  )
 
 (use-package projectile
   :ensure t
@@ -91,10 +91,7 @@
   (rust-mode-hook . lsp)
   (go-mode-hook . lsp)
   :config
-  ;; (setq lsp-prefer-flymake nil)
   (setq lsp-eldoc-render-all nil)
-  ;; (setq lsp-signature-render-all nil)
-  ;; (setq lsp-modeline-diagnostics-scope :workspace)
   (setq lsp-modeline-diagnostics-scope :workspace)
   (setq gc-cons-threshold 100000000)
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
@@ -119,8 +116,6 @@
   :ensure t
   :diminish whitespace-cleanup-mode
   :init)
-;; (global-whitespace-cleanup-mode)
-;; (add-hook 'after-save-hook 'whitespace-cleanup))
 
 (use-package dotenv-mode
   :ensure t
@@ -226,10 +221,10 @@
   :config)
 
 ;; When the loading time, the packages will be updated.
-(use-package auto-package-update
-  :ensure t
-  :config
-  (auto-package-update-now))
+; (use-package auto-package-update
+; :ensure t
+; :config
+; (auto-package-update-now))
 
 (use-package yasnippet
   :ensure t

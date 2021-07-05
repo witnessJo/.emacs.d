@@ -9,7 +9,6 @@
 ;; :request "launch"
 ;; :name "SwitNodev1"))
 
-
 ;; (dap-register-debug-template "SwitFileGo"
 ;; (list :type "go"
 ;; :args "-i"
@@ -23,27 +22,32 @@
 ;; :request "launch"
 ;; :mode "exec"
 ;; :name  "SwitFileGo"))
+
+
 (defvar jong-debug-setting-path (format "%s/.emacs.d/jongyoungcha/jong-debug-settings.el" (getenv "HOME")))
 
-(defun jong-debug-setting-open-file()
+(defun jong-debug-setting-toggle-open-file()
   "Open the dap-debug setting file."
   (interactive)
-  (find-file-at-point jong-debug-setting-path)
+  (if (get-buffer "jong-debug-settings.el")
+	  (kill-buffer (get-buffer "jong-debug-settings.el"))
+	(find-file-at-point jong-debug-setting-path))
   )
 
 (dap-register-debug-template "koscomtls"
 							 (list :type "go"
-								   :args "test"
+								   :args "call -u https://naver.com -X POST -d \'test message\'"
 								   :env '(
-										  ("GOLANG_PROTOBUF_REGISTRATION_CONFLICT" . "warn")
+										  ("MTLS_SENTBIZ_CRT_PATH" . "/Users/richard/koscom_dev_sentbe_com.crt")
+										  ("MTLS_SENTBIZ_KEY_PATH" . "/Users/richard/koscom.dev.sentbe.com.key")
+										  ("MTLS_SENTBIZ_FULL_CHAIN_PATH" . "/Users/richard/koscom_dev_sentbe_com.pem")
 										  )
-								   :program "/Users/richard/go/src/demeter/cmd/koscommtls/main"
+								   :program "/Users/richard/go/src/demeter/cmd/koscommtls/main.go"
+								   :envFile nil
+								   :buildFlags "-gcflags '-N -l'"
 								   :request "launch"
-								   :mode "exec"
-								   :name  "chandra"))
-
-
-
+								   :mode "debug"
+								   :name  "koscomtls"))
 
 
 (provide 'jong-debug-settings)
