@@ -1,6 +1,5 @@
 ;;; Code:
 
-
 (defvar-local jong-edit-beginning-of-line-text-pos (point))
 
 
@@ -26,7 +25,7 @@
 	  (call-interactively 'yank)))
   )
 
-(defun jong-set-mark ()
+(defun jong-set-mark()
   "jong-set-mark."
   (interactive)
   (setq this-command-keys-shift-translated t)
@@ -37,9 +36,8 @@
   "jong-edit-change-hook."
   (interactive "P")
   (when (region-active-p)
-	(call-interactively 'backward-delete-char-untabify)
+	(call-interactively 'delete-active-region))
 	)
-  )
 
 (add-hook 'before-change-functions 'jong-edit-change-hook)
 

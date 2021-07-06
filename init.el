@@ -408,6 +408,7 @@
 (require 'jong-nodejs)
 (require 'jong-go)
 (require 'jong-sql)
+(require 'jong-protobuf)
 
 ;; Utils
 (require 'jong-helm)
@@ -416,7 +417,6 @@
 (require 'jong-html)
 (require 'jong-dap-debug)
 (require 'jong-term)
-(require 'jong-grpc)
 (require 'jong-swit)
 
 (require 'jong-swit-dotenv1)

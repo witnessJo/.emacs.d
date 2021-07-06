@@ -68,6 +68,8 @@
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 
+;; (setq indent-line-function 'insert-tab)
+	
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)

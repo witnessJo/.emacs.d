@@ -180,8 +180,8 @@ And the environment variable was existing, Download go binaries from the interne
 						  (setq lsp-gopls-complete-unimported t)
 						  
 						  (setq indent-tabs-mode t)
-						  (setq tab-width 4)
-
+						  ;; (setq tab-width 4)
+						  
 						  ;; syntax highlight
 						  (go-guru-hl-identifier-mode)
 
