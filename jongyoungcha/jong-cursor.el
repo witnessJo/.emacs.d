@@ -38,8 +38,7 @@
   (when (region-active-p)
 	(call-interactively 'delete-active-region))
 	)
-
-(add-hook 'before-change-functions 'jong-edit-change-hook)
-
+  
+;; (add-hook 'before-change-functions 'jong-edit-change-hook)
 
 (provide 'jong-cursor)

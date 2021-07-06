@@ -11,4 +11,4 @@
 (add-hook 'protobuf-mode-hook
 		  (lambda () (c-add-style "jong-protobuf-style" jong-protobuf-style t)))
 
-(provide 'jong-grpc)
+(provide 'jong-protobuf)
