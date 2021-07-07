@@ -16,8 +16,7 @@
     (setq jong-env-locale-value 'utf-8)
     (set-default-coding-systems jong-env-locale-value)
     (set-input-method 'korean-hangul)
-
-    (load-theme 'sanityinc-tomorrow-blue t)
+	(message "Windows")
     ))
 
  ((string-equal system-type "darwin") ; Mac OS X
@@ -26,10 +25,9 @@
     (setq shell-command-switch "-ic")
     (setq mac-command-modifier 'meta)
     (setq mac-option-modifier 'alt)
-	)
-  
-  (load-theme 'sanityinc-tomorrow-blue t)
-  (message "Mac OS X"))
+	(set-input-method 'korean-hangul)
+	(message "Mac OS X")
+	))
  ((string-equal system-type "gnu/linux") ; linux
   (progn
     
@@ -48,16 +46,9 @@
     (set-keyboard-coding-system jong-env-locale-value)
     (set-selection-coding-system jong-env-locale-value)
     (dynamic-completion-mode)
-    ;; (load-theme 'solarized-dark t)
-    (message "Linux"))))
-;; (message-box "called")
-;; (if (member "Consolas" (font-family-list))
-;; (progn
-;; (setq default-frame-alist '((font . "Consolas-15")))
-;; (message-box "called1"))
-;; (set-face-attribute 'default nil :font "Consolas-14")
-;; (add-to-list 'default-frame-alist '(font . "Consolas-14"))
-;; (setq-default line-spacing 2))
+    (message "Linux")
+	))
+ )
 
 (setq default-frame-alist '((font . "Consolas-14")
 							(vertical-scroll-bars . 0)
@@ -68,17 +59,21 @@
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 
-;; (setq indent-line-function 'insert-tab)
-	
 (set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
 (show-paren-mode t)
+(delete-selection-mode t)
+(load-theme 'sanityinc-tomorrow-blue t)
 
 ;; For protecting my eyes...
 (custom-set-faces
  '(flymake-errline ((((class color)) (:background "#444444"))))
  '(flymake-warnline ((((class color)) (:background "#4444aa"))))
  )
+
+;; aliases
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 
 (provide 'jong-env-setting)

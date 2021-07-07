@@ -10,8 +10,8 @@
 
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("melpa" . "https://melpa.org/packages/")
-			 ("elpa" . "https://mirrors.163.com/elpa/gnu/")))
+						 ("melpa" . "https://melpa.org/packages/")
+						 ("elpa" . "https://mirrors.163.com/elpa/gnu/")))
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
@@ -50,7 +50,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; reuse a dired list buffer.
 (require 'dired)
 (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
@@ -84,7 +83,6 @@
 	  (progn
 		(indent-buffer)
 		(message "Indented buffer.")))))
-
 
 (defun jong-forward-delete-word ()
   "Chan 'forward-delete-word."
@@ -299,7 +297,7 @@
   :ensure t
   :config
   (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize)))
+	(exec-path-from-shell-initialize)))
 
 (use-package ido
   :ensure t

@@ -110,6 +110,7 @@
 	(define-key map (kbd "C-<left>") 'backward-word)
 	(define-key map (kbd "C-<right>") 'forward-word)
 
+	(define-key map (kbd "C-j") 'jong-cursor-newline-align-above)
 	
 	(define-key map (kbd "M-<up>") 'evil-window-up)
 	(define-key map (kbd "M-<left>") 'evil-window-left)

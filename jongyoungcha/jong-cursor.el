@@ -25,6 +25,19 @@
 	  (call-interactively 'yank)))
   )
 
+(defun jong-cursor-newline-align-above()
+  (interactive)
+  (when (region-active-p)
+	(deactivate-mark))
+  (beginning-of-line)
+  (set-mark (point))
+  (beginning-of-line-text)
+  (call-interactively 'copy-region-as-kill)
+  (end-of-line)
+  (call-interactively 'electric-indent-just-newline)
+  (insert (pop kill-ring))
+  )
+
 (defun jong-set-mark()
   "jong-set-mark."
   (interactive)
@@ -35,7 +48,7 @@
 (defun jong-edit-change-hook(arg &optional killp)
   "jong-edit-change-hook."
   (interactive "P")
-  (when (region-active-p)
+  (when (use-region-p)
 	(call-interactively 'delete-active-region))
 	)
   

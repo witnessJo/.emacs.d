@@ -247,11 +247,10 @@ MAIN-CPP-PATH is the cmake file path."
   (gdb-many-windows))
 
 
-;; (defun jong-c-setting-coding-style()
-;; "Setting environment and key bindings."
-;; Set the indentation.
-;; (defvar c-default-style)
-;; (defvar c-basic-offset)
+(defun jong-c-setting-coding-style()
+  "Setting environment and key bindings."
+  (defvar c-default-style)
+  (defvar c-basic-offset))
 
 ;; (setq c-default-style "linux")
 ;; (setq-default indent-tabs-mode t
