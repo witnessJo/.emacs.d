@@ -68,6 +68,9 @@
 (load-theme 'sanityinc-tomorrow-blue t)
 
 (global-eldoc-mode -1)
+(auto-save-visited-mode t)
+(global-auto-revert-mode t)
+
 
 ;; For protecting my eyes...
 (custom-set-faces

@@ -39,6 +39,17 @@
 	 (backward-word arg)
 	 (point))))
 
+(defun jong-cursor-delete-line ()
+  (interactive)
+  (delete-region
+   (progn
+	 (beginning-of-line)
+	 (point))
+   (progn
+	 (end-of-line)
+	 (point))))
+
+
 (defun jong-edit-beginning-of-line-text()
   "Beginning of line."
   (interactive)
@@ -49,7 +60,6 @@
 	(setq jong-edit-beginning-of-line-text-pos (point))
 	)
   )
-
 
 (defun jong-edit-paste-text()
   (interactive)
