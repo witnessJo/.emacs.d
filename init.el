@@ -415,6 +415,7 @@
 (require 'jong-html)
 (require 'jong-dap-debug)
 (require 'jong-term)
+(require 'jong-git)
 (require 'jong-swit)
 
 (require 'jong-swit-dotenv1)

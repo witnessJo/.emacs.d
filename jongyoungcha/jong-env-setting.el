@@ -53,6 +53,7 @@
 (setq default-frame-alist '((font . "Consolas-14")
 							(vertical-scroll-bars . 0)
 							))
+
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
@@ -65,6 +66,8 @@
 (show-paren-mode t)
 (delete-selection-mode t)
 (load-theme 'sanityinc-tomorrow-blue t)
+
+(global-eldoc-mode -1)
 
 ;; For protecting my eyes...
 (custom-set-faces

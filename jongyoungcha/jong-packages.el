@@ -221,10 +221,10 @@
   :config)
 
 ;; When the loading time, the packages will be updated.
-; (use-package auto-package-update
-; :ensure t
-; :config
-; (auto-package-update-now))
+										; (use-package auto-package-update
+										; :ensure t
+										; :config
+										; (auto-package-update-now))
 
 (use-package yasnippet
   :ensure t

@@ -3,6 +3,42 @@
 (defvar-local jong-edit-beginning-of-line-text-pos (point))
 
 
+(defun jong-cursor-delete-subword-forward (arg)
+  (interactive "p")
+  (delete-region
+   (point)
+   (progn
+	 (syntax-subword-forward arg)
+	 (point)))
+  )
+
+(defun jong-cursor-delete-subword-backward (arg)
+  (interactive "p")
+  (delete-region
+   (point)
+   (progn
+	 (syntax-subword-backward arg)
+	 (point)))
+  )
+
+
+(defun jong-cursor-delete-word-forward (arg )
+  (interactive "p")
+  (delete-region
+   (point)
+   (progn
+	 (forward-word arg)
+	 (point))))
+
+
+(defun jong-cursor-delete-word-backward (arg)
+  (interactive "p")
+  (delete-region
+   (point)
+   (progn
+	 (backward-word arg)
+	 (point))))
+
 (defun jong-edit-beginning-of-line-text()
   "Beginning of line."
   (interactive)
@@ -50,8 +86,8 @@
   (interactive "P")
   (when (use-region-p)
 	(call-interactively 'delete-active-region))
-	)
-  
+  )
+
 ;; (add-hook 'before-change-functions 'jong-edit-change-hook)
 
 (provide 'jong-cursor)

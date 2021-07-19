@@ -44,6 +44,14 @@
   )
 
 
+(defun jong-window-split-3-windows-horizontally-evenly ()
+  (interactive)
+  (command-execute 'split-window-horizontally)
+  (command-execute 'split-window-horizontally)
+  (command-execute 'balance-windows)
+  )
+
+
 (provide 'jong-window)
 ;;; jong-window.el ends here
 

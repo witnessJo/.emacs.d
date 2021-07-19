@@ -72,17 +72,22 @@
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 
-;; (global-set-key (kbd "C-c c") 'counsel-compile)
+
 (global-set-key (kbd "C-c g g") 'counsel-git)
-(global-set-key (kbd "C-c g j") 'counsel-git-grep)
-(global-set-key (kbd "C-c g l") 'counsel-git-log)
+
+(global-set-key (kbd "C-c g l") 'counsel-git-checkout)
+(global-set-key (kbd "C-c g c") 'magit-commit)
+(global-set-key (kbd "C-c g p") 'magit-push)
+(global-set-key (kbd "C-c g j c") 'magit-log-current)
+(global-set-key (kbd "C-c g j f") 'magit-log-buffer-file)
 (global-set-key (kbd "C-c a g") 'helm-do-ag)
 ;; (global-set-key (kbd "C-c m") 'counsel-linux-app)
 (global-set-key (kbd "C-c n") 'counsel-fzf)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-;; (global-set-key (kbd "C-c w") 'counsel-wmctrl)
+
+(global-set-key (kbd "C-c w 3") 'jong-window-split-3-windows-horizontally-evenly)
 
 (global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'counsel-projectile-find-file)
@@ -104,9 +109,11 @@
 	(define-key map (kbd "<A-left>") 'syntax-subword-backward)
 	(define-key map (kbd "<A-right>") 'syntax-subword-forward)
 	
-	(define-key map (kbd "A-<backspace>") 'syntax-subword-backward-kill)
-	(define-key map (kbd "<A-kp-delete>") 'syntax-subword-kill)
-
+	(define-key map (kbd "A-<backspace>") 'jong-cursor-delete-subword-backward)
+	(define-key map (kbd "<A-kp-delete>") 'jong-cursor-delete-subword-forward)
+	(define-key map (kbd "C-<backspace>") 'jong-cursor-delete-word-backward)
+	(define-key map (kbd "C-<delete>") 'jong-cursor-delete-word-forward)
+	  
 	(define-key map (kbd "C-<left>") 'backward-word)
 	(define-key map (kbd "C-<right>") 'forward-word)
 
