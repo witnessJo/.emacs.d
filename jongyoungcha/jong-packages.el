@@ -23,6 +23,12 @@
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   )
 
+(use-package buffer-move
+  :ensure t
+  :config
+  (setq buffer-move-behavior 'move)
+  )
+
 (use-package company-quickhelp
   :ensure t
   :config
@@ -220,11 +226,19 @@
   :ensure t
   :config)
 
-;; When the loading time, the packages will be updated.
-										; (use-package auto-package-update
-										; :ensure t
-										; :config
-										; (auto-package-update-now))
+(use-package auto-dim-other-buffers
+  :ensure t
+  :config
+  (auto-dim-other-buffers-mode t)
+  )
+  
+(use-package eshell-syntax-highlighting
+  :ensure t
+  :after esh-mode
+  :demand t ;; Install if not already installed.
+  :config
+  ;; Enable in all Eshell buffers.
+  (eshell-syntax-highlighting-global-mode +1))
 
 (use-package yasnippet
   :ensure t

@@ -30,7 +30,6 @@
 (global-set-key (kbd "C-c C-h") 'windmove-left)
 (global-set-key (kbd "C-c C-l") 'windmove-right)
 
-
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)
 (global-set-key (kbd "C-c <down>") 'jong-project-run-command)
@@ -123,6 +122,11 @@
 	(define-key map (kbd "M-<left>") 'evil-window-left)
 	(define-key map (kbd "M-<down>") 'evil-window-down)
 	(define-key map (kbd "M-<right>") 'evil-window-right)
+
+	(define-key map (kbd "M-A-<up>") 'buf-move-up)
+	(define-key map (kbd "M-A-<left>") 'buf-move-left)
+	(define-key map (kbd "M-A-<down>") 'buf-move-down)
+	(define-key map (kbd "M-A-<right>") 'buf-move-right)
 	
 	(define-key map (kbd "A-<up>") 'backward-paragraph)
 	(define-key map (kbd "A-<down>") 'forward-paragraph)
