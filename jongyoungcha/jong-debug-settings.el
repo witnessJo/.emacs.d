@@ -50,4 +50,20 @@
 								   :name  "koscomtls"))
 
 
+(dap-register-debug-template "demter"
+							 (list :type "go"
+								   :args "start develop"
+								   :env '(
+										  ;; ("MTLS_SENTBIZ_CRT_PATH" . "/Users/richard/koscom_dev_sentbe_com.crt")
+										  ;; ("MTLS_SENTBIZ_KEY_PATH" . "/Users/richard/koscom.dev.sentbe.com.key")
+										  ;; ("MTLS_SENTBIZ_FULL_CHAIN_PATH" . "/Users/richard/koscom_dev_sentbe_com.pem")
+										  )
+								   :program "/Users/richard/go/src/demeter/main.go"
+								   :envFile nil
+								   :buildFlags "-gcflags '-N -l'"
+								   :request "launch"
+								   :mode "debug"))
+
+
+
 (provide 'jong-debug-settings)

@@ -199,7 +199,11 @@
   (setq google-translate-default-source-language "en")
   (setq google-translate-default-target-language "ko")
   (setq google-translate-show-phonetic 1)
-  (global-set-key (kbd "C-c g d") 'google-translate-at-point))
+  (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
+  (global-set-key (kbd "C-c g d") 'google-translate-at-point)
+  :custom
+  (google-translate-backend-method 'curl)
+  )
 
 (use-package org
   :ensure t)
@@ -231,7 +235,7 @@
   :config
   (auto-dim-other-buffers-mode t)
   )
-  
+
 (use-package eshell-syntax-highlighting
   :ensure t
   :after esh-mode
@@ -248,5 +252,7 @@
 (use-package prodigy
   :ensure t)
 
+(use-package logview
+  :ensure t)
 
 (provide 'jong-packages)

@@ -18,8 +18,6 @@
 
 (require 'dap-go)
 
-
-
 (defun jong-dap-debug-toggle-show-ui ()
   (interactive)
   (let ((prev-buffer-name (buffer-name)))

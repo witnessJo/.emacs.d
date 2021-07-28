@@ -15,6 +15,7 @@
   :ensure t
   :config
   (setq go-test-verbose t))
+  
 
 (use-package go-fill-struct
   :ensure t)
@@ -55,7 +56,6 @@
 			(when (and (string-match gud-buffer-pattern (buffer-name buffer))
 					   (equal major-mode 'jong-gogud-mode))
 			  (setq target-buffer buffer)
-			  (message "im here!!!")
 			  (throw 'loop buffer))))))
 
 	(when target-buffer
@@ -67,7 +67,7 @@
 
 (defun jong-go-set-gud-shortcut ()
   "Set shortcuts of gud for golang."
-
+  
   (local-set-key (kbd "<f7>") (lambda () (interactive)
 								(call-interactively 'gud-print)
 								(call-interactively 'end-of-buffer)))
@@ -171,7 +171,6 @@ And the environment variable was existing, Download go binaries from the interne
   ;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
   )
 
-;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 (add-hook 'go-mode-hook
 		  (lambda()
 			(add-hook 'before-save-lsp
@@ -179,6 +178,7 @@ And the environment variable was existing, Download go binaries from the interne
 						(call-interactively 'lsp)))))
 
 (add-hook 'go-mode-hook (lambda ()
+						  (setq go-test-args "-count=1")
 						  (setq lsp-ui-sideline-enable t)
 						  (setq lsp-gopls-staticcheck t)
 						  (setq lsp-ui-doc-enable nil)

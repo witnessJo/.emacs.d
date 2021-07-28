@@ -8,7 +8,7 @@
 (global-set-key (kbd "C-o") 'jong-common-open-line-below)
 (global-set-key (kbd "C-S-c") 'jong-common-copy-region-or-line)
 
-(global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
+;; (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
@@ -42,7 +42,8 @@
 (global-set-key (kbd "<f8>") 'dap-next)
 (global-set-key (kbd "<f6>") 'dap-continue)
 (global-set-key (kbd "<f5>") 'dap-debug)
-(global-set-key (kbd "<f12>") 'jong-debug-setting-toggle-open-file)
+(global-set-key (kbd "<f12>") 'dap-hydra)
+(global-set-key (kbd "M-<f12>") 'jong-debug-setting-toggle-open-file)
 
 
 (global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
@@ -71,16 +72,13 @@
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 
-
 (global-set-key (kbd "C-c g g") 'counsel-git)
-
 (global-set-key (kbd "C-c g l") 'counsel-git-checkout)
 (global-set-key (kbd "C-c g c") 'magit-commit)
 (global-set-key (kbd "C-c g p") 'magit-push)
 (global-set-key (kbd "C-c g j c") 'magit-log-current)
 (global-set-key (kbd "C-c g j f") 'magit-log-buffer-file)
 (global-set-key (kbd "C-c a g") 'helm-do-ag)
-;; (global-set-key (kbd "C-c m") 'counsel-linux-app)
 (global-set-key (kbd "C-c n") 'counsel-fzf)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
