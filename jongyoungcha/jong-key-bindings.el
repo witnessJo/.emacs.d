@@ -1,5 +1,18 @@
 ;;; Code
 
+;;; buffer
+(global-set-key (kbd "C-c m") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c C-m") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c C-n") 'jong-window-display-buffer-right)
+(global-set-key (kbd "C-c n") 'jong-window-display-buffer-right)
+(global-set-key (kbd "M-p") 'jong-window-scroll-down-right)
+(global-set-key (kbd "M-n") 'jong-window-scroll-up-right)
+(global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
+(global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
+
+;;; disable
+(global-set-key (kbd "C-x C-c") nil)
+
 (global-set-key (kbd "C-.") 'winner-undo)
 (global-set-key (kbd "C->") 'winner-redo)
 (global-set-key (kbd "C--") 'jong-common-delete-above-below-window)
@@ -9,53 +22,56 @@
 (global-set-key (kbd "C-S-c") 'jong-common-copy-region-or-line)
 
 ;; (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
-(global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
-(global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
-(global-set-key (kbd "C-d") 'jong-cursor-delete-line)
+;; (global-set-key (kbd "C-d") 'jong-cursor-delete-line)
 (global-set-key (kbd "C-k") 'jong-common-kill-line)
 
+;; windows
 (global-set-key (kbd "C-c s <left>") 'jong-common-split-window-left)
 (global-set-key (kbd "C-c s <right>") 'jong-common-split-window-right)
 (global-set-key (kbd "C-c s <up>") 'jong-common-split-window-up)
 (global-set-key (kbd "C-c s <down>") 'jong-common-split-window-down)
 
-(global-set-key (kbd "C-c m <left>") 'jong-common-merge-window-left)
-(global-set-key (kbd "C-c m <right>") 'jong-common-merge-window-right)
-(global-set-key (kbd "C-c m <up>") 'jong-common-merge-window-up)
-(global-set-key (kbd "C-c m <down>") 'jong-common-merge-window-down)
+;; (global-set-key (kbd "C-c m <left>") 'jong-common-merge-window-left)
+;; (global-set-key (kbd "C-c m <right>") 'jong-common-merge-window-right)
+;; (global-set-key (kbd "C-c m <up>") 'jong-common-merge-window-up)
+;; (global-set-key (kbd "C-c m <down>") 'jong-common-merge-window-down)
 
 (global-set-key (kbd "C-c C-j ") 'windmove-up)
 (global-set-key (kbd "C-c C-k") 'windmove-down)
 (global-set-key (kbd "C-c C-h") 'windmove-left)
 (global-set-key (kbd "C-c C-l") 'windmove-right)
 
+;; cursor
+(global-set-key (kbd "C-S-<down>") 'jong-cursor-move-text-down)
+(global-set-key (kbd "C-S-<up>") 'jong-cursor-move-text-up)
+
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)
 (global-set-key (kbd "C-c <down>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <right>") 'jong-project-run-command)
 
-;; dap
+;; debug
 (global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
 (global-set-key (kbd "<f7>") 'dap-step-out)
 (global-set-key (kbd "<f7>") 'dap-step-in)
 (global-set-key (kbd "<f8>") 'dap-next)
 (global-set-key (kbd "<f6>") 'dap-continue)
 (global-set-key (kbd "<f5>") 'dap-debug)
+(global-set-key (kbd "C-<f5>") 'jong-debug-go-debug-current-test)
 (global-set-key (kbd "<f12>") 'dap-hydra)
 (global-set-key (kbd "M-<f12>") 'jong-debug-setting-toggle-open-file)
-
-
 (global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
-(global-set-key (kbd "C-c d b") 'dap-ui-breakpoints)
-(global-set-key (kbd "C-c d s") 'dap-ui-sessions)
-(global-set-key (kbd "C-c d l") 'dap-ui-locals)
-(global-set-key (kbd "C-c d p") 'dap-debug-last)
-(global-set-key (kbd "C-c d o") 'jong-dap-go-to-output-buffer)
 
-(global-set-key (kbd "C-c d <backspace>") 'dap-delete-session)
-(global-set-key (kbd "C-c d k") 'dap-ui-sessions-delete-session)
-(global-set-key (kbd "C-c d <return>") 'dap-ui-sessions-select)
+(global-set-key (kbd "C-d") nil)
+(global-set-key (kbd "C-d r") 'dap-debug-restart)
+(global-set-key (kbd "C-d p") 'dap-debug-last)
+(global-set-key (kbd "C-d s") 'dap-switch-session)
+(global-set-key (kbd "C-d f") 'dap-ui-select-stack-frame)
+(global-set-key (kbd "C-d o") 'jong-dap-go-to-output-buffer)
+(global-set-key (kbd "C-d d") 'dap-disconnect)
+(global-set-key (kbd "C-d k") 'dap-ui-sessions-delete-session)
+(global-set-key (kbd "C-d <return>") 'dap-ui-sessions-select)
 
 (global-set-key (kbd "C-s") 'swiper-isearch)
 (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -72,12 +88,15 @@
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 
+;; git
 (global-set-key (kbd "C-c g g") 'counsel-git)
 (global-set-key (kbd "C-c g l") 'counsel-git-checkout)
 (global-set-key (kbd "C-c g c") 'magit-commit)
 (global-set-key (kbd "C-c g p") 'magit-push)
 (global-set-key (kbd "C-c g j c") 'magit-log-current)
 (global-set-key (kbd "C-c g j f") 'magit-log-buffer-file)
+(global-set-key (kbd "C-c g b") 'magit-blame-addition)
+
 (global-set-key (kbd "C-c a g") 'helm-do-ag)
 (global-set-key (kbd "C-c n") 'counsel-fzf)
 (global-set-key (kbd "C-x l") 'counsel-locate)
@@ -89,18 +108,13 @@
 (global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'counsel-projectile-find-file)
 
+
+;; profile
+(global-set-key (kbd "C-c q s") 'profiler-start)
+(global-set-key (kbd "C-c q S-s") 'profiler-stop)
+(global-set-key (kbd "C-c q r") 'profiler-report)
+
 ;; remapping about the keybinding.
-
-(defun my-backward-kill-word ()
-  "Kill words backward my way."
-  (interactive)
-  (if (bolp)
-      (backward-delete-char 1)
-    (if (string-match "^\\s-+$" (buffer-substring (point-at-bol) (point)))
-        (kill-region (point-at-bol) (point))
-      (backward-kill-word 1))))
-
-
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
 	(define-key map (kbd "<A-left>") 'syntax-subword-backward)
@@ -178,9 +192,6 @@
 (defun disable-jong-keys-minor-mode()
   (interactive)
   (jong-keys-minor-mode 0))
-
-
-
 
 
 (provide 'jong-key-bindings)

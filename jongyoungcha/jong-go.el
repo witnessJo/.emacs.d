@@ -5,8 +5,8 @@
 (use-package go-mode
   :ensure t)
 
-(use-package go-guru
-  :ensure t)
+;; (use-package go-guru
+;; :ensure t)
 
 (use-package company-go
   :ensure t)
@@ -14,7 +14,10 @@
 (use-package gotest
   :ensure t
   :config
-  (setq go-test-verbose t))
+  (setq go-test-verbose t)
+  (add-hook 'go-test-mode-hook (lambda()
+								(visual-line-mode)))
+  )
   
 
 (use-package go-fill-struct
@@ -171,11 +174,11 @@ And the environment variable was existing, Download go binaries from the interne
   ;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
   )
 
-(add-hook 'go-mode-hook
-		  (lambda()
-			(add-hook 'before-save-lsp
-					  (lambda()
-						(call-interactively 'lsp)))))
+;; (add-hook 'go-mode-hook
+;; (lambda()
+;; (add-hook 'before-save-lsp
+;; (lambda()
+;; (call-interactively 'lsp)))))
 
 (add-hook 'go-mode-hook (lambda ()
 						  (setq go-test-args "-count=1")
@@ -187,12 +190,6 @@ And the environment variable was existing, Download go binaries from the interne
 						  (setq lsp-gopls-complete-unimported t)
 						  
 						  (setq indent-tabs-mode t)
-
-						  ;; disable eldoc mode
-						  (setq eldoc-mode -1)
-
-						  ;; syntax highlight
-						  (go-guru-hl-identifier-mode)
 
 						  ;; setting company-go mode...
 						  (setq company-tooltip-limit 20)
@@ -225,12 +222,16 @@ And the environment variable was existing, Download go binaries from the interne
 						  (local-set-key (kbd "C-c t a") 'go-test-current-file)
 						  (local-set-key (kbd "C-c t p") 'go-test-current-test-cache)
 						  (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
-						  (local-set-key (kbd "C-c M->")
-										 (lambda () (interactive)
-										   (other-window 1)
-										   (call-interactively 'end-of-buffer)
-										   (other-window -1)))
+						  ;; (local-set-key (kbd "C-c M->")
+						  ;; (lambda () (interactive)
+						  ;; (other-window 1)
+						  ;; (call-interactively 'end-of-buffer)
+						  ;; (other-window -1)))
 						  (lsp)
+
+						  ;; disable eldoc mode
+						  ;; (setq eldoc-mode nil)
+						  (eldoc-mode)
 						  )
 		  )
 

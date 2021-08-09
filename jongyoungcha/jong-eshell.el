@@ -1,7 +1,8 @@
-;;; Code
+;;; Code:
 
 
-(defvar jong-eshell-keywords '(("error\\|failed\\|debug\\|" . font-lock-warning-face)
+(defvar jong-eshell-keywords '(("debug\\|" . font-lock-keyword-face)
+							   ("error\\|failed\\|" . font-lock-warning-face)
 							   "Keywords for jong-eshll-minor-mode highlighting"))
 
 (add-hook 'eshell-mode-hook (lambda()

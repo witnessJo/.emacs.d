@@ -39,8 +39,36 @@
 (defun jong-window-display-buffer-right()
   "Move a cursor to right window, and show window."
   (interactive)
-  (call-interactively 'evil-window-right)
-  (ivy-switch-buffer)
+  (let ((current-window (get-buffer-window))
+		(current-buffer (current-buffer))
+		(target-buffer (ivy-switch-buffer)))
+	(ignore-errors (call-interactively 'evil-window-right)
+				   (switch-to-buffer target-buffer)
+				   (select-window current-window)
+				   (switch-to-buffer current-buffer))
+	)
+  )
+
+
+(defun jong-window-scroll-down-right()
+  "Move scroll down right window."
+  (interactive)
+  (let ((current-window (get-buffer-window)))
+	(ignore)
+	(ignore-errors (call-interactively 'evil-window-right)
+				   (scroll-down-line 10))
+	(select-window current-window)
+	)
+  )
+
+(defun jong-window-scroll-up-right()
+  "Move scroll down right window."
+  (interactive)
+  (let ((current-window (get-buffer-window)))
+	(ignore-errors (call-interactively 'evil-window-right)
+				   (scroll-up-line 10))
+	(select-window current-window)
+	)
   )
 
 

@@ -65,5 +65,20 @@
 								   :mode "debug"))
 
 
+(defun jong-debug-go-debug-current-test ()
+  (interactive)
+  (let ((name (go-test--get-current-test)))
+      (dap-debug
+       (list :type "go"
+             :request "launch"
+             :name (concat "Go: Debug " name " test")
+             :mode "auto"
+             :program "${fileDirname}"
+             :buildFlags nil
+             :args (concat "-test.run ^" name "$")
+             :env nil
+             :envFile nil))))
+
+
 
 (provide 'jong-debug-settings)

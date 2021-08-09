@@ -407,12 +407,13 @@
 (require 'jong-go)
 (require 'jong-sql)
 (require 'jong-protobuf)
+
+;; Shell
 (require 'jong-eshell)
 
 ;; ETC files
 (require 'jong-makefile)
 (require 'jong-yaml)
-
 
 ;; Utils
 (require 'jong-helm)
