@@ -15,10 +15,8 @@
   (setq company-async-timeout 4)
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.0)
-  ;; (setq company-minimum-prefix-length 5)
   (global-set-key (kbd "C-<tab>") 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode)
-  ;; (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   )
@@ -70,7 +68,13 @@
 (use-package smartparens
   :ensure t
   :config
-  (smartparens-global-mode))
+  (smartparens-global-mode t)
+  (sp-pair "(" ")" :wrap "C-(")
+  (sp-pair "[" "]" :wrap "C-]")
+  (sp-pair "'" nil :actions :rem)
+  (sp-pair "`" nil :actions :rem)
+  (setq sp-highlight-pair-overlay nil)
+  )
 
 (use-package which-key
   :ensure t
@@ -115,8 +119,18 @@
   (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
   )
 
-(use-package helm-lsp :commands helm-lsp-workspace-symbol)
-(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+(use-package helm-lsp
+  :commands helm-lsp-workspace-symbol)
+
+(use-package treemacs
+  :ensure t
+  :config
+  (setq treemacs-position 'right)
+  )
+
+
+(use-package lsp-treemacs
+  :commands lsp-treemacs-errors-list)
 
 (use-package whitespace-cleanup-mode
   :ensure t
@@ -153,10 +167,7 @@
 (use-package avy
   :ensure t
   :config
-  :bind
-  ("C-'" . avy-goto-word-0)
-  ("C-;" . avy-goto-line))
-
+  )
 
 (use-package counsel
   :ensure t
@@ -254,5 +265,13 @@
 
 (use-package logview
   :ensure t)
+
+(use-package sublimity
+  :ensure t
+  :config
+  (setq sublimity-scroll-weight 5)
+  (setq sublimity-scroll-drift-length 10)
+  )
+
 
 (provide 'jong-packages)

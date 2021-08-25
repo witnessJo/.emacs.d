@@ -1,5 +1,6 @@
-alias nil  $*
-alias sl $*
-alias l $*
-alias s $*
+alias Jul  $*
 alias (nil) $*
+alias s $*
+alias l $*
+alias sl $*
+alias nil $*

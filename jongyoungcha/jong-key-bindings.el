@@ -32,10 +32,7 @@
 (global-set-key (kbd "C-c s <up>") 'jong-common-split-window-up)
 (global-set-key (kbd "C-c s <down>") 'jong-common-split-window-down)
 
-;; (global-set-key (kbd "C-c m <left>") 'jong-common-merge-window-left)
-;; (global-set-key (kbd "C-c m <right>") 'jong-common-merge-window-right)
-;; (global-set-key (kbd "C-c m <up>") 'jong-common-merge-window-up)
-;; (global-set-key (kbd "C-c m <down>") 'jong-common-merge-window-down)
+(global-set-key (kbd "C-;") 'avy-goto-word-1)
 
 (global-set-key (kbd "C-c C-j ") 'windmove-up)
 (global-set-key (kbd "C-c C-k") 'windmove-down)
@@ -101,7 +98,7 @@
 (global-set-key (kbd "C-c n") 'counsel-fzf)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
-(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 
 (global-set-key (kbd "C-c w 3") 'jong-window-split-3-windows-horizontally-evenly)
 

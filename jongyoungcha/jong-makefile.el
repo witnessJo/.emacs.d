@@ -20,7 +20,7 @@
 
 (add-hook 'makefile-bsdmake-mode-hook
 		  (lambda ()
-			(message-box "makefile-bsdmake")
+			;; (message-box "makefile-bsdmake")
 			(setq-local indent-line-function 'jong-makefile-indent-line)
 			(setq indent-tabs-mode t)
 			)

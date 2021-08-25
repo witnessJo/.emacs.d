@@ -28,6 +28,12 @@
 
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 
+(use-package auto-package-update
+  :ensure t
+  :config
+  ;; Yes, please delete the old version on updates.
+  (setq auto-package-update-delete-old-versions t))
+
 (global-font-lock-mode t)
 (transient-mark-mode 1)
 
@@ -109,7 +115,6 @@
 	)
   )
 
-
 (defun jong-backward-delete-word ()
   "Chan 'backward-delete-word."
   (interactive)
@@ -139,12 +144,10 @@
 	)
   )
 
-
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq mark-ring-max 8)
 (setq global-mark-ring-max 8)
 (setq set-mark-command-repeat-pop t)
-
 
 (global-set-key (kbd "M-;") (lambda () (interactive)
 							  (let ((base-pos 0))
@@ -186,34 +189,6 @@
   (if (mark t)
 	  (pop-to-mark-command)
 	(pop-global-mark)))
-
-;; (global-set-key (kbd "C-S-f") (lambda () (interactive)
-;; 								(jong-set-mark)
-;; 								(goto-char (1+ (point)))))
-
-;; (global-set-key (kbd "C-S-b") (lambda () (interactive)
-;; 								(jong-set-mark)
-;; 								(goto-char (1- (point)))))
-
-;; (global-set-key (kbd "C-S-a") (lambda () (interactive)
-;; 								(jong-set-mark)
-;; 								(beginning-of-line)))
-
-;; (global-set-key (kbd "C-S-e") (lambda () (interactive)
-;; 								(jong-set-mark)
-;; 								(end-of-line)))
-
-;; (global-set-key (kbd "C-S-a") (lambda () (interactive)
-;; 								(jong-set-mark)
-;; 								(beginning-of-line)))
-
-;; (global-set-key (kbd "C-S-p") (lambda () (interactive)
-;; 								(jong-set-mark)
-;; 								(forward-line -1)))
-
-;; (global-set-key (kbd "C-S-n") (lambda () (interactive)
-;; 								(jong-set-mark)
-;; 								(forward-line 1)))
 
 
 (global-set-key (kbd "C-x C-o") 'other-window)
@@ -391,6 +366,7 @@
 (require 'jong-project)
 (require 'jong-cursor)
 (require 'jong-window)
+(require 'jong-buffer)
 
 ;; Langauges
 (require 'jong-elisp)
@@ -405,6 +381,7 @@
 (require 'jong-haskell)
 (require 'jong-nodejs)
 (require 'jong-go)
+(require 'jong-kotlin)
 (require 'jong-sql)
 (require 'jong-protobuf)
 
@@ -483,11 +460,13 @@
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(logview eshell-syntax-highlighting auto-dim-other-buffers auto-dim-other-buffer buffer-move aggressive-indent aggresive-indent aggresive-indent-mode magit-delta multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
+   '(kotlin-mode sublimity sublimity-scroll logview eshell-syntax-highlighting auto-dim-other-buffers auto-dim-other-buffer buffer-move aggressive-indent aggresive-indent aggresive-indent-mode magit-delta multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/kafka-grpc-tutorial/")
+   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/fbs/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/fbs/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/kafka-grpc-tutorial/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/kafka-grpc-tutorial/")
 	 (jong-project-sub-default-dir-3 . "/Users/richard/projects/kafka-grpc-tutorial/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/projects/kafka-grpc-tutorial/")
@@ -605,3 +584,4 @@
  '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
  '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
 (put 'dired-find-alternate-file 'disabled nil)
+(put 'upcase-region 'disabled nil)
