@@ -71,6 +71,7 @@
   (smartparens-global-mode t)
   (sp-pair "(" ")" :wrap "C-(")
   (sp-pair "[" "]" :wrap "C-]")
+  (sp-pair "\"" "\"" :wrap "C-\"")
   (sp-pair "'" nil :actions :rem)
   (sp-pair "`" nil :actions :rem)
   (setq sp-highlight-pair-overlay nil)
@@ -125,7 +126,10 @@
 (use-package treemacs
   :ensure t
   :config
-  (setq treemacs-position 'right)
+  (progn
+	(setq treemacs-position 'right
+		  treemacs-width-is-initially-locked nil)
+	)
   )
 
 

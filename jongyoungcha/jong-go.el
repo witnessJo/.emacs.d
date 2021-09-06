@@ -5,9 +5,6 @@
 (use-package go-mode
   :ensure t)
 
-;; (use-package go-guru
-;; :ensure t)
-
 (use-package company-go
   :ensure t)
 
@@ -18,7 +15,12 @@
   (add-hook 'go-test-mode-hook (lambda()
 								(visual-line-mode)))
   )
-  
+
+(use-package go-tag
+  :ensure t
+  :config
+  (setq go-tag-args (list "-transform" "snakecase"))
+  )
 
 (use-package go-fill-struct
   :ensure t)
@@ -154,7 +156,8 @@ And the environment variable was existing, Download go binaries from the interne
 						"golang.org/x/tools/cmd/godoc"
 						"golang.org/x/tools/cmd/guru"
 						"golang.org/x/tools/cmd/goimports"
-						"github.com/go-delve/delve/cmd/dlv")))
+						"github.com/go-delve/delve/cmd/dlv"
+						"github.com/fatih/gomodifytags")))
 	(if (getenv "GOPATH")
 		(progn
 		  (dolist (elt list-url cmd)

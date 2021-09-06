@@ -65,6 +65,36 @@
 								   :mode "debug"))
 
 
+(dap-register-debug-template "fbs"
+							 (list :type "go"
+								   :args "start develop"
+								   :env '(
+										  ;; ("MTLS_SENTBIZ_CRT_PATH" . "/Users/richard/koscom_dev_sentbe_com.crt")
+										  ;; ("MTLS_SENTBIZ_KEY_PATH" . "/Users/richard/koscom.dev.sentbe.com.key")
+										  ;; ("MTLS_SENTBIZ_FULL_CHAIN_PATH" . "/Users/richard/koscom_dev_sentbe_com.pem")
+										  )
+								   :program "/Users/richard/go/src/fbs/cmd/fbs/main.go"
+								   :envFile nil
+								   :buildFlags "-gcflags '-N -l'"
+								   :request "launch"
+								   :mode "debug"))
+
+
+(dap-register-debug-template "fbs-gw"
+							 (list :type "go"
+								   :args "start develop"
+								   :env '(
+										  ;; ("MTLS_SENTBIZ_CRT_PATH" . "/Users/richard/koscom_dev_sentbe_com.crt")
+										  ;; ("MTLS_SENTBIZ_KEY_PATH" . "/Users/richard/koscom.dev.sentbe.com.key")
+										  ;; ("MTLS_SENTBIZ_FULL_CHAIN_PATH" . "/Users/richard/koscom_dev_sentbe_com.pem")
+										  )
+								   :program "/Users/richard/go/src/fbs/cmd/gw/main.go"
+								   :envFile nil
+								   :buildFlags "-gcflags '-N -l'"
+								   :request "launch"
+								   :mode "debug"))
+
+
 (defun jong-debug-go-debug-current-test ()
   (interactive)
   (let ((name (go-test--get-current-test)))

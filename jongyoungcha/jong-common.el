@@ -511,32 +511,6 @@ Version 2017-07-08"
 	))
 
 
-(defun jong-common-delete-line (&optional arg)
-  (interactive "P")
-  (flet ((kill-region (begin end)
-					  (delete-region begin end)))
-	(kill-line arg))
-  (beginning-of-line-text))
-
-
-(defun jong-common-kill-line (&optional arg)
-  (interactive "P")
-  (let ((begin-pos (progn (beginning-of-line) (point)))
-		(end-pos (progn (end-of-line) (point))))
-	(if (string-match-p "^[[:space:]]+$" (thing-at-point 'line t))
-		(progn (beginning-of-line)
-			   (print "")
-			   (setq begin-pos (point)))
-	  (progn (beginning-of-line)
-			 (re-search-forward "[[:graph:]]")
-			 (if (> (point) end-pos)
-				 (goto-char begin-pos)
-			   (backward-char 1))
-			 (print "text")))
-	(call-interactively 'kill-line)
-	(beginning-of-line-text))
-  )
-
 (defun jong-common-kill-forward-word (arg)
   "It would be changed."
   (interactive "p")

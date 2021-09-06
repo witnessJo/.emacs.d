@@ -21,10 +21,8 @@
 (global-set-key (kbd "C-o") 'jong-common-open-line-below)
 (global-set-key (kbd "C-S-c") 'jong-common-copy-region-or-line)
 
-;; (global-set-key (kbd "C-M-\\") 'jong-common-auto-indent-buffer)
-
-;; (global-set-key (kbd "C-d") 'jong-cursor-delete-line)
-(global-set-key (kbd "C-k") 'jong-common-kill-line)
+(global-set-key (kbd "C-S-k") 'jong-cursor-delete-line)
+(global-set-key (kbd "C-k") 'jong-cursor-kill-line)
 
 ;; windows
 (global-set-key (kbd "C-c s <left>") 'jong-common-split-window-left)

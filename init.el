@@ -248,6 +248,11 @@
   (interactive)
   (find-file-at-point user-init-file))
 
+(defun open-dot-jongyoungcha()
+  (interactive)
+  (find-file-read-only (format "%s/.jongyoungcha" (getenv "HOME"))))
+
+
 (global-set-key (kbd "C-c f e d") 'open-init-el)
 (global-set-key (kbd "C-c l e d") 'reload-user-init-file)
 
@@ -331,35 +336,6 @@
 							  (jong-kill-temporary-buffers)
 							  (keyboard-quit)))
 
-(defun create-tags (dir-name)
-  "Create tags file."
-  (interactive "Directory: ")
-  (eshell-command
-   (format "find %s -type f -name \"*.[ch]\" | etags -" dir-name)))
-
-	;;;  Jonas.Jarnestrom<at>ki.ericsson.se A smarter
-	;;;  find-tag that automagically reruns etags when it cant find a
-	;;;  requested item and then makes a new try to locate it.
-	;;;  Fri Mar 15 09:52:14 2002
-(defadvice find-tag (around refresh-etags activate)
-  "Rerun etags and reload tags if tag not found and redo find-tag.
-	 If buffer is modified, ask about save before running etags."
-  (let ((extension (file-name-extension (buffer-file-name))))
-	(condition-case err
-		ad-do-it
-	  (error (and (buffer-modified-p)
-				  (not (ding))
-				  (y-or-n-p "Buffer is modified, save it? ")
-				  (save-buffer))
-			 (er-refresh-etags extension)
-			 ad-do-it))))
-
-(defun er-refresh-etags (&optional extension)
-  "Run etags on all peer files in current dir and reload them silently."
-  (interactive)
-  (shell-command (format "etags *.%s" (or extension "el")))
-  (let ((tags-revert-without-query t))  ; don't query, revert silently
-	(visit-tags-table default-directory nil)))
 
 (require 'jong-packages)
 (require 'jong-common)
@@ -456,15 +432,20 @@
  '(hl-paren-colors '("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900"))
  '(kubernetes-exec-arguments '("-i" "-t" "--container=server"))
  '(kubernetes-logs-arguments '("--tail=1000" "--container=server"))
+ '(lsp-java-workspace-dir "")
  '(magit-diff-use-overlays nil)
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(kotlin-mode sublimity sublimity-scroll logview eshell-syntax-highlighting auto-dim-other-buffers auto-dim-other-buffer buffer-move aggressive-indent aggresive-indent aggresive-indent-mode magit-delta multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
+   '(lsp-java lsp-javas go-tag kotlin-mode sublimity sublimity-scroll logview eshell-syntax-highlighting auto-dim-other-buffers auto-dim-other-buffer buffer-move aggressive-indent aggresive-indent aggresive-indent-mode magit-delta multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/richard/go/src/fbs/")
+   '((jong-project-sub-default-dir-3 . "/Users/richard/Downloads/펌뱅킹-1/통신프로그램_샘플/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/Downloads/펌뱅킹-1/통신프로그램_샘플/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/Downloads/펌뱅킹/통신프로그램_샘플/")
+	 (jong-project-sub-default-dir-2 . "/Users/richard/Downloads/펌뱅킹/통신프로그램_샘플/")
+	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/fbs/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/fbs/")
 	 (jong-project-sub-default-dir-3 . "/Users/richard/go/src/kafka-grpc-tutorial/")
 	 (jong-project-sub-default-dir-2 . "/Users/richard/go/src/kafka-grpc-tutorial/")
@@ -585,3 +566,4 @@
  '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)

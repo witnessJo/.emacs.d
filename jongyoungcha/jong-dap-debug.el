@@ -13,7 +13,10 @@
   (require 'dap-go)
   (require 'dap-gdb-lldb)
   (add-hook 'dap-stopped-hook
-          (lambda (arg) (call-interactively #'dap-hydra)))
+			(lambda (arg)
+			  ;; (call-interactively #'dap-hydra)
+			  (call-interactively #'jong-dap-go-to-output-buffer)
+			  ))
   )
 
 (require 'dap-go)
@@ -25,8 +28,10 @@
 		(progn
 		  ;; (dap-ui-sessions)
 		  ;; (dap-ui-locals)
+		  ;; (dap-go-to-output-buffer)
 		  (dap-ui-show-many-windows)
 		  (switch-to-buffer prev-buffer-name)
+		  (jong-dap-go-to-output-buffer)
 		  ;; (when (get-buffer-window "*dap-ui-sessions*")
 		  ;; (select-window (get-buffer-window "*dap-ui-sessions*"))
 		  ;; (jong-common-enlarge-window-horizontally-10))
@@ -56,12 +61,13 @@
 	(sleep-for 0.5))
   (switch-to-buffer "*dap-ui-repl*"))
 
+
 (defun jong-dap-go-to-output-buffer ()
   (interactive)
   (let ((prev-window (selected-window)))
 	(progn
 	  (dap-go-to-output-buffer)
-	  (enlarge-window 10)
+	  (enlarge-window 20)
 	  (select-window prev-window))
 	)
   )

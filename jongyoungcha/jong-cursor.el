@@ -39,15 +39,38 @@
 	 (backward-word arg)
 	 (point))))
 
+(defun jong-cursor-kill-line (&optional arg)
+  (interactive "P")
+  (let ((begin-pos (progn (beginning-of-line) (point)))
+		(end-pos (progn (end-of-line) (point))))
+	(if (string-match-p "^[[:space:]]+$" (thing-at-point 'line t))
+		(progn (beginning-of-line)
+			   (print "")
+			   (setq begin-pos (point)))
+	  (progn (beginning-of-line)
+			 (re-search-forward "[[:graph:]]")
+			 (if (> (point) end-pos)
+				 (goto-char begin-pos)
+			   (backward-char 1))
+			 (print "text")))
+	(call-interactively 'kill-line)
+	(beginning-of-line-text))
+  )
+
 (defun jong-cursor-delete-line ()
   (interactive)
-  (delete-region
-   (progn
-	 (beginning-of-line)
-	 (point))
-   (progn
-	 (end-of-line)
-	 (point))))
+  (print (thing-at-point 'line t))
+  (if (equal (thing-at-point 'line t) "\n")
+	  (progn
+		(message "heree!1")
+		(delete-char 1)
+		)
+	(delete-region
+	 (line-beginning-position)
+	 (line-end-position)
+	 )
+	)
+  )
 
 
 (defun jong-edit-beginning-of-line-text()
