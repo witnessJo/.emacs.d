@@ -65,19 +65,37 @@
 								   :mode "debug"))
 
 
-(dap-register-debug-template "fbs"
+(dap-register-debug-template "maat"
 							 (list :type "go"
-								   :args "start develop"
+								   :request "launch"
+								   :name "maat"
+								   :args "start grpc"
+								   :buildFlags "-gcflags '-N -l'"
 								   :env '(
 										  ;; ("MTLS_SENTBIZ_CRT_PATH" . "/Users/richard/koscom_dev_sentbe_com.crt")
 										  ;; ("MTLS_SENTBIZ_KEY_PATH" . "/Users/richard/koscom.dev.sentbe.com.key")
 										  ;; ("MTLS_SENTBIZ_FULL_CHAIN_PATH" . "/Users/richard/koscom_dev_sentbe_com.pem")
 										  )
-								   :program "/Users/richard/go/src/fbs/cmd/fbs/main.go"
+								   :program "/Users/richard/go/src/maat/maat"
 								   :envFile nil
-								   :buildFlags "-gcflags '-N -l'"
+								   :mode "exec"))
+
+
+
+(dap-register-debug-template "fbs"
+							 (list :type "go"
 								   :request "launch"
-								   :mode "debug"))
+								   :name "fbs"
+								   :args "start develop"
+								   :buildFlags "-gcflags '-N -l'"
+								   :env '(
+										  ;; ("MTLS_SENTBIZ_CRT_PATH" . "/Users/richard/koscom_dev_sentbe_com.crt")
+										  ;; ("MTLS_SENTBIZ_KEY_PATH" . "/Users/richard/koscom.dev.sentbe.com.key")
+										  ;; ("MTLS_SENTBIZ_FULL_CHAIN_PATH" . "/Users/richard/koscom_dev_sentbe_com.pem")
+										  )
+								   :program "/Users/richard/go/src/fbs/fbs"
+								   :envFile nil
+								   :mode "exec"))
 
 
 (dap-register-debug-template "fbs-gw"

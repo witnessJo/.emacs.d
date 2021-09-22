@@ -79,6 +79,57 @@
   (command-execute 'balance-windows)
   )
 
+(defun jong-window-hide-bottom-windows ()
+  (interactive)
+  (let ((windows-except (list "Treemacs"))
+		)
+	(message "test")
+	)
+  )
+
+(defun jong-window-merge-vertically-all()
+  (interactive)
+  (let ((window-current-horizontal))
+	(when (window-in-direction 'above)
+	  (windmove-up))
+
+	(jong-window-delete-above-below-window)
+	;; move a leftmost buffer
+	(setq window-current-horizontal (selected-window))
+	(while (not (eq (progn
+					  (when (window-in-direction 'left)
+						(windmove-left))
+					  (selected-window)) window-current-horizontal))
+	  (setq window-current-horizontal (selected-window))
+	  (jong-window-delete-above-below-window)
+	  )
+	(jong-window-delete-above-below-window)
+
+	)
+  )
+
+(defun jong-window-move-top-window()
+  (interactive)
+  (let ((buffer-current))
+	(setq buffer-current (current-buffer))
+	(while (not (eq (progn
+					  (windmove-up)
+					  (current-buffer)) buffer-current)))
+	))
+
+
+(defun jong-window-delete-above-below-window ()
+  (interactive)
+  (cond
+   ((window-in-direction 'above)
+	(windmove-up)
+	(delete-window))
+   ((window-in-direction 'below)
+	(windmove-down)
+	(delete-window))
+   )
+  )
+
 
 (provide 'jong-window)
 ;;; jong-window.el ends here

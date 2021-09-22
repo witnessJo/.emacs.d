@@ -21,7 +21,6 @@
 	 (point)))
   )
 
-
 (defun jong-cursor-delete-word-forward (arg )
   (interactive "p")
   (delete-region
@@ -29,7 +28,6 @@
    (progn
 	 (forward-word arg)
 	 (point))))
-
 
 (defun jong-cursor-delete-word-backward (arg)
   (interactive "p")
@@ -93,6 +91,18 @@
 		  (call-interactively 'yank))
 	  (call-interactively 'yank)))
   )
+
+(defun jong-edit-paste-text-below()
+  (interactive)
+  (let ()
+	(call-interactively 'jong-common-open-line-below)
+	(if (use-region-p)
+		(progn
+		  (call-interactively 'delete-backward-char)
+		  (call-interactively 'yank))
+	  (call-interactively 'yank)))
+  )
+
 
 (defun jong-cursor-newline-align-above()
   (interactive)

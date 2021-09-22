@@ -578,17 +578,6 @@ Version 2017-07-08"
   )
 
 
-(defun jong-common-delete-above-below-window ()
-  (interactive)
-  (cond
-   ((window-in-direction 'above)
-	(windmove-up)
-	(delete-window))
-   ((window-in-direction 'below)
-	(windmove-down)
-	(delete-window))
-   )
-  )
 
 
 (defun jong-common-reload-dir-locals ()

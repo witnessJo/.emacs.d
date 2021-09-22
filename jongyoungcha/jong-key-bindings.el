@@ -13,16 +13,16 @@
 ;;; disable
 (global-set-key (kbd "C-x C-c") nil)
 
-(global-set-key (kbd "C-.") 'winner-undo)
-(global-set-key (kbd "C->") 'winner-redo)
+(global-set-key (kbd "C-.") 'undo-tree-undo)
+(global-set-key (kbd "C-?") 'undo-tree-redo)
 (global-set-key (kbd "C--") 'jong-common-delete-above-below-window)
 
 (global-set-key (kbd "C-S-o") 'jong-common-open-line-above)
 (global-set-key (kbd "C-o") 'jong-common-open-line-below)
 (global-set-key (kbd "C-S-c") 'jong-common-copy-region-or-line)
 
-(global-set-key (kbd "C-S-k") 'jong-cursor-delete-line)
-(global-set-key (kbd "C-k") 'jong-cursor-kill-line)
+(global-set-key (kbd "C-k") 'jong-cursor-delete-line)
+(global-set-key (kbd "C-S-k") 'jong-cursor-kill-line)
 
 ;; windows
 (global-set-key (kbd "C-c s <left>") 'jong-common-split-window-left)
@@ -75,10 +75,10 @@
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f1> l") 'counsel-find-library)
-(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-(global-set-key (kbd "<f2> j") 'counsel-set-variable)
-(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+;; (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+;; (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+;; (global-set-key (kbd "<f2> j") 'counsel-set-variable)
+;; (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
@@ -96,18 +96,18 @@
 (global-set-key (kbd "C-c n") 'counsel-fzf)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
-;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 
 (global-set-key (kbd "C-c w 3") 'jong-window-split-3-windows-horizontally-evenly)
-
 (global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
 (global-set-key (kbd "C-c p f") 'counsel-projectile-find-file)
-
 
 ;; profile
 (global-set-key (kbd "C-c q s") 'profiler-start)
 (global-set-key (kbd "C-c q S-s") 'profiler-stop)
 (global-set-key (kbd "C-c q r") 'profiler-report)
+
+(global-set-key (kbd "M-v") 'jong-edit-paste-text)
+(global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
 
 ;; remapping about the keybinding.
 (defvar jong-keys-minor-mode-map
@@ -141,7 +141,10 @@
 	(define-key map (kbd "C-a") 'jong-edit-beginning-of-line-text)
 	(define-key map (kbd "M-*") 'mc/edit-lines)
 	(define-key map (kbd "M-c") 'jong-common-copy-region-or-line)
-	(define-key map (kbd "M-v") 'jong-edit-paste-text)
+	(global-set-key (kbd "M-v") 'jong-edit-paste-text)
+	(global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
+
+
 	(define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)
 									 (jong-forward-line -1)))
