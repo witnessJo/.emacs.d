@@ -15,7 +15,8 @@
 
 (global-set-key (kbd "C-.") 'undo-tree-undo)
 (global-set-key (kbd "C-?") 'undo-tree-redo)
-(global-set-key (kbd "C--") 'jong-common-delete-above-below-window)
+(global-set-key (kbd "C--") 'jong-window-delete-above-below-window)
+(global-set-key (kbd "C-S--") 'jong-window-merge-vertically-all)
 
 (global-set-key (kbd "C-S-o") 'jong-common-open-line-above)
 (global-set-key (kbd "C-o") 'jong-common-open-line-below)
@@ -40,11 +41,14 @@
 ;; cursor
 (global-set-key (kbd "C-S-<down>") 'jong-cursor-move-text-down)
 (global-set-key (kbd "C-S-<up>") 'jong-cursor-move-text-up)
+(global-set-key (kbd "C-S-e") 'jong-cursor-move-eol-region)
+(global-set-key (kbd "C-S-a") 'jong-cursor-move-bol-region)
 
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)
 (global-set-key (kbd "C-c <down>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <right>") 'jong-project-run-command)
+
 
 ;; debug
 (global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
@@ -109,6 +113,11 @@
 (global-set-key (kbd "M-v") 'jong-edit-paste-text)
 (global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
 
+
+;;; etc
+(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
+
 ;; remapping about the keybinding.
 (defvar jong-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
@@ -119,7 +128,7 @@
 	(define-key map (kbd "<A-kp-delete>") 'jong-cursor-delete-subword-forward)
 	(define-key map (kbd "C-<backspace>") 'jong-cursor-delete-word-backward)
 	(define-key map (kbd "C-<delete>") 'jong-cursor-delete-word-forward)
-	  
+	
 	(define-key map (kbd "C-<left>") 'backward-word)
 	(define-key map (kbd "C-<right>") 'forward-word)
 

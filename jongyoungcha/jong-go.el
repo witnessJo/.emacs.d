@@ -177,11 +177,12 @@ And the environment variable was existing, Download go binaries from the interne
   ;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
   )
 
-;; (add-hook 'go-mode-hook
-;; (lambda()
-;; (add-hook 'before-save-lsp
-;; (lambda()
-;; (call-interactively 'lsp)))))
+(add-hook 'go-mode-hook
+		  (lambda()
+			(add-hook 'before-save-lsp
+					  (lambda()
+						(with-current-buffer
+							(flycheck-buffer))))))
 
 (add-hook 'go-mode-hook (lambda ()
 						  (setq go-test-args "-count=1")

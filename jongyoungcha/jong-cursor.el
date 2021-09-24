@@ -60,16 +60,13 @@
   (print (thing-at-point 'line t))
   (if (equal (thing-at-point 'line t) "\n")
 	  (progn
-		(message "heree!1")
+		(message "here!1")
 		(delete-char 1)
 		)
 	(delete-region
 	 (line-beginning-position)
-	 (line-end-position)
-	 )
-	)
+	 (line-end-position)))
   )
-
 
 (defun jong-edit-beginning-of-line-text()
   "Beginning of line."
@@ -103,7 +100,6 @@
 	  (call-interactively 'yank)))
   )
 
-
 (defun jong-cursor-newline-align-above()
   (interactive)
   (when (region-active-p)
@@ -115,6 +111,21 @@
   (end-of-line)
   (call-interactively 'electric-indent-just-newline)
   (insert (pop kill-ring))
+  )
+
+
+(defun jong-cursor-move-eol-region()
+  (interactive)
+  (when (not (use-region-p))
+	(command-execute 'set-mark-command))
+	(end-of-line)
+  )
+
+(defun jong-cursor-move-bol-region()
+  (interactive)
+  (when (not (use-region-p))
+	(command-execute 'set-mark-command))
+	(jong-edit-beginning-of-line-text)
   )
 
 (defun jong-set-mark()
