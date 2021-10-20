@@ -103,20 +103,29 @@
   (go-mode-hook . lsp)
   :config
   (setq lsp-eldoc-render-all nil)
+  (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-gopls-staticcheck t)
+  (setq lsp-gopls-complete-unimported t)
   (setq lsp-modeline-diagnostics-scope :workspace)
   (setq gc-cons-threshold 100000000)
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
   (setq lsp-idle-delay 0.500)
+
+  
   :commands lsp)
 
 (use-package lsp-ui
   :ensure t
   :config
   (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-doc-show-with-mouse t)
+  (setq lsp-ui-doc-show-with-cursor nil)
   (setq lsp-ui-imenu-enable t)
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-diagnostic-max-lines 8)
   (setq lsp-ui-peek-enable t)
+
   (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
   )
 
@@ -340,6 +349,9 @@
          ("S-<f2>" . bm-previous)
          ("C-<f2>" . bm-toggle))
   )
+
+(use-package dockerfile-mode
+  :ensure t)
 
 
 (provide 'jong-packages)

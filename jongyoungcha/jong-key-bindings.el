@@ -9,6 +9,10 @@
 (global-set-key (kbd "M-n") 'jong-window-scroll-up-right)
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
+(global-set-key (kbd "C-c t h") 'jong-buffer-throw-left)
+(global-set-key (kbd "C-c t l") 'jong-buffer-throw-right)
+(global-set-key (kbd "C-c t j") 'jong-buffer-throw-up)
+(global-set-key (kbd "C-c t k") 'jong-buffer-throw-down)
 
 ;;; disable
 (global-set-key (kbd "C-x C-c") nil)
@@ -38,6 +42,10 @@
 (global-set-key (kbd "C-c C-h") 'windmove-left)
 (global-set-key (kbd "C-c C-l") 'windmove-right)
 
+
+
+
+
 ;; cursor
 (global-set-key (kbd "C-S-<down>") 'jong-cursor-move-text-down)
 (global-set-key (kbd "C-S-<up>") 'jong-cursor-move-text-up)
@@ -57,6 +65,7 @@
 (global-set-key (kbd "<f8>") 'dap-next)
 (global-set-key (kbd "<f6>") 'dap-continue)
 (global-set-key (kbd "<f5>") 'dap-debug)
+(global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
 (global-set-key (kbd "C-<f5>") 'jong-debug-go-debug-current-test)
 (global-set-key (kbd "<f12>") 'dap-hydra)
 (global-set-key (kbd "M-<f12>") 'jong-debug-setting-toggle-open-file)
@@ -66,7 +75,9 @@
 (global-set-key (kbd "C-d r") 'dap-debug-restart)
 (global-set-key (kbd "C-d p") 'dap-debug-last)
 (global-set-key (kbd "C-d s") 'dap-switch-session)
-(global-set-key (kbd "C-d f") 'dap-ui-select-stack-frame)
+(global-set-key (kbd "C-d f n") 'dap-down-stack-frame)
+(global-set-key (kbd "C-d f p") 'dap-up-stack-frame)
+(global-set-key (kbd "C-d f l") 'dap-ui-select-stack-frame)
 (global-set-key (kbd "C-d o") 'jong-dap-go-to-output-buffer)
 (global-set-key (kbd "C-d d") 'dap-disconnect)
 (global-set-key (kbd "C-d k") 'dap-ui-sessions-delete-session)

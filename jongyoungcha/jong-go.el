@@ -177,34 +177,26 @@ And the environment variable was existing, Download go binaries from the interne
   ;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
   )
 
-(add-hook 'go-mode-hook
+(add-hook 'before-save-hook
 		  (lambda()
-			(add-hook 'before-save-lsp
-					  (lambda()
-						(with-current-buffer
-							(flycheck-buffer))))))
+			(interactive)
+			(when (eq major-mode 'go-mode)
+			  (gofmt)
+			  (flycheck-buffer))))
 
 (add-hook 'go-mode-hook (lambda ()
 						  (setq go-test-args "-count=1")
-						  (setq lsp-ui-sideline-enable t)
-						  (setq lsp-gopls-staticcheck t)
-						  (setq lsp-ui-doc-enable nil)
-						  (setq lsp-ui-doc-position 'at-point)
-						  ;; (setq lsp-ui-doc-delay 0.5)
-						  (setq lsp-gopls-complete-unimported t)
-						  
 						  (setq indent-tabs-mode t)
 
 						  ;; setting company-go mode...
 						  (setq company-tooltip-limit 20)
-						  (setq company-idle-delay .3)
 						  (setq company-echo-delay 0)
 						  (setq company-begin-commands '(self-insert-command))
 						  (set (make-local-variable 'company-backends) '(company-go))
 						  (company-mode)
 
 						  ;; :weight 'bold)
-						  (local-set-key (kbd "C-c k") 'lsp-ui-doc-show)
+						  (local-set-key (kbd "C-c h") 'lsp-ui-doc-show)
 						  (local-set-key (kbd "C-c r w") 'lsp-workspace-restart)
 						  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
 						  (local-set-key (kbd "C-c C-a") 'go-import-add)
@@ -216,9 +208,7 @@ And the environment variable was existing, Download go binaries from the interne
 						  (local-set-key (kbd "C-c r i") 'lsp-ui-peek-find-implementation)
 						  (local-set-key (kbd "C-c o i") 'lsp-ui-organize-imports)
 						  (local-set-key (kbd "C-c r l") 'helm-imenu)
-						  ;; (local-set-key (kbd "C-c g i") 'jong-get-imported-packages)
 						  (local-set-key (kbd "C-c s f") 'gofmt-before-save)
-						  ;; (local-set-key (kbd "C-c g c") 'chan-run-dlv-cs)
 						  (local-set-key (kbd "C-c c c") 'jong-project-compile-project)
 						  (local-set-key (kbd "C-c r r") 'lsp-rename)
 						  
@@ -226,16 +216,7 @@ And the environment variable was existing, Download go binaries from the interne
 						  (local-set-key (kbd "C-c t a") 'go-test-current-file)
 						  (local-set-key (kbd "C-c t p") 'go-test-current-test-cache)
 						  (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
-						  ;; (local-set-key (kbd "C-c M->")
-						  ;; (lambda () (interactive)
-						  ;; (other-window 1)
-						  ;; (call-interactively 'end-of-buffer)
-						  ;; (other-window -1)))
 						  (lsp)
-
-						  ;; disable eldoc mode
-						  ;; (setq eldoc-mode nil)
-						  (eldoc-mode)
 						  )
 		  )
 

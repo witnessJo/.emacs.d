@@ -68,6 +68,7 @@
 	(progn
 	  (dap-go-to-output-buffer)
 	  (enlarge-window 20)
+	  (compilation-mode)
 	  (select-window prev-window))
 	)
   )

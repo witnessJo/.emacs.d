@@ -72,9 +72,20 @@
 								   :args "start grpc"
 								   :buildFlags "-gcflags '-N -l'"
 								   :env '(
-										  ;; ("MTLS_SENTBIZ_CRT_PATH" . "/Users/richard/koscom_dev_sentbe_com.crt")
-										  ;; ("MTLS_SENTBIZ_KEY_PATH" . "/Users/richard/koscom.dev.sentbe.com.key")
-										  ;; ("MTLS_SENTBIZ_FULL_CHAIN_PATH" . "/Users/richard/koscom_dev_sentbe_com.pem")
+										  ("TARGET" . "develop")
+										  )
+								   :program "/Users/richard/go/src/maat/maat"
+								   :envFile nil
+								   :mode "exec"))
+
+(dap-register-debug-template "maat_gw"
+							 (list :type "go"
+								   :request "launch"
+								   :name "maat"
+								   :args "start grpc"
+								   :buildFlags "-gcflags '-N -l'"
+								   :env '(
+										  ("TARGET" . "develop")
 										  )
 								   :program "/Users/richard/go/src/maat/maat"
 								   :envFile nil
@@ -89,7 +100,7 @@
 								   :args "start develop"
 								   :buildFlags "-gcflags '-N -l'"
 								   :env '(
-										  ;; ("MTLS_SENTBIZ_CRT_PATH" . "/Users/richard/koscom_dev_sentbe_com.crt")
+										  ;; ("ENV_MODE" . "")
 										  ;; ("MTLS_SENTBIZ_KEY_PATH" . "/Users/richard/koscom.dev.sentbe.com.key")
 										  ;; ("MTLS_SENTBIZ_FULL_CHAIN_PATH" . "/Users/richard/koscom_dev_sentbe_com.pem")
 										  )
