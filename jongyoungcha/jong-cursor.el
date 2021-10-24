@@ -21,21 +21,51 @@
 	 (point)))
   )
 
-(defun jong-cursor-delete-word-forward (arg )
+
+(defun jong-cursor-delete-word-forward (arg)
   (interactive "p")
-  (delete-region
-   (point)
-   (progn
-	 (forward-word arg)
-	 (point))))
+  (let ((prev-cursor-pos (point))
+		(prev-line-num (line-number-at-pos))
+		(next-line-num))
+	(forward-word arg)
+	(setq next-line-num (line-number-at-pos))
+	(goto-char prev-cursor-pos)
+	(if (equal prev-line-num next-line-num)
+		(delete-region
+		 (point)
+		 (progn
+		   (forward-word arg)
+		   (point)))
+	  (hungry-delete-forward arg))
+	)
+  )
+
+
+(defun jong-cursor-forward-word (arg)
+  (interactive "p")
+  (forward-word arg)
+  (forward-word arg)
+  (backward-word arg)
+  )
+
 
 (defun jong-cursor-delete-word-backward (arg)
   (interactive "p")
-  (delete-region
-   (point)
-   (progn
-	 (backward-word arg)
-	 (point))))
+  (let ((prev-cursor-pos (point))
+		(prev-line-num (line-number-at-pos))
+		(next-line-num))
+	(backward-word arg)
+	(setq next-line-num (line-number-at-pos))
+	(goto-char prev-cursor-pos)
+	(if (equal prev-line-num next-line-num)
+		(delete-region
+		 (point)
+		 (progn
+		   (backward-word arg)
+		   (point)))
+	  (hungry-delete-backward arg))
+	)
+  )
 
 (defun jong-cursor-kill-line (&optional arg)
   (interactive "P")
@@ -58,14 +88,18 @@
 (defun jong-cursor-delete-line ()
   (interactive)
   (print (thing-at-point 'line t))
-  (if (equal (thing-at-point 'line t) "\n")
+  (if (string-match-p "^[ \t\n\r]+$" (thing-at-point 'line))
 	  (progn
-		(message "here!1")
-		(delete-char 1)
-		)
-	(delete-region
-	 (line-beginning-position)
-	 (line-end-position)))
+		(print "here!1")
+		(delete-char 1))
+	(progn
+	  (print "here2")
+	  (delete-region
+	   (line-beginning-position)
+	   (line-end-position))
+	  )
+	)
+  (indent-for-tab-command)
   )
 
 (defun jong-edit-beginning-of-line-text()

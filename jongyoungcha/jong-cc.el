@@ -181,40 +181,6 @@ MAIN-CPP-PATH is the cmake file path."
 							 (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
 							 file))))))
 
-
-;; (use-package rtags
-;; :ensure t
-;; :config
-;; (setq rtags-autostart-diagnostics t)
-;; (rtags-diagnostics)
-;; (setq rtags-completions-enabled t)
-;; (global-company-mode)
-;; (rtags-enable-standard-keybindings)
-;; (add-hook 'rtags-jump-hook (lambda ()
-;; (xref-push-marker-stack)))
-
-;; (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-;; (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
-;; (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
-
-;; (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-;; (define-key rtags-mode-map (kbd "<C-return>") 'rtags-select-other-window)
-;; (custom-set-faces
-;; '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
-;; '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
-;; )
-
-
-;; (use-package company-rtags
-;; :ensure t
-;; :config
-;; (add-to-list 'company-backends 'company-rtags))
-
-
-;; optionally if you want to use debugger
-;; (use-package dap-mode)
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
-
 (use-package ccls
   :ensure t
   :hook ((c-mode c++-mode objc-mode) .

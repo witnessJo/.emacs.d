@@ -134,7 +134,6 @@
   )
 
 
-
 (defun jong-project-visit-dot-dir-locals-el ()
   (interactive)
   (let ((target-directory)
@@ -178,6 +177,14 @@
   (if (and (boundp 'jong-project-compile-default-dir) (boundp 'jong-project-compile-command))
 	  (jong-project-exec-command jong-project-compile-default-dir jong-project-compile-command)
 	(message "\"projectile-project-root\" and \"jong-project-compile-command were not binded."))
+  )
+
+
+;; TODO
+(defun jong-project-compile-next-error ()
+  (interactive)
+  (with-current-buffer (get-buffer jong-project-compile-command)
+	)
   )
 
 

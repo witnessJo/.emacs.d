@@ -9,10 +9,11 @@
 (global-set-key (kbd "M-n") 'jong-window-scroll-up-right)
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
-(global-set-key (kbd "C-c t h") 'jong-buffer-throw-left)
-(global-set-key (kbd "C-c t l") 'jong-buffer-throw-right)
-(global-set-key (kbd "C-c t j") 'jong-buffer-throw-up)
-(global-set-key (kbd "C-c t k") 'jong-buffer-throw-down)
+
+(global-set-key (kbd "C-c [") 'jong-buffer-throw-left)
+(global-set-key (kbd "C-c ]") 'jong-buffer-throw-right)
+;; (global-set-key (kbd "C-c b j") 'jong-buffer-throw-up)
+;; (global-set-key (kbd "C-c b k") 'jong-buffer-throw-down)
 
 ;;; disable
 (global-set-key (kbd "C-x C-c") nil)
@@ -43,9 +44,6 @@
 (global-set-key (kbd "C-c C-l") 'windmove-right)
 
 
-
-
-
 ;; cursor
 (global-set-key (kbd "C-S-<down>") 'jong-cursor-move-text-down)
 (global-set-key (kbd "C-S-<up>") 'jong-cursor-move-text-up)
@@ -57,6 +55,8 @@
 (global-set-key (kbd "C-c <down>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <right>") 'jong-project-run-command)
 
+(global-set-key (kbd "C-c C-n") 'flycheck-next-error)
+(global-set-key (kbd "C-c C-p") 'flycheck-previous-error)
 
 ;; debug
 (global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
@@ -141,7 +141,7 @@
 	(define-key map (kbd "C-<delete>") 'jong-cursor-delete-word-forward)
 	
 	(define-key map (kbd "C-<left>") 'backward-word)
-	(define-key map (kbd "C-<right>") 'forward-word)
+	(define-key map (kbd "C-<right>") 'jong-cursor-forward-word)
 
 	(define-key map (kbd "C-j") 'jong-cursor-newline-align-above)
 	
@@ -150,10 +150,10 @@
 	(define-key map (kbd "M-<down>") 'evil-window-down)
 	(define-key map (kbd "M-<right>") 'evil-window-right)
 
-	(define-key map (kbd "M-A-<up>") 'buf-move-up)
-	(define-key map (kbd "M-A-<left>") 'buf-move-left)
-	(define-key map (kbd "M-A-<down>") 'buf-move-down)
-	(define-key map (kbd "M-A-<right>") 'buf-move-right)
+	(define-key map (kbd "M-A-<up>") 'jong-buffer-throw-up)
+	(define-key map (kbd "M-A-<left>") 'jong-buffer-throw-left)
+	(define-key map (kbd "M-A-<down>") 'jong-buffer-throw-down)
+	(define-key map (kbd "M-A-<right>") 'jong-buffer-throw-right)
 	
 	(define-key map (kbd "A-<up>") 'backward-paragraph)
 	(define-key map (kbd "A-<down>") 'forward-paragraph)

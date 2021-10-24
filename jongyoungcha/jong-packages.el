@@ -15,16 +15,19 @@
   (setq company-async-timeout 4)
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.0)
-  (global-set-key (kbd "C-<tab>") 'company-complete)
+  ;; (setq company-auto-commit t)
   (add-hook 'after-init-hook 'global-company-mode)
+  (global-set-key (kbd "C-<tab>") 'company-complete)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "<return>") 'company-complete)
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
   )
 
 (use-package buffer-move
   :ensure t
   :config
-  (setq buffer-move-behavior 'move)
+  (setq buffer-move-behavior 'swap)
   )
 
 (use-package company-quickhelp
@@ -119,8 +122,8 @@
   :config
   (setq lsp-ui-doc-enable t)
   (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-show-with-mouse t)
-  (setq lsp-ui-doc-show-with-cursor nil)
+  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-doc-delay 2)
   (setq lsp-ui-imenu-enable t)
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-diagnostic-max-lines 8)
@@ -287,7 +290,9 @@
   )
 
 (use-package command-log-mode
-  :ensure t)
+  :ensure t
+  :config
+  (global-command-log-mode t))
 
 (use-package undo-tree
   :ensure t
@@ -343,8 +348,7 @@
   ;; Then new bookmarks can be saved before the buffer is reverted.
   ;; Make sure bookmarks is saved before check-in (and revert-buffer)
   (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
-
-
+  
   :bind (("<f2>" . bm-next)
          ("S-<f2>" . bm-previous)
          ("C-<f2>" . bm-toggle))
