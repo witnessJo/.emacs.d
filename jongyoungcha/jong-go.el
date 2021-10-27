@@ -25,6 +25,9 @@
 (use-package go-fill-struct
   :ensure t)
 
+(use-package go-impl
+  :ensure t)
+
 (exec-path-from-shell-getenv "GOPATH")
 (exec-path-from-shell-getenv "GOROOT")
 (exec-path-from-shell-getenv "PATH")

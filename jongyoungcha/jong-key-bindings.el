@@ -189,6 +189,14 @@
 	(define-key map (kbd "<A-S-right>") (lambda () (interactive)
 										  (jong-set-mark)
 										  (syntax-subword-forward 1)))
+	
+	(define-key map (kbd "<C-S-left>") (lambda () (interactive)
+										 (jong-set-mark)
+										 (jong-cursor-backword-word 1)))
+	(define-key map (kbd "<C-S-right>") (lambda () (interactive)
+										  (jong-set-mark)
+										  (jong-cursor-forward-word 1)))
+
 	(define-key map (kbd "C-M-S-a") (lambda () (interactive)
 									  (jong-set-mark)
 									  (backward-word)))

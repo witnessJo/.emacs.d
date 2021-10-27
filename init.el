@@ -383,6 +383,7 @@
 (require 'jong-debug-settings)
 (require 'jong-env-setting)
 (require 'jong-key-bindings)
+(require 'jong-sentbe)
 
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")

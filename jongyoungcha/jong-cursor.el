@@ -1,7 +1,9 @@
 ;;; Code:
 
-(defvar-local jong-edit-beginning-of-line-text-pos (point))
+(use-package syntax-subword
+  :ensure t)
 
+(defvar-local jong-edit-beginning-of-line-text-pos (point))
 
 (defun jong-cursor-delete-subword-forward (arg)
   (interactive "p")
@@ -20,7 +22,6 @@
 	 (syntax-subword-backward arg)
 	 (point)))
   )
-
 
 (defun jong-cursor-delete-word-forward (arg)
   (interactive "p")
@@ -44,10 +45,7 @@
 (defun jong-cursor-forward-word (arg)
   (interactive "p")
   (forward-word arg)
-  (forward-word arg)
-  (backward-word arg)
   )
-
 
 (defun jong-cursor-delete-word-backward (arg)
   (interactive "p")
