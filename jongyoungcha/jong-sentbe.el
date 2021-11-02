@@ -24,6 +24,4 @@
   (interactive)
   )
 
-
-
-(provide jong-sentbe)
+(provide 'jong-sentbe)

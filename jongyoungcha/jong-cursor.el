@@ -47,6 +47,11 @@
   (forward-word arg)
   )
 
+(defun jong-cursor-backward-word (arg)
+  (interactive "p")
+  (backward-word arg)
+  )
+
 (defun jong-cursor-delete-word-backward (arg)
   (interactive "p")
   (let ((prev-cursor-pos (point))

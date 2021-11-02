@@ -93,7 +93,7 @@
 ;; (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
 ;; (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
 ;; (global-set-key (kbd "<f2> j") 'counsel-set-variable)
-;; (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
@@ -107,7 +107,7 @@
 (global-set-key (kbd "C-c g j f") 'magit-log-buffer-file)
 (global-set-key (kbd "C-c g b") 'magit-blame-addition)
 
-(global-set-key (kbd "C-c a g") 'helm-do-ag)
+(global-set-key (kbd "C-c a g") 'counsel-ag)
 (global-set-key (kbd "C-c n") 'counsel-fzf)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
@@ -123,7 +123,6 @@
 
 (global-set-key (kbd "M-v") 'jong-edit-paste-text)
 (global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
-
 
 ;;; etc
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
@@ -189,10 +188,9 @@
 	(define-key map (kbd "<A-S-right>") (lambda () (interactive)
 										  (jong-set-mark)
 										  (syntax-subword-forward 1)))
-	
 	(define-key map (kbd "<C-S-left>") (lambda () (interactive)
 										 (jong-set-mark)
-										 (jong-cursor-backword-word 1)))
+										 (jong-cursor-backward-word 1)))
 	(define-key map (kbd "<C-S-right>") (lambda () (interactive)
 										  (jong-set-mark)
 										  (jong-cursor-forward-word 1)))

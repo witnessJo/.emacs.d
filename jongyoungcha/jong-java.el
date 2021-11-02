@@ -87,46 +87,9 @@
   ;; "-XX:+UseG1GC"
   ;; "-XX:+UseStringDeduplication"
   ;; (format "-javaagent:/%s/%s" (getenv "HOME") ".m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar")))
-
-(use-package dap-java
-  : nil)
-
-
 ;; (use-package dap-java
-;;   :after (lsp-java))
+;; :ensure t)
 
-;; (define-key java-mode-map (kbd "C-c c k") 'jong-java-kill-target-processes)
-;; (define-key java-mode-map (kbd "C-c c c") 'lsp-java-build-project)
-;; (define-key java-mode-map (kbd "C-c c g") 'dap-debug)
-;; (define-key java-mode-map (kbd "C-c c p") 'eclim-project-create)
-;; (define-key java-mode-map (kbd "C-c r s") 'helm-imenu)
-;; (define-key java-mode-map (kbd "C-c r r") 'lsp-rename)
-;; (define-key java-mode-map (kbd "C-c r .") 'lsp-find-definition)
-;; (define-key java-mode-map (kbd "C-c r ,") 'lsp-find-references)
-;; (define-key java-mode-map (kbd "C-c d d") 'lsp-ui-doc-show)
-;; (define-key java-mode-map (kbd "C-g") (lambda()
-;; 										(interactive)
-;; 										(display-buffer (get-buffer "*out*"))
-;; 										(ignore-errors (with-current-buffer (get-buffer "*out*")
-;; 														 ((set (make-local-variable 'window-point-insertion-type) t)))
-;; 													   (jong-kill-temporary-buffers)
-;; 													   (keyboard-quit))))
-
-;; (define-key java-mode-map (kbd "<f5>") (lambda()
-;; 										 (interactive)
-;; 										 (call-interactively 'dap-java-debug)
-;; 										 (other-window 1)
-;; 										 (keyboard-quit)
-;; 										 (sleep-for 1)
-;; 										 (display-buffer (get-buffer "*out*"))))
-
-;; (define-key java-mode-map (kbd "<f8>") 'dap-continue)
-;; (define-key java-mode-map (kbd "<f9>") 'dap-breakpoint-toggle)
-;; (define-key java-mode-map (kbd "<f10>") 'dap-next)
-;; (define-key java-mode-map (kbd "<f11>") 'dap-step-in)
-;; (define-key java-mode-map (kbd "<f12>") 'dap-step-in)
-;; (define-key java-mode-map (kbd "C-=") 'jong-dap-debug-goto-repl)
-;; (add-hook 'java-mode-hook 'jong-java-setting-environment)
 (add-hook 'java-mode-hook (lambda()
 							;; (local-set-key (kbd "C-c C-c") 'lsp-execute-code-action)
 							(local-set-key (kbd "C-c k") 'lsp-ui-doc-show)

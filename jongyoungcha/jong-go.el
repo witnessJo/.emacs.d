@@ -13,8 +13,14 @@
   :config
   (setq go-test-verbose t)
   (add-hook 'go-test-mode-hook (lambda()
-								(visual-line-mode)))
-  )
+								 (font-lock-mode -1)
+								 ))
+  (add-hook 'go-test-mode-hook (lambda()
+								(visual-line-mode))))
+
+(use-package go-complete
+  :ensure t)
+
 
 (use-package go-tag
   :ensure t
@@ -98,7 +104,7 @@
 
 
 (defun jong-get-imported-packages ()
-  "Get Imported package "
+  "Get imported package "
   (interactive)
   (let ((output-buffer "*jong-output-buffer*")
 		(extract-pattern-whole "^[[:space:]]*import[[:space:]]*(\\([[:ascii:]]+?\\))")
@@ -174,6 +180,28 @@ And the environment variable was existing, Download go binaries from the interne
 
 (add-hook 'go-mode-hook #'lsp-deferred)
 
+(defvar jong-go-test-buffer nil)
+(defvar jong-go-test-directory nil)
+
+(defun jong-go-run-current-test()
+  "Run Current Test."
+  (interactive)
+  (setq jong-go-test-buffer (current-buffer))
+  (call-interactively 'go-test-current-test)
+  )
+
+(defun jong-go-run-previous-test ()
+  "Run Previous Test."
+  (interactive)
+  (let ((test))
+	(with-current-buffer (get-buffer jong-go-test-buffer)
+	  (call-interactively 'go-test-current-test-cache))
+	(with-current-buffer (get-buffer (go-test--compilation-name))
+	  (setq font-lock-mode nil)
+	)
+	)
+  )
+
 (defun lsp-go-install-save-hooks ()
   "Save configuration before save."
   ;; (add-hook 'before-save-hook #'lsp-format-buffer t t)
@@ -216,9 +244,9 @@ And the environment variable was existing, Download go binaries from the interne
 						  (local-set-key (kbd "C-c c c") 'jong-project-compile-project)
 						  (local-set-key (kbd "C-c r r") 'lsp-rename)
 						  
-						  (local-set-key (kbd "C-c t f") 'go-test-current-test)
+						  (local-set-key (kbd "C-c t f") 'jong-go-run-current-test)
 						  (local-set-key (kbd "C-c t a") 'go-test-current-file)
-						  (local-set-key (kbd "C-c t p") 'go-test-current-test-cache)
+						  (local-set-key (kbd "C-c t p") 'jong-go-run-previous-test)
 						  (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
 						  (lsp)
 						  )

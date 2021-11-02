@@ -6,23 +6,26 @@
 
 (message (regexp-opt-charset '(?a ?c ?e ? ?\t)))
 
+
+(use-package so-long
+  :ensure t
+  :config
+  (global-so-long-mode t))
+
 (use-package auto-complete
-  :ensure t)
+  :ensure t
+  )
 
 (use-package company
   :ensure t
+  :bind (:map company-active-map
+			  ("<tab>" . company-complete-selection))
   :config
   (setq company-async-timeout 4)
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0.0)
-  ;; (setq company-auto-commit t)
-  (add-hook 'after-init-hook 'global-company-mode)
-  (global-set-key (kbd "C-<tab>") 'company-complete)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "<return>") 'company-complete)
-  (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-  )
+  (setq company-minimum-prefix-length 2)
+  (setq company-idle-delay 0.02))
+
+(add-hook 'after-init-hook 'global-company-mode)
 
 (use-package buffer-move
   :ensure t
@@ -123,6 +126,7 @@
   (setq lsp-ui-doc-enable t)
   (setq lsp-ui-doc-position 'at-point)
   (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-doc-show-with-cursor nil)
   (setq lsp-ui-doc-delay 2)
   (setq lsp-ui-imenu-enable t)
   (setq lsp-ui-sideline-enable t)
@@ -292,7 +296,8 @@
 (use-package command-log-mode
   :ensure t
   :config
-  (global-command-log-mode t))
+  ;; (global-command-log-mode t)
+  )
 
 (use-package undo-tree
   :ensure t
