@@ -114,6 +114,9 @@
   (setq lsp-gopls-complete-unimported t)
   (setq lsp-modeline-diagnostics-scope :workspace)
   (setq gc-cons-threshold 100000000)
+  (setq lsp-response-timeout 100)
+  (setq lsp-enable-file-watchers nil)
+  (setq lsp-file-watch-threshold 10000)
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
   (setq lsp-idle-delay 0.500)
 
@@ -125,19 +128,14 @@
   :config
   (setq lsp-ui-doc-enable t)
   (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-show-with-cursor t)
   (setq lsp-ui-doc-show-with-cursor nil)
   (setq lsp-ui-doc-delay 2)
   (setq lsp-ui-imenu-enable t)
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-diagnostic-max-lines 8)
   (setq lsp-ui-peek-enable t)
-
   (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
   )
-
-(use-package helm-lsp
-  :commands helm-lsp-workspace-symbol)
 
 (use-package treemacs
   :ensure t
@@ -147,7 +145,6 @@
 		  treemacs-width-is-initially-locked nil)
 	)
   )
-
 
 (use-package lsp-treemacs
   :commands lsp-treemacs-errors-list)
@@ -360,6 +357,10 @@
   )
 
 (use-package dockerfile-mode
+  :ensure t)
+
+
+(use-package groovy-mode
   :ensure t)
 
 

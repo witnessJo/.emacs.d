@@ -10,19 +10,19 @@
   (setq helm-autoresize-max-height 40)
   (setq helm-autoresize-min-height 40)
   (setq helm-split-window-in-side-p t)
-  (helm-mode 1)
   (setq helm-candidate-number-limit 500)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-  (global-set-key (kbd "C-x r l") 'helm-bookmarks)
+  ;; (global-set-key (kbd "M-x") 'helm-M-x)
+  ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  ;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+  ;; (global-set-key (kbd "C-x r l") 'helm-bookmarks)
   
-  (define-key helm-find-files-map (kbd "M-<up>") 'helm-previous-page)
-  (define-key helm-find-files-map (kbd "M-<down>") 'helm-next-page)
-  (define-key helm-find-files-map (kbd "M-<right>") 'helm-execute-persistent-action)
-  (define-key helm-find-files-map (kbd "M-<left>") 'helm-find-files-up-one-level)
-  (define-key helm-read-file-map (kbd "M-<right>") 'helm-execute-persistent-action)
-  (define-key helm-read-file-map (kbd "M-<left>") 'helm-find-files-up-one-level))
+  ;; (define-key helm-find-files-map (kbd "M-<up>") 'helm-previous-page)
+  ;; (define-key helm-find-files-map (kbd "M-<down>") 'helm-next-page)
+  ;; (define-key helm-find-files-map (kbd "M-<right>") 'helm-execute-persistent-action)
+  ;; (define-key helm-find-files-map (kbd "M-<left>") 'helm-find-files-up-one-level)
+  ;; (define-key helm-read-file-map (kbd "M-<right>") 'helm-execute-persistent-action)
+  ;; (define-key helm-read-file-map (kbd "M-<left>") 'helm-find-files-up-one-level)
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -46,5 +46,9 @@
 
 ;; (setq projectile-completion-system 'helm)
 ;; (helm-projectile-on)
+
+(use-package helm-lsp
+  :ensure t
+  :commands helm-lsp-workspace-symbol)
 
 (provide 'jong-helm)

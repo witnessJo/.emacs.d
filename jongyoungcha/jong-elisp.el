@@ -13,6 +13,9 @@
   :ensure t
   :config)
 
+(use-package lispy
+  :ensure t)
+  
 
 (use-package elisp-slime-nav
   :ensure t
@@ -24,7 +27,6 @@
 (use-package elisp-refs
   :ensure t
   :config)
-
 
 (use-package log4e
   :ensure t
@@ -43,6 +45,9 @@
 (define-key emacs-lisp-mode-map (kbd "C-c g f") 'edebug-defun)
 (define-key emacs-lisp-mode-map (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
 (define-key emacs-lisp-mode-map (kbd "C-M-o") (lambda() (interactive) (scroll-other-window -15)))
+
+(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+
 
 
 

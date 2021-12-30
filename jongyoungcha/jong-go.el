@@ -222,6 +222,8 @@ And the environment variable was existing, Download go binaries from the interne
 						  ;; setting company-go mode...
 						  (setq company-tooltip-limit 20)
 						  (setq company-echo-delay 0)
+						  ;; (setq lsp-ui-doc-show-with-cursor nil)
+						  (setq lsp-ui-doc-show-with-mouse nil)
 						  (setq company-begin-commands '(self-insert-command))
 						  (set (make-local-variable 'company-backends) '(company-go))
 						  (company-mode)

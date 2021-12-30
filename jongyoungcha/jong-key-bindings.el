@@ -49,6 +49,12 @@
 (global-set-key (kbd "C-S-<up>") 'jong-cursor-move-text-up)
 (global-set-key (kbd "C-S-e") 'jong-cursor-move-eol-region)
 (global-set-key (kbd "C-S-a") 'jong-cursor-move-bol-region)
+(global-set-key (kbd "C-M-a") 'jong-edit-beginning-of-line-text)
+(global-set-key (kbd "C-M-e") 'move-end-of-line)
+(global-set-key (kbd "C-M-n") 'sp-next-sexp)
+(global-set-key (kbd "C-M-p") 'sp-previous-sexp)
+(global-set-key (kbd "C-M-t") 'sp-select-next-thing)
+(global-set-key (kbd "C-M-S-t") 'sp-select-previous-thing-exchange)
 
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)
@@ -107,7 +113,7 @@
 (global-set-key (kbd "C-c g j f") 'magit-log-buffer-file)
 (global-set-key (kbd "C-c g b") 'magit-blame-addition)
 
-(global-set-key (kbd "C-c a g") 'counsel-ag)
+(global-set-key (kbd "C-c a g") 'helm-do-ag)
 (global-set-key (kbd "C-c n") 'counsel-fzf)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
