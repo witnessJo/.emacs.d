@@ -338,6 +338,13 @@
 							  (jong-kill-temporary-buffers)
 							  (keyboard-quit)))
 
+;; (add-to-list 'default-frame-alist '(cursor-color . "#ff9090"))
+(require 'frame)
+(defun set-cursor-hook (frame)
+  (modify-frame-parameters
+   frame (list (cons 'cursor-color "DeepSkyBlue"))))
+(add-hook 'after-make-frame-functions 'set-cursor-hook)
+
 (require 'jong-packages)
 (require 'jong-common)
 (require 'jong-project)
@@ -386,10 +393,11 @@
 (require 'jong-env-setting)
 (require 'jong-key-bindings)
 (require 'jong-sentbe)
+(require 'jong-shell-util)
+
 
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
-(set-cursor-color "#aa4444")
 (set-face-background #'hl-line "#004500")
 (global-hl-line-mode t)
 (custom-set-variables
@@ -403,10 +411,7 @@
    ["#01323d" "#ec423a" "#93a61a" "#c49619" "#3c98e0" "#e2468f" "#3cafa5" "#60767e"])
  '(beacon-color "#ff9da4")
  '(compilation-message-face 'default)
- '(cua-global-mark-cursor-color "#3cafa5")
- '(cua-normal-cursor-color "#8d9fa1")
- '(cua-overwrite-cursor-color "#c49619")
- '(cua-read-only-cursor-color "#93a61a")
+ '(cursor-color "#ffffff")
  '(custom-enabled-themes '(solarized-dark-high-contrast))
  '(custom-safe-themes
    '("fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "285d1bf306091644fb49993341e0ad8bafe57130d9981b680c1dbd974475c5c7" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default))
@@ -561,15 +566,17 @@
    ["#01323d" "#ec423a" "#93a61a" "#c49619" "#3c98e0" "#e2468f" "#3cafa5" "#faf3e0"])
  '(xterm-color-names-bright
    ["#002732" "#db5823" "#62787f" "#60767e" "#8d9fa1" "#7a7ed2" "#9eacac" "#ffffee"]))
+
+
+(provide 'init)
+;;;###autoload
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cursor ((t (:background "dark magenta" :foreground "light green" :inverse-video t))))
  '(flymake-error ((((class color)) (:background "#444444"))))
- '(flymake-warning ((((class color)) (:background "#4444aa"))))
- '(rtags-errline ((t (:background "IndianRed3" :foreground "white" :underline (:color "white" :style wave)))))
- '(rtags-warnline ((t (:background "royal blue" :foreground "white" :underline (:color "white" :style wave))))))
+ '(flymake-warning ((((class color)) (:background "#4444aa")))))
 (put 'dired-find-alternate-file 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)

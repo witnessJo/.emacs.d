@@ -36,13 +36,10 @@
 (global-set-key (kbd "C-c s <up>") 'jong-common-split-window-up)
 (global-set-key (kbd "C-c s <down>") 'jong-common-split-window-down)
 
-(global-set-key (kbd "C-;") 'avy-goto-word-1)
-
 (global-set-key (kbd "C-c C-j ") 'windmove-up)
 (global-set-key (kbd "C-c C-k") 'windmove-down)
 (global-set-key (kbd "C-c C-h") 'windmove-left)
 (global-set-key (kbd "C-c C-l") 'windmove-right)
-
 
 ;; cursor
 (global-set-key (kbd "C-S-<down>") 'jong-cursor-move-text-down)
@@ -51,11 +48,16 @@
 (global-set-key (kbd "C-S-a") 'jong-cursor-move-bol-region)
 (global-set-key (kbd "C-M-a") 'jong-edit-beginning-of-line-text)
 (global-set-key (kbd "C-M-e") 'move-end-of-line)
+(global-set-key (kbd "C-M-f") 'forward-list)
+(global-set-key (kbd "C-M-S-f") 'backward-list)
 (global-set-key (kbd "C-M-n") 'sp-next-sexp)
 (global-set-key (kbd "C-M-p") 'sp-previous-sexp)
 (global-set-key (kbd "C-M-t") 'sp-select-next-thing)
 (global-set-key (kbd "C-M-S-t") 'sp-select-previous-thing-exchange)
+(global-set-key (kbd "C-;") 'avy-goto-line)
+(global-set-key (kbd "C-'") 'avy-goto-word-1)
 
+;; run
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)
 (global-set-key (kbd "C-c <down>") 'jong-project-run-command)
@@ -114,7 +116,6 @@
 (global-set-key (kbd "C-c g b") 'magit-blame-addition)
 
 (global-set-key (kbd "C-c a g") 'helm-do-ag)
-(global-set-key (kbd "C-c n") 'counsel-fzf)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 

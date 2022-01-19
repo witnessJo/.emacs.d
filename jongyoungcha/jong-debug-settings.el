@@ -123,21 +123,37 @@
 								   :request "launch"
 								   :mode "debug"))
 
+(dap-register-debug-template "dbconnection"
+							 (list :type "go"
+								   :args ""
+								   :env '(
+										  ("DB_HOST" . "127.0.0.1")
+										  ("DB_PORT" . "5432")
+										  ("DB_USER" . "postgres")
+										  ("DB_PASSWD" . "sentbe1234.")
+										  )
+										  :program "/Users/richard/go/src/dbconnection/cmd/main.go"
+										  :envFile nil
+										  :buildFlags "-gcflags '-N -l'"
+										  :request "launch"
+										  :mode "debug"))
 
-(defun jong-debug-go-debug-current-test ()
-  (interactive)
-  (let ((name (go-test--get-current-test)))
-      (dap-debug
-       (list :type "go"
-             :request "launch"
-             :name (concat "Go: Debug " name " test")
-             :mode "auto"
-             :program "${fileDirname}"
-             :buildFlags nil
-             :args (concat "-test.run ^" name "$")
-             :env nil
-             :envFile nil))))
+
+
+							 (defun jong-debug-go-debug-current-test ()
+							   (interactive)
+							   (let ((name (go-test--get-current-test)))
+								 (dap-debug
+								  (list :type "go"
+										:request "launch"
+										:name (concat "Go: Debug " name " test")
+										:mode "auto"
+										:program "${fileDirname}"
+										:buildFlags nil
+										:args (concat "-test.run ^" name "$")
+										:env nil
+										:envFile nil))))
 
 
 
-(provide 'jong-debug-settings)
+							 (provide 'jong-debug-settings)
