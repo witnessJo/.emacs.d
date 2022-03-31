@@ -299,7 +299,13 @@
 (use-package undo-tree
   :ensure t
   :config
-  (setq global-undo-tree-mode t))
+  (global-undo-tree-mode)
+  (defun jong-tree-undo-tree ()
+	(interactive)
+	(setq buffer-undo-tree nil)
+	)
+  )
+
 
 (use-package bm
   :ensure t

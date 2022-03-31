@@ -17,11 +17,13 @@
 			  )
   )
 
+(use-package impostman
+  :ensure t)
+
 ;; (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 ;; (eval-after-load "restclient"
 ;; (define-key restclient-mode-map (kbd "C-c C-c") 
 ;; )
-
 
 (defcustom jong-http-restclient-response-json-elems nil
   "Name for response buffer."

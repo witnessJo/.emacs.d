@@ -384,6 +384,7 @@
 (require 'jong-html)
 (require 'jong-dap-debug)
 (require 'jong-term)
+(require 'jong-redis)
 (require 'jong-git)
 (require 'jong-kubernetes)
 (require 'jong-swit)
@@ -446,7 +447,7 @@
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(lispy helm-lsp groovy-mode gradle-mode dap-java sis dockerfile-mode tn bm command-log-mode lsp-java lsp-javas go-tag kotlin-mode sublimity sublimity-scroll logview eshell-syntax-highlighting auto-dim-other-buffers auto-dim-other-buffer buffer-move aggressive-indent aggresive-indent aggresive-indent-mode magit-delta multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
+   '(eredis lispy helm-lsp groovy-mode gradle-mode dap-java sis dockerfile-mode tn bm command-log-mode lsp-java lsp-javas go-tag kotlin-mode sublimity sublimity-scroll logview eshell-syntax-highlighting auto-dim-other-buffers auto-dim-other-buffer buffer-move aggressive-indent aggresive-indent aggresive-indent-mode magit-delta multiple-cursors evil-mode evil company-lsp company-lspf ivy-posframe counsel-projectile ag counsel go-fill-struct inf-mongo vterm plantuml-mode exwm kubernetes-tramp kubernetes gotest smartparens smartparens-stric protobuf-mode cider lsp-ui yaml-mode xterm-color xref-js2 whitespace-cleanup-mode which-key web-mode use-package undo-tree tide syntax-subword solarized-theme rtags restclient realgud racer prodigy popwin pcap-mode nodejs-repl modern-cpp-font-lock magit log4e js-comint indium hungry-delete helm-xref helm-projectile helm-go-package helm-dash helm-ag google-translate godoctor go-stacktracer go-rename go-guru go-errcheck go-eldoc go-dlv go-direx go-complete go-autocomplete flymake-go flycheck-rust flycheck-haskell exec-path-from-shell ensime elpy elisp-slime-nav elisp-refs dap-mode company-quickhelp company-jedi company-go color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo bash-completion avy autopair auto-package-update auto-highlight-symbol anaconda-mode))
  '(pos-tip-background-color "#01323d")
  '(pos-tip-foreground-color "#9eacac")
  '(safe-local-variable-values

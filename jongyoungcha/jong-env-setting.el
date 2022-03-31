@@ -50,7 +50,7 @@
 	))
  )
 
-(setq default-frame-alist '((font . "Consolas-15")
+(setq default-frame-alist '((font . "Source Code Pro-15")
 							(vertical-scroll-bars . 0)
 							))
 

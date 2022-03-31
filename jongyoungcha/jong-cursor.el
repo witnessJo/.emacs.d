@@ -102,7 +102,7 @@
 	   (line-end-position))
 	  )
 	)
-  (indent-for-tab-command)
+  (indent-according-to-mode)
   )
 
 (defun jong-edit-beginning-of-line-text()
