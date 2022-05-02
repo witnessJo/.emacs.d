@@ -11,7 +11,6 @@
 ;;   :group 'jong-java
 ;;   :type 'list)
 
-
 (use-package gradle-mode
   :ensure t
   :config
