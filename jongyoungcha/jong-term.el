@@ -63,8 +63,13 @@
 (use-package vterm
   :ensure t
   :config
-  (define-key vterm-mode-map (kbd "C-c C-l") nil)
   (define-key vterm-mode-map (kbd "C-s") nil)
+  (define-key vterm-mode-map (kbd "C-c C-c") 'vterm-send-C-c)
+  (define-key vterm-mode-map (kbd "C-<left>") 'vterm-send-M-b)
+  (define-key vterm-mode-map (kbd "C-<right>") 'vterm-send-M-f)
+  (add-hook 'vterm-mode-hook (lambda ()
+							   (disable-jong-keys-minor-mode)
+							   ))
   )
 
 (add-hook 'vterm-mode-hook

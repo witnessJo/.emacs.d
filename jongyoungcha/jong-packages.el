@@ -264,6 +264,7 @@
 	(interactive)
 	(setq buffer-undo-tree nil)
 	)
+  (setq undo-tree-auto-save-history nil)
   )
 
 
