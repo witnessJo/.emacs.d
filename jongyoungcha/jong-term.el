@@ -21,15 +21,6 @@
 
 (require 'ansi-color)
 
-;; (defun jong-shell-font-lock-matcher (token)
-;;   "jongyoungcha's shell font matcher..."
-;;   (let ((case-fold-search nil))
-;;     (re-search-forward   "\\success\\|good\\|continue\\|"
-;;                          token 'no-error)))
-
-;; (add-hook 'shell-mode-hook
-;;           (lambda () (setq font-lock-defaults 'jong-shell-highlights)))
-
 (defun eshell/clear ()
   "Clear the eshell buffer."
   (let ((inhibit-read-only t))
@@ -60,13 +51,18 @@
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 (add-to-list 'comint-output-filter-functions 'jong-term-comint-preoutput-turn-buffer-read-only)
 
+
 (use-package vterm
   :ensure t
   :config
+  (define-key vterm-mode-map (kbd "M-c") 'jong-copy-line-or-region)
+  (define-key vterm-mode-map (kbd "M-v") 'yank)
   (define-key vterm-mode-map (kbd "C-s") nil)
   (define-key vterm-mode-map (kbd "C-c C-c") 'vterm-send-C-c)
   (define-key vterm-mode-map (kbd "C-<left>") 'vterm-send-M-b)
   (define-key vterm-mode-map (kbd "C-<right>") 'vterm-send-M-f)
+  (define-key vterm-mode-map (kbd "C-a") 'vterm-send-C-a)
+  (define-key vterm-mode-map (kbd "C-e") 'vterm-send-C-e)
   (add-hook 'vterm-mode-hook (lambda ()
 							   (disable-jong-keys-minor-mode)
 							   ))
