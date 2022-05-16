@@ -54,8 +54,8 @@
 (global-set-key (kbd "C-M-p") 'sp-previous-sexp)
 (global-set-key (kbd "C-M-t") 'sp-select-next-thing)
 (global-set-key (kbd "C-M-S-t") 'sp-select-previous-thing-exchange)
-(global-set-key (kbd "C-;") 'avy-goto-line)
-(global-set-key (kbd "C-'") 'avy-goto-word-1)
+(global-set-key (kbd "C-;") 'jong-avy-goto-line)
+(global-set-key (kbd "C-'") 'jong-avy-goto-word-1)
 
 ;; run
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)

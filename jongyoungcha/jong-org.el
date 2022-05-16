@@ -1,17 +1,16 @@
 
 (use-package org
   :ensure t
-  :bind (
-		 ("C-c e m" . org-hugo-export-to-md)
-		 )
   :config
-  (add-hook 'org-mode-hook (lambda () (setq truncate-lines t)))
-  (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
   (add-hook 'org-mode-hook (lambda ()
-							 ;; (setq org-export-with-archived-trees nil)
-							 ;; (setq org-export-with-broken-links 'mark)
-							 ))
-  (add-hook 'org-mode-hook 'turn-on-auto-fill)
+							 (setq truncate-lines t)
+							 (setq fill-column 80)
+							 (turn-on-auto-fill)
+							 (local-set-key (kbd "C-c e m") 'org-hugo-export-to-md)
+							 (local-set-key (kbd "C-S-<up>") 'jong-cursor-move-text-up)
+							 (local-set-key (kbd "C-S-<down>") 'jong-cursor-move-text-down)
+                             )
+			)
   )
 
 (use-package verb

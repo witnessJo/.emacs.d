@@ -144,6 +144,22 @@
 (use-package avy
   :ensure t
   :config
+  
+  (defun jong-avy-goto-line ()
+    (interactive)
+    (progn
+      (call-interactively 'avy-goto-line)
+      (call-interactively 'recenter-top-bottom)
+      )
+    )
+  
+  (defun jong-avy-goto-word-1 ()
+    (interactive)
+    (progn
+      (call-interactively 'avy-goto-word-1)
+      (call-interactively 'recenter-top-bottom)
+      )
+    )
   )
 
 (use-package counsel

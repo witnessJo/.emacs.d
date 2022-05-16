@@ -380,6 +380,7 @@
 (require 'jong-yaml)
 
 ;; Utils
+(require 'jong-org)
 (require 'jong-helm)
 (require 'jong-network)
 (require 'jong-http)
