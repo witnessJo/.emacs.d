@@ -149,7 +149,7 @@
     (interactive)
     (progn
       (call-interactively 'avy-goto-line)
-      (call-interactively 'recenter-top-bottom)
+      (call-interactively 'recenter)
       )
     )
   
@@ -157,7 +157,7 @@
     (interactive)
     (progn
       (call-interactively 'avy-goto-word-1)
-      (call-interactively 'recenter-top-bottom)
+      (call-interactively 'recenter)
       )
     )
   )

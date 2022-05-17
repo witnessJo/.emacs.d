@@ -57,6 +57,10 @@
   :config
   (define-key vterm-mode-map (kbd "M-c") 'jong-copy-line-or-region)
   (define-key vterm-mode-map (kbd "M-v") 'yank)
+  (define-key vterm-mode-map (kbd "M-<left>") 'evil-window-left)
+  (define-key vterm-mode-map (kbd "M-<up>") 'evil-window-up)
+  (define-key vterm-mode-map (kbd "M-<right>") 'evil-window-right)
+  (define-key vterm-mode-map (kbd "M-<down>") 'evil-window-down)
   (define-key vterm-mode-map (kbd "C-s") nil)
   (define-key vterm-mode-map (kbd "C-c C-c") 'vterm-send-C-c)
   (define-key vterm-mode-map (kbd "C-<left>") 'vterm-send-M-b)
