@@ -47,8 +47,5 @@
 ;; (setq projectile-completion-system 'helm)
 ;; (helm-projectile-on)
 
-(use-package helm-lsp
-  :ensure t
-  :commands helm-lsp-workspace-symbol)
 
 (provide 'jong-helm)

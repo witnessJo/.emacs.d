@@ -35,6 +35,10 @@
   (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
   )
 
+(use-package helm-lsp
+  :ensure t
+  :commands helm-lsp-workspace-symbol)
+
 
 (use-package lsp-treemacs
   :commands lsp-treemacs-errors-list)

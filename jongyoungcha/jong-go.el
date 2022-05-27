@@ -235,7 +235,7 @@ And the environment variable was existing, Download go binaries from the interne
 						  (local-set-key (kbd "C-c C-a") 'go-import-add)
 						  (local-set-key (kbd "C-c C-g") 'go-goto-imports)
 						  (local-set-key (kbd "C-c C-f") 'gofmt)
-						  (local-set-key (kbd "C-c C-c") 'lsp-execute-code-action)
+						  (local-set-key (kbd "C-c C-c") 'helm-lsp-code-actions)
 						  (local-set-key (kbd "C-.") 'lsp-ui-peek-find-definitions)
 						  (local-set-key (kbd "C-,") 'xref-pop-marker-stack)
 						  (local-set-key (kbd "C-c r ,") 'lsp-ui-peek-find-references)
