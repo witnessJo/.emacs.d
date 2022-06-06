@@ -11,6 +11,7 @@
   (setq helm-autoresize-min-height 40)
   (setq helm-split-window-in-side-p t)
   (setq helm-candidate-number-limit 500)
+  (helm-mode)
   ;; (global-set-key (kbd "M-x") 'helm-M-x)
   ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
   ;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)

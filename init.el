@@ -28,6 +28,13 @@
 
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 
+(when (memq window-system '(mac ns))
+  (shell-command "brew Tap homebrew/cask-fonts && brew install --cask font-source-code-pro")
+  (exec-path-from-shell-copy-env "GOROOT")
+  (exec-path-from-shell-copy-env "GOPATH")
+  (exec-path-from-shell-copy-env "PATH")
+  )
+
 (use-package auto-package-update
   :ensure t
   :config
@@ -51,7 +58,7 @@
   (with-output-to-temp-buffer temp-buffer-name
 	(async-shell-command cmd temp-buffer-name temp-buffer-name)
 	(pop-to-buffer temp-buffer-name)
-	))
+))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
@@ -455,7 +462,12 @@
  '(pos-tip-background-color "#01323d")
  '(pos-tip-foreground-color "#9eacac")
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/richard/gowork/src/go-bizron/")
+   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/go-ethereum/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/go-ethereum/")
+     (checkdoc-minor-mode . t)
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/go-projects/go-ethereum/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/go-projects/go-ethereum/")
+     (jong-project-sub-default-dir-3 . "/Users/richard/gowork/src/go-bizron/")
      (jong-project-sub-default-dir-2 . "/Users/richard/gowork/src/go-bizron/")
      (jong-project-sub-default-dir-3 . "/Users/richard/gowork/src/go-ethereum/")
      (jong-project-sub-default-dir-2 . "/Users/richard/gowork/src/go-ethereum/")
@@ -571,7 +583,7 @@
      (360 . "#268bd2")))
  '(vc-annotate-very-old-color nil)
  '(warning-suppress-log-types '((emacs) (emacs) (emacs) (emacs)))
- '(warning-suppress-types '((emacs) (emacs) (emacs)))
+ '(warning-suppress-types '((comp) (emacs) (emacs) (emacs)))
  '(weechat-color-list
    '(unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83"))
  '(window-divider-mode nil)

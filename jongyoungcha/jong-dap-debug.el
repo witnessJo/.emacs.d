@@ -10,7 +10,7 @@
   (dap-ui-controls-mode 1)
   (require 'dap-lldb)
   (require 'dap-node)
-  (require 'dap-go)
+  (require 'dap-dlv-go)
   (require 'dap-gdb-lldb)
   (add-hook 'dap-stopped-hook
 			(lambda (arg)
@@ -18,8 +18,6 @@
 			  (call-interactively #'jong-dap-go-to-output-buffer)
 			  ))
   )
-
-(require 'dap-go)
 
 (defun jong-dap-debug-toggle-show-ui ()
   (interactive)

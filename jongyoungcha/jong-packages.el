@@ -102,12 +102,19 @@
 
 (use-package treemacs
   :ensure t
-  :config
+  :commands (treemacs
+             treemacs-follow-mode
+             treemacs-filewatch-mode
+             treemacs-fringe-indicator-mode)
+  :init
   (progn
 	(setq treemacs-position 'right
 		  treemacs-width-is-initially-locked nil)
-	)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t))
   )
+
 
 (use-package whitespace-cleanup-mode
   :ensure t

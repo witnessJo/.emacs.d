@@ -2,6 +2,8 @@
 
 (defvar jong-go-debug-buffer "*jong-go-debug*" "Jong go language debug buffer.")
 
+(exec-path-from-shell-copy-env "GOPATH")
+
 (use-package go-mode
   :ensure t)
 
