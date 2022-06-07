@@ -33,6 +33,10 @@
 						   (local-set-key (kbd "C-S-<up>") 'jong-cursor-move-text-up)
 						   (local-set-key (kbd "C-S-<down>") 'jong-cursor-move-text-down)
                            (local-set-key (kbd "C-'") 'jong-avy-goto-word-1)
+                           (local-set-key (kbd "<tab>") 'org-indent-item)
+                           (local-set-key (kbd "S-<tab>") 'org-outdent-item)
+                           (local-set-key (kbd "C-<up>") 'backward-paragraph)
+                           (local-set-key (kbd "C-<down>") 'forward-paragraph)
                            )
           )
 
