@@ -353,5 +353,8 @@
 (use-package groovy-mode
   :ensure t)
 
+(use-package vdiff
+  :ensure t)
+
 
 (provide 'jong-packages)
