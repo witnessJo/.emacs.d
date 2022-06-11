@@ -15,7 +15,6 @@
 
 (use-package lispy
   :ensure t)
-  
 
 (use-package elisp-slime-nav
   :ensure t
@@ -46,7 +45,8 @@
 (define-key emacs-lisp-mode-map (kbd "C-M-i") (lambda() (interactive) (scroll-other-window 15)))
 (define-key emacs-lisp-mode-map (kbd "C-M-o") (lambda() (interactive) (scroll-other-window -15)))
 
-(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+(add-hook 'emacs-lisp-mode-hook (lambda ()
+                                  (lispy-mode 0)))
 
 
 
