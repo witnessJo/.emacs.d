@@ -31,9 +31,13 @@
 ;; $ brew install the_silver_searcher ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package helm-ag
-  :ensure t)
-;; (with-eval-after-load 'helm-ag
-;; (global-set-key (kbd "C-c a g") 'helm-do-ag))
+  :ensure t
+  :config
+  (defun jong-helm-ag-do-ag-projectile()
+    (interactive)
+    (message (projectile-project-root))
+    (sleep-for 2)
+    (helm-do-ag (projectile-project-root))))
 
 ;; (global-set-key (kbd "C-c b") 'helm-buffers-list)
 ;; (global-set-key (kbd "C-c C-b") 'helm-buffers-list)

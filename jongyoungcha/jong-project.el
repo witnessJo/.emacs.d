@@ -152,22 +152,37 @@
   (let ((default-directory (if (not (file-directory-p directory))
 							   (error "The directory was not existing")
 							 directory))
-		(proc))
+		(buffer-name (format "*jong-command-%s-%s*" directory cmd)))
 	(unless (file-directory-p directory)
 	  (error (format "Couldnt find the directory %s\"" directory)))
 
 	(when (or (equal cmd nil) (string= cmd ""))
 	  (error (format "Couldnt find  %s\"" cmd)))
-	(when (get-buffer jong-project-output-buffer) (kill-buffer jong-project-output-buffer))
+	(when (get-buffer buffer-name) (kill-buffer buffer-name))
 	(set-process-sentinel
-	 (start-file-process-shell-command "*jong-command*" jong-project-output-buffer cmd)
+	 (start-file-process-shell-command buffer-name buffer-name cmd)
 	 (lambda (p e)
-	   (ignore-errors (with-current-buffer (get-buffer jong-project-output-buffer)
-						(compilation-mode)
-						(compilation-shell-minor-mode))
-					  (when (functionp after-func)
-						(funcall after-func)))))
-	(display-buffer (get-buffer-create jong-project-output-buffer)))
+       ;; After process done
+       (with-current-buffer (get-buffer (process-buffer p))
+		 (compilation-mode)
+		 (compilation-shell-minor-mode)
+         )))
+    (display-buffer (get-buffer-create buffer-name))
+	(when (functionp after-func)
+	  (funcall after-func))
+    )
+  )
+
+(defun jong-project-exec-after-func (directory cmd)
+  (interactive)
+  ;; After process get started
+  (let ((buffer-name (format "*jong-command-%s-%s*" directory cmd))
+        )
+    (with-current-buffer (get-buffer buffer-name)
+	  (compilation-mode)
+	  (compilation-shell-minor-mode)
+      )
+    )
   )
 
 
@@ -194,17 +209,23 @@
   (jong-common-reload-dir-locals)
   (cond ((equal num 1)
 		 (if (and (boundp 'jong-project-run-default-dir) (boundp 'jong-project-run-command))
-			 (jong-project-exec-command jong-project-run-default-dir jong-project-run-command)
-		   (message "\"projectile-project-root\" and \"jong-project-run-command were not binded.")))
+			 (jong-project-exec-command
+              jong-project-run-default-dir
+              jong-project-run-command)
+           (message "\"projectile-project-root\" and \"jong-project-run-command were not binded.")))
 
 		((equal num 2)
 		 (if (and (boundp 'jong-project-sub-default-dir-2) (boundp 'jong-project-sub-command-2))
-			 (jong-project-exec-command jong-project-sub-default-dir-2 jong-project-sub-command-2)
+			 (jong-project-exec-command
+              jong-project-sub-default-dir-2
+              jong-project-sub-command-2)
 		   (message "\"jong-project-sub-default-dir-2\" and \"jong-project-sub-command-2\".")))
 
 		((equal num 3)
 		 (if (and (boundp 'jong-project-sub-default-dir-3) (boundp 'jong-project-sub-command-3))
-			 (jong-project-exec-command jong-project-sub-default-dir-3 jong-project-sub-command-3)
+			 (jong-project-exec-command
+              jong-project-sub-default-dir-3
+              jong-project-sub-command-3)
 		   (message "\"jong-project-sub-default-dir-3\" and \"jong-project-sub-command-3\".")))
 		))
 
@@ -245,7 +266,13 @@
 					 :candidates subcmds-temp
 					 :fuzzy-match t
 					 :action (lambda (cmd)
-							   (jong-project-subcmd-exec (nth 0 cmd) (nth 1 cmd) (nth 2 cmd))))
+							   ;; (jong-project-subcmd-exec (nth 0 cmd) (nth 1 cmd) (nth 2 cmd))
+                               (jong-project-exec-command
+                                (nth 2 cmd)
+                                (nth 1 cmd)
+                                ;; (jong-project-exec-after-func (nth 2 cmd) (nth 1 cmd))
+                                )
+                               ))
 		  :buffer "*jong project commands*")
 	)
   )
@@ -263,17 +290,22 @@
 
 	(when (or (equal cmd nil) (string= cmd ""))
 	  (error (format "Couldnt find  %s\"" cmd)))
+    
 	(when (get-buffer output-buffer) (kill-buffer output-buffer))
 
 	(with-current-buffer (get-buffer-create output-buffer)
-	  (compilation-mode t)
+	  ;; (compilation-modet)
 	  (ansi-color-for-comint-mode-on)
 	  (comint-mode)
 	  (setq default-directory directory)
 	  (display-buffer (current-buffer))
-	  (setq proc (start-process-shell-command (format "*jong-project-subcmd <%s-%s>*" title directory) (current-buffer) cmd))
-	  (set-process-filter proc 'comint-output-filter))
-	)
+	  (setq proc (start-process-shell-command
+                  output-buffer
+                  (current-buffer)
+                  cmd))
+	  (set-process-filter proc 'comint-output-filter)
+      )
+    )
   )
 
 
