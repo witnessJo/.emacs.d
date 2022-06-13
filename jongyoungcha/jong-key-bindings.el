@@ -5,15 +5,17 @@
 (global-set-key (kbd "C-c C-m") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c C-n") 'jong-window-display-buffer-right)
 (global-set-key (kbd "C-c n") 'jong-window-display-buffer-right)
-;; (global-set-key (kbd "M-p") 'jong-window-scroll-down-right)
-;; (global-set-key (kbd "M-n") 'jong-window-scroll-up-right)
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
-(global-set-key (kbd "C-c [") 'jong-buffer-throw-left)
-(global-set-key (kbd "C-c ]") 'jong-buffer-throw-right)
+(global-set-key (kbd "C-c ;") 'jong-buffer-throw-left)
+(global-set-key (kbd "C-c '") 'jong-buffer-throw-right)
 ;; (global-set-key (kbd "C-c b j") 'jong-buffer-throw-up)
 ;; (global-set-key (kbd "C-c b k") 'jong-buffer-throw-down)
+
+(global-set-key (kbd "C-x r l") 'counsel-bookmark)
+(global-set-key (kbd "<f2>") 'jong-bookmark-set-anonymous)
+(global-set-key (kbd "S-<f2>") 'bookmark-delete-all)
 
 ;;; disable
 (global-set-key (kbd "C-x C-c") nil)
@@ -81,17 +83,17 @@
 (global-set-key (kbd "M-<f12>") 'jong-debug-setting-toggle-open-file)
 (global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
 
-(global-set-key (kbd "C-d") nil)
-(global-set-key (kbd "C-d r") 'dap-debug-restart)
-(global-set-key (kbd "C-d p") 'dap-debug-last)
-(global-set-key (kbd "C-d s") 'dap-switch-session)
-(global-set-key (kbd "C-d f n") 'dap-down-stack-frame)
-(global-set-key (kbd "C-d f p") 'dap-up-stack-frame)
-(global-set-key (kbd "C-d f l") 'dap-ui-select-stack-frame)
-(global-set-key (kbd "C-d o") 'jong-dap-go-to-output-buffer)
-(global-set-key (kbd "C-d d") 'dap-disconnect)
-(global-set-key (kbd "C-d k") 'dap-ui-sessions-delete-session)
-(global-set-key (kbd "C-d <return>") 'dap-ui-sessions-select)
+;; (global-set-key (kbd "C-d") nil)
+;; (global-set-key (kbd "C-d r") 'dap-debug-restart)
+;; (global-set-key (kbd "C-d p") 'dap-debug-last)
+;; (global-set-key (kbd "C-d s") 'dap-switch-session)
+;; (global-set-key (kbd "C-d f n") 'dap-down-stack-frame)
+;; (global-set-key (kbd "C-d f p") 'dap-up-stack-frame)
+;; (global-set-key (kbd "C-d f l") 'dap-ui-select-stack-frame)
+;; (global-set-key (kbd "C-d o") 'jong-dap-go-to-output-buffer)
+;; (global-set-key (kbd "C-d d") 'dap-disconnect)
+;; (global-set-key (kbd "C-d k") 'dap-ui-sessions-delete-session)
+;; (global-set-key (kbd "C-d <return>") 'dap-ui-sessions-select)
 
 (global-set-key (kbd "C-s") 'swiper-isearch)
 (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -146,6 +148,10 @@
   (let ((map (make-sparse-keymap)))
 	(define-key map (kbd "<A-left>") 'syntax-subword-backward)
 	(define-key map (kbd "<A-right>") 'syntax-subword-forward)
+    
+	(define-key map (kbd "A-b") 'syntax-subword-backward)
+	(define-key map (kbd "A-f") 'syntax-subword-forward)
+
 	
 	(define-key map (kbd "A-<backspace>") 'jong-cursor-delete-subword-backward)
 	(define-key map (kbd "<A-kp-delete>") 'jong-cursor-delete-subword-forward)
@@ -155,6 +161,9 @@
 	(define-key map (kbd "C-<left>") 'backward-word)
 	(define-key map (kbd "C-<right>") 'jong-cursor-forward-word)
 
+    (define-key map (kbd "M-b") 'backward-word)
+    (define-key map (kbd "M-f") 'jong-cursor-forward-word)
+   
 	(define-key map (kbd "C-j") 'jong-cursor-newline-align-above)
 	
 	(define-key map (kbd "M-<up>") 'evil-window-up)

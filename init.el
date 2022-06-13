@@ -394,6 +394,7 @@
 (require 'jong-html)
 (require 'jong-dap-debug)
 (require 'jong-term)
+(require 'jong-bookmark)
 (require 'jong-redis)
 (require 'jong-git)
 (require 'jong-kubernetes)
