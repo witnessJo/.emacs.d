@@ -3,17 +3,19 @@
 (use-package dap-mode
   :ensure t
   :config
-  (dap-mode 1)
-  (dap-ui-mode 1)
-  (dap-tooltip-mode 1)
-  (tooltip-mode 1)
-  (dap-ui-controls-mode 1)
+  (require 'dap-ui)
   (require 'dap-lldb)
   (require 'dap-node)
   (require 'dap-dlv-go)
   (require 'dap-gdb-lldb)
 
-  
+  (dap-mode 1)
+  (dap-ui-mode 1)
+  (dap-tooltip-mode 1)
+  (tooltip-mode 1)
+  (dap-ui-controls-mode 1)
+  (setq dap-ui-variable-length 100)
+
   (defun disable-lsp-ui-doc (orig-fun &rest args)
     (lsp-ui-doc-mode -1))
 
@@ -22,7 +24,7 @@
 
   (advice-add 'dap-debug :after #'disable-lsp-ui-doc)
   (advice-add 'dap-disconnect :after #'enable-lsp-ui-doc)
-  
+
   (add-hook 'dap-stopped-hook
 			(lambda (arg)
 			  ;; (call-interactively #'dap-hydra)
