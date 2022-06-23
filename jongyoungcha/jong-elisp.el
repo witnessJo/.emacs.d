@@ -1,4 +1,4 @@
-;;; Code
+;;; Code:
 
 (use-package dash
   :ensure t
@@ -14,6 +14,12 @@
   :config)
 
 (use-package lispy
+  :ensure t)
+
+(require 'loadhist)
+(file-dependents (feature-file 'cl))
+
+(use-package slime
   :ensure t)
 
 (use-package elisp-slime-nav
@@ -47,10 +53,6 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (lispy-mode 0)))
-
-
-
-
 
 (provide 'jong-elisp)
 

@@ -8,8 +8,8 @@
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
-(global-set-key (kbd "C-c ;") 'jong-buffer-throw-left)
-(global-set-key (kbd "C-c '") 'jong-buffer-throw-right)
+(global-set-key (kbd "C-c C-;") 'jong-buffer-throw-left)
+(global-set-key (kbd "C-c C-'") 'jong-buffer-throw-right)
 ;; (global-set-key (kbd "C-c b j") 'jong-buffer-throw-up)
 ;; (global-set-key (kbd "C-c b k") 'jong-buffer-throw-down)
 

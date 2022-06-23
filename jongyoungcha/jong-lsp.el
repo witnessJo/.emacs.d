@@ -24,10 +24,10 @@
 (use-package lsp-ui
   :ensure t
   :config
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-show-with-cursor nil)
-  (setq lsp-ui-doc-delay 2)
+  ;; (setq lsp-ui-doc-enable t)
+  ;; (setq lsp-ui-doc-position 'at-point)
+  ;; (setq lsp-ui-doc-show-with-cursor nil)
+  ;; (setq lsp-ui-doc-delay 2)
   (setq lsp-ui-imenu-enable t)
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-diagnostic-max-lines 8)

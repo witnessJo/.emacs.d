@@ -4,6 +4,28 @@
 
 (exec-path-from-shell-copy-env "GOPATH")
 
+;; Define a read-only directory class
+;; (dir-locals-set-class-variables 'read-only
+;; '((nil . ((buffer-read-only . t)))))
+
+;; Associate directories with the read-only class
+;; (dolist (dir (list
+
+
+(defun jong-go-check-readonly-dir()
+  "Check directory prepath and make 'read-only-mode'."
+  (dolist (dir (list
+                (format "%s/%s" (getenv "GOPATH") "pkg")
+                (format "%s/%s" (getenv "GOROOT") "src")
+                ))
+    (when (string-prefix-p dir default-directory)
+      (read-only-mode t)
+      )
+    )
+  )
+
+(add-hook 'find-file-hook #'jong-go-check-readonly-dir)
+
 (use-package go-mode
   :ensure t)
 
@@ -18,7 +40,7 @@
 								 (font-lock-mode -1)
 								 ))
   (add-hook 'go-test-mode-hook (lambda()
-								(visual-line-mode))))
+								 (visual-line-mode))))
 
 (use-package go-complete
   :ensure t)
@@ -200,7 +222,7 @@ And the environment variable was existing, Download go binaries from the interne
 	  (call-interactively 'go-test-current-test-cache))
 	(with-current-buffer (get-buffer (go-test--compilation-name))
 	  (setq font-lock-mode nil)
-	)
+	  )
 	)
   )
 
@@ -222,7 +244,7 @@ And the environment variable was existing, Download go binaries from the interne
 						  (setq indent-tabs-mode t)
 
 						  ;; setting company-go mode...
-						  (setq company-tooltip-limit 20)
+						  ;; (setq company-tooltip-limit 20)
 						  (setq company-echo-delay 0)
 						  ;; (setq lsp-ui-doc-show-with-cursor nil)
 						  (setq lsp-ui-doc-show-with-mouse nil)
