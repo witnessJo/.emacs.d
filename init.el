@@ -408,7 +408,6 @@
 (require 'jong-sentbe)
 (require 'jong-shell-util)
 
-
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
 (set-face-background #'hl-line "#004500")

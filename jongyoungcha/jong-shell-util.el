@@ -12,8 +12,8 @@
 	  ))
   )
 
-  (defun jong-shell-util-connect ()
-	) 
-  
+(defun jong-shell-util-connect ()
+  )
+
 
 (provide 'jong-shell-util)
