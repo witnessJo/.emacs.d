@@ -19,7 +19,12 @@
 	(message "Windows")
     ))
 
- ((string-equal system-type "darwin") ; Mac OS X
+ ((string-equal system-type "darwin")
+                                        ; Mac OS X
+  (setq default-frame-alist '((font . "Source Code Pro-15")
+							  (vertical-scroll-bars . 0)
+							  ))
+  (load-theme 'solarized-dark-high-contrast t)
   (progn
     (setq shell-file-name "zsh")
     (setq shell-command-switch "-ic")
@@ -30,7 +35,11 @@
 	))
  ((string-equal system-type "gnu/linux") ; linux
   (progn
-    
+    (setq default-frame-alist '((font . "Source Code Pro-12")
+							    (vertical-scroll-bars . 0)
+							    ))
+    (load-theme 'deeper-blue t)
+
     (set-language-environment "Korean")
     (with-no-warnings (setq projectile-indexing-method 'hybrid))
     
@@ -49,10 +58,6 @@
     (message "Linux")
 	))
  )
-
-(setq default-frame-alist '((font . "Source Code Pro-15")
-							(vertical-scroll-bars . 0)
-							))
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
