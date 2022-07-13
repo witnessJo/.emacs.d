@@ -38,8 +38,8 @@
     (setq default-frame-alist '((font . "Source Code Pro-12")
 							    (vertical-scroll-bars . 0)
 							    ))
-    (load-theme 'deeper-blue t)
-
+    ;; (load-theme 'deeper-blue t)
+    
     (set-language-environment "Korean")
     (with-no-warnings (setq projectile-indexing-method 'hybrid))
     

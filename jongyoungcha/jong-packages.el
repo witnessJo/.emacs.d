@@ -356,5 +356,9 @@
 (use-package vdiff
   :ensure t)
 
+(use-package ssh-config-mode
+  :ensure t)
+
+
 
 (provide 'jong-packages)

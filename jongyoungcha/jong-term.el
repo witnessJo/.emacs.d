@@ -67,16 +67,16 @@
   (define-key vterm-mode-map (kbd "C-<right>") 'vterm-send-M-f)
   (define-key vterm-mode-map (kbd "C-a") 'vterm-send-C-a)
   (define-key vterm-mode-map (kbd "C-e") 'vterm-send-C-e)
-  (add-hook 'vterm-mode-hook (lambda ()
-							   (disable-jong-keys-minor-mode)
-							   ))
+  (define-key vterm-mode-map (kbd "C-v") 'term-paste)
   )
 
 (add-hook 'vterm-mode-hook
 		  (lambda ()
 			(cua-mode -1)
-			(local-set-key (kbd "C-v") #'term-paste)
-			))
+            (disable-jong-keys-minor-mode)
+            (setq vterm-max-scrollback 50000)
+            (setq font-lock-keywords-only t)
+           	))
 
 
 (add-to-list 'vterm-eval-cmds '("update-pwd" (lambda (path) (setq default-directory path))))
