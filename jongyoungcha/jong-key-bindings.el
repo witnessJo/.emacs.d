@@ -121,8 +121,8 @@
 (global-set-key (kbd "C-c g b") 'magit-blame-addition)
 
 ;; (global-set-key (kbd "C-c a g") 'jong-helm-ag-do-ag-projectile)
-(global-set-key (kbd "C-c a g") 'counsel-projectile-ag)
-(global-set-key (kbd "C-c a G") 'helm-do-ag)
+(global-set-key (kbd "C-c a g") 'counsel-projectile-git-grep)
+(global-set-key (kbd "C-c a G") 'counsel-git-grep)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 

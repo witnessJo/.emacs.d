@@ -149,7 +149,8 @@
 
 (defun jong-project-exec-command (directory cmd &optional after-func)
   (interactive)
-  (let ((default-directory (if (not (file-directory-p directory))
+  (let ((proc)
+        (default-directory (if (not (file-directory-p directory))
 							   (error "The directory was not existing")
 							 directory))
 		(buffer-name (format "*jong-command-%s-%s*" directory cmd)))
@@ -159,17 +160,34 @@
 	(when (or (equal cmd nil) (string= cmd ""))
 	  (error (format "Couldnt find  %s\"" cmd)))
 	(when (get-buffer buffer-name) (kill-buffer buffer-name))
-	(set-process-sentinel
-	 (start-file-process-shell-command buffer-name buffer-name cmd)
-	 (lambda (p e)
-       ;; After process done
-       (with-current-buffer (get-buffer (process-buffer p))
-		 (compilation-mode)
-		 (compilation-shell-minor-mode)
-         )))
-    (display-buffer (get-buffer-create buffer-name))
-	(when (functionp after-func)
-	  (funcall after-func))
+	(with-current-buffer (get-buffer-create buffer-name)
+	  ;; (compilation-modet)
+	  (ansi-color-for-comint-mode-on)
+	  (comint-mode)
+	  (setq default-directory directory)
+	  (display-buffer (current-buffer))
+	  (setq proc (start-process-shell-command
+                  buffer-name
+                  (current-buffer)
+                  cmd))
+	  (set-process-filter proc 'comint-output-filter)
+      )
+    
+    ;; (setq proc (start-file-process-shell-command buffer-name buffer-name cmd))
+    ;; (set-process-filter proc 'comint-output-filter)
+	;; (set-process-sentinel
+    ;; proc
+	;; (lambda (p e)
+    ;; After process done
+    ;; (with-current-buffer (get-buffer (process-buffer p))
+	;; (compilation-mode)
+	;; (compilation-shell-minor-mode)
+    ;; )
+    ;; ))
+    ;; (display-buffer (get-buffer-create buffer-name))
+	;; (when (functionp after-func)
+	;; (funcall after-func))
+    ;; )
     )
   )
 
@@ -184,7 +202,6 @@
       )
     )
   )
-
 
 (defun jong-project-compile-project ()
   (interactive)
@@ -201,7 +218,6 @@
   (with-current-buffer (get-buffer jong-project-compile-command)
 	)
   )
-
 
 (defun jong-project-run-project (&optional num)
   (interactive "p")
