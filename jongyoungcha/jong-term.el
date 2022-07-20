@@ -68,6 +68,7 @@
   (define-key vterm-mode-map (kbd "C-a") 'vterm-send-C-a)
   (define-key vterm-mode-map (kbd "C-e") 'vterm-send-C-e)
   (define-key vterm-mode-map (kbd "C-v") 'term-paste)
+  (define-key vterm-mode-map (kbd "C-<return>") 'vterm-toggle-insert-cd)
   )
 
 (add-hook 'vterm-mode-hook
@@ -76,7 +77,10 @@
             (disable-jong-keys-minor-mode)
             (setq vterm-max-scrollback 50000)
             (setq font-lock-keywords-only t)
-           	))
+            ))
+
+(use-package vterm-toggle
+  :ensure t)
 
 
 (add-to-list 'vterm-eval-cmds '("update-pwd" (lambda (path) (setq default-directory path))))

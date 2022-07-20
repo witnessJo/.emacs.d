@@ -144,6 +144,9 @@
 ;;; etc
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
+;;; vterm
+(global-set-key (kbd "M-<return>") 'vterm-toggle)
+(global-set-key (kbd "C-<return>") 'vterm-toggle-cd)
 
 ;; remapping about the keybinding.
 (defvar jong-keys-minor-mode-map

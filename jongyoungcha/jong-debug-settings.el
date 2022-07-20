@@ -127,6 +127,20 @@
 
 
 
+(dap-register-debug-template "bc-backend"
+							 (list :type "go"
+								   :request "launch"
+								   :name "bc-backend"
+								   :args ""
+								   :buildFlags "-gcflags '-N -l'"
+								   :env '(
+										  ("TARGET" . "develop")
+										  )
+								   :program "/Users/jongyoungcha/gowork/mdl-platform/services/bc-backend/main.go"
+								   :envFile nil
+								   :mode "debug"))
+
+
 (defun jong-debug-go-debug-current-test ()
   (interactive)
   (let ((name (go-test--get-current-test)))

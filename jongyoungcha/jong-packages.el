@@ -202,7 +202,8 @@
   (setq ivy-posframe-parameters
 		'((left-fringe . 12)
 		  (right-fringe . 12)))
-  (ivy-posframe-mode))
+  ;; (ivy-posframe-mode)
+  )
 
 (use-package google-translate
   :ensure t
