@@ -22,17 +22,21 @@
   :commands lsp)
 
 (use-package lsp-ui
-  :ensure t
-  :config
+  :ensure t  :config
   ;; (setq lsp-ui-doc-enable t)
   ;; (setq lsp-ui-doc-position 'at-point)
   ;; (setq lsp-ui-doc-show-with-cursor nil)
   ;; (setq lsp-ui-doc-delay 2)
-  (setq lsp-ui-imenu-enable t)
-  (setq lsp-ui-sideline-enable t)
-  (setq lsp-ui-sideline-diagnostic-max-lines 8)
-  (setq lsp-ui-peek-enable t)
-  (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
+  
+  ;; (lsp-ui-mode t)
+  ;; (setq lsp-ui-imenu-enable t)
+  ;; (setq lsp-ui-sideline-enable t)
+  ;; (setq lsp-ui-sideline-diagnostic-max-lines 8)
+  ;; (setq lsp-ui-peek-enable t)
+  
+  ;; (setq lsp-ui-doc-show-with-mouse nil)
+  ;; (setq lsp-ui-doc-show-with-cursor nil)
+  ;; (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
   )
 
 (use-package helm-lsp

@@ -17,19 +17,30 @@
   (setq dap-ui-variable-length 100)
 
   (defun disable-lsp-ui-doc (orig-fun &rest args)
-    (lsp-ui-doc-mode -1))
+    (lsp-ui-doc-enable nil))
 
   (defun enable-lsp-ui-doc (orig-fun &rest args)
-    (lsp-ui-doc-mode))
+    (lsp-ui-doc-enable t))
 
   (advice-add 'dap-debug :after #'disable-lsp-ui-doc)
   (advice-add 'dap-disconnect :after #'enable-lsp-ui-doc)
+  
+  (setq dap-auto-configure-features '(locals expressions breakpoints tooltip))
 
-  (add-hook 'dap-stopped-hook
-			(lambda (arg)
-			  ;; (call-interactively #'dap-hydra)
-			  (call-interactively #'jong-dap-go-to-output-buffer)
-			  ))
+  (define-key treemacs-mode-map (kbd "D") (lambda()
+                                            (interactive)
+                                            (let (buffer-name (buffer-name (current-buffer)))
+                                              (when buffer-name "Expressions"
+                                                    (call-interactively 'dap-ui-expressions)
+                                                    (call-interactively 'dap-ui-expressions-remove))
+                                              )
+                                            ))
+
+  ;; (add-hook 'dap-stopped-hook
+  ;; (lambda (arg)
+  ;; (call-interactively #'dap-hydra)
+  ;; (call-interactively #'jong-dap-go-to-output-buffer)
+  ;; ))
   )
 
 (defun jong-dap-debug-toggle-show-ui ()
@@ -42,7 +53,7 @@
 		  ;; (dap-go-to-output-buffer)
 		  (dap-ui-show-many-windows)
 		  (switch-to-buffer prev-buffer-name)
-		  (jong-dap-go-to-output-buffer)
+		  ;; (jong-dap-go-to-output-buffer)
 		  ;; (when (get-buffer-window "*dap-ui-sessions*")
 		  ;; (select-window (get-buffer-window "*dap-ui-sessions*"))
 		  ;; (jong-common-enlarge-window-horizontally-10))
@@ -77,10 +88,12 @@
   (interactive)
   (let ((prev-window (selected-window)))
 	(progn
-	  (dap-go-to-output-buffer)
-	  (enlarge-window 20)
-	  (compilation-mode)
-	  (select-window prev-window))
+      
+	  ;; (dap-go-to-output-buffer)
+	  ;; (enlarge-window 10)
+	  ;; (compilation-mode)
+	  ;; (select-window prev-window)
+      )
 	)
   )
 

@@ -186,11 +186,7 @@ MAIN-CPP-PATH is the cmake file path."
   :hook ((c-mode c++-mode objc-mode) .
 		 (lambda ()
 		   (require 'ccls)
-		   (setq lsp-ui-sideline-enable nil)
-		   (setq lsp-ui-doc-enable nil)
-		   (lsp)
-		   (setq company-auto-complete nil)
-		   )))
+           )))
 
 (setq ccls-executable "/usr/local/bin/ccls")
 

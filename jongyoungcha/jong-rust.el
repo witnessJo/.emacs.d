@@ -5,12 +5,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar jong-rust-output "*jong-rust-output*"
-	"Output output jong-rust.")
+  "Output output jong-rust.")
 
 (use-package rust-mode
-	:ensure t
-	:config
-	(setq rust-format-on-save t))
+  :ensure t
+  :config
+  (setq rust-format-on-save t))
 
 ;; (use-package racer
 ;; :ensure t
@@ -21,40 +21,41 @@
 
 
 (defun jong-rust-install ()
-	(interactive)
-	(with-current-buffer (get-buffer-create jong-rust-output)
-		(display-buffer jong-rust-output)
-		(shell-command "curl https://sh.rustup.rs -sSf | sh" jong-rust-output jong-rust-output)))
+  (interactive)
+  (with-current-buffer (get-buffer-create jong-rust-output)
+	(display-buffer jong-rust-output)
+	(shell-command "curl https://sh.rustup.rs -sSf | sh" jong-rust-output jong-rust-output)))
 
 
 (defun jong-rust-install-racer-bins ()
-	(interactive)
-	(with-current-buffer (get-buffer-create jong-rust-output)
-		(display-buffer jong-rust-output)
-		(shell-command "rustup toolchain add nightly" jong-rust-output jong-rust-output)
-		(shell-command "rustup component add rust-src" jong-rust-output jong-rust-output)))
+  (interactive)
+  (with-current-buffer (get-buffer-create jong-rust-output)
+	(display-buffer jong-rust-output)
+	(shell-command "rustup toolchain add nightly" jong-rust-output jong-rust-output)
+	(shell-command "rustup component add rust-src" jong-rust-output jong-rust-output)))
 
 
 (defun jong-rust-install-rls-bins ()
-	(interactive)
-	(with-current-buffer (get-buffer-create jong-rust-output)
-		(display-buffer jong-rust-output)
-		(shell-command "rustup component add rls rust-analysis rust-src" jong-rust-output jong-rust-output)))
+  (interactive)
+  (with-current-buffer (get-buffer-create jong-rust-output)
+	(display-buffer jong-rust-output)
+	(shell-command "rustup component add rls rust-analysis rust-src" jong-rust-output jong-rust-output)))
 
 (use-package flycheck-rust
-	:ensure t
-	:config
-	(with-eval-after-load 'rust-mode
-		(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
+  :ensure t
+  :config
+  (with-eval-after-load 'rust-mode
+	(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
 
 (use-package cargo
   :ensure t)
 
 (add-hook 'rust-mode-hook (lambda()
-														(setq lsp-ui-sideline-enable nil)
-														(setq lsp-ui-doc-enable nil)
-														(lsp)
-														(setq gud-gud-gdb-command-name "rust-gdb --fullname")))
+							;; (setq lsp-ui-sideline-enable nil)
+							;; (setq lsp-ui-doc-enable nil)
+							(lsp)
+							;; (setq gud-gud-gdb-command-name "rust-gdb --fullname")
+                            ))
 
 
 (setq rust-format-on-save t)
