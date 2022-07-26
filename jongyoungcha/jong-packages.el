@@ -186,6 +186,9 @@
   (add-to-list 'ivy-re-builders-alist
 			   '(counsel-M-x . ivy--regex-ignore-order)))
 
+(use-package wgrep
+  :ensure t)
+
 (use-package ag
   :ensure t)
 
@@ -344,7 +347,9 @@
   
   :bind (("<f2>" . bm-next)
          ("S-<f2>" . bm-previous)
-         ("C-<f2>" . bm-toggle))
+         ("M-<f2>" . bm-toggle)
+         ("C-M-<f2>" . bm-remove-all-all-buffers)
+         )
   )
 
 (use-package dockerfile-mode

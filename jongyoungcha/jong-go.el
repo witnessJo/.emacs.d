@@ -269,6 +269,7 @@ And the environment variable was existing, Download go binaries from the interne
 						  (local-set-key (kbd "C-c s f") 'gofmt-before-save)
 						  (local-set-key (kbd "C-c c c") 'jong-project-compile-project)
 						  (local-set-key (kbd "C-c r r") 'lsp-rename)
+                          (local-set-key (kbd "C-M-g") 'go-goto-function-name)
 						  
 						  (local-set-key (kbd "C-c t f") 'jong-go-run-current-test)
 						  (local-set-key (kbd "C-c t a") 'go-test-current-file)

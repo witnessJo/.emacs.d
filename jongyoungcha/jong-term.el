@@ -82,6 +82,9 @@
 (use-package vterm-toggle
   :ensure t)
 
+(use-package multi-vterm
+  :ensure t)
+
 
 (add-to-list 'vterm-eval-cmds '("update-pwd" (lambda (path) (setq default-directory path))))
 
