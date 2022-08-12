@@ -79,9 +79,6 @@
             (setq font-lock-keywords-only t)
             ))
 
-(use-package vterm-toggle
-  :ensure t)
-
 (use-package multi-vterm
   :ensure t)
 

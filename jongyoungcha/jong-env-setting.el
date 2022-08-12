@@ -75,7 +75,7 @@
 (global-eldoc-mode -1)
 (auto-save-visited-mode t)
 (global-auto-revert-mode t)
-(global-visual-line-mode t)
+;; (global-visual-line-mode t)
 
 
 ;; For protecting my eyes...

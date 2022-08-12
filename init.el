@@ -420,9 +420,17 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(counsel-tramp tramp-term ssh-config-mode ssh-config yaml-mode whitespace-cleanup-mode which-key web-mode vterm verb vdiff use-package undo-tree syntax-subword sublimity solidity-mode solarized-theme smartparens slime scala-mode sbt-mode rust-mode restclient protobuf-mode prodigy plantuml-mode pcap-mode pandoc ox-pandoc ox-hugo multiple-cursors modern-cpp-font-lock magit-delta lsp-ui lsp-java logview log4e lispy kubernetes-tramp kubernetes kotlin-mode json-mode js2-mode ivy-posframe impostman hungry-delete helm-xref helm-projectile helm-lsp helm-dash helm-ag groovy-mode gradle-mode gotest google-translate go-tag go-impl go-fill-struct go-complete flycheck-rust flycheck-haskell exec-path-from-shell evil eshell-syntax-highlighting eredis elpy elisp-slime-nav elisp-refs dotenv-mode dockerfile-mode dash-functional counsel-projectile company-quickhelp company-jedi company-go command-log-mode color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo buffer-move bm bash-completion auto-package-update auto-highlight-symbol auto-dim-other-buffers auto-complete anaconda-mode ag))
+   '(multi-vterm wgrep counsel-tramp tramp-term ssh-config-mode ssh-config yaml-mode whitespace-cleanup-mode which-key web-mode vterm verb vdiff use-package undo-tree syntax-subword sublimity solidity-mode solarized-theme smartparens slime scala-mode sbt-mode rust-mode restclient protobuf-mode prodigy plantuml-mode pcap-mode pandoc ox-pandoc ox-hugo multiple-cursors modern-cpp-font-lock magit-delta lsp-ui lsp-java logview log4e lispy kubernetes-tramp kubernetes kotlin-mode json-mode js2-mode ivy-posframe impostman hungry-delete helm-xref helm-projectile helm-lsp helm-dash helm-ag groovy-mode gradle-mode gotest google-translate go-tag go-impl go-fill-struct go-complete flycheck-rust flycheck-haskell exec-path-from-shell evil eshell-syntax-highlighting eredis elpy elisp-slime-nav elisp-refs dotenv-mode dockerfile-mode dash-functional counsel-projectile company-quickhelp company-jedi company-go command-log-mode color-theme-sanityinc-tomorrow cmake-mode cmake-ide clang-format ccls cargo buffer-move bm bash-completion auto-package-update auto-highlight-symbol auto-dim-other-buffers auto-complete anaconda-mode ag))
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-platform/")
+   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/fabric-kubernetes-tutorial/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/fabric-kubernetes-tutorial/")
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gopath/src/github.com/the-medium-tech/mdl-platform/services/bc-backend/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gopath/src/github.com/the-medium-tech/mdl-platform/services/bc-backend/")
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gopath/mdl-platform/services/bc-backend/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gopath/mdl-platform/services/bc-backend/")
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-platform/services/bc-backend/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/mdl-platform/services/bc-backend/")
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-platform/")
      (jong-project-sub-command-2 . "none")
      (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/mdl-platform/"))))
 (custom-set-faces
