@@ -149,6 +149,9 @@
 ;;; etc
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
+;;; cursor
+(global-set-key (kbd "M-<backspace>") 'jong-cursor-delete-word-backward)
+
 ;;; vterm
 ;; (global-set-key (kbd "M-<return>") 'vterm-toggle)
 ;; (global-set-key (kbd "C-<return>") 'vterm-toggle-cd)
@@ -161,7 +164,6 @@
     
 	(define-key map (kbd "A-b") 'syntax-subword-backward)
 	(define-key map (kbd "A-f") 'syntax-subword-forward)
-
 	
 	(define-key map (kbd "A-<backspace>") 'jong-cursor-delete-subword-backward)
 	(define-key map (kbd "<A-kp-delete>") 'jong-cursor-delete-subword-forward)
