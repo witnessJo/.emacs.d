@@ -6,13 +6,13 @@
 (defun jong-yaml-indent-left ()
   "Do indentation of left direction."
   (interactive)
-  (jong-cusor-indent -2)
+  (jong-cursor-indent -2)
 )
 
 (defun jong-yaml-indent-right ()  
   "Do indentation of right direction."
   (interactive)
-  (jong-cusor-indent 2)
+  (jong-cursor-indent 2)
 )
 
 (define-key yaml-mode-map (kbd "C-M-\\") 'yaml-indent-line)
