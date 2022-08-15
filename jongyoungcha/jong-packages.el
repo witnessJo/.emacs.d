@@ -169,6 +169,12 @@
     )
   )
 
+(use-package wgrep
+  :ensure t)
+
+(use-package ag
+  :ensure t)
+
 (use-package counsel
   :ensure t
   :after ivy
@@ -185,12 +191,6 @@
   (setq ivy-initial-inputs-alist nil)
   (add-to-list 'ivy-re-builders-alist
 			   '(counsel-M-x . ivy--regex-ignore-order)))
-
-(use-package wgrep
-  :ensure t)
-
-(use-package ag
-  :ensure t)
 
 (use-package counsel-projectile
   :ensure t)

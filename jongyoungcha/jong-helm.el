@@ -42,7 +42,6 @@
 ;; (global-set-key (kbd "C-c b") 'helm-buffers-list)
 ;; (global-set-key (kbd "C-c C-b") 'helm-buffers-list)
 
-
 (use-package helm-projectile
   :ensure t)
 

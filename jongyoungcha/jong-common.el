@@ -557,8 +557,6 @@ Version 2017-07-08"
   (newline)
   (call-interactively 'indent-for-tab-command))
 
-
-
 (defun jong-common-copy-region-or-line (arg)
   "Chan 'copy current line."
   (interactive "p")

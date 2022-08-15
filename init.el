@@ -58,7 +58,7 @@
   (with-output-to-temp-buffer temp-buffer-name
 	(async-shell-command cmd temp-buffer-name temp-buffer-name)
 	(pop-to-buffer temp-buffer-name)
-))
+    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;  common configurations  ;;;;
@@ -67,8 +67,8 @@
 (require 'dired)
 (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
 (define-key dired-mode-map (kbd "^")
-  (lambda () (interactive)
-	(find-alternate-file "..")))
+            (lambda () (interactive)
+              (find-alternate-file "..")))
 
 ;; Remove the key esc esc esc remove other window
 (defadvice keyboard-escape-quit (around jong-keyboard-escape-quit activate)
