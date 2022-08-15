@@ -151,10 +151,12 @@
 
 ;;; cursor
 (global-set-key (kbd "M-<backspace>") 'jong-cursor-delete-word-backward)
+(global-set-key (kbd "C-<") 'jong-cursor-indent-left)
+(global-set-key (kbd "C->") 'jong-cursor-indent-right)
 
 ;;; vterm
-;; (global-set-key (kbd "M-<return>") 'vterm-toggle)
-;; (global-set-key (kbd "C-<return>") 'vterm-toggle-cd)
+(global-set-key (kbd "M-v") 'jong-edit-paste-text)
+(global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
 
 ;; remapping about the keybinding.
 (defvar jong-keys-minor-mode-map
@@ -194,9 +196,6 @@
 	(define-key map (kbd "C-a") 'jong-edit-beginning-of-line-text)
 	(define-key map (kbd "M-*") 'mc/edit-lines)
 	(define-key map (kbd "M-c") 'jong-common-copy-region-or-line)
-	(global-set-key (kbd "M-v") 'jong-edit-paste-text)
-	(global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
-
 
 	(define-key map (kbd "<S-up>") (lambda () (interactive)
 									 (jong-set-mark)

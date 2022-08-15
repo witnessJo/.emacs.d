@@ -204,18 +204,18 @@
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window -15)))
 (global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window 15)))
 
-(global-set-key (kbd "C-c <") (lambda() (interactive)
-								(call-interactively 'eyebrowse-prev-window-config)
-								(message "slot : %s" (eyebrowse--get 'current-slot))))
+;; (global-set-key (kbd "C-c <") (lambda() (interactive)
+;; (call-interactively 'eyebrowse-prev-window-config)
+;; (message "slot : %s" (eyebrowse--get 'current-slot))))
 
-(global-set-key (kbd "C-c >") (lambda() (interactive)
-								(call-interactively 'eyebrowse-next-window-config)
-								(message "slot : %s" (eyebrowse--get 'current-slot))))
+;; (global-set-key (kbd "C-c >") (lambda() (interactive)
+;; (call-interactively 'eyebrowse-next-window-config)
+;; (message "slot : %s" (eyebrowse--get 'current-slot))))
 
-(global-set-key (kbd "C-c w w") (lambda() (interactive)
-								  (call-interactively 'eyebrowse-switch-to-window-config-1)
-								  (call-interactively 'eyebrowse-switch-to-window-config-2)
-								  (call-interactively 'eyebrowse-switch-to-window-config-3)))
+;; (global-set-key (kbd "C-c w w") (lambda() (interactive)
+;; (call-interactively 'eyebrowse-switch-to-window-config-1)
+;; (call-interactively 'eyebrowse-switch-to-window-config-2)
+;; (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 ;; default setting.
 (defun toggle-transparency ()

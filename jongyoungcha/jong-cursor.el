@@ -155,14 +155,14 @@
   (interactive)
   (when (not (use-region-p))
 	(command-execute 'set-mark-command))
-	(end-of-line)
+  (end-of-line)
   )
 
 (defun jong-cursor-move-bol-region()
   (interactive)
   (when (not (use-region-p))
 	(command-execute 'set-mark-command))
-	(jong-edit-beginning-of-line-text)
+  (jong-edit-beginning-of-line-text)
   )
 
 (defun jong-set-mark()
@@ -213,5 +213,36 @@
   arg lines up."
   (interactive "*p")
   (jong-cursor-move-text-internal (- arg)))
+
+(defun jong-cursor-indent (offset)
+  (let ((start-pos)
+        (end-pos))
+    (if (use-region-p)
+        (progn (indent-code-rigidly
+                (region-beginning)
+                (region-end)
+                offset)
+               (setq deactivate-mark nil))
+      (beginning-of-line)
+      (setq start-pos (point))
+      (end-of-line)
+      (setq end-pos (point))
+      (activate-mark)
+      (indent-code-rigidly
+       start-pos
+       end-pos
+       offset)
+      (beginning-of-line-text)
+      )
+    )
+  )
+
+(defun jong-cursor-indent-left ()
+  (interactive)
+  (jong-cursor-indent -2))
+
+(defun jong-cursor-indent-right ()
+  (interactive)
+  (jong-cursor-indent 2))
 
 (provide 'jong-cursor)
