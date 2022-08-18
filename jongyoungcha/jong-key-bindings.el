@@ -132,8 +132,15 @@
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 
 (global-set-key (kbd "C-c w 3") 'jong-window-split-3-windows-horizontally-evenly)
-(global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
-(global-set-key (kbd "C-c p f") 'counsel-projectile-find-file)
+(global-set-key (kbd "C-c p p") (lambda()
+                                  (interactive)
+                                  (call-interactively 'counsel-projectile-switch-project)
+                                  (call-interactively 'projectile-invalidate-cache)))
+(global-set-key (kbd "C-c p f") (lambda()
+                                  (interactive)
+                                  (call-interactively 'projectile-invalidate-cache)
+                                  (call-interactively 'counsel-projectile-find-file)))
+                
 
 ;; profile
 (global-set-key (kbd "C-c q s") 'profiler-start)
