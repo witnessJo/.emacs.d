@@ -164,6 +164,7 @@
 ;;; vterm
 (global-set-key (kbd "M-v") 'jong-edit-paste-text)
 (global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
+(global-set-key (kbd "M-<return>") 'jong-term-vterm-default-directory)
 
 ;; remapping about the keybinding.
 (defvar jong-keys-minor-mode-map

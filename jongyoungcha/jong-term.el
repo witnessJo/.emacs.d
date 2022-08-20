@@ -82,6 +82,22 @@
 (use-package multi-vterm
   :ensure t)
 
+(defun jong-term-vterm-default-directory()
+  (interactive)
+  (let ((current-dir default-directory))
+    (dolist (buffer (buffer-list))
+      (if (string-prefix-p "*vterminal" (buffer-name buffer))
+          (with-current-buffer buffer
+            (when (string= current-dir default-directory)
+              (progn
+                (message "found vterm %s %s" current-dir default-directory)
+                (switch-to-buffer buffer))
+              ))
+        )
+      )
+    (multi-vterm)
+    ))
+
 
 (add-to-list 'vterm-eval-cmds '("update-pwd" (lambda (path) (setq default-directory path))))
 
