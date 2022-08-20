@@ -11,7 +11,6 @@
 ;; Associate directories with the read-only class
 ;; (dolist (dir (list
 
-
 (defun jong-go-check-readonly-dir()
   "Check directory prepath and make 'read-only-mode'."
   (dolist (dir (list
