@@ -25,7 +25,6 @@
   (package-install 'use-package))
 
 (server-start)
-
 (add-to-list 'load-path "~/.emacs.d/jongyoungcha")
 
 (when (memq window-system '(mac ns))
@@ -303,7 +302,7 @@
 (setq split-height-threshold (+ (/ (frame-height) 2) 1))
 (setq split-width-threshold  (/ (frame-width) 2))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; elisp develope environments ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'emacs-lisp-mode-hook
@@ -402,6 +401,7 @@
 (require 'jong-swit)
 (require 'jong-plantuml)
 
+;; 
 (require 'jong-swit-dotenv1)
 (require 'jong-debug-settings)
 (require 'jong-env-setting)
@@ -414,6 +414,7 @@
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
 (put 'dired-find-alternate-file 'disabled nil)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,4 +1,7 @@
-;;; Code
+;;; Code:
+
+;;; Disable Keys
+(global-set-key (kbd "C-x C-x") nil)
 
 ;;; buffer
 (global-set-key (kbd "C-x m") 'ivy-switch-buffer)
