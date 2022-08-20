@@ -42,6 +42,7 @@
 ;; (defun jong-term-clear-hook ()
 ;; (local-set-key "C-c c l" 'comint-clear-buffer))
 ;; (add-hook 'shell-mode-hook 'jong-term-clear-hook)
+(require 'cl)
 
 (setq comint-prompt-read-only t)
 (defun jong-term-comint-preoutput-turn-buffer-read-only (text)
@@ -85,17 +86,20 @@
 (defun jong-term-vterm-default-directory()
   (interactive)
   (let ((current-dir default-directory))
-    (dolist (buffer (buffer-list))
-      (if (string-prefix-p "*vterminal" (buffer-name buffer))
-          (with-current-buffer buffer
-            (when (string= current-dir default-directory)
-              (progn
-                (message "found vterm %s %s" current-dir default-directory)
-                (switch-to-buffer buffer))
-              ))
+    (catch 'found
+      (dolist (buffer (buffer-list))
+        (if (string-prefix-p "*vterminal" (buffer-name buffer))
+            (with-current-buffer buffer
+              (when (string= current-dir default-directory)
+                (progn
+                  (message "found vterm %s %s" current-dir default-directory)
+                  (switch-to-buffer buffer)
+                  ()
+                  (throw 'found t))
+                ))
+          )
         )
-      )
-    (multi-vterm)
+      (multi-vterm))
     ))
 
 
