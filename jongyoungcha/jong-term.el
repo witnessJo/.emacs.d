@@ -93,15 +93,32 @@
               (when (string= current-dir default-directory)
                 (progn
                   (message "found vterm %s %s" current-dir default-directory)
+                  (split-window-below)
+                  (windmove-down)
                   (switch-to-buffer buffer)
-                  ()
                   (throw 'found t))
                 ))
           )
         )
+      (split-window-below)
+      (windmove-down)
       (multi-vterm))
     ))
 
+(defun jong-term-vterm-close-window()
+  (interactive)
+  (let ()
+    (when (string-prefix-p "*vterminal" (buffer-name (current-buffer)))
+      (delete-window))
+    ))
+
+(defun jong-term-vterm-show-hide-toggle ()
+  (interactive)
+  (let ()
+    (if (string-prefix-p "*vterminal" (buffer-name (current-buffer)))
+        (jong-term-vterm-close-window)
+      (jong-term-vterm-default-directory))
+    ))
 
 (add-to-list 'vterm-eval-cmds '("update-pwd" (lambda (path) (setq default-directory path))))
 
