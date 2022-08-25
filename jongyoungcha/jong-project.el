@@ -161,9 +161,9 @@
 	  (error (format "Couldnt find  %s\"" cmd)))
 	(when (get-buffer buffer-name) (kill-buffer buffer-name))
 	(with-current-buffer (get-buffer-create buffer-name)
-	  ;; (compilation-modet)
-	  (ansi-color-for-comint-mode-on)
+      (ansi-color-for-comint-mode-on)
 	  (comint-mode)
+      
 	  (setq default-directory directory)
 	  (display-buffer (current-buffer))
 	  (setq proc (start-process-shell-command
@@ -171,23 +171,16 @@
                   (current-buffer)
                   cmd))
 	  (set-process-filter proc 'comint-output-filter)
+      (set-process-sentinel
+       proc
+	   (lambda (p e)
+         ;; After process done
+         (with-current-buffer (get-buffer (process-buffer p))
+	       (compilation-mode)
+	       (compilation-shell-minor-mode)
+           )
+         ))
       )
-    
-    ;; (setq proc (start-file-process-shell-command buffer-name buffer-name cmd))
-    ;; (set-process-filter proc 'comint-output-filter)
-	;; (set-process-sentinel
-    ;; proc
-	;; (lambda (p e)
-    ;; After process done
-    ;; (with-current-buffer (get-buffer (process-buffer p))
-	;; (compilation-mode)
-	;; (compilation-shell-minor-mode)
-    ;; )
-    ;; ))
-    ;; (display-buffer (get-buffer-create buffer-name))
-	;; (when (functionp after-func)
-	;; (funcall after-func))
-    ;; )
     )
   )
 
