@@ -100,20 +100,6 @@
 (setq global-mark-ring-max 8)
 (setq set-mark-command-repeat-pop t)
 
-(global-set-key (kbd "M-;") (lambda () (interactive)
-							  (let ((base-pos 0))
-								(setq base-pos (point))
-								(beginning-of-line)
-								(call-interactively 'comment-line)
-								(goto-char base-pos)
-								(forward-line)
-								(indent-for-tab-command)
-								)))
-
-
-(global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
-(global-set-key (kbd "C-d") 'delete-forward-char)
-
 (defun jong-forward-line (number)
   (interactive)
   (let ((curr-column (- (point) (progn (beginning-of-line)
@@ -148,19 +134,6 @@
 
 (global-set-key (kbd "C-M-i") (lambda() (interactive) (scroll-other-window -15)))
 (global-set-key (kbd "C-M-o") (lambda() (interactive) (scroll-other-window 15)))
-
-;; (global-set-key (kbd "C-c <") (lambda() (interactive)
-;; (call-interactively 'eyebrowse-prev-window-config)
-;; (message "slot : %s" (eyebrowse--get 'current-slot))))
-
-;; (global-set-key (kbd "C-c >") (lambda() (interactive)
-;; (call-interactively 'eyebrowse-next-window-config)
-;; (message "slot : %s" (eyebrowse--get 'current-slot))))
-
-;; (global-set-key (kbd "C-c w w") (lambda() (interactive)
-;; (call-interactively 'eyebrowse-switch-to-window-config-1)
-;; (call-interactively 'eyebrowse-switch-to-window-config-2)
-;; (call-interactively 'eyebrowse-switch-to-window-config-3)))
 
 ;; default setting.
 (defun toggle-transparency ()
@@ -202,10 +175,6 @@
 (defun open-dot-jongyoungcha()
   (interactive)
   (find-file-read-only (format "%s/.jongyoungcha" (getenv "HOME"))))
-
-
-(global-set-key (kbd "C-c f e d") 'open-init-el)
-(global-set-key (kbd "C-c l e d") 'reload-user-init-file)
 
 (defun jo-set-projectile-run-command ()
   "Read user input commajksldfnd and set ectile-project-run-cmd'."
@@ -306,6 +275,7 @@
 (require 'jong-cursor)
 (require 'jong-window)
 (require 'jong-buffer)
+(require 'jong-code)
 
 ;; Langauges
 (require 'jong-elisp)

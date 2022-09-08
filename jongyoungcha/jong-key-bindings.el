@@ -1,7 +1,16 @@
 ;;; Code:
 
-;;; Disable Keys
+;;; Common
+(global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
+(global-set-key (kbd "C-d") 'delete-forward-char)
+(global-set-key (kbd "C-c f e d") 'open-init-el)
+(global-set-key (kbd "C-c l e d") 'reload-user-init-file)
+
+;;; To Disable Keys
 (global-set-key (kbd "C-x C-x") nil)
+
+;;; Code
+(global-set-key (kbd "M-;") 'jong-code-comment)
 
 ;;; buffer
 (global-set-key (kbd "C-x m") 'ivy-switch-buffer)
@@ -14,8 +23,6 @@
 
 (global-set-key (kbd "C-c C-;") 'jong-buffer-throw-left)
 (global-set-key (kbd "C-c C-'") 'jong-buffer-throw-right)
-;; (global-set-key (kbd "C-c b j") 'jong-buffer-throw-up)
-;; (global-set-key (kbd "C-c b k") 'jong-buffer-throw-down)
 
 (global-set-key (kbd "C-x r l") 'counsel-bookmark)
 (global-set-key (kbd "<f2>") 'jong-bookmark-set-anonymous)
