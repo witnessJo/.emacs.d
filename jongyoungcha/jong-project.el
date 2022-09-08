@@ -275,11 +275,9 @@
 					 :candidates subcmds-temp
 					 :fuzzy-match t
 					 :action (lambda (cmd)
-							   ;; (jong-project-subcmd-exec (nth 0 cmd) (nth 1 cmd) (nth 2 cmd))
                                (jong-project-exec-command
                                 (nth 2 cmd)
                                 (nth 1 cmd)
-                                ;; (jong-project-exec-after-func (nth 2 cmd) (nth 1 cmd))
                                 )
                                ))
 		  :buffer "*jong project commands*")

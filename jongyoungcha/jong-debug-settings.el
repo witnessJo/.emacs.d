@@ -136,8 +136,9 @@
 								   :env '(
 										  ("TARGET" . "develop")
 										  )
-								   :program "/Users/jongyoungcha/gopath/src/github.com/the-medium-tech/mdl-platform/services/bc-backend/main.go"
-								   :envFile "/Users/jongyoungcha/gopath/src/github.com/the-medium-tech/mdl-platform/services/bc-backend/configs/.env"
+                                   :default-directory "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/"
+								   :program "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/main.go"
+								   :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"
 								   :mode "debug"))
 
 
