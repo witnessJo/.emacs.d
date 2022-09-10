@@ -19,8 +19,11 @@
 (require 'loadhist)
 (file-dependents (feature-file 'cl))
 
+(setq inferior-lisp-program "sbcl")
 (use-package slime
   :ensure t)
+
+;; (require 'slime)
 
 (use-package elisp-slime-nav
   :ensure t

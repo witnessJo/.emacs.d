@@ -7,6 +7,7 @@
   (rust-mode-hook . lsp)
   (go-mode-hook . lsp)
   :config
+  (setq lsp-ui-doc-enable t)
   (setq lsp-eldoc-render-all nil)
   (setq lsp-eldoc-enable-hover nil)
   (setq lsp-go-library-directories-include-go-modules t)
@@ -23,20 +24,20 @@
 
 (use-package lsp-ui
   :ensure t  :config
-  ;; (setq lsp-ui-doc-enable t)
+  ;; (setq lsp-ui-doc-enable nil)
   ;; (setq lsp-ui-doc-position 'at-point)
   ;; (setq lsp-ui-doc-show-with-cursor nil)
   ;; (setq lsp-ui-doc-delay 2)
   
-  ;; (lsp-ui-mode t)
+  (lsp-ui-mode t)
   ;; (setq lsp-ui-imenu-enable t)
-  ;; (setq lsp-ui-sideline-enable t)
-  ;; (setq lsp-ui-sideline-diagnostic-max-lines 8)
-  ;; (setq lsp-ui-peek-enable t)
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-diagnostic-max-lines 8)
+  (setq lsp-ui-peek-enable t)
   
-  ;; (setq lsp-ui-doc-show-with-mouse nil)
-  ;; (setq lsp-ui-doc-show-with-cursor nil)
-  ;; (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
+  (setq lsp-ui-doc-show-with-mouse nil)
+  (setq lsp-ui-doc-show-with-cursor nil)
+  (setq lsp-ui-peek-find-workspace-symbol "pattern 0")
   )
 
 (use-package helm-lsp
