@@ -71,6 +71,7 @@
 (global-set-key (kbd "C-M-S-t") 'sp-select-previous-thing-exchange)
 (global-set-key (kbd "C-;") 'jong-avy-goto-line)
 (global-set-key (kbd "C-'") 'jong-avy-goto-word-1)
+(global-set-key (kbd "C-A-d") 'jong-cursor-delete-subword-forward)
 
 ;; run
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
@@ -98,6 +99,7 @@
 (global-set-key (kbd "<f12>") 'dap-hydra)
 (global-set-key (kbd "M-<f12>") 'jong-debug-setting-toggle-open-file)
 (global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
+(global-set-key [mouse-2] 'dap-tooltip-at-point)
 
 ;; (global-set-key (kbd "C-d") nil)
 ;; (global-set-key (kbd "C-d r") 'dap-debug-restart)

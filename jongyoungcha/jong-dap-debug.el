@@ -46,7 +46,7 @@
   ;; ))
   )
 
-(global-set-key [mouse-2] 'dap-tooltip-at-point)
+
 ;; (add-hook 'dap-tooltip-mode-hook (lambda() (sleep-for 3000)))
 ;; (defun jong-dap-debug)
 
