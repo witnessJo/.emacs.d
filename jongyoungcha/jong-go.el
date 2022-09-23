@@ -235,8 +235,11 @@ And the environment variable was existing, Download go binaries from the interne
 		  (lambda()
 			(interactive)
 			(when (eq major-mode 'go-mode)
-			  (gofmt)
-			  (flycheck-buffer))))
+              (when (> (buffer-size (current-buffer)) 0)
+                (gofmt)
+                (flycheck-buffer)
+                )))
+          )
 
 (add-hook 'go-mode-hook (lambda ()
 						  (setq go-test-args "-count=1")

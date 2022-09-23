@@ -336,10 +336,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ignored-local-variable-values
+   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/go-ethereum/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/go-ethereum/")))
  '(package-selected-packages
    '(elisp-slime-nav slime multi-vterm wgrep counsel-tramp ssh-config-mode ssh-config whitespace-cleanup-mode undo-tree syntax-subword sublimity solidity-mode scala-mode sbt-mode restclient protobuf-mode prodigy plantuml-mode pcap-mode pandoc modern-cpp-font-lock magit-delta log4e kubernetes-tramp kotlin-mode json-mode ivy-posframe hungry-delete helm-xref helm-lsp helm-dash helm-ag groovy-mode gradle-mode google-translate go-tag go-impl go-fill-struct go-complete flycheck-rust flycheck-haskell eredis dotenv-mode dash-functional counsel-projectile company-jedi company-go command-log-mode color-theme-sanityinc-tomorrow cmake-ide clang-format ccls buffer-move bm bash-completion auto-package-update auto-highlight-symbol auto-dim-other-buffers auto-complete ag))
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/fabric-kubernetes-tutorial/fabric-sdk-samples/")
+   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/fabric-kubernetes-tutorial/fabric-samples/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/fabric-kubernetes-tutorial/fabric-samples/")
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/fabric-kubernetes-tutorial/fabric-sdk-samples/")
      (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/fabric-kubernetes-tutorial/fabric-sdk-samples/")
      (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/blog/")
      (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/blog/")
