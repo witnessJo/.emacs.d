@@ -130,8 +130,23 @@
    )
   )
 
+(defun jong-window-toggle-maximize-buffer ()
+  "Maximize buffer."
+  (interactive)
+  (save-excursion
+    (if (and (= 1 (length (cl-remove-if
+                           (lambda (w)
+                             (or (and (fboundp 'treemacs-is-treemacs-window?)
+                                      (treemacs-is-treemacs-window? w))
+                                 (and (bound-and-true-p neo-global--window)
+                                      (eq neo-global--window w))))
+                           (window-list))))
+             (assoc ?_ register-alist))
+        (jump-to-register ?_)
+      (window-configuration-to-register ?_)
+      (delete-other-windows))))
 
 (provide 'jong-window)
-;;; jong-window.el ends here
+
 
 

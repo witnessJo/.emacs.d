@@ -1,6 +1,10 @@
 
 (use-package org
   :ensure t
+  :bind (
+         :map org-mode-map
+         ("C-<return>" . jong-window-toggle-maximize-buffer)
+         )
   :config
 ;;; image
   (setq org-startup-with-inline-images t))

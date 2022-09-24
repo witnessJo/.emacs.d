@@ -28,6 +28,8 @@
 (global-set-key (kbd "<f2>") 'jong-bookmark-set-anonymous)
 (global-set-key (kbd "S-<f2>") 'bookmark-delete-all)
 
+(global-set-key (kbd "C-<return>") 'jong-window-toggle-maximize-buffer)
+
 ;;; disable
 (global-set-key (kbd "C-x C-c") nil)
 
@@ -81,6 +83,9 @@
 
 (global-set-key (kbd "C-c C-n") 'flycheck-next-error)
 (global-set-key (kbd "C-c C-p") 'flycheck-previous-error)
+
+(global-set-key (kbd "C-c C-0") 'next-error)
+(global-set-key (kbd "C-c C--") 'previous-error)
 
 ;; debug
 (global-set-key (kbd "<f9>") 'dap-breakpoint-toggle)
