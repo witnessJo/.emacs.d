@@ -14,7 +14,7 @@
   (tooltip-mode 1)
   (dap-tooltip-mode 1)
   (dap-ui-controls-mode 1)
-  (setq dap-mouse-popup-timeout 1.5)
+  (setq dap-mouse-popup-timeout 1)
   (setq dap-ui-variable-length 100)
   (setq dap-tooltip-mouse-motions-active t)
  

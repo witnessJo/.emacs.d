@@ -15,7 +15,6 @@
   (jong-cursor-indent 2)
 )
 
-;; (define-key yaml-mode-map (kbd "C-M-\\") 'yaml-indent-line)
 (define-key yaml-mode-map (kbd "C-<") 'jong-yaml-indent-left)
 (define-key yaml-mode-map (kbd "C->") 'jong-yaml-indent-right)
 
