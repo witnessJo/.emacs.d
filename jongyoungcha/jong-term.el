@@ -69,7 +69,6 @@
   (define-key vterm-mode-map (kbd "C-a") 'vterm-send-C-a)
   (define-key vterm-mode-map (kbd "C-e") 'vterm-send-C-e)
   (define-key vterm-mode-map (kbd "C-v") 'term-paste)
-  (define-key vterm-mode-map (kbd "C-<return>") 'vterm-toggle-insert-cd)
   )
 
 (add-hook 'vterm-mode-hook

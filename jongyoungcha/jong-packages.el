@@ -123,6 +123,9 @@
   :diminish whitespace-cleanup-mode
   :init)
 
+(use-package load-env-vars
+  :ensure t)
+
 (use-package dotenv-mode
   :ensure t
   :config

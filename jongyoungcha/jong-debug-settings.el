@@ -151,9 +151,22 @@
 		   :name (concat "Go: Debug " name " test")
 		   :mode "auto"
 		   :program "${fileDirname}"
-		   :buildFlags nil
+		   :buildFlags "-gcflags '-N -l'"
 		   :args (concat "-test.run ^" name "$")
-		   :env nil
+		   :env
+           '(("DB_ADDRESS" . "localhost")
+            ("DB_PORT" . "20306")
+            ("DB_NAME" . "mdl_manager")
+            ("DB_USERNAME" . "root")
+            ("DB_PASSWORD" . "root")
+            ("DB_DRIVER" . "mysql")
+            ("DB_TABLES" . "caservers,causers,orderers,peers,msps,organizations,channels,channel_joined_peers,channel_msps,chaincodes,chaincodes_funcs,chaincodes_orderers,chaincodes_peers,node_ports,nodes")
+            ("DB_LOGGING" . "yes")
+
+            ("REDIS_ADDRESS" . redis)
+            ("REDIS_PORT" . 6379)
+            ("REDIS_PASSWORD" . ""))
+
 		   :envFile nil))))
 
 
