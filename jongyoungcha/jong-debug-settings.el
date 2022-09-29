@@ -138,7 +138,7 @@
 										  )
                                    :default-directory "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/"
 								   :program "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/main.go"
-								   :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"
+								   ;; :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"
 								   :mode "debug"))
 
 
@@ -153,21 +153,23 @@
 		   :program "${fileDirname}"
 		   :buildFlags "-gcflags '-N -l'"
 		   :args (concat "-test.run ^" name "$")
-		   :env
-           '(("DB_ADDRESS" . "localhost")
-            ("DB_PORT" . "20306")
-            ("DB_NAME" . "mdl_manager")
-            ("DB_USERNAME" . "root")
-            ("DB_PASSWORD" . "root")
-            ("DB_DRIVER" . "mysql")
-            ("DB_TABLES" . "caservers,causers,orderers,peers,msps,organizations,channels,channel_joined_peers,channel_msps,chaincodes,chaincodes_funcs,chaincodes_orderers,chaincodes_peers,node_ports,nodes")
-            ("DB_LOGGING" . "yes")
+		   ;; :env
+           ;; '(("DB_ADDRESS" . "localhost")
+           ;; ("DB_PORT" . "20306")
+           ;; ("DB_NAME" . "mdl_manager")
+           ;; ("DB_USERNAME" . "root")
+           ;; ("DB_PASSWORD" . "root")
+           ;; ("DB_DRIVER" . "mysql")
+           ;; ("DB_TABLES" . "caservers,causers,orderers,peers,msps,organizations,channels,channel_joined_peers,channel_msps,chaincodes,chaincodes_funcs,chaincodes_orderers,chaincodes_peers,node_ports,nodes")
+           ;; ("DB_LOGGING" . "yes")
+           
+           ;; ("REDIS_ADDRESS" . redis)
+           ;; ("REDIS_PORT" . 6379)
+           ;; ("REDIS_PASSWORD" . ""))
+           
+		   ;; :envFile nil)
 
-            ("REDIS_ADDRESS" . redis)
-            ("REDIS_PORT" . 6379)
-            ("REDIS_PASSWORD" . ""))
-
-		   :envFile nil))))
+           ))))
 
 
 
