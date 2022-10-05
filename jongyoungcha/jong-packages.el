@@ -96,10 +96,6 @@
 (use-package yaml-mode
   :ensure t
   :config
-  ;; (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-  ;; (add-hook 'yaml-mode-hook
-  ;; '(lambda ()
-  ;; (define-key yaml-mode-map "C-j" 'newline-and-indent)))
   )
 
 (use-package treemacs

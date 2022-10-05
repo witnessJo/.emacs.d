@@ -70,7 +70,9 @@
 (global-hl-line-mode t)
 (show-paren-mode t)
 (delete-selection-mode t)
-(load-theme 'sanityinc-tomorrow-blue t)
+(load-theme 'solarized-zenburn t)
+;; (load-theme 'solarized-dark-high-contrast t)
+;; (load-theme 'sanityinc-tomorrow-blue t)
 
 (global-eldoc-mode -1)
 (auto-save-visited-mode t)
