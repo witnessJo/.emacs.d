@@ -75,6 +75,9 @@
 (global-set-key (kbd "C-'") 'jong-avy-goto-word-1)
 (global-set-key (kbd "C-A-d") 'jong-cursor-delete-subword-forward)
 
+;; parenthesis
+(global-set-key (kbd "C-c u") 'sp-splice-sexp)
+
 ;; run
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
 (global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)

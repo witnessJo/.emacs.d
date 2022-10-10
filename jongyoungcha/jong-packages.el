@@ -20,10 +20,14 @@
   :ensure t
   :bind (:map company-active-map
 			  ("<tab>" . company-complete-selection))
+  (:map lsp-mode-map
+        ("<tab>" . company-indent-or-complete-common))
   :config
   (setq company-async-timeout 4)
-  (setq company-minimum-prefix-length 2)
-  (setq company-idle-delay 0.02))
+  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.0)
+  )
+
 
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -74,15 +78,18 @@
 
 (use-package smartparens
   :ensure t
+  :bind
   :config
-  (smartparens-global-mode t)
+  (require 'smartparens-config)
+  (setq smartparens-global-mode t)
+  (progn (show-smartparens-global-mode t))
+  (setq sp-navigate-close-if-unbalanced t)
   (sp-pair "(" ")" :wrap "C-(")
   (sp-pair "[" "]" :wrap "C-]")
+  (sp-pair "{" "}" :wrap "C-{")
   (sp-pair "\"" "\"" :wrap "C-\"")
-  (sp-pair "'" nil :actions :rem)
-  (sp-pair "`" nil :actions :rem)
-  (setq sp-highlight-pair-overlay nil)
   )
+
 
 (use-package which-key
   :ensure t
