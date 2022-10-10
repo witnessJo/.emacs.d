@@ -1,5 +1,6 @@
 
 (use-package lsp-mode
+  :ensure t
   :hook
   (c-mode . lsp)
   (c++-mode-hook . lsp)
@@ -23,7 +24,8 @@
   :commands lsp)
 
 (use-package lsp-ui
-  :ensure t  :config
+  :ensure t
+  :config
   ;; (setq lsp-ui-doc-enable nil)
   ;; (setq lsp-ui-doc-position 'at-point)
   ;; (setq lsp-ui-doc-show-with-cursor nil)

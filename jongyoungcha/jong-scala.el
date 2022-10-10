@@ -18,11 +18,5 @@
 	:ensure t
 	:init (global-flycheck-mode))
 
-(use-package lsp-mode
-	:ensure t
-	;; Optional - enable lsp-mode automatically in scala files
-	:hook (scala-mode . lsp)
-	:config (setq lsp-prefer-flymake nil))
-
 
 (provide 'jong-scala)
