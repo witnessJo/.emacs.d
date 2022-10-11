@@ -171,7 +171,7 @@
 (global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
 
 ;;; lsp
-(global-set-key (kbd "C-<tab>") 'company-complete)
+;; (global-set-key (kbd "C-<tab>") 'company-complete)
 
 ;;; etc
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
