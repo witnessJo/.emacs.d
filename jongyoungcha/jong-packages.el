@@ -21,7 +21,7 @@
   :after (lsp-mode)
   :bind
   (:map company-active-map
-		      ("<tab>" . company-complete-selection))
+		("<tab>" . company-complete-selection))
   (:map lsp-mode-map
         ("<tab>" . company-indent-or-complete-common))
   :config
@@ -149,56 +149,6 @@
   (interactive)
   (ispell-change-dictionary "default")
   (flyspell-buffer))
-
-;; (use-package flycheck-aspell
-;; :ensure t
-;; :config
-
-;; (require 'flyspell)
-;; Ensure `flycheck-aspell' is available
-;; (require 'flycheck-aspell)
-;; If you want to check TeX/LaTeX/ConTeXt buffers
-;; (add-to-list 'flycheck-checkers 'tex-aspell-dynamic)
-;; If you want to check Markdown/GFM buffers
-;; (add-to-list 'flycheck-checkers 'markdown-aspell-dynamic)
-;; If you want to check HTML buffers
-;; (add-to-list 'flycheck-checkers 'html-aspell-dynamic)
-;; If you want to check XML/SGML buffers
-;; (add-to-list 'flycheck-checkers 'xml-aspell-dynamic)
-;; If you want to check Nroff/Troff/Groff buffers
-;; (add-to-list 'flycheck-checkers 'nroff-aspell-dynamic)
-;; If you want to check Texinfo buffers
-;; (add-to-list 'flycheck-checkers 'texinfo-aspell-dynamic)
-;; If you want to check comments and strings for C-like languages
-;; (add-to-list 'flycheck-checkers 'c-aspell-dynamic)
-;; If you want to check message buffers
-;; (add-to-list 'flycheck-checkers 'mail-aspell-dynamic)
-
-;; (setq ispell-dictionary "en")
-;; (setq ispell-program-name "aspell")
-;; (setq ispell-silently-savep t)
-
-
-;; (advice-add #'ispell-pdict-save :after #'flycheck-maybe-recheck)
-;; (defun flycheck-maybe-recheck (_)
-;; (when (bound-and-true-p flycheck-mode)
-;; (flycheck-buffer)))
-
-;; (add-hook 'after-init-hook #'global-flycheck-mode))
-
-
-;; (use-package flymake-aspell
-;; :ensure t
-;; :config
-;; (setq ispell-dictionary "en")
-;; (setq ispell-program-name "aspell")
-;; (setq ispell-silently-savep t)
-;; (setq ispell-dictionary (format "%s/%s" (getenv "HOME") ".aspell"))
-;; (setq ispell-program-name "aspell")
-;; (setq ispell-silently-savep t)
-;; (add-hook 'text-mode-hook #'flymake-aspell-setup)
-;; )
-
 
 (use-package multiple-cursors
   :ensure t)
@@ -430,6 +380,18 @@
 (use-package vdiff
   :ensure t)
 
+(use-package vdiff-magit
+  :ensure t
+  :config
+  (require 'vdiff-magit)
+  (define-key magit-mode-map "e" 'vdiff-magit-dwim)
+  (define-key magit-mode-map "E" 'vdiff-magit)
+  (transient-suffix-put 'magit-dispatch "e" :description "vdiff (dwim)")
+  (transient-suffix-put 'magit-dispatch "e" :command 'vdiff-magit-dwim)
+  (transient-suffix-put 'magit-dispatch "E" :description "vdiff")
+  (transient-suffix-put 'magit-dispatch "E" :command 'vdiff-magit))
+  
+  
 (use-package ssh-config-mode
   :ensure t)
 

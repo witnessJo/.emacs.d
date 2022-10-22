@@ -153,6 +153,7 @@
 		   :program "${fileDirname}"
 		   :buildFlags "-gcflags '-N -l'"
 		   :args (concat "-test.run ^" name "$")
+           :envFile nil
 		   ;; :env
            ;; '(("DB_ADDRESS" . "localhost")
            ;; ("DB_PORT" . "20306")

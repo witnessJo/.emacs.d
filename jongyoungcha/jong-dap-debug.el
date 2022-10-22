@@ -1,5 +1,4 @@
 ;;; Code :
-
 (use-package dap-mode
   :ensure t
   :config
@@ -8,43 +7,23 @@
   (require 'dap-node)
   (require 'dap-dlv-go)
   (require 'dap-gdb-lldb)
-
-  ;; (dap-mode 1)
+  
+  (dap-mode 1)
   (dap-ui-mode 1)
   (tooltip-mode 1)
   (dap-tooltip-mode 1)
   (dap-ui-controls-mode 1)
+  
+  (setq left-fringe-width 16)
+  (set-fringe-style (quote (12 . 8)))
+  (setq dap-print-io t)
   (setq dap-mouse-popup-timeout 1)
   (setq dap-ui-variable-length 100)
   (setq dap-tooltip-mouse-motions-active t)
- 
-
-  ;; (defun disable-lsp-ui-doc (orig-fun &rest args)
-  ;; (lsp-ui-doc-enable nil))
-  
-  ;; (defun enable-lsp-ui-doc (orig-fun &rest args)
-  ;; (lsp-ui-doc-enable t))
-  
-  ;; (advice-add 'dap-debug :after #'disable-lsp-ui-doc)
-  ;; (advice-add 'dap-disconnect :after #'enable-lsp-ui-doc)
   
   (setq dap-auto-configure-features '(locals expressions breakpoints tooltip))
-
-  (define-key treemacs-mode-map (kbd "D") (lambda()
-                                            (interactive)
-                                            (let (buffer-name (buffer-name (current-buffer)))
-                                              (when buffer-name "Expressions"
-                                                    (call-interactively 'dap-ui-expressions)
-                                                    (call-interactively 'dap-ui-expressions-remove))
-                                              )
-                                            ))
-
-  ;; (add-hook 'dap-stopped-hook
-  ;; (lambda (arg)
-  ;; (call-interactively #'dap-hydra)
-  ;; (call-interactively #'jong-dap-go-to-output-buffer)
-  ;; ))
   )
+
 
 
 ;; (add-hook 'dap-tooltip-mode-hook (lambda() (sleep-for 3000)))
