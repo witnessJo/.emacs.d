@@ -217,6 +217,19 @@ And the environment variable was existing, Download go binaries from the interne
     )
   )
 
+
+(defun jong-go-run-current-test-no-cache()
+  "Run Current Test."
+  (interactive)
+  (setq jong-go-test-buffer (current-buffer))
+  (call-interactively 'go-test-current-test)
+  (with-current-buffer "*Go Test*"
+    (shell-command "go clean -testcache" (current-buffer) (current-buffer))
+    (call-interactively 'compilation-mode)
+    )
+  )
+
+
 (defun jong-go-run-previous-test ()
   "Run Previous Test."
   (interactive)
