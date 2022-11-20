@@ -9,6 +9,20 @@
 ;;; image
   (setq org-startup-with-inline-images t))
 
+(use-package org-roam
+  :ensure t
+  :after org
+  :init
+  (setq org-roam-v2-ack t
+        org-directory (file-truename "~/jongyoungcha/org")
+        org-roam-directory (file-truename "~/jongyoungcha/org/roam")
+        org-roam-completion-everywhere t)
+  :custom
+  (org-roam-directory (file-truename org-directory))
+  :config
+  (org-roam-db-autosync-mode)
+  (org-roam-setup))
+
 ;;; plantuml
 (org-babel-do-load-languages
  'org-babel-load-languages

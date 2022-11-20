@@ -4,6 +4,7 @@
 
 (defconst jong-project-output-buffer "*jong-project-output*")
 (defconst jong-project-debug-buffer "*jong-project-debug*")
+(defconst jong-project-log-frame "jong-project-log")
 
 (add-to-list 'jong-kill-buffer-patterns jong-project-output-buffer)
 (add-to-list 'jong-kill-buffer-patterns jong-project-debug-buffer)
@@ -147,9 +148,25 @@
 	)
   )
 
+(defun jong-project-get-buffer-name (directory cmd)
+  "Get project buffer name."
+  (buffer-name (format "*jong-command-%s-%s*" directory cmd))
+  )
+
+(defun jong-project-focus-log-window()
+  (interactive)
+  (condition-case err
+      (select-frame-by-name jong-project-log-frame)
+    (error (progn (make-frame '((name . "jong-project-log"))
+                              )))
+    )
+  (select-frame-by-name jong-project-log-frame)
+  )
+
 (defun jong-project-exec-command (directory cmd &optional after-func)
   (interactive)
   (let ((proc)
+        (current-frame (selected-frame))
         (default-directory (if (not (file-directory-p directory))
 							   (error "The directory was not existing")
 							 directory))
@@ -159,6 +176,7 @@
 
 	(when (or (equal cmd nil) (string= cmd ""))
 	  (error (format "Couldnt find  %s\"" cmd)))
+    (jong-project-focus-log-window)
 	(when (get-buffer buffer-name) (kill-buffer buffer-name))
 	(with-current-buffer (get-buffer-create buffer-name)
       (ansi-color-for-comint-mode-on)
@@ -181,6 +199,7 @@
            )
          ))
       )
+    (select-frame current-frame)
     )
   )
 
