@@ -55,6 +55,7 @@
 (define-key emacs-lisp-mode-map (kbd "C-M-o") (lambda() (interactive) (scroll-other-window -15)))
 
 (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                  (eldoc-mode t)
                                   (lispy-mode 0)))
 
 (provide 'jong-elisp)

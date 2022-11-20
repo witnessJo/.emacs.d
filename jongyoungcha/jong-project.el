@@ -157,7 +157,8 @@
   (interactive)
   (condition-case err
       (select-frame-by-name jong-project-log-frame)
-    (error (progn (make-frame '((name . "jong-project-log"))
+    (error (progn (make-frame `((name . "jong-project-log")
+                                (parent-frame . ,(window-frame)))
                               )))
     )
   (select-frame-by-name jong-project-log-frame)
@@ -166,7 +167,8 @@
 (defun jong-project-exec-command (directory cmd &optional after-func)
   (interactive)
   (let ((proc)
-        (current-frame (selected-frame))
+        (parent-frame (selected-frame))
+        (current-frame-title (buffer-name (current-buffer)))
         (default-directory (if (not (file-directory-p directory))
 							   (error "The directory was not existing")
 							 directory))
@@ -176,30 +178,36 @@
 
 	(when (or (equal cmd nil) (string= cmd ""))
 	  (error (format "Couldnt find  %s\"" cmd)))
+
     (jong-project-focus-log-window)
+
 	(when (get-buffer buffer-name) (kill-buffer buffer-name))
 	(with-current-buffer (get-buffer-create buffer-name)
       (ansi-color-for-comint-mode-on)
 	  (comint-mode)
+      (setq default-directory directory)
+	  ;; (display-buffer (current-buffer))
+      (switch-to-buffer (current-buffer))
+      (delete-other-windows)
       
-	  (setq default-directory directory)
-	  (display-buffer (current-buffer))
-	  (setq proc (start-process-shell-command
+      (setq proc (start-process-shell-command
                   buffer-name
                   (current-buffer)
                   cmd))
 	  (set-process-filter proc 'comint-output-filter)
+
+      ;; After process done
       (set-process-sentinel
        proc
 	   (lambda (p e)
-         ;; After process done
          (with-current-buffer (get-buffer (process-buffer p))
 	       (compilation-mode)
 	       (compilation-shell-minor-mode)
            )
          ))
       )
-    (select-frame current-frame)
+    (select-frame-set-input-focus parent-frame)
+    (make-frame-visible parent-frame)
     )
   )
 
