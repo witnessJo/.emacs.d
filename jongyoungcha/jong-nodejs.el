@@ -1,8 +1,8 @@
-(use-package js2-mode :ensure t)
+(use-package js2-mode
+  :ensure t)
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . js2-mode))
-
 (add-hook 'js-mode-hook 'js2-minor-mode)
 
 (setq lsp-eslint-server-command 
@@ -10,9 +10,9 @@
      "/home/USER/.vscode/extensions/dbaeumer.vscode-eslint-2.0.11/server/out/eslintServer.js" 
      "--stdio"))
 
+(setq lsp-disabled-clients '(jsts-ls ts-ls))
 
 (add-hook 'js2-mode-hook #'lsp)
-
 (add-hook 'js-mode-hook #'lsp)
 (add-hook 'typescript-mode-hook #'lsp) ;; for typescript support
 (add-hook 'js3-mode-hook #'lsp) ;; for js3-mode support

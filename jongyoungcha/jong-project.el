@@ -158,8 +158,8 @@
   (condition-case err
       (select-frame-by-name jong-project-log-frame)
     (error (progn (make-frame `((name . "jong-project-log")
-                                (parent-frame . ,(window-frame)))
-                              )))
+                                ;; (parent-frame . ,(window-frame))
+                                ))))
     )
   (select-frame-by-name jong-project-log-frame)
   )
