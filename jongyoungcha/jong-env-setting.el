@@ -65,8 +65,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-(set-cursor-color "#aa4444")
-(set-face-background #'hl-line "#004500")
+
 (global-hl-line-mode t)
 (show-paren-mode t)
 (delete-selection-mode t)
@@ -88,6 +87,16 @@
 
 ;; aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+(set-cursor-color "#003399")
+(set-face-background #'hl-line "#aaaaaa")
+;; frame setting
+(require 'frame)
+(defun set-cursor-hook (frame)
+  (modify-frame-parameters
+   frame (list (cons 'cursor-color "#003399"))))
+(add-hook 'after-make-frame-functions 'set-cursor-hook)
+
 
 
 (provide 'jong-env-setting)

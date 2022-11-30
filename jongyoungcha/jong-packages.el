@@ -266,7 +266,7 @@
 (use-package auto-dim-other-buffers
   :ensure t
   :config
-  (auto-dim-other-buffers-mode t)
+  ;; (auto-dim-other-buffers-mode t)
   )
 
 (use-package eshell-syntax-highlighting
