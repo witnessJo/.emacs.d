@@ -16,8 +16,8 @@
 (global-set-key (kbd "C-x m") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c m") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c C-m") 'ivy-switch-buffer)
-(global-set-key (kbd "C-c C-n") 'jong-window-display-buffer-right)
-(global-set-key (kbd "C-c n") 'jong-window-display-buffer-right)
+(global-set-key (kbd "C-c C-n") 'jong-project-switch-buffer-log-frame)
+(global-set-key (kbd "C-c n") 'jong-project-switch-buffer-log-frame)
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
 
@@ -29,6 +29,15 @@
 (global-set-key (kbd "S-<f2>") 'bookmark-delete-all)
 
 (global-set-key (kbd "C-<return>") 'jong-window-toggle-maximize-buffer)
+
+;; window
+(global-set-key (kbd "C-x C-o") 'other-window)
+(global-set-key (kbd "C-x p") (lambda() (interactive) (other-window -1)))
+(global-set-key (kbd "C-c C-o") 'other-window)
+
+;; frame
+(global-set-key (kbd "C-M-i") 'jong-project-scroll-down-log-frame)
+(global-set-key (kbd "C-M-o") 'jong-project-scroll-up-log-frame)
 
 ;;; disable
 (global-set-key (kbd "C-x C-c") nil)

@@ -77,6 +77,7 @@
             (disable-jong-keys-minor-mode)
             (setq vterm-max-scrollback 50000)
             (setq font-lock-keywords-only t)
+            ;; (face-remap-add-relative 'default :background "#f0f0ff")
             ))
 
 (use-package multi-vterm

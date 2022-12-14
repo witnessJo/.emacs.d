@@ -88,15 +88,22 @@
 ;; aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(set-cursor-color "#003399")
-(set-face-background #'hl-line "#aaaaaa")
+;; (set-cursor-color "#003399")
+;; (set-background-color "#cdcdcd")
+;; (set-face-background #'hl-line "#fdfdfd")
+;; (set-face-attribute 'region nil :background "#ddf")
+
 ;; frame setting
 (require 'frame)
 (defun set-cursor-hook (frame)
-  (modify-frame-parameters
-   frame (list (cons 'cursor-color "#003399"))))
+  ;; (modify-frame-parameters
+  ;; frame (list (cons 'cursor-color "#003399")
+  ;; (cons 'background-color "#cdcdcd")
+  ;; (cons 'hl-line-face "#fdfdfd")
+  ;; ))
+  ;; (set-face-attribute 'region frame :background "#ddf")
+  )
+
 (add-hook 'after-make-frame-functions 'set-cursor-hook)
-
-
 
 (provide 'jong-env-setting)

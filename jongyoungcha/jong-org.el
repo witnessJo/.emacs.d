@@ -29,7 +29,7 @@
  '((plantuml . t)))
 (setq org-confirm-babel-evaluate nil)
 (setq org-plantuml-jar-path
-      (expand-file-name "~/Downloads/plantuml.jar"))
+      (expand-file-name "~/jongyoungcha/plantuml.jar"))
 (add-hook 'org-babel-after-execute-hook
           (lambda ()
             (when org-inline-image-overlays
