@@ -323,7 +323,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(solarized-light-high-contrast))
+ '(custom-enabled-themes '(solarized-dark-high-contrast))
  '(custom-safe-themes
    '("00445e6f15d31e9afaa23ed0d765850e9cd5e929be5e8e63b114a3346236c44c" "4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "33ea268218b70aa106ba51a85fe976bfae9cf6931b18ceaf57159c558bbcd1e6" default))
  '(ignored-local-variable-values
@@ -332,7 +332,11 @@
  '(package-selected-packages
    '(anti-zenburn-theme anti-zenburn org-roam geiser-mit geiser vdiff-magit flymake-aspell flycheck-aspell counsel-lsp lsp-ui load-env-vars emacs-load-env-vars elisp-slime-nav multi-vterm wgrep counsel-tramp ssh-config-mode ssh-config whitespace-cleanup-mode undo-tree syntax-subword sublimity scala-mode sbt-mode protobuf-mode prodigy plantuml-mode pcap-mode pandoc modern-cpp-font-lock magit-delta log4e kubernetes-tramp kotlin-mode json-mode ivy-posframe hungry-delete helm-xref helm-lsp helm-dash helm-ag groovy-mode gradle-mode go-tag go-impl go-fill-struct go-complete flycheck-rust flycheck-haskell eredis dotenv-mode dash-functional counsel-projectile company-jedi company-go command-log-mode cmake-ide clang-format ccls buffer-move bm bash-completion auto-package-update auto-dim-other-buffers auto-complete ag))
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-manager/services/ma-backend/")
+   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-manager/services/tx-worker/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/mdl-manager/services/tx-worker/")
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-manager/mdl-common/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/mdl-manager/mdl-common/")
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-manager/services/ma-backend/")
      (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/mdl-manager/services/ma-backend/")
      (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-payment/was/")
      (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/mdl-payment/was/")
@@ -375,3 +379,4 @@
  '(flymake-warning ((((class color)) (:background "#4444aa")))))
 (put 'downcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
+(put 'upcase-region 'disabled nil)

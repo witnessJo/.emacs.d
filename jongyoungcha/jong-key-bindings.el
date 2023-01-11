@@ -16,7 +16,7 @@
 (global-set-key (kbd "C-x m") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c m") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c C-m") 'ivy-switch-buffer)
-(global-set-key (kbd "C-c C-n") 'jong-project-switch-buffer-log-frame)
+;; (global-set-key (kbd "C-c C-n") 'jong-project-switch-buffer-log-frame)
 (global-set-key (kbd "C-c n") 'jong-project-switch-buffer-log-frame)
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
@@ -86,6 +86,7 @@
 
 ;; parenthesis
 (global-set-key (kbd "C-c u") 'sp-splice-sexp)
+(global-set-key (kbd "C-M-(") 'sp-unwrap-sexp)
 
 ;; run
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)

@@ -237,12 +237,14 @@ And the environment variable was existing, Download go binaries from the interne
 	(with-current-buffer (get-buffer jong-go-test-buffer)
 	  (call-interactively 'go-test-current-test-cache)
       )
-    ;; (sleep-for 0.5)
-	(with-current-buffer "*Go Test*"
-	  (setq font-lock-mode nil)
+    (with-current-buffer "*Go Test*"
+      (setq font-lock-mode nil)
       (call-interactively 'compilation-mode)
-	  )
-	)
+      (set-window-point
+        (get-buffer-window (current-buffer) 'visible)
+         (point-max))
+      )
+    )
   )
 
 (defun lsp-go-install-save-hooks ()
