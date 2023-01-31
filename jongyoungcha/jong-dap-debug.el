@@ -17,8 +17,8 @@
   (setq left-fringe-width 16)
   (set-fringe-style (quote (12 . 8)))
   (setq dap-print-io t)
-  (setq dap-mouse-popup-timeout 1)
-  (setq dap-ui-variable-length 100)
+  (setq dap-mouse-popup-timeout 0.5)
+  (setq dap-ui-variable-length 1024)
   (setq dap-tooltip-mouse-motions-active t)
   
   (setq dap-auto-configure-features '(locals expressions breakpoints tooltip))

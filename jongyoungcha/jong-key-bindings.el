@@ -156,8 +156,10 @@
 (global-set-key (kbd "C-c g b") 'magit-blame-addition)
 
 ;; (global-set-key (kbd "C-c a g") 'jong-helm-ag-do-ag-projectile)
-(global-set-key (kbd "C-c a g") 'counsel-projectile-git-grep)
-(global-set-key (kbd "C-c a G") 'counsel-git-grep)
+;; (global-set-key (kbd "C-c a g") 'counsel-projectile-git-grep)
+;; (global-set-key (kbd "C-c a G") 'counsel-git-grep)
+(global-set-key (kbd "C-c a g") 'counsel-ag)
+(global-set-key (kbd "C-c a G") 'counsel-projectile-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 
@@ -170,7 +172,7 @@
                                   (interactive)
                                   (call-interactively 'projectile-invalidate-cache)
                                   (call-interactively 'counsel-projectile-find-file)))
-                
+
 
 ;; profile
 (global-set-key (kbd "C-c q s") 'profiler-start)
@@ -215,7 +217,7 @@
 
     (define-key map (kbd "M-b") 'backward-word)
     (define-key map (kbd "M-f") 'jong-cursor-forward-word)
-   
+    
 	(define-key map (kbd "C-j") 'jong-cursor-newline-align-above)
 	
 	(define-key map (kbd "M-<up>") 'evil-window-up)
