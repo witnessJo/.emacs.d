@@ -332,7 +332,9 @@
  '(package-selected-packages
    '(typescript-mode nestjs nestjs-mode anti-zenburn-theme anti-zenburn org-roam geiser-mit geiser vdiff-magit flymake-aspell flycheck-aspell counsel-lsp lsp-ui load-env-vars emacs-load-env-vars elisp-slime-nav multi-vterm wgrep counsel-tramp ssh-config-mode ssh-config whitespace-cleanup-mode undo-tree syntax-subword sublimity scala-mode sbt-mode protobuf-mode prodigy plantuml-mode pcap-mode pandoc modern-cpp-font-lock magit-delta log4e kubernetes-tramp kotlin-mode json-mode ivy-posframe hungry-delete helm-xref helm-lsp helm-dash helm-ag groovy-mode gradle-mode go-tag go-impl go-fill-struct go-complete flycheck-rust flycheck-haskell eredis dotenv-mode dash-functional counsel-projectile company-jedi company-go command-log-mode cmake-ide clang-format ccls buffer-move bm bash-completion auto-package-update auto-dim-other-buffers auto-complete ag))
  '(safe-local-variable-values
-   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/hashvegas-proxy-go/")
+   '((jong-project-sub-default-dir-3 . "/Users/jongyoungcha/jswork/hashvegas-poc-backend/")
+     (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/jswork/hashvegas-poc-backend/")
+     (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/hashvegas-proxy-go/")
      (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/hashvegas-proxy-go/")
      (jong-project-sub-default-dir-3 . "/Users/jongyoungcha/gowork/mdl-manager/services/tx-worker/")
      (jong-project-sub-default-dir-2 . "/Users/jongyoungcha/gowork/mdl-manager/services/tx-worker/")

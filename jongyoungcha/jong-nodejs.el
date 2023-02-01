@@ -40,9 +40,9 @@
   (local-set-key (kbd "C-c r .") 'lsp-ui-peek-find-definitions)
   (local-set-key (kbd "C-c r ,") 'lsp-ui-peek-find-references)
   (local-set-key (kbd "C-c r i") 'lsp-ui-peek-find-implementation)
+  (local-set-key (kbd "C-c C-c") 'helm-lsp-code-actions)
   (local-set-key (kbd "C-c c c") 'jong-project-compile-project)
   (local-set-key (kbd "C-c c r") 'jong-project-run-project)
-  (local-set-key (kbd "C-c t a") 'go-test-current-file)
   )
 
 (provide 'jong-nodejs)

@@ -158,8 +158,8 @@
 ;; (global-set-key (kbd "C-c a g") 'jong-helm-ag-do-ag-projectile)
 ;; (global-set-key (kbd "C-c a g") 'counsel-projectile-git-grep)
 ;; (global-set-key (kbd "C-c a G") 'counsel-git-grep)
-(global-set-key (kbd "C-c a g") 'counsel-ag)
-(global-set-key (kbd "C-c a G") 'counsel-projectile-ag)
+(global-set-key (kbd "C-c a g") 'counsel-projectile-rg)
+(global-set-key (kbd "C-c a G") 'counsel-rg)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 
