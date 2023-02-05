@@ -280,6 +280,7 @@
 (require 'jong-kotlin)
 (require 'jong-sql)
 (require 'jong-protobuf)
+(require 'jong-fabric)
 
 ;; Shell
 (require 'jong-eshell)
