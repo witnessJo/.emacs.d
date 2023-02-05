@@ -29,7 +29,7 @@
  '((plantuml . t)))
 (setq org-confirm-babel-evaluate nil)
 (setq org-plantuml-jar-path
-      (expand-file-name "~/jongyoungcha/plantuml.jar"))
+      (expand-file-name "~/jongyoungcha/plantuml-1.2023.1.jar"))
 (add-hook 'org-babel-after-execute-hook
           (lambda ()
             (when org-inline-image-overlays
@@ -38,7 +38,6 @@
              '("u" "#+BEGIN_SRC plantuml :file ?.png
                     \nskinparam monochrome true
                     \n#+END_SRC"))
-
 
 (add-hook 'org-mode-hook (lambda ()
 						   (setq truncate-lines t)
@@ -57,9 +56,6 @@
                            (local-set-key (kbd "C-<down>") 'forward-paragraph)
                            )
           )
-
-
-
 
 (defun jong-org-insert-src-block ()
   (interactive)
