@@ -13,6 +13,7 @@
         ("LEVEL" . 'font-lock-function-name-face)
 
         ;; Keywords
+        ("[Q\\|q]uery" . 'font-lock-keyword-face)
         ("[C\\|c]reate[d]" . 'font-lock-keyword-face)
         ("[C\\|c]REATE[d]" . 'font-lock-keyword-face)
         ("[U\\|u]pdate[d]" . 'font-lock-keyword-face)
@@ -29,11 +30,13 @@
         ;; Bad cases
         ("[E\\|e]rror" . 'font-lock-warning-face)
         ("[F\\|f]ail" . 'font-lock-warning-face)
+        ("[F\\|f]ailed" . 'font-lock-warning-face)
         ("[D\\|d]elete[d]" . 'font-lock-warning-face)
         ("[D\\|d]ELETE[d]" . 'font-lock-warning-face)
         ("[D\\|d]rop" . 'font-lock-warning-face)
         ("[D\\|d]ROP" . 'font-lock-warning-face)
         ("[W\\|w]arn" . 'font-lock-warning-face)
+        ("[W\\|w]arning" . 'font-lock-warning-face)
         ))
 
 (font-lock-add-keywords 'vterm-mode jong-font-locks-term)

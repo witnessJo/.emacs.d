@@ -192,6 +192,7 @@
 (global-set-key (kbd "M-<backspace>") 'jong-cursor-delete-word-backward)
 (global-set-key (kbd "C-<") 'jong-cursor-indent-left)
 (global-set-key (kbd "C->") 'jong-cursor-indent-right)
+(global-set-key (kbd "C-j") 'jong-cursor-newline-align-above)
 
 ;;; vterm
 (global-set-key (kbd "M-v") 'jong-edit-paste-text)
@@ -218,7 +219,6 @@
     (define-key map (kbd "M-b") 'backward-word)
     (define-key map (kbd "M-f") 'jong-cursor-forward-word)
     
-	(define-key map (kbd "C-j") 'jong-cursor-newline-align-above)
 	
 	(define-key map (kbd "M-<up>") 'evil-window-up)
 	(define-key map (kbd "M-<left>") 'evil-window-left)

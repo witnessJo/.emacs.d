@@ -54,6 +54,8 @@
                            (local-set-key (kbd "S-<tab>") 'org-outdent-item)
                            (local-set-key (kbd "C-<up>") 'backward-paragraph)
                            (local-set-key (kbd "C-<down>") 'forward-paragraph)
+                           (local-set-key (kbd "C-<down>") 'forward-paragraph)
+                           (local-set-key (kbd "C-j") 'org-insert-item)
                            )
           )
 
@@ -61,6 +63,7 @@
   (interactive)
   (insert "#+BEGIN_SRC \n\n#+END_SRC")
   )
+
 
 (use-package pandoc
   :ensure t)
