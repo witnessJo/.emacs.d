@@ -17,9 +17,6 @@
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-()
-
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -40,7 +37,7 @@
 (savehist-mode t)
 (save-place-mode t)
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
-(load custom-file 'noerror 'nomessage)
+
 
 (use-package auto-package-update
   :ensure t
@@ -261,6 +258,7 @@
 ;; (add-to-list 'default-frame-alist '(cursor-color . "#ff9090"))
 
 (require 'jong-packages)
+(require 'jong-journal)
 (require 'jong-lsp)
 ;; (require 'jong-eglot)
 (require 'jong-common)
@@ -326,6 +324,8 @@
 (setq jong-go-run-command (format "./geth --datadir=~/testnet --verbosity 4 --bootnodes %s --syncmode \"full\" --cache=2048" (getenv "BOOTNODE")))
 (setq jong-go-run-default-path "~/goworks/src/github.com/ethereum/go-ethereum/cmd/geth")
 (put 'dired-find-alternate-file 'disabled nil)
+
+(load custom-file 'noerror 'nomessage)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

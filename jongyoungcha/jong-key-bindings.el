@@ -5,6 +5,8 @@
 (global-set-key (kbd "C-d") 'delete-forward-char)
 (global-set-key (kbd "C-c f e d") 'open-init-el)
 (global-set-key (kbd "C-c l e d") 'reload-user-init-file)
+(global-set-key (kbd "C-c f w l") 'jong-journal-open-worklist)
+(global-set-key (kbd "C-c f j l") 'jong-journal-open-journal)
 
 ;;; To Disable Keys
 (global-set-key (kbd "C-x C-x") nil)
@@ -117,19 +119,7 @@
 (global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
 (global-set-key [mouse-2] 'dap-tooltip-at-point)
 
-;; (global-set-key (kbd "C-d") nil)
-;; (global-set-key (kbd "C-d r") 'dap-debug-restart)
-;; (global-set-key (kbd "C-d p") 'dap-debug-last)
-;; (global-set-key (kbd "C-d s") 'dap-switch-session)
-;; (global-set-key (kbd "C-d f n") 'dap-down-stack-frame)
-;; (global-set-key (kbd "C-d f p") 'dap-up-stack-frame)
-;; (global-set-key (kbd "C-d f l") 'dap-ui-select-stack-frame)
-;; (global-set-key (kbd "C-d o") 'jong-dap-go-to-output-buffer)
-;; (global-set-key (kbd "C-d d") 'dap-disconnect)
-;; (global-set-key (kbd "C-d k") 'dap-ui-sessions-delete-session)
-;; (global-set-key (kbd "C-d <return>") 'dap-ui-sessions-select)
 
-(global-set-key (kbd "C-s") 'swiper-isearch)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
