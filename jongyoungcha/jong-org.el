@@ -1,4 +1,4 @@
-
+﻿
 (use-package org
   :ensure t
   :bind (
@@ -18,10 +18,8 @@
         org-roam-directory (file-truename "~/jongyoungcha/org/roam")
         org-roam-completion-everywhere t)
   :custom
-  (org-roam-directory (file-truename org-directory))
-  :config
-  (org-roam-db-autosync-mode)
-  (org-roam-setup))
+  (org-roam-directory (file-truename org-directory)))
+
 
 ;;; plantuml
 (org-babel-do-load-languages

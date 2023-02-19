@@ -24,9 +24,7 @@
 (global-set-key (kbd "C-c C-;") 'jong-buffer-throw-left)
 (global-set-key (kbd "C-c C-'") 'jong-buffer-throw-right)
 
-(global-set-key (kbd "C-x r l") 'counsel-bookmark)
-(global-set-key (kbd "<f2>") 'jong-bookmark-set-anonymous)
-(global-set-key (kbd "S-<f2>") 'bookmark-delete-all)
+(global-set-key (kbd "C-x r l") 'helm-bm)
 
 (global-set-key (kbd "C-<return>") 'jong-window-toggle-maximize-buffer)
 
