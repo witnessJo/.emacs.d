@@ -44,6 +44,7 @@
 (font-lock-add-keywords 'term-mode jong-font-locks-term)
 (font-lock-add-keywords 'shell-mode jong-font-locks-term)
 (font-lock-add-keywords 'comint-mode jong-font-locks-term)
+(font-lock-add-keywords 'compilation-mode jong-font-locks-term)
 
 (provide 'jong-font-locks)
 

@@ -3,7 +3,8 @@
   :ensure t
   :bind (
          :map org-mode-map
-         ("C-<return>" . jong-window-toggle-maximize-buffer)
+              ("C-<return>" . jong-window-toggle-maximize-buffer)
+              ("C-c RET" . nil)
          )
   :config
 ;;; image

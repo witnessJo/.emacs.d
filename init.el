@@ -38,7 +38,6 @@
 (save-place-mode t)
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 
-
 (use-package auto-package-update
   :ensure t
   :config
@@ -184,12 +183,12 @@
 	  (message "The command was empty..."))
 	))
 
-(global-set-key (kbd "C-c p p") 'projectile-switch-project)
-(global-set-key (kbd "C-c p f") 'projectile-find-file)
-(global-set-key (kbd "C-c p c") 'projectile-compile-project)
-(global-set-key (kbd "C-c p r") 'projectile-run-project)
-(global-set-key (kbd "C-c p s") 'jo-set-projectile-run-command)
-(global-set-key (kbd "C-c w f") 'other-frame)
+;; (global-set-key (kbd "C-c p p") 'projectile-switch-project)
+;; (global-set-key (kbd "C-c p f") 'projectile-find-file)
+;; (global-set-key (kbd "C-c p c") 'projectile-compile-project)
+;; (global-set-key (kbd "C-c p r") 'projectile-run-project)
+;; (global-set-key (kbd "C-c p s") 'jo-set-projectile-run-command)
+;; (global-set-key (kbd "C-c w f") 'other-frame)
 
 (use-package exec-path-from-shell
   :ensure t

@@ -90,11 +90,12 @@
   (progn (show-smartparens-global-mode t))
   (setq sp-navigate-close-if-unbalanced t)
   (sp-pair "(" ")" :wrap "C-(")
+  (sp-pair "(" ")" :wrap "C-(")
   (sp-pair "[" "]" :wrap "C-]")
   (sp-pair "{" "}" :wrap "C-{")
   (sp-pair "\"" "\"" :wrap "C-\"")
+  (sp-pair "'" "'" :wrap "C-'")
   )
-
 
 (use-package which-key
   :ensure t
@@ -332,8 +333,8 @@
   (transient-suffix-put 'magit-dispatch "e" :command 'vdiff-magit-dwim)
   (transient-suffix-put 'magit-dispatch "E" :description "vdiff")
   (transient-suffix-put 'magit-dispatch "E" :command 'vdiff-magit))
-  
-  
+
+
 (use-package ssh-config-mode
   :ensure t)
 
@@ -342,23 +343,59 @@
 
 (defhydra Navigation (global-map "<f>")
   "testnn"
-   :Line
-   ("n" next-line)
-   ("p" previous-line)
-   ("a" beginning-of-line)
-   ("e" move-end-of-line)
-   ("g" goto-line)
-   :Word
-   ("f" forward-word "Next")
-   ("b" backward-word "Previous")
-   ("{" org-backward-element "Next Element")
-   ("}" org-forward-element "Previous Element")
-   :Screen
-   ("v" scroll-up-command "Scroll Down")
-   ("V" scroll-down-command "Scroll Up")
-   ("l" recenter-top-bottom "Center Page")
-   ("r" move-to-window-line-top-bottom "Relocate Point")
-   ("m" helm-imenu "Textual Menu"))
+  :Line
+  ("n" next-line)
+  ("p" previous-line)
+  ("a" beginning-of-line)
+  ("e" move-end-of-line)
+  ("g" goto-line)
+  :Word
+  ("f" forward-word "Next")
+  ("b" backward-word "Previous")
+  ("{" org-backward-element "Next Element")
+  ("}" org-forward-element "Previous Element")
+  :Screen
+  ("v" scroll-up-command "Scroll Down")
+  ("V" scroll-down-command "Scroll Up")
+  ("l" recenter-top-bottom "Center Page")
+  ("r" move-to-window-line-top-bottom "Relocate Point")
+  ("m" helm-imenu "Textual Menu"))
+
+(defhydra hydra-zoom (global-map "C-=")
+  "zoom"
+  ("g" text-scale-increase "in")
+  ("l" text-scale-decrease "out"))
+
+
+;; (use-package hydra-goto
+;;   :doc "Search and move cursor"
+;;   :bind ("M-j" . *hydra-goto/body)
+;;   :pretty-hydra
+;;   ((:title " Goto" :color blue :quit-key "q" :foreign-keys warn :separator "-")
+;;    ("Got"
+;;     (("i" avy-goto-char       "char")
+;;      ("t" avy-goto-char-timer "timer")
+;;      ("w" avy-goto-word-2     "word")
+;;      ("j" avy-resume "resume"))
+;;     "Line"
+;;     (("h" avy-goto-line        "head")
+;;      ("e" avy-goto-end-of-line "end")
+;;      ("n" consult-goto-line    "number"))
+;;     "Topic"
+;;     (("o"  consult-outline      "outline")
+;;      ("m"  consult-imenu        "imenu")
+;;      ("gm" consult-global-imenu "global imenu"))
+;;     "Error"
+;;     ((","  flycheck-previous-error "previous" :exit nil)
+;;      ("."  flycheck-next-error "next" :exit nil)
+;;      ("l" consult-flycheck "list"))
+;;     "Spell"
+;;     ((">"  flyspell-goto-next-error "next" :exit nil)
+;;      ("cc" flyspell-correct-at-point "correct" :exit nil)))))
+
+
+(use-package quickrun
+  :ensure t)
 
 
 (provide 'jong-packages)

@@ -241,8 +241,8 @@ And the environment variable was existing, Download go binaries from the interne
       (setq font-lock-mode nil)
       (call-interactively 'compilation-mode)
       (set-window-point
-        (get-buffer-window (current-buffer) 'visible)
-         (point-max))
+       (get-buffer-window (current-buffer) 'visible)
+       (point-max))
       )
     )
   )

@@ -1,6 +1,17 @@
 ;;; Code:
 
-;;; Common
+;; (defun with-safe (command)
+;; "Check whether minibuffer opened, running COMMAND, close seamlessly."
+;; `(lambda (&rest args)
+;; (interactive)
+;; (if (minibuffer-window-active-p (active-minibuffer-window))
+;; (progn
+;; (with-local-quit (minibuffer-keyboard-quit))
+;; (apply #',command args))
+;; (apply #',command args)
+;; ))
+;; )
+
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
 (global-set-key (kbd "C-d") 'delete-forward-char)
 (global-set-key (kbd "C-c f e d") 'open-init-el)
@@ -26,7 +37,7 @@
 (global-set-key (kbd "C-c C-;") 'jong-buffer-throw-left)
 (global-set-key (kbd "C-c C-'") 'jong-buffer-throw-right)
 
-(global-set-key (kbd "C-x r l") 'helm-bm)
+(global-set-key (kbd "C-c r m") 'helm-bm)
 
 (global-set-key (kbd "C-<return>") 'jong-window-toggle-maximize-buffer)
 
@@ -86,7 +97,7 @@
 
 ;; parenthesis
 (global-set-key (kbd "C-c u") 'sp-splice-sexp)
-(global-set-key (kbd "C-M-(") 'sp-unwrap-sexp)
+(global-set-key (kbd "M-(") 'sp-unwrap-sexp)
 
 ;; run
 (global-set-key (kbd "C-c <up>") 'jong-project-run-command)
@@ -119,7 +130,6 @@
 (global-set-key (kbd "C-c d d") 'jong-dap-debug-toggle-show-ui)
 (global-set-key [mouse-2] 'dap-tooltip-at-point)
 
-
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
@@ -129,8 +139,15 @@
 ;; (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
 ;; (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
 ;; (global-set-key (kbd "<f2> j") 'counsel-set-variable)
-(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-(global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+(global-set-key (kbd "C-x C-b") 'counsel-switch-buffer)
+(global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
+(global-set-key (kbd "C-c p f") 'counsel-projectile-find-file)
+(global-set-key (kbd "C-c p c") 'counsel-projectile-compile-project)
+(global-set-key (kbd "C-c p r") 'counsel-projectile-run-project)
+(global-set-key (kbd "C-c p s") 'jo-set-projectile-run-command)
+(global-set-key (kbd "C-c w f") 'other-frame)
+
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 
@@ -146,6 +163,9 @@
 ;; (global-set-key (kbd "C-c a g") 'jong-helm-ag-do-ag-projectile)
 ;; (global-set-key (kbd "C-c a g") 'counsel-projectile-git-grep)
 ;; (global-set-key (kbd "C-c a G") 'counsel-git-grep)
+
+(global-set-key (kbd "C-s") 'swiper-isearch)
+
 (global-set-key (kbd "C-c a g") 'counsel-projectile-rg)
 (global-set-key (kbd "C-c a G") 'counsel-rg)
 (global-set-key (kbd "C-x l") 'counsel-locate)
