@@ -18,8 +18,7 @@
                 (format "%s/%s" (getenv "GOROOT") "src")
                 ))
     (when (string-prefix-p dir default-directory)
-      (read-only-mode t)
-      )
+      (read-only-mode t))
     )
   )
 
@@ -55,6 +54,9 @@
   :ensure t)
 
 (use-package go-impl
+  :ensure t)
+
+(use-package go-snippets
   :ensure t)
 
 (exec-path-from-shell-getenv "GOPATH")

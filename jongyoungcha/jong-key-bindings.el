@@ -1,17 +1,5 @@
 ;;; Code:
 
-;; (defun with-safe (command)
-;; "Check whether minibuffer opened, running COMMAND, close seamlessly."
-;; `(lambda (&rest args)
-;; (interactive)
-;; (if (minibuffer-window-active-p (active-minibuffer-window))
-;; (progn
-;; (with-local-quit (minibuffer-keyboard-quit))
-;; (apply #',command args))
-;; (apply #',command args)
-;; ))
-;; )
-
 (global-set-key (kbd "M-ESC ESC") 'keyboard-escape-quit)
 (global-set-key (kbd "C-d") 'delete-forward-char)
 (global-set-key (kbd "C-c f e d") 'open-init-el)
@@ -94,6 +82,9 @@
 (global-set-key (kbd "C-;") 'jong-avy-goto-line)
 (global-set-key (kbd "C-'") 'jong-avy-goto-word-1)
 (global-set-key (kbd "C-A-d") 'jong-cursor-delete-subword-forward)
+
+;; yasnippet
+(global-set-key (kbd "C-c y") 'helm-yas-complete)
 
 ;; parenthesis
 (global-set-key (kbd "C-c u") 'sp-splice-sexp)
@@ -181,6 +172,8 @@
                                   (call-interactively 'projectile-invalidate-cache)
                                   (call-interactively 'counsel-projectile-find-file)))
 
+;; gpt
+(global-set-key (kbd "C-c a i") 'gpt-dwim)
 
 ;; profile
 (global-set-key (kbd "C-c q s") 'profiler-start)

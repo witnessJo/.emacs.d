@@ -79,7 +79,18 @@
 (use-package yasnippet
   :ensure t
   :config
-  (setq yas-global-mode 1))
+  ;; (setq yas-global-mode 1)
+  (yas-global-mode 1)
+  )
+
+(use-package yasnippet-snippets
+  :ensure t)
+
+(use-package helm-c-yasnippet
+  :ensure t
+  :config
+  (setq helm-yas-space-match-any-greedy t)
+  )
 
 (use-package smartparens
   :ensure t
@@ -278,11 +289,6 @@
   ;; Enable in all Eshell buffers.
   (eshell-syntax-highlighting-global-mode +1))
 
-(use-package yasnippet
-  :ensure t
-  :config
-  (yas-global-mode 1))
-
 (use-package prodigy
   :ensure t)
 
@@ -334,9 +340,13 @@
   (transient-suffix-put 'magit-dispatch "E" :description "vdiff")
   (transient-suffix-put 'magit-dispatch "E" :command 'vdiff-magit))
 
-
 (use-package ssh-config-mode
   :ensure t)
+
+(use-package gpt
+  :ensure t
+  :config
+  (setq gpt-openai-key (getenv "GPT_KEY")))
 
 (use-package hydra
   :ensure t)
