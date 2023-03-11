@@ -79,8 +79,8 @@
 (global-set-key (kbd "M-k") 'sp-up-sexp)
 (global-set-key (kbd "C-M-t") 'sp-select-next-thing)
 (global-set-key (kbd "C-M-S-t") 'sp-select-previous-thing-exchange)
-(global-set-key (kbd "C-;") 'jong-avy-goto-line)
-(global-set-key (kbd "C-'") 'jong-avy-goto-word-1)
+(global-set-key (kbd "C-'") 'jong-avy-goto-line)
+(global-set-key (kbd "C-;") 'jong-avy-goto-word-1)
 (global-set-key (kbd "C-A-d") 'jong-cursor-delete-subword-forward)
 
 ;; yasnippet

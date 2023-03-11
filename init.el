@@ -183,13 +183,6 @@
 	  (message "The command was empty..."))
 	))
 
-;; (global-set-key (kbd "C-c p p") 'projectile-switch-project)
-;; (global-set-key (kbd "C-c p f") 'projectile-find-file)
-;; (global-set-key (kbd "C-c p c") 'projectile-compile-project)
-;; (global-set-key (kbd "C-c p r") 'projectile-run-project)
-;; (global-set-key (kbd "C-c p s") 'jo-set-projectile-run-command)
-;; (global-set-key (kbd "C-c w f") 'other-frame)
-
 (use-package exec-path-from-shell
   :ensure t
   :config
@@ -254,8 +247,6 @@
 							  (jong-kill-temporary-buffers)
 							  (keyboard-quit)))
 
-;; (add-to-list 'default-frame-alist '(cursor-color . "#ff9090"))
-
 (require 'jong-packages)
 (require 'jong-journal)
 (require 'jong-lsp)
@@ -267,6 +258,7 @@
 (require 'jong-window)
 (require 'jong-buffer)
 (require 'jong-code)
+(require 'jong-assist)
 
 ;; Langauges
 (require 'jong-elisp)
@@ -310,10 +302,7 @@
 
 (require 'jong-env-setting)
 (require 'jong-debug-settings)
-;; 
-;; (require 'jong-swit)
-;; (require 'jong-swit-dotenv1)
-;; (require 'jong-sentbe)
+
 (require 'jong-key-bindings)
 (require 'jong-shell-util)
 (require 'jong-themes)

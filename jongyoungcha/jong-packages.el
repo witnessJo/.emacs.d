@@ -27,7 +27,9 @@
   :config
   (setq company-async-timeout 4)
   (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0.0))
+  (setq company-idle-delay 0.0)
+  (setq company-show-numbers t)
+  )
 
 (use-package company-box
   :ensure t
@@ -181,7 +183,7 @@
 (use-package avy
   :ensure t
   :config
-  
+  (setq avy-all-windows nil)
   (defun jong-avy-goto-line ()
     (interactive)
     (progn
@@ -350,59 +352,6 @@
 
 (use-package hydra
   :ensure t)
-
-(defhydra Navigation (global-map "<f>")
-  "testnn"
-  :Line
-  ("n" next-line)
-  ("p" previous-line)
-  ("a" beginning-of-line)
-  ("e" move-end-of-line)
-  ("g" goto-line)
-  :Word
-  ("f" forward-word "Next")
-  ("b" backward-word "Previous")
-  ("{" org-backward-element "Next Element")
-  ("}" org-forward-element "Previous Element")
-  :Screen
-  ("v" scroll-up-command "Scroll Down")
-  ("V" scroll-down-command "Scroll Up")
-  ("l" recenter-top-bottom "Center Page")
-  ("r" move-to-window-line-top-bottom "Relocate Point")
-  ("m" helm-imenu "Textual Menu"))
-
-(defhydra hydra-zoom (global-map "C-=")
-  "zoom"
-  ("g" text-scale-increase "in")
-  ("l" text-scale-decrease "out"))
-
-
-;; (use-package hydra-goto
-;;   :doc "Search and move cursor"
-;;   :bind ("M-j" . *hydra-goto/body)
-;;   :pretty-hydra
-;;   ((:title " Goto" :color blue :quit-key "q" :foreign-keys warn :separator "-")
-;;    ("Got"
-;;     (("i" avy-goto-char       "char")
-;;      ("t" avy-goto-char-timer "timer")
-;;      ("w" avy-goto-word-2     "word")
-;;      ("j" avy-resume "resume"))
-;;     "Line"
-;;     (("h" avy-goto-line        "head")
-;;      ("e" avy-goto-end-of-line "end")
-;;      ("n" consult-goto-line    "number"))
-;;     "Topic"
-;;     (("o"  consult-outline      "outline")
-;;      ("m"  consult-imenu        "imenu")
-;;      ("gm" consult-global-imenu "global imenu"))
-;;     "Error"
-;;     ((","  flycheck-previous-error "previous" :exit nil)
-;;      ("."  flycheck-next-error "next" :exit nil)
-;;      ("l" consult-flycheck "list"))
-;;     "Spell"
-;;     ((">"  flyspell-goto-next-error "next" :exit nil)
-;;      ("cc" flyspell-correct-at-point "correct" :exit nil)))))
-
 
 (use-package quickrun
   :ensure t)

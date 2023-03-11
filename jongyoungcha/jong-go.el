@@ -27,8 +27,8 @@
 (use-package go-mode
   :ensure t)
 
-(use-package company-go
-  :ensure t)
+;; (use-package company-go
+;; :ensure t)
 
 (use-package gotest
   :ensure t
@@ -273,9 +273,9 @@ And the environment variable was existing, Download go binaries from the interne
 						  ;; (setq company-tooltip-limit 20)
 						  (setq company-echo-delay 0)
                           (setq company-begin-commands '(self-insert-command))
-						  (set (make-local-variable 'company-backends) '(company-go))
-						  (company-mode)
-
+						  ;; (set (make-local-variable 'company-backends) '(company-go))
+						  ;; (company-mode)
+                          
 						  ;; :weight 'bold)
 						  (local-set-key (kbd "C-c h") 'lsp-ui-doc-show)
 						  (local-set-key (kbd "C-c r w") 'lsp-workspace-restart)

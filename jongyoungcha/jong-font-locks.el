@@ -22,6 +22,8 @@
         ("[F\\|f]ROM" . 'font-lock-keyword-face)
         ("[S\\|s]elect" . 'font-lock-keyword-face)
         ("[S\\|s]ELECT" . 'font-lock-keyword-face)
+        ("[W\\|w]here" . 'font-lock-keyword-face)
+        ("[W\\|W]HERE" . 'font-lock-keyword-face)
         ("[T\\|t]est" . 'font-lock-keyword-face)
         ("[T\\|t]EST" . 'font-lock-keyword-face)
         ("[D\\|d]ebug" . 'font-lock-keyword-face)

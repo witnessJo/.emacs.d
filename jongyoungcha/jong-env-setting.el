@@ -65,7 +65,6 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-
 (global-hl-line-mode t)
 (show-paren-mode t)
 (delete-selection-mode t)
@@ -75,6 +74,7 @@
 
 (global-eldoc-mode -1)
 (auto-save-visited-mode t)
+
 (global-auto-revert-mode t)
 ;; (global-visual-line-mode t)
 

@@ -33,6 +33,18 @@
   (windmove-up)
   )
 
+(defun jong-save-all-unsaved ()
+  "Save all unsaved files. no ask.
+Version 2019-11-05"
+  (interactive)
+  (save-some-buffers t))
+
+(if (version< emacs-version "27")
+    (add-hook 'focus-out-hook 'jong-save-all-unsaved)
+  (setq after-focus-change-function 'jong-save-all-unsaved)
+  )
+
+(add-hook 'after-save-hook 'jong-save-all-unsaved)
 
 (run-with-timer 60 60 (lambda ()
 						(mapc 'kill-buffer

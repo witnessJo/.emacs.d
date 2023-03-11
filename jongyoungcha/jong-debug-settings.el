@@ -141,6 +141,21 @@
 								   ;; :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"
 								   :mode "debug"))
 
+(dap-register-debug-template "ma-backend"
+							 (list :type "go"
+								   :request "launch"
+								   :name "ma-backend"
+								   :args ""
+								   :buildFlags "-gcflags '-N -l'"
+								   :env '(
+										  ("TARGET" . "develop")
+										  )
+                                   :default-directory "/Users/jongyoungcha/gowork/mdl-manager/services/ma-backend/"
+								   :program "/Users/jongyoungcha/gowork/mdl-manager/services/ma-backend/main.go"
+								   ;; :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"
+								   :mode "debug"))
+
+
 
 (defun jong-debug-go-debug-current-test ()
   (interactive)
