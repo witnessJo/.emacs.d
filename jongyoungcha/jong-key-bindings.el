@@ -17,7 +17,6 @@
 (global-set-key (kbd "C-x m") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c m") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c C-m") 'ivy-switch-buffer)
-;; (global-set-key (kbd "C-c C-n") 'jong-project-switch-buffer-log-frame)
 (global-set-key (kbd "C-c n") 'jong-project-switch-buffer-log-frame)
 (global-set-key (kbd "C-x C-p") 'jong-common-prev-buffer)
 (global-set-key (kbd "C-x C-n") 'jong-common-next-buffer)
@@ -65,6 +64,8 @@
 (global-set-key (kbd "C-c C-l") 'windmove-right)
 
 ;; cursor
+(global-set-key (kbd "C-M-<up>") 'beginning-of-defun)
+(global-set-key (kbd "C-M-<down>") 'end-of-defun)
 (global-set-key (kbd "C-S-<down>") 'jong-cursor-move-text-down)
 (global-set-key (kbd "C-S-<up>") 'jong-cursor-move-text-up)
 (global-set-key (kbd "C-S-e") 'jong-cursor-move-eol-region)
@@ -220,7 +221,6 @@
     (define-key map (kbd "M-b") 'backward-word)
     (define-key map (kbd "M-f") 'jong-cursor-forward-word)
     
-	
 	(define-key map (kbd "M-<up>") 'evil-window-up)
 	(define-key map (kbd "M-<left>") 'evil-window-left)
 	(define-key map (kbd "M-<down>") 'evil-window-down)
