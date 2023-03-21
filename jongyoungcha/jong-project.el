@@ -7,6 +7,9 @@
 (defconst jong-project-log-frame "jong-project-log")
 (defconst jong-project-compile-buffer "jong-project-compile-buffer")
 
+(defvar jong-project-prev-dir)
+(defvar jong-project-prev-cmd)
+
 (add-to-list 'jong-kill-buffer-patterns jong-project-output-buffer)
 (add-to-list 'jong-kill-buffer-patterns jong-project-debug-buffer)
 
@@ -315,6 +318,14 @@
 	)
   )
 
+
+(defun jong-project-run-prev-command ()
+  "Run previous project command."
+  (interactive)
+  (jong-project-exec-command jong-project-prev-dir jong-project-prev-cmd)
+  )
+
+
 (defun jong-project-subcmd-list ()
   (interactive)
   (let ((subcmds-temp)
@@ -334,6 +345,8 @@
 					 :candidates subcmds-temp
 					 :fuzzy-match t
 					 :action (lambda (cmd)
+                               (setq jong-project-prev-dir (nth 2 cmd))
+                               (setq jong-project-prev-cmd (nth 1 cmd))
                                (jong-project-exec-command
                                 (nth 2 cmd)
                                 (nth 1 cmd)
@@ -343,36 +356,36 @@
 	)
   )
 
-(defun jong-project-subcmd-exec (title cmd directory)
-  (let ((default-directory (if (not (file-directory-p directory))
-							   (error "The directory was not existing")
-							 directory))
-		(proc)
-		(output-buffer (format "*jong-project-subcmd <%s-%s>*" title directory))
-		(target-window)
-		(base-window (selected-window)))
-	(unless (file-directory-p directory)
-	  (error (format "Couldnt find the directory %s\"" directory)))
+;; (defun jong-project-subcmd-exec (title cmd directory)
+;;   (let ((default-directory (if (not (file-directory-p directory))
+;; 							   (error "The directory was not existing")
+;; 							 directory))
+;; 		(proc)
+;; 		(output-buffer (format "*jong-project-subcmd <%s-%s>*" title directory))
+;; 		(target-window)
+;; 		(base-window (selected-window)))
+;; 	(unless (file-directory-p directory)
+;; 	  (error (format "Couldnt find the directory %s\"" directory)))
 
-	(when (or (equal cmd nil) (string= cmd ""))
-	  (error (format "Couldnt find  %s\"" cmd)))
-    
-	(when (get-buffer output-buffer) (kill-buffer output-buffer))
+;; 	(when (or (equal cmd nil) (string= cmd ""))
+;; 	  (error (format "Couldnt find  %s\"" cmd)))
 
-	(with-current-buffer (get-buffer-create output-buffer)
-	  ;; (compilation-modet)
-	  (ansi-color-for-comint-mode-on)
-	  (comint-mode)
-	  (setq default-directory directory)
-	  (display-buffer (current-buffer))
-	  (setq proc (start-process-shell-command
-                  output-buffer
-                  (current-buffer)
-                  cmd))
-	  (set-process-filter proc 'comint-output-filter)
-      )
-    )
-  )
+;; 	(when (get-buffer output-buffer) (kill-buffer output-buffer))
+
+;; 	(with-current-buffer (get-buffer-create output-buffer)
+;; 	  ;; (compilation-modet)
+;; 	  (ansi-color-for-comint-mode-on)
+;; 	  (comint-mode)
+;; 	  (setq default-directory directory)
+;; 	  (display-buffer (current-buffer))
+;; 	  (setq proc (start-process-shell-command
+;;                   output-buffer
+;;                   (current-buffer)
+;;                   cmd))
+;; 	  (set-process-filter proc 'comint-output-filter)
+;;       )
+;;     )
+;;   )
 
 
 (setq jong-project-window-buffer-pair (make-hash-table :test 'equal))
@@ -401,7 +414,6 @@
 	)
   )
 
-
 (defun jong-project-show-buffer-fixed-window()
   (interactive)
   (let ((target-window))
@@ -420,6 +432,7 @@
 (global-set-key (kbd "C-c c r") 'jong-project-run-project)
 (global-set-key (kbd "C-c c d") 'jong-project-debug-project)
 (global-set-key (kbd "C-c c l") 'jong-project-subcmd-list)
+(global-set-key (kbd "C-c c p") 'jong-project-run-prev-command)
 (global-set-key (kbd "C-c c .") 'jong-project-show-buffer-fixed-window)
 (global-set-key (kbd "C-c c ,") 'jong-project-register-buffer-to-show)
 

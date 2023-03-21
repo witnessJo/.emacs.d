@@ -89,13 +89,8 @@
 
 ;; parenthesis
 (global-set-key (kbd "C-c u") 'sp-splice-sexp)
-(global-set-key (kbd "M-(") 'sp-unwrap-sexp)
+(global-set-key (kbd "C-)") 'sp-unwrap-sexp)
 
-;; run
-(global-set-key (kbd "C-c <up>") 'jong-project-run-command)
-(global-set-key (kbd "C-c <left>") 'jong-project-sub-command-2)
-(global-set-key (kbd "C-c <down>") 'jong-project-run-command)
-(global-set-key (kbd "C-c <right>") 'jong-project-run-command)
 
 (global-set-key (kbd "C-c C-n") 'flycheck-next-error)
 (global-set-key (kbd "C-c C-p") 'flycheck-previous-error)

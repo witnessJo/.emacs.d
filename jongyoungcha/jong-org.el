@@ -3,8 +3,8 @@
   :ensure t
   :bind (
          :map org-mode-map
-              ("C-<return>" . jong-window-toggle-maximize-buffer)
-              ("C-c RET" . nil)
+         ("C-<return>" . jong-window-toggle-maximize-buffer)
+         ("C-c RET" . nil)
          )
   :config
 ;;; image
@@ -37,7 +37,6 @@
              '("u" "#+BEGIN_SRC plantuml :file ?.png
                     \nskinparam monochrome true
                     \n#+END_SRC"))
-
 (add-hook 'org-mode-hook (lambda ()
 						   (setq truncate-lines t)
 						   (setq fill-column 80)
@@ -55,6 +54,9 @@
                            (local-set-key (kbd "C-<down>") 'forward-paragraph)
                            (local-set-key (kbd "C-<down>") 'forward-paragraph)
                            (local-set-key (kbd "C-j") 'org-insert-item)
+                           (local-set-key (kbd "C-c F") 'org-fold-hide-entry)
+                           (local-set-key (kbd "C-c f") 'org-fold-show-entry)
+                           (local-set-key (kbd "C-M-t") 'nil)
                            )
           )
 
@@ -62,7 +64,6 @@
   (interactive)
   (insert "#+BEGIN_SRC \n\n#+END_SRC")
   )
-
 
 (use-package pandoc
   :ensure t)
