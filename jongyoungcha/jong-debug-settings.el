@@ -1,28 +1,5 @@
 ;;; Code:
 
-;; (dap-register-debug-template "SwitNodeV1"
-;; (list :type "node"
-;; :args "-i"
-;; :cwd nil
-;; :env '(("DEBUG" . "1"))
-;; :target-module (expand-file-name "~/go/src/swit/swit-apiv1/")
-;; :request "launch"
-;; :name "SwitNodev1"))
-
-;; (dap-register-debug-template "SwitFileGo"
-;; (list :type "go"
-;; :args "-i"
-;; :env '(
-;; ("BUCKET_NAME" . "test-swit")
-;; ("FILE_SERVICE_PORT" . "10040")
-;; ("SWIT_FILE_LOG_LEVEL" ."debug")
-;; ("GOOGLE_STORAGE_CREDENTIALS" . "/Users/swit-mac/swit-gke-resource-access.json")
-;; )
-;; :program "/Users/swit-mac/go/src/swit/swit-gcs-file-golang/server"
-;; :request "launch"
-;; :mode "exec"
-;; :name  "SwitFileGo"))
-
 
 (defvar jong-debug-setting-path (format "%s/.emacs.d/jongyoungcha/jong-debug-settings.el" (getenv "HOME")))
 
@@ -133,12 +110,12 @@
 								   :name "bc-backend"
 								   :args ""
 								   :buildFlags "-gcflags '-N -l'"
-								   :env '(
-										  ("TARGET" . "develop")
-										  )
+                                   ;; :env '(
+								   ;; ("TARGET" . "develop")
+								   ;; )
                                    :default-directory "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/"
 								   :program "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/main.go"
-								   ;; :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"
+                                   ;; :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"
 								   :mode "debug"))
 
 (dap-register-debug-template "ma-backend"
@@ -147,9 +124,6 @@
 								   :name "ma-backend"
 								   :args ""
 								   :buildFlags "-gcflags '-N -l'"
-								   :env '(
-										  ("TARGET" . "develop")
-										  )
                                    :default-directory "/Users/jongyoungcha/gowork/mdl-manager/services/ma-backend/"
 								   :program "/Users/jongyoungcha/gowork/mdl-manager/services/ma-backend/main.go"
 								   ;; :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"

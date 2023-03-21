@@ -1,4 +1,7 @@
 ;;; Code :
+
+(defvar jong-dap-debug-last-buffer)
+
 (use-package dap-mode
   :ensure t
   :config
@@ -25,6 +28,19 @@
   )
 
 
+(defun jong-dap-debug()
+  (interactive)
+  (setq jong-dap-debug-last-buffer (current-buffer))
+  (call-interactively 'dap-debug)
+  )
+
+(defun jong-dap-debug-last()
+  "Do `dap-debug-last' from target buffer."
+  (interactive)
+  (with-current-buffer jong-dap-debug-last-buffer
+    (call-interactively 'dap-debug-last)
+    )
+  )
 
 ;; (add-hook 'dap-tooltip-mode-hook (lambda() (sleep-for 3000)))
 ;; (defun jong-dap-debug)
