@@ -7,7 +7,8 @@
          ("C-c RET" . nil)
          )
   :config
-;;; image
+  (auto-fill-mode 1)
+  (setq truncate-lines t)
   (setq org-startup-with-inline-images t))
 
 (use-package org-roam
@@ -20,6 +21,19 @@
         org-roam-completion-everywhere t)
   :custom
   (org-roam-directory (file-truename org-directory)))
+
+
+(use-package org-ai
+  :ensure
+  :commands (org-ai-mode)
+  :custom
+  (org-ai-openai-api-token (getenv "GPT_KEY"))
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode)
+  :config
+  ;; if you are using yasnippet and want `ai` snippets
+  ;; (org-ai-install-yasnippets)
+  )
 
 
 ;;; plantuml
@@ -40,7 +54,6 @@
 (add-hook 'org-mode-hook (lambda ()
 						   (setq truncate-lines t)
 						   (setq fill-column 80)
-						   (turn-on-auto-fill)
 						   (local-set-key (kbd "C-c e h") 'org-hugo-export-to-md)
                            (local-set-key (kbd "C-c e m") 'org-pandoc-export-to-markdown)
                            (local-set-key (kbd "C-c e p") 'org-pandoc-export-to-latex-pdf)
