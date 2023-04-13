@@ -35,7 +35,6 @@
   ;; (org-ai-install-yasnippets)
   )
 
-
 ;;; plantuml
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -67,8 +66,8 @@
                            (local-set-key (kbd "C-<down>") 'forward-paragraph)
                            (local-set-key (kbd "C-<down>") 'forward-paragraph)
                            (local-set-key (kbd "C-j") 'org-insert-item)
-                           (local-set-key (kbd "C-c F") 'org-fold-hide-entry)
-                           (local-set-key (kbd "C-c f") 'org-fold-show-entry)
+                           (local-set-key (kbd "C-c f f") 'org-fold-hide-entry)
+                           (local-set-key (kbd "C-c f u") 'org-fold-show-entry)
                            (local-set-key (kbd "C-M-t") 'nil)
                            )
           )

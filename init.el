@@ -250,7 +250,6 @@
 (require 'jong-packages)
 (require 'jong-journal)
 (require 'jong-lsp)
-;; (require 'jong-eglot)
 (require 'jong-common)
 (require 'jong-project)
 (require 'jong-font-locks)
@@ -306,6 +305,8 @@
 (require 'jong-key-bindings)
 (require 'jong-shell-util)
 (require 'jong-themes)
+
+(require 'jo-bundle)
 
 (global-hl-line-mode t)
 ;; (set-face-background #'hl-line "#004500")

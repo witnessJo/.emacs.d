@@ -350,10 +350,128 @@
   :config
   (setq gpt-openai-key (getenv "GPT_KEY")))
 
+(use-package gptel
+  :ensure t
+  :config
+  (setq gptel-api-key (getenv "GPT_KEY")))
+
 (use-package hydra
   :ensure t)
 
 (use-package quickrun
+  :ensure t)
+
+(use-package smex
+  :ensure t
+  :config
+  (smex-initialize))
+
+(use-package helm-smex
+  :ensure t)
+
+(use-package string-inflection
+  :ensure t
+  :config
+  (defun jong-package-string-inflection-all-cycle ()
+    (interactive)
+    (cond
+     ;; for emacs-lisp-mode
+     ((eq major-mode 'emacs-lisp-mode)
+      (string-inflection-all-cycle))
+     ;; for python
+     ((eq major-mode 'python-mode)
+      (string-inflection-python-style-cycle))
+     ;; for java
+     ((eq major-mode 'java-mode)
+      (string-inflection-java-style-cycle))
+     ;; for golang
+     ((eq major-mode 'go-mode)
+      (string-inflection-python-style-cycle))
+     ;; for elixir
+     ((eq major-mode 'elixir-mode)
+      (string-inflection-elixir-style-cycle))
+     (t
+      ;; default
+      (string-inflection-ruby-style-cycle)))
+    )
+  )
+
+(use-package bufler
+  :ensure t
+  :init
+  :config
+  (bufler-mode 1)
+  (bufler-tabs-mode 1)
+  (tab-bar-mode 1)
+  (tab-line-mode 1)[]
+  (add-to-list 'window-state-change-functions
+               (lambda() (call-interactively 'bufler-workspace-focus-buffer)))
+  (add-hook 'window-configuration-change-hook
+            (lambda() (call-interactively 'bufler-workspace-focus-buffer)))
+  
+  (bufler-defgroups
+    (group
+     ;; Subgroup collecting all named workspaces.
+     (auto-workspace))
+    (group
+     ;; Subgroup collecting all `help-mode' and `info-mode' buffers.
+     (group-or "*Help/Info*"
+               (mode-match "*Help*" (rx bos "help-"))
+               (mode-match "*Info*" (rx bos "info-"))))
+    (group
+     ;; Subgroup collecting all special buffers (i.e. ones that are not
+     ;; file-backed), except `magit-status-mode' buffers (which are allowed to fall
+     ;; through to other groups, so they end up grouped with their project buffers).
+     (group-and "*Special*"
+                (lambda (buffer)
+                  (unless (or (funcall (mode-match "Magit" (rx bos "magit-status"))
+                                       buffer)
+                              (funcall (mode-match "Dired" (rx bos "dired"))
+                                       buffer)
+                              (funcall (auto-file) buffer))
+                    "*Special*")))
+     (group
+      ;; Subgroup collecting these "special special" buffers
+      ;; separately for convenience.
+      (name-match "**Special**"
+                  (rx bos "*" (or "Messages" "Warnings" "scratch" "Backtrace") "*")))
+     (group
+      ;; Subgroup collecting all other Magit buffers, grouped by directory.
+      (mode-match "*Magit* (non-status)" (rx bos (or "magit" "forge") "-"))
+      (auto-directory))
+     ;; Subgroup for Helm buffers.
+     (mode-match "*Helm*" (rx bos "helm-"))
+     ;; Remaining special buffers are grouped automatically by mode.
+     (auto-mode))
+    ;; All buffers under "~/.emacs.d" (or wherever it is).
+    (dir user-emacs-directory)
+    (group
+     ;; Subgroup collecting buffers in `org-directory' (or "~/org" if
+     ;; `org-directory' is not yet defined).
+     (dir (if (bound-and-true-p org-directory)
+              org-directory
+            "~/org"))
+     (group
+      ;; Subgroup collecting indirect Org buffers, grouping them by file.
+      ;; This is very useful when used with `org-tree-to-indirect-buffer'.
+      (auto-indirect)
+      (auto-file))
+     ;; Group remaining buffers by whether they're file backed, then by mode.
+     (group-not "*special*" (auto-file))
+     (auto-mode))
+    (group
+     ;; Subgroup collecting buffers in a projectile project.
+     (auto-projectile))
+    (group
+     ;; Subgroup collecting buffers in a version-control project,
+     ;; grouping them by directory.
+     (auto-project))
+    ;; Group remaining buffers by directory, then major mode.
+    (auto-directory)
+    (auto-mode))
+  )
+
+(use-package helm-bufler
   :ensure t)
 
 

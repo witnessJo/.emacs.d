@@ -118,14 +118,12 @@
 (global-set-key [mouse-2] 'dap-tooltip-at-point)
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "M-X") 'helm-smex-major-mode-commands)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f1> l") 'counsel-find-library)
-;; (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-;; (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-;; (global-set-key (kbd "<f2> j") 'counsel-set-variable)
 (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
 (global-set-key (kbd "C-x C-b") 'counsel-switch-buffer)
 (global-set-key (kbd "C-c p p") 'counsel-projectile-switch-project)
@@ -147,9 +145,6 @@
 (global-set-key (kbd "C-c g j f") 'magit-log-buffer-file)
 (global-set-key (kbd "C-c g b") 'magit-blame-addition)
 
-;; (global-set-key (kbd "C-c a g") 'jong-helm-ag-do-ag-projectile)
-;; (global-set-key (kbd "C-c a g") 'counsel-projectile-git-grep)
-;; (global-set-key (kbd "C-c a G") 'counsel-git-grep)
 
 (global-set-key (kbd "C-s") 'swiper-isearch)
 
@@ -172,15 +167,25 @@
 (global-set-key (kbd "C-c a i") 'gpt-dwim)
 
 ;; profile
-(global-set-key (kbd "C-c q s") 'profiler-start)
+
 (global-set-key (kbd "C-c q S-s") 'profiler-stop)
 (global-set-key (kbd "C-c q r") 'profiler-report)
 
 (global-set-key (kbd "M-v") 'jong-edit-paste-text)
 (global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
 
-;;; lsp
-;; (global-set-key (kbd "C-<tab>") 'company-complete)
+
+;; bufler
+(global-set-key (kbd "C-M-<tab>") 'tab-bar-switch-to-next-tab)
+(global-set-key (kbd "C-M-S-<tab>") 'tab-bar-switch-to-prev-tab)
+(global-set-key (kbd "C-<tab>") 'tab-line-switch-to-next-tab)
+(global-set-key (kbd "C-S-<tab>") 'tab-line-switch-to-prev-tab)
+(global-set-key (kbd "C-c n") 'tab-line-new-tab)
+(global-set-key (kbd "C-c k") 'tab-line-close-tab)
+(global-set-key (kbd "C-c k") 'tab-line-close-tab)
+(global-set-key (kbd "C-c ,") 'bufler-workspace-switch-buffer)
+(global-set-key (kbd "C-c SPC") 'bufler-workspace-switch-buffer)
+(global-set-key (kbd "C-c .") 'bufler-workspace-focus-buffer)
 
 ;;; etc
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
@@ -195,6 +200,9 @@
 (global-set-key (kbd "M-v") 'jong-edit-paste-text)
 (global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
 (global-set-key (kbd "M-<return>") 'jong-term-vterm-show-hide-toggle)
+
+;;; string
+(global-set-key (kbd "M-&") 'jong-package-string-inflection-all-cycle)
 
 ;; remapping about the keybinding.
 (defvar jong-keys-minor-mode-map
@@ -216,10 +224,26 @@
     (define-key map (kbd "M-b") 'backward-word)
     (define-key map (kbd "M-f") 'jong-cursor-forward-word)
     
-	(define-key map (kbd "M-<up>") 'evil-window-up)
-	(define-key map (kbd "M-<left>") 'evil-window-left)
-	(define-key map (kbd "M-<down>") 'evil-window-down)
-	(define-key map (kbd "M-<right>") 'evil-window-right)
+	(define-key map (kbd "M-<up>") (lambda()
+                                     (interactive)
+                                     (call-interactively 'evil-window-up)
+                                     (call-interactively 'bufler-workspace-focus-buffer)
+                                     ))
+	(define-key map (kbd "M-<left>") (lambda()
+                                       (interactive)
+                                       (call-interactively 'evil-window-left)
+                                       (call-interactively 'bufler-workspace-focus-buffer)
+                                       ))
+	(define-key map (kbd "M-<down>") (lambda()
+                                       (interactive)
+                                       (call-interactively 'evil-window-down)
+                                       (call-interactively 'bufler-workspace-focus-buffer)
+                                       ))
+	(define-key map (kbd "M-<right>") (lambda()
+                                        (interactive)
+                                        (call-interactively 'evil-window-right)
+                                        (call-interactively 'bufler-workspace-focus-buffer)
+                                        ))
 
 	(define-key map (kbd "M-A-<up>") 'jong-buffer-throw-up)
 	(define-key map (kbd "M-A-<left>") 'jong-buffer-throw-left)

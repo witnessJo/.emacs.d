@@ -117,7 +117,6 @@
 					  (current-buffer)) buffer-current)))
 	))
 
-
 (defun jong-window-delete-above-below-window ()
   (interactive)
   (cond
@@ -147,6 +146,5 @@
       (delete-other-windows))))
 
 (provide 'jong-window)
-
 
 
