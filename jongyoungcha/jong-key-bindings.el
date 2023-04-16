@@ -164,9 +164,9 @@
                                   (call-interactively 'counsel-projectile-find-file)))
 
 ;; gpt
-(global-set-key (kbd "C-c a i") 'gpt-dwim)
+(global-set-key (kbd "C-c a i") 'jo/gptel-toggle-gptel)
 
-;; profile
+;; profileb
 
 (global-set-key (kbd "C-c q S-s") 'profiler-stop)
 (global-set-key (kbd "C-c q r") 'profiler-report)

@@ -353,7 +353,17 @@
 (use-package gptel
   :ensure t
   :config
-  (setq gptel-api-key (getenv "GPT_KEY")))
+  (setq gptel-api-key (getenv "GPT_KEY"))
+  (defun jo/gptel-toggle-gptel()
+    (interactive)
+    (let ((gptel-buffer-name "*ChatGPT*")
+          (gptel-window))
+      (if (setq gptel-window (get-buffer-window gptel-buffer-name))
+          (delete-window gptel-window)
+        (call-interactively 'gptel)
+        )
+      ))
+  )
 
 (use-package hydra
   :ensure t)
@@ -403,12 +413,12 @@
   (bufler-mode 1)
   (bufler-tabs-mode 1)
   (tab-bar-mode 1)
-  (tab-line-mode 1)[]
+  (tab-line-mode 1)
   (add-to-list 'window-state-change-functions
                (lambda() (call-interactively 'bufler-workspace-focus-buffer)))
   (add-hook 'window-configuration-change-hook
             (lambda() (call-interactively 'bufler-workspace-focus-buffer)))
-  
+  (setq bufler-workspace-set-hook nil)
   (bufler-defgroups
     (group
      ;; Subgroup collecting all named workspaces.
