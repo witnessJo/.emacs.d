@@ -5,8 +5,6 @@
 (winner-mode)
 
 (message (regexp-opt-charset '(?a ?c ?e ? ?\t)))
-
-
 (use-package so-long
   :ensure t
   :config
@@ -70,6 +68,7 @@
   (projectile-mode 1)
   (setq projectile-globally-ignored-directories (append '(".git") projectile-globally-ignored-directories))
   (setq projectile-globally-ignored-directories (append '(".svn") projectile-globally-ignored-directories))
+  (setq projectile-ignored-projects '("~/"))
   (setq projectile-enable-caching t)
   (setq projectile-git-submodule-command nil)
   (setq projectile-track-known-projects-automatically nil))
@@ -419,6 +418,7 @@
   (add-hook 'window-configuration-change-hook
             (lambda() (call-interactively 'bufler-workspace-focus-buffer)))
   (setq bufler-workspace-set-hook nil)
+  ;; (bufler-work)
   (bufler-defgroups
     (group
      ;; Subgroup collecting all named workspaces.
@@ -484,5 +484,8 @@
 (use-package helm-bufler
   :ensure t)
 
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
 
 (provide 'jong-packages)

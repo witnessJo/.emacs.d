@@ -176,6 +176,7 @@
 
 
 ;; bufler
+(global-set-key (kbd "C-c b") 'bufler)
 (global-set-key (kbd "C-M-<tab>") 'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-M-S-<tab>") 'tab-bar-switch-to-prev-tab)
 (global-set-key (kbd "C-<tab>") 'tab-line-switch-to-next-tab)
