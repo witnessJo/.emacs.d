@@ -174,12 +174,12 @@
 (global-set-key (kbd "M-v") 'jong-edit-paste-text)
 (global-set-key (kbd "M-C-v") 'jong-edit-paste-text-below)
 
-
 ;; bufler
 (global-set-key (kbd "C-c b") 'bufler)
+(global-set-key (kbd "C-M-w") 'jo/bufler-workspace-kill-buffers)
 (global-set-key (kbd "C-M-<tab>") 'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-M-S-<tab>") 'tab-bar-switch-to-prev-tab)
-(global-set-key (kbd "C-<tab>") 'tab-line-switch-to-next-tab)
+(global-set-key (kbd "C-<tab>") 'jo/bufler-workspace-cycle-tab-line-tabs)
 (global-set-key (kbd "C-S-<tab>") 'tab-line-switch-to-prev-tab)
 (global-set-key (kbd "C-c n") 'tab-line-new-tab)
 (global-set-key (kbd "C-c k") 'tab-line-close-tab)

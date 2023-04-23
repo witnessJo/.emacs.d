@@ -409,6 +409,25 @@
   :ensure t
   :init
   :config
+  (defun jo/bufler-workspace-cycle-tab-line-tabs()
+    (interactive)
+    (let (local-buffer)
+      (setq local-buffer (current-buffer))
+      (if (member local-buffer (bufler-workspace-buffers))
+          (call-interactively 'tab-line-switch-to-next-tab)
+        (switch-to-buffer (car (bufler-workspace-buffers)))
+        ))
+    )
+  (defun jo/bufler-workspace-kill-buffers()
+    (interactive)
+    (let ()
+      (dolist (buf (bufler-workspace-buffers))
+        (kill-buffer buf)
+        )
+      )
+    )
+  
+  (setq tab-line-switch-cycling t)
   (bufler-mode 1)
   (bufler-tabs-mode 1)
   (tab-bar-mode 1)

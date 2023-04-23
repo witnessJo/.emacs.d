@@ -243,10 +243,6 @@
 		(kill-buffer buffer))))
   )
 
-;; (global-set-key (kbd "C-g") (lambda () (interactive)
-;; (jong-kill-temporary-buffers)
-;; (keyboard-quit)))
-
 (require 'jong-packages)
 (require 'jong-journal)
 (require 'jong-lsp)
