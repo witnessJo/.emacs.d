@@ -61,6 +61,7 @@
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(pixel-scroll-mode t)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -69,8 +70,7 @@
 (show-paren-mode t)
 (delete-selection-mode t)
 (load-theme 'solarized-zenburn t)
-;; (load-theme 'solarized-dark-high-contrast t)
-;; (load-theme 'sanityinc-tomorrow-blue t)
+
 
 (global-eldoc-mode -1)
 (auto-save-visited-mode t)
