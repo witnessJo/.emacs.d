@@ -20,14 +20,19 @@
 
 (setq lsp-disabled-clients '(jsts-ls eslint))
 
-(add-hook 'js2-mode-hook #'lsp)
+(add-hook 'web-mode-hook #'lsp)
 (add-hook 'js-mode-hook #'lsp)
-(add-hook 'typescript-mode-hook #'lsp) ;; for typescript support
+(add-hook 'js2-mode-hook #'lsp)
 (add-hook 'js3-mode-hook #'lsp) ;; for js3-mode support
+(add-hook 'typescript-mode-hook #'lsp) ;; for typescript support
 (add-hook 'rjsx-mode #'lsp) ;; for rjsx-mode support
 
+(add-hook 'web-mode-hook #'jong-js-key-set)
+(add-hook 'js-mode-hook #'jong-js-key-set)
 (add-hook 'js2-mode-hook #'jong-js-key-set)
+(add-hook 'js3-mode-hook #'jong-js-key-set)
 (add-hook 'typescript-mode-hook #'jong-js-key-set)
+(add-hook 'rjsx-mode #'jong-js-key-set) ;; for rjsx-mode support
 
 (defun jong-js-key-set()
   "Key set for javacript."
