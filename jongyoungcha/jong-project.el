@@ -238,6 +238,7 @@
          (with-current-buffer (get-buffer (process-buffer p))
 	       (compilation-mode)
 	       (compilation-shell-minor-mode)
+           (message "Done!!")
            )
          ))
       )

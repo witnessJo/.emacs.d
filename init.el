@@ -121,7 +121,9 @@
 	(if (> target-column max-column)
 		(goto-char max-column) 
 	  (goto-char target-column))
-	(recenter-top-bottom (line-number-at-pos))))
+	;; (recenter-top-bottom (line-number-at-pos))
+    ;; (recenter (line-number-at-pos))
+    ))
 
 
 (defun pop-local-or-global-mark ()
