@@ -27,12 +27,13 @@
 (add-hook 'typescript-mode-hook #'lsp) ;; for typescript support
 (add-hook 'rjsx-mode #'lsp) ;; for rjsx-mode support
 
-(add-hook 'web-mode-hook #'jong-js-key-set)
-(add-hook 'js-mode-hook #'jong-js-key-set)
-(add-hook 'js2-mode-hook #'jong-js-key-set)
-(add-hook 'js3-mode-hook #'jong-js-key-set)
-(add-hook 'typescript-mode-hook #'jong-js-key-set)
-(add-hook 'rjsx-mode #'jong-js-key-set) ;; for rjsx-mode support
+(add-hook 'web-mode-hook 'jo/lsp-key-bindings)
+(add-hook 'js-mode-hook 'jo/lsp-key-bindings)
+(add-hook 'js2-mode-hook 'jo/lsp-key-bindings)
+(add-hook 'js3-mode-hook 'jo/lsp-key-bindings)
+(add-hook 'typescript-mode-hook 'jo/lsp-key-bindings)
+(add-hook 'rjsx-mode 'jo/lsp-key-bindings) ;; for rjsx-mode support
+
 
 (defun jong-js-key-set()
   "Key set for javacript."

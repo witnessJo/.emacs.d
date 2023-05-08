@@ -266,44 +266,26 @@ And the environment variable was existing, Download go binaries from the interne
                 )))
           )
 
+
+
+(add-hook 'go-mode-hook 'jo/lsp-key-bindings)
 (add-hook 'go-mode-hook (lambda ()
 						  (setq go-test-args "-count=1")
-						  (setq indent-tabs-mode t)
-
-						  ;; setting company-go mode...
-						  ;; (setq company-tooltip-limit 20)
-						  (setq company-echo-delay 0)
-                          (setq company-begin-commands '(self-insert-command))
-						  ;; (set (make-local-variable 'company-backends) '(company-go))
                           
-						  ;; :weight 'bold)
-                          (local-set-key (kbd "A-<tab>") 'copilot-complete)
-                          
-						  (local-set-key (kbd "C-c h") 'lsp-ui-doc-show)
-						  (local-set-key (kbd "C-c r w") 'lsp-workspace-restart)
-						  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-						  (local-set-key (kbd "C-c C-a") 'go-import-add)
-						  (local-set-key (kbd "C-c C-g") 'go-goto-imports)
-                          (local-set-key (kbd "C-c C-c") 'helm-lsp-code-actions)
-						  (local-set-key (kbd "M-.") 'lsp-ui-peek-find-definitions)
-						  (local-set-key (kbd "M-,") 'xref-pop-marker-stack)
-                          (local-set-key (kbd "C-,") 'xref-go-back)
-                          (local-set-key (kbd "C-.") 'xref-go-forward)
-                          (local-set-key (kbd "C-c r ,") 'lsp-ui-peek-find-references)
-						  (local-set-key (kbd "C-c r i") 'lsp-ui-peek-find-implementation)
-						  (local-set-key (kbd "C-c o i") 'lsp-ui-organize-imports)
-						  (local-set-key (kbd "C-c r l") 'counsel-imenu)
-                          (local-set-key (kbd "C-c c c") 'jong-project-compile-project)
-						  (local-set-key (kbd "C-c r r") 'lsp-rename)
+                          (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
+                          (local-set-key (kbd "C-c C-a") 'go-import-add)
+                          (local-set-key (kbd "C-c C-g") 'go-goto-imports)
                           (local-set-key (kbd "C-M-g") 'go-goto-function-name)
-						  
-						  (local-set-key (kbd "C-c t f") 'jong-go-run-current-test)
-						  (local-set-key (kbd "C-c t a") 'go-test-current-file)
-						  (local-set-key (kbd "C-c t p") 'jong-go-run-previous-test)
-						  (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)
-						  (lsp)
+                          (local-set-key (kbd "C-c t f") 'jong-go-run-current-test)
+                          (local-set-key (kbd "C-c t a") 'go-test-current-file)
+                          (local-set-key (kbd "C-c t p") 'jong-go-run-previous-test)
+                          (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)						  ;; (set (make-local-variable 'company-backends) '(company-go))
+                          ;; :weight 'bold)
+                          (lsp)
 						  )
 		  )
+
+
 
 (provide 'jong-go)
 ;;;

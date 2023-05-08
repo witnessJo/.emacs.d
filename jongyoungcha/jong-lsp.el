@@ -21,6 +21,29 @@
   (setq lsp-file-watch-threshold 10000)
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
   (setq lsp-idle-delay 0.500)
+
+  (defun jo/lsp-key-bindings()
+    (setq indent-tabs-mode t)
+    ;; setting company-go mode...
+    ;; (setq company-tooltip-limit 20)
+    (setq company-echo-delay 0)
+    (setq company-begin-commands '(self-insert-command))
+    (local-set-key (kbd "A-<tab>") 'copilot-complete)
+    (local-set-key (kbd "C-c h") 'lsp-ui-doc-show)
+    (local-set-key (kbd "C-c r w") 'lsp-workspace-restart)
+    (local-set-key (kbd "C-c C-c") 'helm-lsp-code-actions)
+    (local-set-key (kbd "M-.") 'lsp-ui-peek-find-definitions)
+    (local-set-key (kbd "M-,") 'xref-pop-marker-stack)
+    (local-set-key (kbd "C-,") 'xref-go-back)
+    (local-set-key (kbd "C-.") 'xref-go-forward)
+    (local-set-key (kbd "C-c r ,") 'lsp-ui-peek-find-references)
+    (local-set-key (kbd "C-c r i") 'lsp-ui-peek-find-implementation)
+    (local-set-key (kbd "C-c o i") 'lsp-ui-organize-imports)
+    (local-set-key (kbd "C-c r l") 'counsel-imenu)
+    (local-set-key (kbd "C-c c c") 'jong-project-compile-project)
+    (local-set-key (kbd "C-c r r") 'lsp-rename)
+    (lsp)
+    )
   :commands lsp)
 
 (use-package lsp-ui
