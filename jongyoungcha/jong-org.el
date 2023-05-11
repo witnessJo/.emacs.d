@@ -65,7 +65,7 @@
 (add-hook 'org-mode-hook (lambda ()
 						   (setq truncate-lines t)
 						   (setq fill-column 80)
-						   (local-set-key (kbd "C-c e h") 'org-hugo-export-to-md)
+                           (local-set-key (kbd "C-c e h") 'org-hugo-export-to-md)
                            (local-set-key (kbd "C-c e m") 'org-pandoc-export-to-markdown)
                            (local-set-key (kbd "C-c e p") 'org-pandoc-export-to-latex-pdf)
                            (local-set-key (kbd "C-c e d") 'org-pandoc-export-to-docx)
@@ -81,6 +81,7 @@
                            (local-set-key (kbd "C-c f f") 'org-fold-hide-entry)
                            (local-set-key (kbd "C-c f u") 'org-fold-show-entry)
                            (local-set-key (kbd "C-M-t") 'nil)
+                           (local-set-key (kbd "C-M-y") 'org-download-clipboard)
                            )
           )
 
