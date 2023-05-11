@@ -22,6 +22,18 @@
   :custom
   (org-roam-directory (file-truename org-directory)))
 
+(use-package org-download
+  :ensure t
+  :init
+  :config
+  (add-hook 'dired-mode-hook 'org-download-enable)
+  (unless (executable-find "pngpaste")
+    (cond ((string-equal system-type "darwin")
+           (async-shell-command "brew install pngpaste"))
+          ((string-equal system-type "gnu/linux"))
+          )
+    )
+  )
 
 (use-package org-ai
   :ensure

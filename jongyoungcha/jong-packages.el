@@ -507,4 +507,7 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
+(use-package docker
+  :ensure t)
+
 (provide 'jong-packages)

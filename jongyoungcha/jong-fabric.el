@@ -2,8 +2,8 @@
 
 (require 'ivy)
 
-(setenv "FABRIC_SAMPLE_HOME" (concat (getenv "HOME") "/gowork/fabric-samples"))
-(setenv "FABRIC_TEST_NETWORK_HOME" (concat (getenv "HOME") "/gowork/fabric-samples/test-network"))
+(setenv "FABRIC_SAMPLE_HOME" (concat (getenv "HOME") "/work/fabric-samples"))
+(setenv "FABRIC_TEST_NETWORK_HOME" (concat (getenv "HOME") "/work/fabric-samples/test-network"))
 (setenv "FABRIC_TEST_NETWORK_NAME" "richard-network")
 (setenv "FABRIC_CFG_PATH" (concat (getenv "FABRIC_SAMPLE_HOME") "/config/"))
 

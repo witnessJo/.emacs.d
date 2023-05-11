@@ -1,5 +1,6 @@
 
 ;;; Code:
+(add-to-list 'auto-mode-alist '("Makefile.*\\'" . makefile-mode))
 
 (defun jong-makefile-indent-line ()
   (save-excursion
@@ -17,14 +18,21 @@
 	 ((looking-at "\\s-+")
 	  (replace-match "")))))
 
-
 (add-hook 'makefile-bsdmake-mode-hook
 		  (lambda ()
-			;; (message-box "makefile-bsdmake")
-			(setq-local indent-line-function 'jong-makefile-indent-line)
+            (setq-local indent-line-function 'jong-makefile-indent-line)
 			(setq indent-tabs-mode t)
 			)
 		  )
+
+(add-hook 'makefile-mode-hook
+          (lambda ()
+            (setq-local indent-line-function 'jong-makefile-indent-line)
+			(setq indent-tabs-mode t)
+			)
+          )
+
+(remove-hook 'write-file-functions 'makefile-warn-suspicious-lines)
 
 (provide 'jong-makefile)
 ;;; jong-makefile.el ends here
