@@ -129,7 +129,14 @@
 								   ;; :envFile "/Users/jongyoungcha/gowork/mdl-manager/services/bc-backend/configs/.env"
 								   :mode "debug"))
 
-
+(dap-register-debug-template
+ "blockchain-explorer"
+ (list :type "node"
+       :request "launch"
+       :program "/Users/jongyoungcha/work/blockchain-explorer/dist/main.js"
+       :dap-compilation "npx tsc main.ts --outdir dist --sourceMap true"
+       :outFiles (list "/Users/jongyoungcha/work/blockchain-explorer/dist/**/*.js")
+       :name "blockchain-explorer"))
 
 (defun jong-debug-go-debug-current-test ()
   (interactive)

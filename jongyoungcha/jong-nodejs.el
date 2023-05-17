@@ -1,3 +1,10 @@
+(use-package tree-sitter
+  :ensure t
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  )
+
 (use-package js2-mode
   :ensure t)
 
@@ -6,12 +13,20 @@
   :hook
   (typescript-mode . lsp-deferred)
   :config
-  (setq typescript-indent-level 2)
+  (setq typescript-indent-level 4)
   (require 'typescript-mode))
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 (add-hook 'js-mode-hook 'js2-minor-mode)
+
+(defun my-setup-dap-node ()
+  "Require dap-node feature and run dap-node-setup if VSCode module isn't already installed"
+  (require 'dap-node)
+  (unless (file-exists-p dap-node-debug-path) (dap-node-setup)))
+
+(add-hook 'typescript-mode-hook 'my-setup-dap-node)
+(add-hook 'javascript-mode-hook 'my-setup-dap-node)
 
 (setq lsp-eslint-server-command 
       '("node"
@@ -19,6 +34,9 @@
         "--stdio"))
 
 (setq lsp-disabled-clients '(jsts-ls eslint))
+
+(add-hook 'typescript-mode-hook 'lsp-deferred)
+(add-hook 'javascript-mode-hook 'lsp-deferred)
 
 (add-hook 'web-mode-hook #'lsp)
 (add-hook 'js-mode-hook #'lsp)

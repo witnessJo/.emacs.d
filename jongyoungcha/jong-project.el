@@ -323,7 +323,10 @@
 (defun jong-project-run-prev-command ()
   "Run previous project command."
   (interactive)
-  (jong-project-exec-command jong-project-prev-dir jong-project-prev-cmd)
+  (if (boundp 'jong-project-prev-dir)
+      (jong-project-exec-command jong-project-prev-dir jong-project-prev-cmd)
+    (message "not executed any command yet!!!")
+    )
   )
 
 
@@ -426,6 +429,7 @@
 			 jong-project-window-buffer-pair)
 	)
   )
+
 
 (global-set-key (kbd "C-c c m") 'jong-project-make-dot-dir-locals-el)
 (global-set-key (kbd "C-c c v") 'jong-project-visit-dot-dir-locals-el)
