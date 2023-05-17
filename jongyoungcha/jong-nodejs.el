@@ -5,6 +5,11 @@
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
   )
 
+(use-package tree-sitter-langs
+  :ensure t
+  :after tree-sitter)
+
+
 (use-package js2-mode
   :ensure t)
 
@@ -35,13 +40,17 @@
 
 (setq lsp-disabled-clients '(jsts-ls eslint))
 
+;; (add-hook 'typescript-mode-hook 'eglot-ensure)
+;; (add-hook 'javascript-mode-hook 'eglot-ensure)
+;; (add-hook 'js2-mode-hook 'eglot-ensure)
 (add-hook 'typescript-mode-hook 'lsp-deferred)
 (add-hook 'javascript-mode-hook 'lsp-deferred)
+(add-hook 'js2-mode-hook 'lsp-deferred)
 
-(add-hook 'web-mode-hook #'lsp)
-(add-hook 'js-mode-hook #'lsp)
-(add-hook 'js2-mode-hook #'lsp)
-(add-hook 'js3-mode-hook #'lsp) ;; for js3-mode support
+;; (add-hook 'web-mode-hook #'lsp)
+;; (add-hook 'js-mode-hook #'lsp)
+;; (add-hook 'js2-mode-hook #'lsp)
+;; (add-hook 'js3-mode-hook #'lsp) ;; for js3-mode support
 (add-hook 'typescript-mode-hook #'lsp) ;; for typescript support
 (add-hook 'rjsx-mode #'lsp) ;; for rjsx-mode support
 
@@ -51,7 +60,6 @@
 (add-hook 'js3-mode-hook 'jo/lsp-key-bindings)
 (add-hook 'typescript-mode-hook 'jo/lsp-key-bindings)
 (add-hook 'rjsx-mode 'jo/lsp-key-bindings) ;; for rjsx-mode support
-
 
 (defun jong-js-key-set()
   "Key set for javacript."

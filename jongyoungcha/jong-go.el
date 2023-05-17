@@ -203,7 +203,6 @@ And the environment variable was existing, Download go binaries from the interne
 	)
   )
 
-(add-hook 'go-mode-hook #'lsp-deferred)
 
 (defvar jong-go-test-buffer nil)
 (defvar jong-go-test-directory nil)
@@ -268,10 +267,11 @@ And the environment variable was existing, Download go binaries from the interne
 
 
 
+(add-hook 'go-mode-hook 'lsp-deferred)
 (add-hook 'go-mode-hook 'jo/lsp-key-bindings)
+;; (add-hook 'go-mode-hook 'jo/eglot-key-bindings)
 (add-hook 'go-mode-hook (lambda ()
 						  (setq go-test-args "-count=1")
-                          
                           (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
                           (local-set-key (kbd "C-c C-a") 'go-import-add)
                           (local-set-key (kbd "C-c C-g") 'go-goto-imports)
@@ -279,10 +279,7 @@ And the environment variable was existing, Download go binaries from the interne
                           (local-set-key (kbd "C-c t f") 'jong-go-run-current-test)
                           (local-set-key (kbd "C-c t a") 'go-test-current-file)
                           (local-set-key (kbd "C-c t p") 'jong-go-run-previous-test)
-                          (local-set-key (kbd "C-c r s") 'jong-go-set-project-run-command)						  ;; (set (make-local-variable 'company-backends) '(company-go))
-                          ;; :weight 'bold)
-                          (lsp)
-						  )
+                          )
 		  )
 
 
